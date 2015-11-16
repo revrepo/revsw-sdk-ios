@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import <RevSDK/RevSDK.h>
 
 @interface AppDelegate ()
 
@@ -17,6 +18,9 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    [RevSDK startWithSDKKey:@"12345"];
+    
     return YES;
 }
 
