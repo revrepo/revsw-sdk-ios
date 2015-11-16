@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5B3096891BFA02120045024C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096881BFA02120045024C /* main.m */; };
+		5B30968C1BFA02120045024C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B30968B1BFA02120045024C /* AppDelegate.m */; };
+		5B30968F1BFA02120045024C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B30968E1BFA02120045024C /* ViewController.m */; };
+		5B3096921BFA02120045024C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B3096901BFA02120045024C /* Main.storyboard */; };
+		5B3096941BFA02120045024C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3096931BFA02120045024C /* Assets.xcassets */; };
+		5B3096971BFA02120045024C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B3096951BFA02120045024C /* LaunchScreen.storyboard */; };
+		5B3096A21BFA02120045024C /* RevClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096A11BFA02120045024C /* RevClientTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5B30969E1BFA02120045024C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B30967C1BFA02120045024C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5B3096831BFA02120045024C;
+			remoteInfo = RevClient;
+		};
+		5B3096D51BFA02770045024C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B3096D01BFA02770045024C /* RevSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B3096B61BFA02770045024C;
+			remoteInfo = RevSDK;
+		};
+		5B3096D71BFA02770045024C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5B3096D01BFA02770045024C /* RevSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B3096C01BFA02770045024C;
+			remoteInfo = RevSDKTests;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		5B3096841BFA02120045024C /* RevClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RevClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B3096881BFA02120045024C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5B30968A1BFA02120045024C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5B30968B1BFA02120045024C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5B30968D1BFA02120045024C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		5B30968E1BFA02120045024C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		5B3096911BFA02120045024C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5B3096931BFA02120045024C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5B3096961BFA02120045024C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		5B3096981BFA02120045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B30969D1BFA02120045024C /* RevClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RevClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B3096A11BFA02120045024C /* RevClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevClientTests.m; sourceTree = "<group>"; };
+		5B3096A31BFA02120045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B3096D01BFA02770045024C /* RevSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RevSDK.xcodeproj; path = ../../RevSDK/RevSDK.xcodeproj; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5B3096811BFA02120045024C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B30969A1BFA02120045024C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5B30967B1BFA02120045024C = {
+			isa = PBXGroup;
+			children = (
+				5B3096861BFA02120045024C /* RevClient */,
+				5B3096A01BFA02120045024C /* RevClientTests */,
+				5B3096851BFA02120045024C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5B3096851BFA02120045024C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5B3096841BFA02120045024C /* RevClient.app */,
+				5B30969D1BFA02120045024C /* RevClientTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5B3096861BFA02120045024C /* RevClient */ = {
+			isa = PBXGroup;
+			children = (
+				5B30968A1BFA02120045024C /* AppDelegate.h */,
+				5B30968B1BFA02120045024C /* AppDelegate.m */,
+				5B30968D1BFA02120045024C /* ViewController.h */,
+				5B30968E1BFA02120045024C /* ViewController.m */,
+				5B3096901BFA02120045024C /* Main.storyboard */,
+				5B3096931BFA02120045024C /* Assets.xcassets */,
+				5B3096951BFA02120045024C /* LaunchScreen.storyboard */,
+				5B3096981BFA02120045024C /* Info.plist */,
+				5B3096871BFA02120045024C /* Supporting Files */,
+				5B3096D01BFA02770045024C /* RevSDK.xcodeproj */,
+			);
+			path = RevClient;
+			sourceTree = "<group>";
+		};
+		5B3096871BFA02120045024C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5B3096881BFA02120045024C /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5B3096A01BFA02120045024C /* RevClientTests */ = {
+			isa = PBXGroup;
+			children = (
+				5B3096A11BFA02120045024C /* RevClientTests.m */,
+				5B3096A31BFA02120045024C /* Info.plist */,
+			);
+			path = RevClientTests;
+			sourceTree = "<group>";
+		};
+		5B3096D11BFA02770045024C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5B3096D61BFA02770045024C /* RevSDK.framework */,
+				5B3096D81BFA02770045024C /* RevSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5B3096831BFA02120045024C /* RevClient */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B3096A61BFA02120045024C /* Build configuration list for PBXNativeTarget "RevClient" */;
+			buildPhases = (
+				5B3096801BFA02120045024C /* Sources */,
+				5B3096811BFA02120045024C /* Frameworks */,
+				5B3096821BFA02120045024C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RevClient;
+			productName = RevClient;
+			productReference = 5B3096841BFA02120045024C /* RevClient.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5B30969C1BFA02120045024C /* RevClientTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5B3096A91BFA02120045024C /* Build configuration list for PBXNativeTarget "RevClientTests" */;
+			buildPhases = (
+				5B3096991BFA02120045024C /* Sources */,
+				5B30969A1BFA02120045024C /* Frameworks */,
+				5B30969B1BFA02120045024C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5B30969F1BFA02120045024C /* PBXTargetDependency */,
+			);
+			name = RevClientTests;
+			productName = RevClientTests;
+			productReference = 5B30969D1BFA02120045024C /* RevClientTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5B30967C1BFA02120045024C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = TundraMobile;
+				TargetAttributes = {
+					5B3096831BFA02120045024C = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					5B30969C1BFA02120045024C = {
+						CreatedOnToolsVersion = 7.1;
+						TestTargetID = 5B3096831BFA02120045024C;
+					};
+				};
+			};
+			buildConfigurationList = 5B30967F1BFA02120045024C /* Build configuration list for PBXProject "RevClient" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5B30967B1BFA02120045024C;
+			productRefGroup = 5B3096851BFA02120045024C /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 5B3096D11BFA02770045024C /* Products */;
+					ProjectRef = 5B3096D01BFA02770045024C /* RevSDK.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				5B3096831BFA02120045024C /* RevClient */,
+				5B30969C1BFA02120045024C /* RevClientTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		5B3096D61BFA02770045024C /* RevSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RevSDK.framework;
+			remoteRef = 5B3096D51BFA02770045024C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5B3096D81BFA02770045024C /* RevSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RevSDKTests.xctest;
+			remoteRef = 5B3096D71BFA02770045024C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5B3096821BFA02120045024C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B3096971BFA02120045024C /* LaunchScreen.storyboard in Resources */,
+				5B3096941BFA02120045024C /* Assets.xcassets in Resources */,
+				5B3096921BFA02120045024C /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B30969B1BFA02120045024C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5B3096801BFA02120045024C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B30968F1BFA02120045024C /* ViewController.m in Sources */,
+				5B30968C1BFA02120045024C /* AppDelegate.m in Sources */,
+				5B3096891BFA02120045024C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B3096991BFA02120045024C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5B3096A21BFA02120045024C /* RevClientTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5B30969F1BFA02120045024C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5B3096831BFA02120045024C /* RevClient */;
+			targetProxy = 5B30969E1BFA02120045024C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		5B3096901BFA02120045024C /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B3096911BFA02120045024C /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		5B3096951BFA02120045024C /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5B3096961BFA02120045024C /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		5B3096A41BFA02120045024C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5B3096A51BFA02120045024C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		5B3096A71BFA02120045024C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RevClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5B3096A81BFA02120045024C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = RevClient/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevClient;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5B3096AA1BFA02120045024C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RevClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevClientTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RevClient.app/RevClient";
+			};
+			name = Debug;
+		};
+		5B3096AB1BFA02120045024C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = RevClientTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevClientTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RevClient.app/RevClient";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5B30967F1BFA02120045024C /* Build configuration list for PBXProject "RevClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B3096A41BFA02120045024C /* Debug */,
+				5B3096A51BFA02120045024C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5B3096A61BFA02120045024C /* Build configuration list for PBXNativeTarget "RevClient" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B3096A71BFA02120045024C /* Debug */,
+				5B3096A81BFA02120045024C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		5B3096A91BFA02120045024C /* Build configuration list for PBXNativeTarget "RevClientTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5B3096AA1BFA02120045024C /* Debug */,
+				5B3096AB1BFA02120045024C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5B30967C1BFA02120045024C /* Project object */;
+}
