@@ -10,6 +10,13 @@
 		5B3096BA1BFA02770045024C /* RevSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B3096B91BFA02770045024C /* RevSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B3096C11BFA02770045024C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3096B61BFA02770045024C /* RevSDK.framework */; };
 		5B3096C61BFA02770045024C /* RevSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096C51BFA02770045024C /* RevSDKTests.m */; };
+		5B3096EA1BFA0CB70045024C /* RSURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B3096E81BFA0CB70045024C /* RSURLProtocol.h */; };
+		5B3096EB1BFA0CB70045024C /* RSURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096E91BFA0CB70045024C /* RSURLProtocol.m */; };
+		5B3096EE1BFA0CD30045024C /* RSURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B3096EC1BFA0CD30045024C /* RSURLConnection.h */; };
+		5B3096EF1BFA0CD30045024C /* RSURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096ED1BFA0CD30045024C /* RSURLConnection.m */; };
+		5B3096F11BFA11E50045024C /* RevSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096F01BFA11E50045024C /* RevSDK.m */; };
+		5B3096F41BFA17330045024C /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B3096F21BFA17330045024C /* RSUtils.h */; };
+		5B3096F51BFA17330045024C /* RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096F31BFA17330045024C /* RSUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +36,13 @@
 		5B3096C01BFA02770045024C /* RevSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RevSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3096C51BFA02770045024C /* RevSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevSDKTests.m; sourceTree = "<group>"; };
 		5B3096C71BFA02770045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5B3096E81BFA0CB70045024C /* RSURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLProtocol.h; sourceTree = "<group>"; };
+		5B3096E91BFA0CB70045024C /* RSURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSURLProtocol.m; sourceTree = "<group>"; };
+		5B3096EC1BFA0CD30045024C /* RSURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLConnection.h; sourceTree = "<group>"; };
+		5B3096ED1BFA0CD30045024C /* RSURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSURLConnection.m; sourceTree = "<group>"; };
+		5B3096F01BFA11E50045024C /* RevSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevSDK.m; sourceTree = "<group>"; };
+		5B3096F21BFA17330045024C /* RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RSUtils.h; path = ../RSUtils.h; sourceTree = "<group>"; };
+		5B3096F31BFA17330045024C /* RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RSUtils.m; path = ../RSUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +85,11 @@
 		5B3096B81BFA02770045024C /* RevSDK */ = {
 			isa = PBXGroup;
 			children = (
+				5B3096E71BFA0CA70045024C /* Interception */,
 				5B3096B91BFA02770045024C /* RevSDK.h */,
+				5B3096F01BFA11E50045024C /* RevSDK.m */,
+				5B3096F21BFA17330045024C /* RSUtils.h */,
+				5B3096F31BFA17330045024C /* RSUtils.m */,
 				5B3096BB1BFA02770045024C /* Info.plist */,
 			);
 			path = RevSDK;
@@ -86,6 +104,17 @@
 			path = RevSDKTests;
 			sourceTree = "<group>";
 		};
+		5B3096E71BFA0CA70045024C /* Interception */ = {
+			isa = PBXGroup;
+			children = (
+				5B3096E81BFA0CB70045024C /* RSURLProtocol.h */,
+				5B3096E91BFA0CB70045024C /* RSURLProtocol.m */,
+				5B3096EC1BFA0CD30045024C /* RSURLConnection.h */,
+				5B3096ED1BFA0CD30045024C /* RSURLConnection.m */,
+			);
+			path = Interception;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -93,7 +122,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B3096F41BFA17330045024C /* RSUtils.h in Headers */,
+				5B3096EA1BFA0CB70045024C /* RSURLProtocol.h in Headers */,
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
+				5B3096EE1BFA0CD30045024C /* RSURLConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -193,6 +225,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B3096EB1BFA0CB70045024C /* RSURLProtocol.m in Sources */,
+				5B3096F51BFA17330045024C /* RSUtils.m in Sources */,
+				5B3096F11BFA11E50045024C /* RevSDK.m in Sources */,
+				5B3096EF1BFA0CD30045024C /* RSURLConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
