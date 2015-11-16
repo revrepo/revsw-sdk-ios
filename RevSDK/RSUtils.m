@@ -10,6 +10,6 @@
 
 NSString* const kRVURLProtocolHandledKey = @"kRVProtocolHandledKey";
 
-@implementation RVUtils
+@implementation RSUtils
 
 @end

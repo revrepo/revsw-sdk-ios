@@ -10,6 +10,6 @@
 
 extern NSString* const kRVURLProtocolHandledKey;
 
-@interface RVUtils : NSObject
+@interface RSUtils : NSObject
 
 @end

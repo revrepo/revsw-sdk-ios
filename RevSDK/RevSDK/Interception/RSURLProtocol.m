@@ -8,6 +8,13 @@
 
 #import "RSURLProtocol.h"
 #import "RSUtils.h"
+#import "RSURLConnection.h"
+
+@interface RSURLProtocol ()<RSURLConnectionDelegate>
+
+@property (nonatomic, strong)RSURLConnection* connection;
+
+@end
 
 @implementation RSURLProtocol
 
@@ -31,11 +38,36 @@
     NSLog(@"Start loading");
     NSMutableURLRequest *newRequest = [self.request mutableCopy];
     [NSURLProtocol setProperty:@YES forKey:kRVURLProtocolHandledKey inRequest:newRequest];
+    
+    self.connection = [RSURLConnection connectionWithRequest:newRequest delegate:self];
 }
 
 - (void)stopLoading
 {
-    
+    NSLog(@"Stop loading");
 }
+
+#pragma mark - NSURLConnectionDelegate
+
+- (void) connection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+}
+
+- (void) connection:(RSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    [self.client URLProtocol:self didLoadData:data];
+}
+
+- (void) connectionDidFinishLoading:(RSURLConnection *)connection
+{
+    [self.client URLProtocolDidFinishLoading:self];
+}
+
+- (void)connection:(RSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [self.client URLProtocol:self didFailWithError:error];
+}
+
 
 @end

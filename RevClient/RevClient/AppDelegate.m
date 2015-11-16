@@ -21,6 +21,17 @@
     
     [RevSDK startWithSDKKey:@"12345"];
     
+    NSURL* url = [NSURL URLWithString:@"https://google.com"];
+    NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    
+    NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
+    
+        NSLog(@"Response %@ error %@", response, error);
+    
+    }];
+    
+    [task resume];
+    
     return YES;
 }
 
