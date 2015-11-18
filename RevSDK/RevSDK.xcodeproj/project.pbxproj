@@ -29,7 +29,7 @@
 		5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C33B1BFB714C00217971 /* QUICProtocol.hpp */; };
 		5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C33E1BFB7A9200217971 /* Connection.cpp */; };
 		5B54C3411BFB7A9200217971 /* Connection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C33F1BFB7A9200217971 /* Connection.hpp */; };
-		5B54C3441BFB7AE200217971 /* StandardConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3421BFB7AE200217971 /* StandardConnection.cpp */; };
+		5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3421BFB7AE200217971 /* StandardConnection.mm */; };
 		5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3431BFB7AE200217971 /* StandardConnection.hpp */; };
 		5B54C3481BFB7B8700217971 /* QUICConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3461BFB7B8700217971 /* QUICConnection.cpp */; };
 		5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3471BFB7B8700217971 /* QUICConnection.hpp */; };
@@ -73,7 +73,7 @@
 		5B54C33B1BFB714C00217971 /* QUICProtocol.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QUICProtocol.hpp; sourceTree = "<group>"; };
 		5B54C33E1BFB7A9200217971 /* Connection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Connection.cpp; sourceTree = "<group>"; };
 		5B54C33F1BFB7A9200217971 /* Connection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Connection.hpp; sourceTree = "<group>"; };
-		5B54C3421BFB7AE200217971 /* StandardConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StandardConnection.cpp; sourceTree = "<group>"; };
+		5B54C3421BFB7AE200217971 /* StandardConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = StandardConnection.mm; sourceTree = "<group>"; };
 		5B54C3431BFB7AE200217971 /* StandardConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StandardConnection.hpp; sourceTree = "<group>"; };
 		5B54C3461BFB7B8700217971 /* QUICConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QUICConnection.cpp; sourceTree = "<group>"; };
 		5B54C3471BFB7B8700217971 /* QUICConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QUICConnection.hpp; sourceTree = "<group>"; };
@@ -193,7 +193,7 @@
 				5B54C31F1BFB598700217971 /* Request.cpp */,
 				5B54C33E1BFB7A9200217971 /* Connection.cpp */,
 				5B54C33F1BFB7A9200217971 /* Connection.hpp */,
-				5B54C3421BFB7AE200217971 /* StandardConnection.cpp */,
+				5B54C3421BFB7AE200217971 /* StandardConnection.mm */,
 				5B54C3431BFB7AE200217971 /* StandardConnection.hpp */,
 				5B54C3461BFB7B8700217971 /* QUICConnection.cpp */,
 				5B54C3471BFB7B8700217971 /* QUICConnection.hpp */,
@@ -320,7 +320,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B54C3441BFB7AE200217971 /* StandardConnection.cpp in Sources */,
+				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.m in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,

@@ -12,6 +12,6 @@ namespace rs
 {
     Request::Request(std::string aURL): mURL(aURL)
     {
-        printf("Request constructor called\n");
+        
     }
 }

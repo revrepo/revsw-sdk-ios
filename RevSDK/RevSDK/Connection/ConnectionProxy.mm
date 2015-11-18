@@ -11,7 +11,7 @@
 #import <Foundation/Foundation.h>
 
 #include "ConnectionProxy.h"
-//#include "RSUtils.h"
+#include "RSUtils.h"
 #include "Request.hpp"
 #include "Connection.hpp"
 #include "Model.hpp"
@@ -20,18 +20,17 @@ namespace rs
 {
     ConnectionProxy::ConnectionProxy(NSURLRequest* aRequest)
     {
-  //      mRequest = requestFromURLRequest(aRequest);
-        
-        std::cout << "Connection Proxy constructor\n";
+        mRequest = requestFromURLRequest(aRequest);
     }
     
     ConnectionProxy::~ConnectionProxy()
     {
-        std::cout << "Connection Proxy destructor\n";
+        
     }
     
     void ConnectionProxy::start()
     {
-    
+        std::shared_ptr<Connection> connection = Model::instance()->currentConnection();
+        connection.get()->startWithRequest(mRequest);
     }
 }

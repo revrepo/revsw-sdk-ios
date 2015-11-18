@@ -25,9 +25,7 @@
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     
     NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
-    
         NSLog(@"Response %@ error %@", response, error);
-    
     }];
     
     [task resume];

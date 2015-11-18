@@ -40,13 +40,15 @@ namespace rs
     
     std::shared_ptr<Connection> Model::currentConnection()
     {
-        std::shared_ptr<Connection> connection;
-        
-        std::map<std::string, std::shared_ptr<Connection>> dictionary = {
+        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
         
             {kRSHTTPSProtocolName, std::make_shared<StandardConnection>() }
         };
-    
+        
+        std::shared_ptr<Protocol> protocol     = currentProtocol();
+        std::string protocolName               = protocol.get()->protocolName();
+        std::shared_ptr<Connection> connection = connectionDictionary[protocolName];
+        
         return connection;
     }
 }

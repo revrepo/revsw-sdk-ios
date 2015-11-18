@@ -10,13 +10,16 @@
 #define Connection_hpp
 
 #include <stdio.h>
+#include <iostream>
 
 namespace rs
 {
+    class Request;
+    
     class Connection
     {
     public:
-       virtual void start() = 0;
+        virtual void startWithRequest(std::shared_ptr<Request>) = 0;
     };
 }
 

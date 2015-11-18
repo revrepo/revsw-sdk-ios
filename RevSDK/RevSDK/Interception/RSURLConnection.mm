@@ -44,7 +44,7 @@
 
 - (void)start
 {
-    NSLog(@"MAIN THREAD %d", [NSThread isMainThread]);
+    connectionProxy.get()->start();
 }
 
 @end
