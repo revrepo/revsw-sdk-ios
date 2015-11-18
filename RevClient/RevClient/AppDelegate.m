@@ -11,6 +11,8 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic, assign) CFHTTPMessageRef httpMessageRef;
+
 @end
 
 @implementation AppDelegate
@@ -21,17 +23,37 @@
     
     [RevSDK startWithSDKKey:@"12345"];
     
-    NSURL* url = [NSURL URLWithString:@"https://google.com"];
+    NSURL* url = [NSURL URLWithString:@"https://stackoverflow.com"];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
+    NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
+    NSString* proxyHost = @"52.88.151.82";
+    NSNumber* proxyPort = [NSNumber numberWithInt: 8888];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+    NSDictionary *proxyDict = @{
+                                @"HTTPEnable"  : [NSNumber numberWithInt:1],
+                                (NSString *)kCFStreamPropertyHTTPProxyHost  : proxyHost,
+                                (NSString *)kCFStreamPropertyHTTPProxyPort  : proxyPort,
+                                
+                                @"HTTPSEnable" : [NSNumber numberWithInt:1],
+                                (NSString *)kCFStreamPropertyHTTPSProxyHost : proxyHost,
+                                (NSString *)kCFStreamPropertyHTTPSProxyPort : proxyPort,
+                                };
+#pragma clang diagnostic pop
+    configuration.connectionProxyDictionary = proxyDict;
+    
+    configuration.protocolClasses = @[NSClassFromString(@"RSURLProtocol")];
+    NSURLSession* session = [NSURLSession sessionWithConfiguration:configuration];
+    
+    NSURLSessionTask* task = [session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
     
         NSLog(@"Response %@ error %@", response, error);
     
     }];
     
     [task resume];
-    
+
     return YES;
 }
 

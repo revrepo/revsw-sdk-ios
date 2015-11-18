@@ -42,7 +42,7 @@
     
     self.connection = [RSURLConnection connectionWithRequest:newRequest delegate:self];
     [self.connection start];
-    [self.client URLProtocolDidFinishLoading:self];
+   // [self.client URLProtocolDidFinishLoading:self];
 }
 
 - (void)stopLoading
