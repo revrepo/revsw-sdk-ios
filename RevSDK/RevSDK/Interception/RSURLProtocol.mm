@@ -6,13 +6,14 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-#import "RSURLProtocol.h"
 #import "RSUtils.h"
+
+#import "RSURLProtocol.h"
 #import "RSURLConnection.h"
 
 @interface RSURLProtocol ()<RSURLConnectionDelegate>
 
-@property (nonatomic, strong)RSURLConnection* connection;
+@property (nonatomic, strong) RSURLConnection* connection;
 
 @end
 
@@ -20,7 +21,7 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
-    return ![NSURLProtocol propertyForKey:kRVURLProtocolHandledKey inRequest:request];
+    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request];
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)task
@@ -37,9 +38,11 @@
 {
     NSLog(@"Start loading");
     NSMutableURLRequest *newRequest = [self.request mutableCopy];
-    [NSURLProtocol setProperty:@YES forKey:kRVURLProtocolHandledKey inRequest:newRequest];
+    [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:newRequest];
     
     self.connection = [RSURLConnection connectionWithRequest:newRequest delegate:self];
+    [self.connection start];
+    [self.client URLProtocolDidFinishLoading:self];
 }
 
 - (void)stopLoading

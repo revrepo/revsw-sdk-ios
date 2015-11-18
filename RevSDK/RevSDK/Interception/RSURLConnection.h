@@ -27,5 +27,6 @@
 @property (nonatomic, weak) id<RSURLConnectionDelegate> delegate;
 
 + (nullable instancetype)connectionWithRequest:(nullable NSURLRequest *)aRequest delegate:(nullable id<RSURLConnectionDelegate>)delegate;
+- (void)start;
 
 @end

@@ -6,12 +6,15 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#import <stdio.h>
+#import <memory>
+
 #import "RSURLConnection.h"
-#import "ConnectionProxy.hpp"
+#import "ConnectionProxy.h"
 
 @interface RSURLConnection ()
 {
-    rs::ConnectionProxy* connectionProxy;
+    std::shared_ptr<rs::ConnectionProxy> connectionProxy;
 }
 
 @end
@@ -32,9 +35,16 @@
     if (self)
     {
         self.delegate = aDelegate;
+        
+        connectionProxy = std::make_shared<rs::ConnectionProxy>(aRequest);
     }
     
     return self;
+}
+
+- (void)start
+{
+    NSLog(@"MAIN THREAD %d", [NSThread isMainThread]);
 }
 
 @end

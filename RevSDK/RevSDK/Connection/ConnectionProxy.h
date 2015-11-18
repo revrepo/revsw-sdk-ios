@@ -10,12 +10,22 @@
 #define ConnectionProxy_hpp
 
 #include <stdio.h>
+#include <memory>
 
 namespace rs
 {
+
+   class Request;
+    
    class ConnectionProxy
    {
-        
+       std::shared_ptr<Request> mRequest;
+       
+     public:
+       ConnectionProxy(NSURLRequest* aRequest);
+       ~ConnectionProxy();
+       
+       void start();
    };
 }
 
