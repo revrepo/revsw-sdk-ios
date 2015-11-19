@@ -24,10 +24,43 @@ namespace rs
         NSMutableURLRequest* mutableRequest               = request.mutableCopy;
         NSURLSessionConfiguration* sessionConfiguration   = [NSURLSessionConfiguration defaultSessionConfiguration];
         
+        NSString* targetHost = request.URL.host;
+        
         [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
+        if (targetHost != nil)
+            [mutableRequest addValue:targetHost forHTTPHeaderField:@"Host"];
+        //static NSString* const kEdgeHost = @"mbeans.com";
+        static NSString* const kEdgeHost = @"rev-200.revdn.net";
+        NSString* newURL = request.URL.absoluteString;
+        
+        std::shared_ptr<Connection> oAnchor = mWeakThis.lock();
+
+        if (targetHost != nil)
+        {
+            [newURL stringByReplacingOccurrencesOfString:targetHost
+                                              withString:kEdgeHost];
+        }
+        else
+        {
+            NSLog(@"");
+            Error error;
+            error.code     = 404;
+            error.domain   = "com.revsdk";
+            error.userInfo = std::map <std::string, std::string>();
+            error.userInfo["description"] = "URL not supported";
+            aDelegate->connectionDidFailWithError(oAnchor, error);
+            return;
+        }
+        
+        [mutableRequest setURL:[NSURL URLWithString:newURL]];
         
         const NSString* proxyHost = kRSProxyHostName;
-        NSNumber* proxyPort       = [NSNumber numberWithInt: kRSProxyPortNumber];
+        
+        int portNumber = kRSProxyPortNumber;
+        if ([request.URL.absoluteString rangeOfString:@"https"].location == 0)
+            portNumber = 443;
+        NSNumber* proxyPort       = [NSNumber numberWithInt:portNumber];
+        
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSDictionary *proxyDict = @{
@@ -40,11 +73,10 @@ namespace rs
                                     (NSString *)kCFStreamPropertyHTTPSProxyPort : proxyPort,
                                     };
 #pragma clang diagnostic pop
-        sessionConfiguration.connectionProxyDictionary = proxyDict;
+        //sessionConfiguration.connectionProxyDictionary = proxyDict;
         
         NSURLSession* session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
         
-        std::shared_ptr<Connection> oAnchor = mWeakThis.lock();
 
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){

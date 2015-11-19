@@ -20,8 +20,8 @@ namespace rs
     const std::string kRSHTTPSProtocolName = "https";
     
     //proxy
-    const NSString* kRSProxyHostName = @"52.88.151.82";
-    const int kRSProxyPortNumber     = 8888;
+    const NSString* kRSProxyHostName = @"mbeans.com"; // 52.88.151.82
+    const int kRSProxyPortNumber     = 80; // 8888
     
     std::string stdStringFromNSString(NSString* aNSString)
     {

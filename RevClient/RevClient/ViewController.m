@@ -48,8 +48,8 @@
 {
     [self.webView stopLoading];
     
-    self.currentURLString = [self.currentURLString lowercaseString];
-    self.currentURLString = [self.currentURLString stringByReplacingOccurrencesOfString:@"http://" withString:@"https://"];
+    //self.currentURLString = [self.currentURLString lowercaseString];
+    //self.currentURLString = [self.currentURLString stringByReplacingOccurrencesOfString:@"http://" withString:@"https://"];
     self.textField.text = self.currentURLString;
     
     NSURL* URL = [NSURL URLWithString:self.currentURLString];
