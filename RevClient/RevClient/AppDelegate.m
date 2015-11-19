@@ -23,7 +23,7 @@
     
     [RevSDK startWithSDKKey:@"12345"];
     
-    NSURL* url = [NSURL URLWithString:@"https://stackoverflow.com"];
+    NSURL* url = [NSURL URLWithString:@"https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg"];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
@@ -41,9 +41,9 @@
                                 (NSString *)kCFStreamPropertyHTTPSProxyPort : proxyPort,
                                 };
 #pragma clang diagnostic pop
-    configuration.connectionProxyDictionary = proxyDict;
+   configuration.connectionProxyDictionary = proxyDict;
     
-    configuration.protocolClasses = @[NSClassFromString(@"RSURLProtocol")];
+  //  configuration.protocolClasses = @[NSClassFromString(@"RSURLProtocol")];
     NSURLSession* session = [NSURLSession sessionWithConfiguration:configuration];
     
     NSURLSessionTask* task = [session dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
