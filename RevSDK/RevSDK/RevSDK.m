@@ -13,8 +13,6 @@
 
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
-    NSLog(@"Start with key %@", aSDKKey);
-    
     [NSURLProtocol registerClass:[RSURLProtocol class]];
 }
 

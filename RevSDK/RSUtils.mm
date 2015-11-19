@@ -6,10 +6,12 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#include <iostream>
+
 #import "RSUtils.h"
 
 NSString* const kRVURLProtocolHandledKey = @"kRVProtocolHandledKey";
 
-@implementation RVUtils
+@implementation RSUtils
 
 @end
