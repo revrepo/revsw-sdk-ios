@@ -19,20 +19,17 @@ namespace rs
 {
     void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate, std::shared_ptr<Connection> aConnection)
     {
-        NSURLRequest* request = URLRequestFromRequest(aRequest);
-        NSMutableURLRequest* mutableRequest = request.mutableCopy;
-        //[NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:mutableRequest];
-        
-        NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession* session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+        NSURLRequest* request                             = URLRequestFromRequest(aRequest);
+        NSMutableURLRequest* mutableRequest               = request.mutableCopy;
+        NSURLSessionConfiguration* sessionConfiguration   = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession* session                             = [NSURLSession sessionWithConfiguration:sessionConfiguration];
         
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                             
-                                                Data data = dataFromNSData(aData);
-                                                
+                                                Data data                          = dataFromNSData(aData);
                                                 std::shared_ptr<Response> response = responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse);
-                                                NSLog(@"LENGTH %lu", data.length);
+                                                
                                                 aDelegate->connectionDidReceiveData(aConnection, data);
                                                 aDelegate->connectionDidReceiveResponse(aConnection, response);
                                                 aDelegate->connectionDidFinish(aConnection);
