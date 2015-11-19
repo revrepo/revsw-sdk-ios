@@ -21,23 +21,6 @@
     
     [RevSDK startWithSDKKey:@"12345"];
     
-   /* NSURL* url = [NSURL URLWithString:@"http://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg"];
-    NSURLRequest* request = [NSURLRequest requestWithURL:url];
-    
-    NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
-    
-        UIImage* image = [UIImage imageWithData:data];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
-            
-            [[[[UIApplication sharedApplication] delegate] window] addSubview:imageView];
-        });
-    }];
-    
-    [task resume];*/
-    
     return YES;
 }
 
