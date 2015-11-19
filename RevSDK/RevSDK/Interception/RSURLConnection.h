@@ -8,9 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-<<<<<<< HEAD
-@interface RSURLConnection : NSURLConnection
-=======
 @class RSURLConnection;
 
 @protocol RSURLConnectionDelegate
@@ -31,6 +28,5 @@
 
 + (nullable instancetype)connectionWithRequest:(nullable NSURLRequest *)aRequest delegate:(nullable id<RSURLConnectionDelegate>)delegate;
 - (void)start;
->>>>>>> RS-14
 
 @end
