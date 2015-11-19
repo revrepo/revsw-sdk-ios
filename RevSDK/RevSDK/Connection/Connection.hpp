@@ -33,7 +33,16 @@ namespace rs
     class Connection
     {
     public:
-        virtual void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*, std::shared_ptr<Connection>) = 0;
+        virtual void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*) = 0;
+        template <class T>
+        static std::shared_ptr<Connection> create()
+        {
+            std::shared_ptr<Connection> result(new T());
+            result->mWeakThis = std::weak_ptr<Connection>(result);
+            return result;
+        }
+    protected:
+        std::weak_ptr<Connection> mWeakThis;
     };
 }
 

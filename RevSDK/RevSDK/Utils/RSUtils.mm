@@ -35,8 +35,6 @@ namespace rs
     
     std::map<std::string, std::string> stdMapFromNSDictionary(NSDictionary* aDictionary)
     {
-        NSLog(@"Dictionary %@", aDictionary);
-        
         std::map <std::string, std::string> map;
         
         for (NSString* key in aDictionary)

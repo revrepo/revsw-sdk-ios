@@ -20,7 +20,7 @@ namespace rs
        public:
         StandardConnection(){}
         StandardConnection(const StandardConnection &aConnection){}
-        void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*, std::shared_ptr<Connection>);
+        void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
     };
 }
 

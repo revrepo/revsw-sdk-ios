@@ -33,7 +33,7 @@ namespace rs
     void ConnectionProxy::start()
     {
         std::shared_ptr<Connection> connection = Model::instance()->currentConnection();
-        connection.get()->startWithRequest(mRequest, this, connection);
+        connection.get()->startWithRequest(mRequest, this);
     }
     
     void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback, std::function<void(Error)> aErrorCallback)

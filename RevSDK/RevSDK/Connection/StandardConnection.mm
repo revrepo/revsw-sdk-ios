@@ -18,7 +18,7 @@
 
 namespace rs
 {
-    void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate, std::shared_ptr<Connection> aConnection)
+    void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
     {
         NSURLRequest* request                             = URLRequestFromRequest(aRequest);
         NSMutableURLRequest* mutableRequest               = request.mutableCopy;
@@ -42,13 +42,15 @@ namespace rs
 #pragma clang diagnostic pop
         sessionConfiguration.connectionProxyDictionary = proxyDict;
         
-        NSURLSession* session                             = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+        NSURLSession* session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
         
+        std::shared_ptr<Connection> oAnchor = mWeakThis.lock();
+
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                            
-                                                NSLog(@"Response %@ error %@", aResponse, aError);
-                                               
+                                                                                           
+                                                std::shared_ptr<Connection> anchor = oAnchor;
+
                                                 NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                                 
                                                 if (!aError)
@@ -56,14 +58,14 @@ namespace rs
                                                     Data data                          = dataFromNSData(aData);
                                                     std::shared_ptr<Response> response = responseFromHTTPURLResponse(httpResponse);
                                                     
-                                                    aDelegate->connectionDidReceiveResponse(aConnection, response);
-                                                    aDelegate->connectionDidReceiveData(aConnection, data);
-                                                    aDelegate->connectionDidFinish(aConnection);
+                                                    aDelegate->connectionDidReceiveResponse(anchor, response);
+                                                    aDelegate->connectionDidReceiveData(anchor, data);
+                                                    aDelegate->connectionDidFinish(anchor);
                                                 }
                                                 else
                                                 {
                                                     Error error = errorFromNSError(aError);
-                                                    aDelegate->connectionDidFailWithError(aConnection, error);
+                                                    aDelegate->connectionDidFailWithError(anchor, error);
                                                 }
                                             }];
         [task resume];

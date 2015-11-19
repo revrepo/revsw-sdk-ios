@@ -42,7 +42,7 @@ namespace rs
     {
         std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
         
-            {kRSHTTPSProtocolName, std::make_shared<StandardConnection>() }
+            {kRSHTTPSProtocolName, Connection::create<StandardConnection>() }
         };
 
         std::shared_ptr<Protocol> protocol     = currentProtocol();

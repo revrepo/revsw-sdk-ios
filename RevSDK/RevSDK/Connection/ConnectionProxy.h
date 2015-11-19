@@ -16,12 +16,13 @@
 
 namespace rs
 {
+    class Connection;
    class Request;
    class Response;
    class Data;
    class Error;
     
-    class ConnectionProxy : ConnectionDelegate
+    class ConnectionProxy : public ConnectionDelegate
    {
        std::shared_ptr<Request> mRequest;
        
