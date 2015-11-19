@@ -21,10 +21,7 @@
     
     [RevSDK startWithSDKKey:@"12345"];
     
-    //NSURLSessionConfiguration* c = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    
-    NSURL* url = [NSURL URLWithString:@"https://www.wonderplugin.com/wp-content/plugins/wonderplugin-lightbox/images/demo-image0.jpg"];
+    NSURL* url = [NSURL URLWithString:@"https://cdn.photographylife.com/wp-content/uploads/2014/06/Nikon-D810-Image-Sample-6.jpg"];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     
     NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
