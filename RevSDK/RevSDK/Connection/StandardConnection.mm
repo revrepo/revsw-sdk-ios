@@ -14,6 +14,7 @@
 #include "Data.hpp"
 #include "Response.hpp"
 #include "Request.hpp"
+#include "Error.hpp"
 
 namespace rs
 {
@@ -25,8 +26,8 @@ namespace rs
         
         [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
         
-        NSString* proxyHost = @"52.88.151.82";
-        NSNumber* proxyPort = [NSNumber numberWithInt: 8888];
+        const NSString* proxyHost = kRSProxyHostName;
+        NSNumber* proxyPort       = [NSNumber numberWithInt: kRSProxyPortNumber];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSDictionary *proxyDict = @{
@@ -47,14 +48,23 @@ namespace rs
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                             
                                                 NSLog(@"Response %@ error %@", aResponse, aError);
+                                               
+                                                NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                                 
-                                                Data data                          = dataFromNSData(aData);
-                                                std::shared_ptr<Response> response = responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse);
-                                                
-                                                aDelegate->connectionDidReceiveResponse(aConnection, response);
-                                                aDelegate->connectionDidReceiveData(aConnection, data);
-                                                aDelegate->connectionDidFinish(aConnection);
-                                                
+                                                if (!aError)
+                                                {
+                                                    Data data                          = dataFromNSData(aData);
+                                                    std::shared_ptr<Response> response = responseFromHTTPURLResponse(httpResponse);
+                                                    
+                                                    aDelegate->connectionDidReceiveResponse(aConnection, response);
+                                                    aDelegate->connectionDidReceiveData(aConnection, data);
+                                                    aDelegate->connectionDidFinish(aConnection);
+                                                }
+                                                else
+                                                {
+                                                    Error error = errorFromNSError(aError);
+                                                    aDelegate->connectionDidFailWithError(aConnection, error);
+                                                }
                                             }];
         [task resume];
     }

@@ -19,6 +19,7 @@ namespace rs
    class Request;
    class Response;
    class Data;
+   class Error;
     
     class ConnectionProxy : ConnectionDelegate
    {
@@ -27,17 +28,19 @@ namespace rs
        std::function<void()> mFinishRequestCallback;
        std::function<void(Data)> mReceivedDataCallback;
        std::function<void(std::shared_ptr<Response>)> mReceivedResponseCallback;
+       std::function<void(Error)> mErrorCallback;
        
      public:
        ConnectionProxy(NSURLRequest* aRequest);
        ~ConnectionProxy();
        void start();
-       void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>);
+       void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>, std::function<void(Error)>);
        
        //delegate
        virtual void connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse);
        virtual void connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData);
        virtual void connectionDidFinish(std::shared_ptr<Connection> aConnection);
+       virtual void connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError);
    };
 }
 

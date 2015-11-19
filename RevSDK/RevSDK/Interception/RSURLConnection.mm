@@ -9,11 +9,13 @@
 #import <stdio.h>
 #import <memory>
 
+#import "RSUtils.h"
 #import "RSURLConnection.h"
+
 #import "ConnectionProxy.h"
 #import "Data.hpp"
 #import "Response.hpp"
-#import "RSUtils.h"
+#import "Error.hpp"
 
 @interface RSURLConnection ()
 {
@@ -56,8 +58,14 @@
             [self.delegate connection:self didReceiveResponse:response];
         };
         
+        std::function<void(rs::Error)> errorCallback = [self](rs::Error aError){
+        
+            NSError* error = rs::NSErrorFromError(aError);
+            [self.delegate connection:self didFailWithError:error];
+        };
+        
         connectionProxy = std::make_shared<rs::ConnectionProxy>(aRequest);
-        connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback);
+        connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     
     return self;

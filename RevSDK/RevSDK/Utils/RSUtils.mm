@@ -10,6 +10,7 @@
 #include "Request.hpp"
 #include "Response.hpp"
 #include "Data.hpp"
+#include "Error.hpp"
 
 namespace rs
 {
@@ -17,6 +18,10 @@ namespace rs
  
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
+    
+    //proxy
+    const NSString* kRSProxyHostName = @"52.88.151.82";
+    const int kRSProxyPortNumber     = 8888;
     
     std::string stdStringFromNSString(NSString* aNSString)
     {
@@ -30,16 +35,20 @@ namespace rs
     
     std::map<std::string, std::string> stdMapFromNSDictionary(NSDictionary* aDictionary)
     {
+        NSLog(@"Dictionary %@", aDictionary);
+        
         std::map <std::string, std::string> map;
         
         for (NSString* key in aDictionary)
         {
             NSString* value = aDictionary[key];
-            NSCAssert([value isKindOfClass:[NSString class]], @"Value is not a string %@", value);
-            
-            std::string std_key   = stdStringFromNSString(key);
-            std::string std_value = stdStringFromNSString(value);
-            map[std_key]          = std_value;
+           
+            if ([value isKindOfClass:[NSString class]])
+            {
+                std::string std_key   = stdStringFromNSString(key);
+                std::string std_value = stdStringFromNSString(value);
+                map[std_key]          = std_value;
+            }
         }
             
         return map;
@@ -112,7 +121,25 @@ namespace rs
                                                                   statusCode:statusCode
                                                                  HTTPVersion:@"1.1"
                                                                 headerFields:headerFields];
-        
         return response;
+    }
+    
+    Error errorFromNSError(NSError* aError)
+    {
+        Error error;
+        error.code     = aError.code;
+        error.domain   = stdStringFromNSString(aError.domain);
+        error.userInfo = stdMapFromNSDictionary(aError.userInfo);
+        return error;
+    }
+    
+    NSError* NSErrorFromError(Error aError)
+    {
+        NSString* domain       = NSStringFromStdString(aError.domain);
+        NSDictionary* userInfo = NSDictionaryFromStdMap(aError.userInfo);
+        
+        return [NSError errorWithDomain:domain
+                                   code:aError.code
+                               userInfo:userInfo];
     }
 }

@@ -21,11 +21,16 @@ namespace rs
     class Request;
     class Response;
     class Data;
+    class Error;
     
     extern NSString* const kRSURLProtocolHandledKey;
     
     //protocols
     extern const std::string kRSHTTPSProtocolName;
+    
+    //proxy
+    extern const NSString* kRSProxyHostName;
+    extern const int kRSProxyPortNumber;
     
     std::string stdStringFromNSString(NSString *aNSString);
     NSString* NSStringFromStdString(std::string aStdString);
@@ -41,5 +46,8 @@ namespace rs
     
     std::shared_ptr<Response> responseFromHTTPURLResponse(NSHTTPURLResponse* aHTTPURLResponse);
     NSHTTPURLResponse* NSHTTPURLResponseFromResponse(std::shared_ptr<Response>);
+    
+    Error errorFromNSError(NSError* aError);
+    NSError* NSErrorFromError(Error aError);
 }
 #endif

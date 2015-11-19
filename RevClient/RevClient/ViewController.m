@@ -61,19 +61,24 @@
     }
     else
     {
-        UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"Error"
-                                                                                 message:@"URL not valid"
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        
-        UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK"
-                                                         style:UIAlertActionStyleCancel
-                                                       handler:^(UIAlertAction* action){}];
-        [alertController addAction:action];
-        
-        [self presentViewController:alertController
-                           animated:YES
-                         completion:nil];
+        [self showErrorAlertWithMessage:@"URL not valid"];
     }
+}
+
+- (void)showErrorAlertWithMessage:(NSString *)aMessage
+{
+    UIAlertController* alertController = [UIAlertController alertControllerWithTitle:@"Error"
+                                                                             message:aMessage
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction* action = [UIAlertAction actionWithTitle:@"OK"
+                                                     style:UIAlertActionStyleCancel
+                                                   handler:^(UIAlertAction* action){}];
+    [alertController addAction:action];
+    
+    [self presentViewController:alertController
+                       animated:YES
+                     completion:nil];
 }
 
 - (BOOL)isURLValid:(NSURL*)aURL
@@ -97,10 +102,9 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
-    NSLog(@"ERROR %@", error);
-    
     [self.activityIndicatorView stopAnimating];
     self.activityIndicatorView.hidden = YES;
+    [self showErrorAlertWithMessage:error.localizedDescription];
 }
 
 #pragma mark - UITextFieldDelegate

@@ -16,6 +16,7 @@
 #include "Model.hpp"
 #include "Data.hpp"
 #include "Response.hpp"
+#include "Error.hpp"
 
 namespace rs
 {
@@ -35,11 +36,12 @@ namespace rs
         connection.get()->startWithRequest(mRequest, this, connection);
     }
     
-    void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback)
+    void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback, std::function<void(Error)> aErrorCallback)
     {
         mFinishRequestCallback    = aFinishCallback;
         mReceivedDataCallback     = aDataCallback;
         mReceivedResponseCallback = aResponseCallback;
+        mErrorCallback            = aErrorCallback;
     }
     
     void ConnectionProxy:: connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse)
@@ -55,5 +57,10 @@ namespace rs
     void ConnectionProxy:: connectionDidFinish(std::shared_ptr<Connection> aConnection)
     {
         mFinishRequestCallback();
+    }
+    
+    void ConnectionProxy:: connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError)
+    {
+        mErrorCallback(aError);
     }
 }
