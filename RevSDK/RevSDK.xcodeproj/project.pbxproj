@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */; };
+		5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */; };
+		5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BD11BFDD20B003DCB27 /* Data.cpp */; };
+		5B2F4BD41BFDD20B003DCB27 /* Data.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F4BD21BFDD20B003DCB27 /* Data.hpp */; };
 		5B3096BA1BFA02770045024C /* RevSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B3096B91BFA02770045024C /* RevSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B3096C11BFA02770045024C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3096B61BFA02770045024C /* RevSDK.framework */; };
 		5B3096C61BFA02770045024C /* RevSDKTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096C51BFA02770045024C /* RevSDKTests.m */; };
@@ -48,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
+		5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Response.hpp; sourceTree = "<group>"; };
+		5B2F4BD11BFDD20B003DCB27 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
+		5B2F4BD21BFDD20B003DCB27 /* Data.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Data.hpp; sourceTree = "<group>"; };
 		5B3096B61BFA02770045024C /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RevSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3096B91BFA02770045024C /* RevSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RevSDK.h; sourceTree = "<group>"; };
 		5B3096BB1BFA02770045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -197,6 +205,10 @@
 				5B54C3431BFB7AE200217971 /* StandardConnection.hpp */,
 				5B54C3461BFB7B8700217971 /* QUICConnection.cpp */,
 				5B54C3471BFB7B8700217971 /* QUICConnection.hpp */,
+				5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */,
+				5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */,
+				5B2F4BD11BFDD20B003DCB27 /* Data.cpp */,
+				5B2F4BD21BFDD20B003DCB27 /* Data.hpp */,
 			);
 			path = Connection;
 			sourceTree = "<group>";
@@ -209,8 +221,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
+				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
 				5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */,
 				5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */,
+				5B2F4BD41BFDD20B003DCB27 /* Data.hpp in Headers */,
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
 				5B54C3301BFB700C00217971 /* Model.hpp in Headers */,
@@ -329,7 +343,9 @@
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.mm in Sources */,
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
+				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
+				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,
 				5B54C3481BFB7B8700217971 /* QUICConnection.cpp in Sources */,
 				5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */,

@@ -44,7 +44,7 @@ namespace rs
         
             {kRSHTTPSProtocolName, std::make_shared<StandardConnection>() }
         };
-        
+
         std::shared_ptr<Protocol> protocol     = currentProtocol();
         std::string protocolName               = protocol.get()->protocolName();
         std::shared_ptr<Connection> connection = connectionDictionary[protocolName];

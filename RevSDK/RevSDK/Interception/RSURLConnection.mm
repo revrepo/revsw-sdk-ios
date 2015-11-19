@@ -11,6 +11,9 @@
 
 #import "RSURLConnection.h"
 #import "ConnectionProxy.h"
+#import "Data.hpp"
+#import "Response.hpp"
+#import "RSUtils.h"
 
 @interface RSURLConnection ()
 {
@@ -36,7 +39,25 @@
     {
         self.delegate = aDelegate;
         
+        std::function<void()> finishCallback = [self](){
+        
+            [self.delegate connectionDidFinishLoading:self];
+        };
+        
+        std::function<void(rs::Data)> dataCallback = [self](rs::Data aData){
+           
+            NSData* data = rs::NSDataFromData(aData);
+            [self.delegate connection:self didReceiveData:data];
+        };
+        
+        std::function<void(std::shared_ptr<rs::Response>)> responseCallback = [self](std::shared_ptr<rs::Response> aResponse){
+            
+            NSHTTPURLResponse* response = rs::NSHTTPURLResponseFromResponse(aResponse);
+            [self.delegate connection:self didReceiveResponse:response];
+        };
+        
         connectionProxy = std::make_shared<rs::ConnectionProxy>(aRequest);
+        connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback);
     }
     
     return self;

@@ -12,20 +12,32 @@
 #include <stdio.h>
 #include <memory>
 
+#include "Connection.hpp"
+
 namespace rs
 {
-
    class Request;
+   class Response;
+   class Data;
     
-   class ConnectionProxy
+    class ConnectionProxy : ConnectionDelegate
    {
        std::shared_ptr<Request> mRequest;
+       
+       std::function<void()> mFinishRequestCallback;
+       std::function<void(Data)> mReceivedDataCallback;
+       std::function<void(std::shared_ptr<Response>)> mReceivedResponseCallback;
        
      public:
        ConnectionProxy(NSURLRequest* aRequest);
        ~ConnectionProxy();
-       
        void start();
+       void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>);
+       
+       //delegate
+       virtual void connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse);
+       virtual void connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData);
+       virtual void connectionDidFinish(std::shared_ptr<Connection> aConnection);
    };
 }
 

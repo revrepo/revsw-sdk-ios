@@ -36,16 +36,13 @@
 
 - (void)startLoading
 {
-    NSMutableURLRequest *newRequest = [self.request mutableCopy];
-    [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:newRequest];
-    
-    self.connection = [RSURLConnection connectionWithRequest:newRequest delegate:self];
+    self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
     [self.connection start];
 }
 
 - (void)stopLoading
 {
-    
+    NSLog(@"STOP Loading");
 }
 
 #pragma mark - NSURLConnectionDelegate

@@ -18,7 +18,7 @@ namespace rs {
 class QUICConnection : public Connection
 {
    public:
-    void startWithRequest(std::shared_ptr<Request>);
+    void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
 };
     
 }

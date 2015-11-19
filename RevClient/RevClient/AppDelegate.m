@@ -21,11 +21,22 @@
     
     [RevSDK startWithSDKKey:@"12345"];
     
-    NSURL* url = [NSURL URLWithString:@"https://google.com"];
+    //NSURLSessionConfiguration* c = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    
+    NSURL* url = [NSURL URLWithString:@"https://www.wonderplugin.com/wp-content/plugins/wonderplugin-lightbox/images/demo-image0.jpg"];
     NSURLRequest* request = [NSURLRequest requestWithURL:url];
     
     NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
-        NSLog(@"Response %@ error %@", response, error);
+    
+        UIImage* image = [UIImage imageWithData:data];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            UIImageView* imageView = [[UIImageView alloc] initWithImage:image];
+            
+            [[[[UIApplication sharedApplication] delegate] window] addSubview:imageView];
+        });
     }];
     
     [task resume];

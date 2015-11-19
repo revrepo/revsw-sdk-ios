@@ -13,8 +13,9 @@
 #include "ConnectionProxy.h"
 #include "RSUtils.h"
 #include "Request.hpp"
-#include "Connection.hpp"
 #include "Model.hpp"
+#include "Data.hpp"
+#include "Response.hpp"
 
 namespace rs
 {
@@ -31,6 +32,28 @@ namespace rs
     void ConnectionProxy::start()
     {
         std::shared_ptr<Connection> connection = Model::instance()->currentConnection();
-        connection.get()->startWithRequest(mRequest);
+        connection.get()->startWithRequest(mRequest, this, connection);
+    }
+    
+    void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback)
+    {
+        mFinishRequestCallback    = aFinishCallback;
+        mReceivedDataCallback     = aDataCallback;
+        mReceivedResponseCallback = aResponseCallback;
+    }
+    
+    void ConnectionProxy:: connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse)
+    {
+        mReceivedResponseCallback(aResponse);
+    }
+    
+    void ConnectionProxy:: connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData)
+    {
+        mReceivedDataCallback(aData);
+    }
+    
+    void ConnectionProxy:: connectionDidFinish(std::shared_ptr<Connection> aConnection)
+    {
+        mFinishRequestCallback();
     }
 }

@@ -14,10 +14,13 @@
 #include <memory>
 #include <iostream>
 #include <string>
+#include <map>
 
 namespace rs
 {
     class Request;
+    class Response;
+    class Data;
     
     extern NSString* const kRSURLProtocolHandledKey;
     
@@ -25,9 +28,18 @@ namespace rs
     extern const std::string kRSHTTPSProtocolName;
     
     std::string stdStringFromNSString(NSString *aNSString);
-    NSString* nsStringFromStdString(std::string aStdString);
+    NSString* NSStringFromStdString(std::string aStdString);
     
-    std::shared_ptr<Request> requestFromURLRequest(NSURLRequest *aURLRequest);
+    std::map <std::string, std::string> stdMapFromNSDictionary(NSDictionary* aDictionary);
+    NSDictionary* NSDictionaryFromStdMap(std::map<std::string, std::string> aMap);
+    
+    Data dataFromNSData(NSData* aData);
+    NSData* NSDataFromData(Data aData);
+    
+    std::shared_ptr<Request> requestFromURLRequest(NSURLRequest* aURLRequest);
     NSURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest);
+    
+    std::shared_ptr<Response> responseFromHTTPURLResponse(NSHTTPURLResponse* aHTTPURLResponse);
+    NSHTTPURLResponse* NSHTTPURLResponseFromResponse(std::shared_ptr<Response>);
 }
 #endif
