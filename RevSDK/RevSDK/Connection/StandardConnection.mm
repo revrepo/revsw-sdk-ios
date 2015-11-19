@@ -23,8 +23,10 @@ namespace rs
         NSMutableURLRequest* mutableRequest               = request.mutableCopy;
         NSURLSessionConfiguration* sessionConfiguration   = [NSURLSessionConfiguration defaultSessionConfiguration];
         
+        [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
+        
         NSString* proxyHost = @"52.88.151.82";
-        NSNumber* proxyPort = [NSNumber numberWithInt: 8080];
+        NSNumber* proxyPort = [NSNumber numberWithInt: 8888];
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
         NSDictionary *proxyDict = @{
@@ -49,8 +51,8 @@ namespace rs
                                                 Data data                          = dataFromNSData(aData);
                                                 std::shared_ptr<Response> response = responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse);
                                                 
-                                                aDelegate->connectionDidReceiveData(aConnection, data);
                                                 aDelegate->connectionDidReceiveResponse(aConnection, response);
+                                                aDelegate->connectionDidReceiveData(aConnection, data);
                                                 aDelegate->connectionDidFinish(aConnection);
                                                 
                                             }];

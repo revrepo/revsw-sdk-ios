@@ -42,7 +42,7 @@
 
 - (void)stopLoading
 {
-    NSLog(@"STOP Loading");
+   
 }
 
 #pragma mark - NSURLConnectionDelegate
