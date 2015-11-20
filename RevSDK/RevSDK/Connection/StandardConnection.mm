@@ -48,6 +48,10 @@ namespace rs
         NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration];
 
+        // It turns out that NSURLSession doesn't support synchronous calls
+        // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
+        // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
+        
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                                                                            
