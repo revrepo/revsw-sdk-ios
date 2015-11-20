@@ -20,29 +20,13 @@ namespace rs
 {
     void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
     {
-        NSURLRequest* request                             = URLRequestFromRequest(aRequest);
-        NSMutableURLRequest* mutableRequest               = request.mutableCopy;
-        NSURLSessionConfiguration* sessionConfiguration   = [NSURLSessionConfiguration defaultSessionConfiguration];
-        
-        NSString* targetHost = request.URL.host;
-        
-        [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
-        if (targetHost != nil)
-            [mutableRequest addValue:targetHost forHTTPHeaderField:@"Host"];
-        //static NSString* const kEdgeHost = @"mbeans.com";
-        static NSString* const kEdgeHost = @"rev-200.revdn.net";
-        NSString* newURL = request.URL.absoluteString;
-        
         std::shared_ptr<Connection> oAnchor = mWeakThis.lock();
-
-        if (targetHost != nil)
+        NSURLRequest* request               = URLRequestFromRequest(aRequest);
+        NSMutableURLRequest* mutableRequest = request.mutableCopy;
+        NSString* targetHost                = request.URL.host;
+        
+        if (!targetHost)
         {
-            [newURL stringByReplacingOccurrencesOfString:targetHost
-                                              withString:kEdgeHost];
-        }
-        else
-        {
-            NSLog(@"");
             Error error;
             error.code     = 404;
             error.domain   = "com.revsdk";
@@ -52,31 +36,17 @@ namespace rs
             return;
         }
         
+        [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
+        [mutableRequest addValue:targetHost forHTTPHeaderField:@"Host"];
+        
+        NSString* edgeHost       = NSStringFromStdString(kRSEdgeHost);
+        NSString* absoluteString = request.URL.absoluteString;
+        NSString* newURL         = [absoluteString stringByReplacingOccurrencesOfString:targetHost
+                                              withString:edgeHost];
         [mutableRequest setURL:[NSURL URLWithString:newURL]];
-        
-        const NSString* proxyHost = kRSProxyHostName;
-        
-        int portNumber = kRSProxyPortNumber;
-        if ([request.URL.absoluteString rangeOfString:@"https"].location == 0)
-            portNumber = 443;
-        NSNumber* proxyPort       = [NSNumber numberWithInt:portNumber];
-        
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        NSDictionary *proxyDict = @{
-                                    @"HTTPEnable"  : [NSNumber numberWithInt:1],
-                                    (NSString *)kCFStreamPropertyHTTPProxyHost  : proxyHost,
-                                    (NSString *)kCFStreamPropertyHTTPProxyPort  : proxyPort,
-                                    
-                                    @"HTTPSEnable" : [NSNumber numberWithInt:1],
-                                    (NSString *)kCFStreamPropertyHTTPSProxyHost : proxyHost,
-                                    (NSString *)kCFStreamPropertyHTTPSProxyPort : proxyPort,
-                                    };
-#pragma clang diagnostic pop
-        //sessionConfiguration.connectionProxyDictionary = proxyDict;
-        
-        NSURLSession* session = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-        
+
+        NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration];
 
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){

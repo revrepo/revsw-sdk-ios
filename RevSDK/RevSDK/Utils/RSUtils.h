@@ -28,9 +28,8 @@ namespace rs
     //protocols
     extern const std::string kRSHTTPSProtocolName;
     
-    //proxy
-    extern const NSString* kRSProxyHostName;
-    extern const int kRSProxyPortNumber;
+    //edge host
+    extern const std::string kRSEdgeHost;
     
     std::string stdStringFromNSString(NSString *aNSString);
     NSString* NSStringFromStdString(std::string aStdString);

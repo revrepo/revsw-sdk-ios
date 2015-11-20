@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		115AD3511BFE5B0400FA81D6 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 115AD3501BFE5B0400FA81D6 /* RevSDK.framework */; };
-		115AD3521BFE5B0400FA81D6 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 115AD3501BFE5B0400FA81D6 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B3096891BFA02120045024C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096881BFA02120045024C /* main.m */; };
 		5B30968C1BFA02120045024C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B30968B1BFA02120045024C /* AppDelegate.m */; };
 		5B30968F1BFA02120045024C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B30968E1BFA02120045024C /* ViewController.m */; };
@@ -36,7 +34,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				115AD3521BFE5B0400FA81D6 /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,7 +41,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		115AD3501BFE5B0400FA81D6 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/Alexander1/Library/Developer/Xcode/DerivedData/RevSDK-evtzuhfitxmxukbtzngfldtszrym/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5B3096841BFA02120045024C /* RevClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RevClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3096881BFA02120045024C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5B30968A1BFA02120045024C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -67,7 +63,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B3096DA1BFA06690045024C /* RevSDK.framework in Frameworks */,
-				115AD3511BFE5B0400FA81D6 /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,7 +79,6 @@
 		5B30967B1BFA02120045024C = {
 			isa = PBXGroup;
 			children = (
-				115AD3501BFE5B0400FA81D6 /* RevSDK.framework */,
 				5B3096861BFA02120045024C /* RevClient */,
 				5B3096A01BFA02120045024C /* RevClientTests */,
 				5B3096851BFA02120045024C /* Products */,
