@@ -64,7 +64,7 @@
             [self.delegate connection:self didFailWithError:error];
         };
         
-        connectionProxy = std::make_shared<rs::ConnectionProxy>(aRequest);
+        connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(aRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     

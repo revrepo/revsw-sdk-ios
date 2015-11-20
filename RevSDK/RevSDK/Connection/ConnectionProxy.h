@@ -32,7 +32,7 @@ namespace rs
        std::function<void(Error)> mErrorCallback;
        
      public:
-       ConnectionProxy(NSURLRequest* aRequest);
+       ConnectionProxy(std::shared_ptr<Request> aRequest);
        ~ConnectionProxy();
        void start();
        void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>, std::function<void(Error)>);

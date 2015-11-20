@@ -12,7 +12,6 @@
 #include <stdio.h>
 
 #include "Protocol.hpp"
-//#include "RSUtils.h"
 
 namespace rs
 {

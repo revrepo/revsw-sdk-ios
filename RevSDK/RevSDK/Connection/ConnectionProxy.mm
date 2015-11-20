@@ -8,8 +8,6 @@
 
 #include <iostream>
 
-#import <Foundation/Foundation.h>
-
 #include "ConnectionProxy.h"
 #include "RSUtils.h"
 #include "Request.hpp"
@@ -20,9 +18,9 @@
 
 namespace rs
 {
-    ConnectionProxy::ConnectionProxy(NSURLRequest* aRequest)
+    ConnectionProxy::ConnectionProxy(std::shared_ptr<Request> aRequest): mRequest(aRequest)
     {
-        mRequest = requestFromURLRequest(aRequest);
+        
     }
     
     ConnectionProxy::~ConnectionProxy()
