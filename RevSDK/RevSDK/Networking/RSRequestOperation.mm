@@ -9,6 +9,8 @@
 #import "RSRequestOperation.h"
 #import "RSUtils.h"
 
+static const NSUInteger kRSResponseStatusCodeOk = 200;
+
 @interface RSRequestOperation ()
 
 @property (nonatomic, copy) NSString* method;
@@ -45,13 +47,26 @@
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
-                                                                 completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
+                                                                 completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                                                  
+                                                                     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
+                                                                     
+                                                                     if (httpResponse.statusCode != kRSResponseStatusCodeOk)
+                                                                     {
+                                                                         if (!aError)
+                                                                         {
+                                                                             aError = [NSError errorWithDomain:@"com.revsdk"
+                                                                                                          code:httpResponse.statusCode
+                                                                                                      userInfo:@{
+                                                                                                                 NSLocalizedDescriptionKey : @"Unknown error"
+                                                                                                                 }];
+                                                                         }
+                                                                     }
+                                                                     
                                                                      if (self.completionHandler)
                                                                      {
-                                                                         self.completionHandler(data, response, error);
+                                                                         self.completionHandler(aData, aResponse, aError);
                                                                      }
-                                                                 
                                                                  }];
     [task resume];
 }

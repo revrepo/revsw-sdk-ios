@@ -26,12 +26,17 @@ namespace rs
     
     NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint)
     {
-        NSString* baseURL = NSStringFromStdString(kRSEdgeHost);
-        return [NSString stringWithFormat:@"%@/%@", baseURL, aEndPoint];
+        NSString* host = NSStringFromStdString(kRSEdgeHost);
+        return [NSString stringWithFormat:@"https://%@/%@", host, aEndPoint];
     }
     
     std::string stdStringFromNSString(NSString* aNSString)
     {
+        if (!aNSString)
+        {
+            return "";
+        }
+        
         return std::string([aNSString UTF8String]);
     }
     
