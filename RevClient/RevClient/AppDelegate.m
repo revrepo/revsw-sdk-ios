@@ -9,19 +9,6 @@
 #import "AppDelegate.h"
 #import <RevSDK/RevSDK.h>
 
-@interface AAProtocol : NSURLProtocol
-
-@end
-
-@implementation AAProtocol
-
-+ (BOOL)canInitWithRequest:(NSURLRequest *)request
-{
-    return NO;
-}
-
-@end
-
 @interface AppDelegate ()
 
 @end
