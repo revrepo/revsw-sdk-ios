@@ -15,6 +15,8 @@
 #include <string>
 #include <map>
 
+#include "RSUtilsBridge.hpp"
+
 namespace rs
 {
     struct Error
@@ -22,6 +24,8 @@ namespace rs
         long code;
         std::string domain;
         std::map<std::string, std::string> userInfo;
+        
+        std::string description();
     };
 }
 

@@ -14,13 +14,21 @@
 
 namespace rs
 {
+    //keys
     NSString* const kRSURLProtocolHandledKey = @"kRVProtocolHandledKey";
- 
+    const std::string kRSErrorDescriptionKey = "NSLocalizedDescription";
+    
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
     
     //edge host
     const std::string kRSEdgeHost = "rev-200.revdn.net";
+    
+    NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint)
+    {
+        NSString* baseURL = NSStringFromStdString(kRSEdgeHost);
+        return [NSString stringWithFormat:@"%@/%@", baseURL, aEndPoint];
+    }
     
     std::string stdStringFromNSString(NSString* aNSString)
     {

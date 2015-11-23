@@ -9,11 +9,15 @@
 #import "RevSDK.h"
 #import "RSURLProtocol.h"
 
+#import "Model.hpp"
+
 @implementation RevSDK
 
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
     [NSURLProtocol registerClass:[RSURLProtocol class]];
+    
+    rs::Model::instance()->initialize();
 }
 
 @end

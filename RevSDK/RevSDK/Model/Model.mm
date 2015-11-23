@@ -15,9 +15,17 @@
 #include "StandardConnection.hpp"
 #include "QUICConnection.hpp"
 #include "RSUtils.h"
+#include "Network.hpp"
+#include "Data.hpp"
+#include "Error.hpp"
 
 namespace rs
 {
+    Model::Model()
+    {
+        network = new Network;
+    }
+    
     Model* Model::instance()
     {
         static std::mutex mtx;
@@ -50,5 +58,27 @@ namespace rs
         std::shared_ptr<Connection> connection = connectionDictionary[protocolName];
         
         return connection;
+    }
+    
+    void Model::loadConfiguration()
+    {
+        std::function<void(Data, Error)> completionBlock = [](Data aData, Error aError){
+        
+           if (aError.code == 0)
+           {
+               NSLog(@"NO ERROR!");
+           }
+           else
+           {
+               std::cout << "\n" << "RevSDK failed to load configuration " << aError.description();
+           }
+        };
+        
+        network->loadConfigurationWithCompletionBlock(completionBlock);
+    }
+    
+    void Model::initialize()
+    {
+        loadConfiguration();
     }
 }

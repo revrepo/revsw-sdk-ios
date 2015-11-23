@@ -7,3 +7,12 @@
 //
 
 #include "Error.hpp"
+
+namespace rs
+{
+    std::string Error::description()
+    {
+        std::string key = errorDescriptionKey();
+        return userInfo[key];
+    }
+}

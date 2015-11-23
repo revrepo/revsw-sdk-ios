@@ -23,13 +23,16 @@ namespace rs
     class Data;
     class Error;
     
+    //keys
     extern NSString* const kRSURLProtocolHandledKey;
+    extern const std::string kRSErrorDescriptionKey;
     
     //protocols
     extern const std::string kRSHTTPSProtocolName;
     
     //edge host
     extern const std::string kRSEdgeHost;
+    NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint);
     
     std::string stdStringFromNSString(NSString *aNSString);
     NSString* NSStringFromStdString(std::string aStdString);

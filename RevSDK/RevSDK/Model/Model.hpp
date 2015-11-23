@@ -16,15 +16,23 @@ namespace rs
 {
     class Protocol;
     class Connection;
+    class Network;
     
     class Model
     {
+      Network* network;
+        
       public:
+        
+        Model();
         
         static Model* instance();
         
         std::shared_ptr<Protocol> currentProtocol();
         std::shared_ptr<Connection> currentConnection();
+        
+        void loadConfiguration();
+        void initialize();
     };
 }
 

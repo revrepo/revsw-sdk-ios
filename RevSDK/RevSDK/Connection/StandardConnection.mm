@@ -15,6 +15,7 @@
 #include "Response.hpp"
 #include "Request.hpp"
 #include "Error.hpp"
+#include "RSUtilsBridge.hpp"
 
 namespace rs
 {
@@ -31,7 +32,7 @@ namespace rs
             error.code     = 404;
             error.domain   = "com.revsdk";
             error.userInfo = std::map <std::string, std::string>();
-            error.userInfo["description"] = "URL not supported";
+            error.userInfo[errorDescriptionKey()] = "URL not supported";
             aDelegate->connectionDidFailWithError(oAnchor, error);
             return;
         }
