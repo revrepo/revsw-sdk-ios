@@ -21,6 +21,8 @@
 		5B3096EE1BFA0CD30045024C /* RSURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B3096EC1BFA0CD30045024C /* RSURLConnection.h */; };
 		5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096ED1BFA0CD30045024C /* RSURLConnection.mm */; };
 		5B3096F11BFA11E50045024C /* RevSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096F01BFA11E50045024C /* RevSDK.m */; };
+		5B4FCD281C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD261C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.h */; };
+		5B4FCD291C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD271C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.m */; };
 		5B54C3211BFB598700217971 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C31F1BFB598700217971 /* Request.cpp */; };
 		5B54C3221BFB598700217971 /* Request.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3201BFB598700217971 /* Request.hpp */; };
 		5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3281BFB5EF000217971 /* RSUtils.h */; };
@@ -71,6 +73,8 @@
 		5B3096EC1BFA0CD30045024C /* RSURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLConnection.h; sourceTree = "<group>"; };
 		5B3096ED1BFA0CD30045024C /* RSURLConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLConnection.mm; sourceTree = "<group>"; };
 		5B3096F01BFA11E50045024C /* RevSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevSDK.m; sourceTree = "<group>"; };
+		5B4FCD261C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+RSUtils.h"; sourceTree = "<group>"; };
+		5B4FCD271C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+RSUtils.m"; sourceTree = "<group>"; };
 		5B54C31F1BFB598700217971 /* Request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Request.cpp; sourceTree = "<group>"; };
 		5B54C3201BFB598700217971 /* Request.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Request.hpp; sourceTree = "<group>"; };
 		5B54C3281BFB5EF000217971 /* RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUtils.h; sourceTree = "<group>"; };
@@ -170,6 +174,8 @@
 			children = (
 				5B54C3281BFB5EF000217971 /* RSUtils.h */,
 				5B54C3291BFB5EF000217971 /* RSUtils.mm */,
+				5B4FCD261C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.h */,
+				5B4FCD271C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -234,6 +240,7 @@
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
 				5B54C3301BFB700C00217971 /* Model.hpp in Headers */,
+				5B4FCD281C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.h in Headers */,
 				5B54C3411BFB7A9200217971 /* Connection.hpp in Headers */,
 				5B2F4BD81BFE11F6003DCB27 /* Error.hpp in Headers */,
 				5B3096EA1BFA0CB70045024C /* RSURLProtocol.h in Headers */,
@@ -343,6 +350,7 @@
 			files = (
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
+				5B4FCD291C031B1600C8D320 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.m in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,
 				5B2F4BD71BFE11F6003DCB27 /* Error.cpp in Sources */,
