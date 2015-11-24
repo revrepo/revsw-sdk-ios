@@ -6,6 +6,8 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#import <QuartzCore/QuartzCore.h>
+
 #import "RevSDK.h"
 #import "RSURLProtocol.h"
 
@@ -16,7 +18,7 @@
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
     [NSURLProtocol registerClass:[RSURLProtocol class]];
-    
+
     rs::Model::instance()->initialize();
 }
 

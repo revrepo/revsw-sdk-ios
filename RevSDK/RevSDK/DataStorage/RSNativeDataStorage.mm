@@ -23,7 +23,6 @@
 - (void)saveConfiguration:(rs::Configuration)aConfiguration
 {
     NSDictionary* dictionary = rs::NSDictionaryFromConfiguration(aConfiguration);
-    NSLog(@"Saving dictionary %@", dictionary);
     [self saveObject:dictionary forKey:@"configuration_key"];
 }
 

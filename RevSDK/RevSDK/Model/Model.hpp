@@ -19,9 +19,11 @@ namespace rs
     class Network;
     class DataStorage;
     class Configuration;
+    class Timer;
     
     class Model
     {
+      Timer* configurationRefreshTimer;
       Network* mNetwork;
       DataStorage* mDataStorage;
       std::shared_ptr<Configuration> mConfiguration;

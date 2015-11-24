@@ -21,13 +21,15 @@
 #include "ConfigurationProcessor.hpp"
 #include "Configuration.hpp"
 #include "DataStorage.hpp"
+#include "Timer.hpp"
 
 namespace rs
 {
     Model::Model()
     {
-        mNetwork     = new Network;
-        mDataStorage = new DataStorage;
+        configurationRefreshTimer = nullptr;
+        mNetwork                  = new Network;
+        mDataStorage              = new DataStorage;
     }
     
     Model* Model::instance()
@@ -76,6 +78,17 @@ namespace rs
               Configuration configuration = ConfigurationProcessor::processConfigurationData(aData);
               mDataStorage->saveConfiguration(configuration);
               mConfiguration = std::make_shared<Configuration>(configuration);
+               
+              if (!configurationRefreshTimer)
+              {
+                  std::function<void()> scheduledFunction = [this](){
+                  
+                      loadConfiguration();
+                  };
+                  
+                  configurationRefreshTimer = new Timer(mConfiguration.get()->refreshInterval, scheduledFunction);
+                  configurationRefreshTimer->start();
+              }
            }
            else
            {
