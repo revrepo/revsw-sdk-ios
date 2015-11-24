@@ -15,6 +15,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 
 namespace rs
 {
@@ -22,6 +23,7 @@ namespace rs
     class Response;
     class Data;
     class Error;
+    class Configuration;
     
     //keys
     extern NSString* const kRSURLProtocolHandledKey;
@@ -34,11 +36,17 @@ namespace rs
     extern const std::string kRSEdgeHost;
     NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint);
     
+    Configuration configurationFromNSDictionary(NSDictionary* aDictionary);
+    NSDictionary* NSDictionaryFromConfiguration(const Configuration&);
+    
     std::string stdStringFromNSString(NSString *aNSString);
     NSString* NSStringFromStdString(std::string aStdString);
     
     std::map <std::string, std::string> stdMapFromNSDictionary(NSDictionary* aDictionary);
     NSDictionary* NSDictionaryFromStdMap(std::map<std::string, std::string> aMap);
+    
+    std::vector<std::string> vectorFromNSArray(NSArray<NSString*> * aArray);
+    NSArray<NSString*> * NSArrayFromVector(std::vector<std::string> aVector);
     
     Data dataFromNSData(NSData* aData);
     NSData* NSDataFromData(Data aData);

@@ -31,11 +31,34 @@
 
 - (void)loadConfigurationWithCompletionBlock:(void (^)(NSData *, NSURLResponse *, NSError *))aCompletionBlock
 {
-    void (^completionHandler)(NSData*, NSURLResponse*, NSError*) = ^(NSData* data, NSURLResponse* response, NSError* error){
+    void (^completionHandler)(NSData*, NSURLResponse*, NSError*) = ^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
     
+        NSString* json = @"{\"app_name\": \"RevClient\",\
+                            \"os\" : \"ios\",\
+        \"configs\" : {\
+        \"sdk_release_version\" : 1.0,\
+        \"configuration_api_url\" : \"https://rev-200.revdn.net\",\
+        \"configuration_refresh_interval_sec\" : 100,\
+        \"configuration_stale_timeout_sec\" : 100,\
+        \"edge_host\" : \"rev-200.revdn.net\",\
+        \"operation_mode\" : \"transfer_and_report\",\
+        \"allowed_transport_protocols\" : [\"standard\"],\
+        \"initial_transport_protocol\" : \"standard\",\
+        \"transport_monitoring_url\" : \"https://rev-200.revdn.net\",\
+        \"stats_reporting_url\" : \"https://rev-200.revdn.net\",\
+        \"stats_reporting_interval\" : 100,\
+        \"stats_reporting_level\" : \"out_of_band\",\
+        \"stats_reporting_max_request_per_report\" : 1,\
+        \"domains_provisioned_list\" : [ \"mbeans.com\"],\
+        \"domains_white_list\" : [\"mbeans.com\"],\
+        \"domains_black_list\" : [] }}";
+        
+        
+        NSData* data = [json dataUsingEncoding:NSUTF8StringEncoding];
+
        if (aCompletionBlock)
        {
-           aCompletionBlock(data, response, error);
+           aCompletionBlock(data, aResponse, nil);
        }
     };
     

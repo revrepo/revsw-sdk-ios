@@ -17,10 +17,14 @@ namespace rs
     class Protocol;
     class Connection;
     class Network;
+    class DataStorage;
+    class Configuration;
     
     class Model
     {
-      Network* network;
+      Network* mNetwork;
+      DataStorage* mDataStorage;
+      std::shared_ptr<Configuration> mConfiguration;
         
       public:
         

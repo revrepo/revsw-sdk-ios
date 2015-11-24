@@ -24,7 +24,7 @@ namespace rs
 #endif
     }
     
-    void Network::loadConfigurationWithCompletionBlock(std::function<void(Data, Error)> aCompletionBlock)
+    void Network::loadConfigurationWithCompletionBlock(std::function<void(Data&, Error&)> aCompletionBlock)
     {
 #ifdef __APPLE__
         

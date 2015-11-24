@@ -7,3 +7,19 @@
 //
 
 #include "Data.hpp"
+
+namespace rs
+{
+    std::string Data::toString()
+    {
+        std::string str = "";
+        char* cPtr = (char *)bytes;
+        
+        for (int i = 0; i < length; i++)
+        {
+            str += *(cPtr++);
+        }
+        
+        return str;
+    }
+}

@@ -18,12 +18,16 @@
 #include "Network.hpp"
 #include "Data.hpp"
 #include "Error.hpp"
+#include "ConfigurationProcessor.hpp"
+#include "Configuration.hpp"
+#include "DataStorage.hpp"
 
 namespace rs
 {
     Model::Model()
     {
-        network = new Network;
+        mNetwork     = new Network;
+        mDataStorage = new DataStorage;
     }
     
     Model* Model::instance()
@@ -62,11 +66,16 @@ namespace rs
     
     void Model::loadConfiguration()
     {
-        std::function<void(Data, Error)> completionBlock = [](Data aData, Error aError){
+        Configuration configuration = mDataStorage->configuration();
+        mConfiguration = std::make_shared<Configuration>(configuration);
         
+        std::function<void(Data&, Error&)> completionBlock = [this](Data& aData, Error& aError){
+            
            if (aError.code == 0)
            {
-               NSLog(@"NO ERROR!");
+              Configuration configuration = ConfigurationProcessor::processConfigurationData(aData);
+              mDataStorage->saveConfiguration(configuration);
+              mConfiguration = std::make_shared<Configuration>(configuration);
            }
            else
            {
@@ -74,7 +83,7 @@ namespace rs
            }
         };
         
-        network->loadConfigurationWithCompletionBlock(completionBlock);
+        mNetwork->loadConfigurationWithCompletionBlock(completionBlock);
     }
     
     void Model::initialize()

@@ -25,7 +25,7 @@ namespace rs
         
         Network();
         
-        void loadConfigurationWithCompletionBlock(std::function<void(Data, Error)>);
+        void loadConfigurationWithCompletionBlock(std::function<void(Data&, Error&)>);
     };
 }
 

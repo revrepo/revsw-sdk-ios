@@ -10,6 +10,7 @@
 #define Data_hpp
 
 #include <stdio.h>
+#include <string>
 
 namespace rs
 {
@@ -17,6 +18,8 @@ namespace rs
     {
         void* bytes;
         unsigned long length;
+        
+        std::string toString();
     };
 }
 

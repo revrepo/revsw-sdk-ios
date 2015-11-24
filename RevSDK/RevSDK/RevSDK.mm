@@ -10,7 +10,6 @@
 #import "RSURLProtocol.h"
 
 #import "Model.hpp"
-#include <jsoncpp/json/json.h>
 
 @implementation RevSDK
 
