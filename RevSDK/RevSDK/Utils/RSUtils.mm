@@ -15,6 +15,9 @@
 
 namespace rs
 {
+    //codes
+    const long kRSNoErrorCode = -10000;
+    
     //keys
     NSString* const kRSURLProtocolHandledKey = @"kRVProtocolHandledKey";
     const std::string kRSErrorDescriptionKey = "NSLocalizedDescription";

@@ -6,6 +6,9 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#ifndef NativeDataStorage_h
+#define NativeDataStorage_h
+
 #include <string.h>
 #include <iostream>
 
@@ -22,3 +25,4 @@ namespace rs
     };
     
 }
+#endif

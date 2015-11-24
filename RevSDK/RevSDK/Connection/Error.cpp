@@ -7,12 +7,22 @@
 //
 
 #include "Error.hpp"
+#include "RSUtilsBridge.hpp"
 
 namespace rs
 {
-    std::string Error::description()
+    std::string Error::description() const
     {
-        std::string key = errorDescriptionKey();
-        return userInfo[key];
+        std::string key                       = errorDescriptionKey();
+        std::map<std::string, std::string> ui = userInfo;
+        std::string description               = ui[key];
+        return description;
+    }
+    
+    Error Error::notError()
+    {
+        Error error;
+        error.code = noErrorCode();
+        return error;
     }
 }

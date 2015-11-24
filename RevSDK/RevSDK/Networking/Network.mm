@@ -9,35 +9,29 @@
 #include "Network.hpp"
 #include "Data.hpp"
 #include "Error.hpp"
-#include "RSUtils.h"
-
-#ifdef __APPLE__
-#include "RSNativeNetwork.h"
-#endif
+#include "Response.hpp"
+#include "NativeNetwork.h"
 
 namespace rs
 {
     Network::Network()
     {
-#ifdef __APPLE__
-        nativeNetwork = (void *)CFBridgingRetain([[RSNativeNetwork alloc] init]);
-#endif
+        nativeNetwork = new NativeNetwork;
     }
     
-    void Network::loadConfigurationWithCompletionBlock(std::function<void(Data&, Error&)> aCompletionBlock)
+    Network::~Network()
     {
-#ifdef __APPLE__
+        delete nativeNetwork;
+    }
+    
+    void Network::loadConfigurationWithCompletionBlock(std::function<void(const Data&, const Error&)> aCompletionBlock)
+    {
+        std::function<void(const Data&, const Response&, const Error&)> completion = [=](const Data& aData, const Response& aResponse, const Error& aError){
         
-        void (^completionBlock)(NSData* , NSURLResponse*, NSError*) = ^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-            
-            Data data   = dataFromNSData(aData);
-            Error error = errorFromNSError(aError);
-            
-            aCompletionBlock(data, error);
+            aCompletionBlock(aData, aError);
         };
         
-        [(__bridge RSNativeNetwork *)nativeNetwork loadConfigurationWithCompletionBlock:completionBlock];
-#endif
+        nativeNetwork->loadConfigurationWithCompletion(completion);
     }
 }
 

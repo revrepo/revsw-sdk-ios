@@ -71,9 +71,9 @@ namespace rs
         Configuration configuration = mDataStorage->configuration();
         mConfiguration = std::make_shared<Configuration>(configuration);
         
-        std::function<void(Data&, Error&)> completionBlock = [this](Data& aData, Error& aError){
+        std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
             
-           if (aError.code == 0)
+           if (aError.code == kRSNoErrorCode)
            {
               Configuration configuration = ConfigurationProcessor::processConfigurationData(aData);
               mDataStorage->saveConfiguration(configuration);

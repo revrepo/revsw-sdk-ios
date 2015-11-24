@@ -25,6 +25,9 @@ namespace rs
     class Error;
     class Configuration;
     
+    //codes
+    extern const long kRSNoErrorCode;
+    
     //keys
     extern NSString* const kRSURLProtocolHandledKey;
     extern const std::string kRSErrorDescriptionKey;

@@ -16,6 +16,7 @@
 namespace rs
 {
     std::string errorDescriptionKey();
+    long noErrorCode();
 }
 
 #endif /* RSUtilsBridge_hpp */

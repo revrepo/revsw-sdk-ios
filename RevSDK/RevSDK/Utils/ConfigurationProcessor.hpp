@@ -20,7 +20,7 @@ namespace rs
     class ConfigurationProcessor
     {
        public:
-        static Configuration processConfigurationData(Data&);
+        static Configuration processConfigurationData(const Data&);
     };
 }
 

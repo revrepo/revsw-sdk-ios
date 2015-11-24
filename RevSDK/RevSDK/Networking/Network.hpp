@@ -16,16 +16,18 @@ namespace rs
 {
     class Data;
     class Error;
+    class NativeNetwork;
     
     class Network
     {
-        void* nativeNetwork;
+        NativeNetwork* nativeNetwork;
         
         public:
         
         Network();
+        ~Network();
         
-        void loadConfigurationWithCompletionBlock(std::function<void(Data&, Error&)>);
+        void loadConfigurationWithCompletionBlock(std::function<void(const Data&, const Error&)>);
     };
 }
 

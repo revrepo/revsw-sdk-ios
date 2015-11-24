@@ -17,4 +17,9 @@ namespace rs
     {
         return stdStringFromNSString(NSLocalizedDescriptionKey);
     }
+    
+    long noErrorCode()
+    {
+        return kRSNoErrorCode;
+    }
 }

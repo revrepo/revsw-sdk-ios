@@ -28,9 +28,10 @@ namespace rs
         return vector;
     }
     
-    Configuration ConfigurationProcessor::processConfigurationData(Data& aData)
+    Configuration ConfigurationProcessor::processConfigurationData(const Data& aData)
     {
-        std::string dataString = aData.toString();
+        Data data = aData;
+        std::string dataString = data.toString();
         Json::Value value;
         Json::Reader reader;
         Configuration configuration;
