@@ -15,10 +15,11 @@
 namespace rs
 {
   class Configuration;
+  class NativeDataStorage;
     
   class DataStorage
   {
-     void* nativeDataStorage;
+     NativeDataStorage* nativeDataStorage;
       
      public:
       

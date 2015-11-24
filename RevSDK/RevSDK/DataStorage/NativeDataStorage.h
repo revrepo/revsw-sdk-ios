@@ -6,19 +6,19 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 #include <string.h>
 #include <iostream>
 
 namespace rs
 {
     struct Configuration;
+    
+    class NativeDataStorage
+    {
+    public:
+        
+        void saveConfiguration(Configuration);
+        Configuration configuration()const;
+    };
+    
 }
-
-@interface RSNativeDataStorage : NSObject
-
-- (void)saveConfiguration:(rs::Configuration)aConfiguration;
-- (rs::Configuration)configuration;
-
-@end

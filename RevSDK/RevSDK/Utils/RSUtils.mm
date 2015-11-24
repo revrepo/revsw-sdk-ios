@@ -18,6 +18,7 @@ namespace rs
     //keys
     NSString* const kRSURLProtocolHandledKey = @"kRVProtocolHandledKey";
     const std::string kRSErrorDescriptionKey = "NSLocalizedDescription";
+    NSString* const kRSConfigurationStorageKey = @"kRSConfigurationStorageKey";
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";

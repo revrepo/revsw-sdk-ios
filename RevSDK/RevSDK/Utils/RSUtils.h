@@ -28,6 +28,7 @@ namespace rs
     //keys
     extern NSString* const kRSURLProtocolHandledKey;
     extern const std::string kRSErrorDescriptionKey;
+    extern NSString* const kRSConfigurationStorageKey;
     
     //protocols
     extern const std::string kRSHTTPSProtocolName;

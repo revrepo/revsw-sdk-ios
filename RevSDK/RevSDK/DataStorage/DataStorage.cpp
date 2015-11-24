@@ -8,28 +8,27 @@
 
 #include "DataStorage.hpp"
 #include "Configuration.hpp"
-#include "RSUtils.h"
-#import "RSNativeDataStorage.h"
+#import "NativeDataStorage.h"
 
 namespace rs
 {
     DataStorage::DataStorage()
     {
-        nativeDataStorage = (void *)CFBridgingRetain([RSNativeDataStorage new]);
+        nativeDataStorage = new NativeDataStorage();
     }
     
     DataStorage::~DataStorage()
     {
-        CFBridgingRelease(nativeDataStorage);
+        delete nativeDataStorage;
     }
 
     void DataStorage::saveConfiguration(const Configuration& aConfiguration)
     {
-        [(__bridge RSNativeDataStorage *)nativeDataStorage saveConfiguration:aConfiguration];
+        nativeDataStorage->saveConfiguration(aConfiguration);
     }
     
     Configuration DataStorage::configuration()const
     {
-        return [(__bridge RSNativeDataStorage *)nativeDataStorage configuration];
+        return nativeDataStorage->configuration();
     }
 }
