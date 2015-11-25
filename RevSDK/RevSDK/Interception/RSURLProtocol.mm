@@ -42,6 +42,7 @@
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask
 {
     NSURLRequest* request = [aTask currentRequest];
+
     return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request] && !request.isFileRequest;
 }
 
