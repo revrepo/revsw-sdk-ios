@@ -18,9 +18,12 @@ namespace rs
         mFunction = aFunction;
         
         NSBlockOperation* operation = [NSBlockOperation blockOperationWithBlock:^{
-                                       
-                                       aFunction();
-                                       
+            
+                                        if (aFunction)
+                                        {
+                                           aFunction();
+                                        }
+            
                                        }];
         
         timer = ( void *)CFBridgingRetain([NSTimer timerWithTimeInterval:aInterval

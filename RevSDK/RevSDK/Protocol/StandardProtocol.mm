@@ -7,12 +7,12 @@
 //
 
 #include "StandardProtocol.hpp"
-#include "RSUtils.h"
+#include "RSUtilsBridge.hpp"
 
 namespace rs
 {
     std::string StandardProtocol::protocolName()
     {
-        { return kRSHTTPSProtocolName; }
+        { return httpsProtocolName(); }
     }
 }

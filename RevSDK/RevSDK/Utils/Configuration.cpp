@@ -40,7 +40,6 @@ namespace rs
         Data data;
         data.bytes  = this;
         data.length = sizeof(*this);
-        
         return data;
     }
     

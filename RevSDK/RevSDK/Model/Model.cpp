@@ -14,7 +14,7 @@
 #include "QUICProtocol.hpp"
 #include "StandardConnection.hpp"
 #include "QUICConnection.hpp"
-#include "RSUtils.h"
+#include "RSUtilsBridge.hpp"
 #include "Network.hpp"
 #include "Data.hpp"
 #include "Error.hpp"
@@ -27,9 +27,9 @@ namespace rs
 {
     Model::Model()
     {
-        configurationRefreshTimer = nullptr;
-        mNetwork                  = new Network;
-        mDataStorage              = new DataStorage;
+        mConfigurationRefreshTimer = nullptr;
+        mNetwork                   = new Network;
+        mDataStorage               = new DataStorage;
     }
     
     Model* Model::instance()
@@ -56,7 +56,7 @@ namespace rs
     {
         std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
         
-            {kRSHTTPSProtocolName, Connection::create<StandardConnection>() }
+            {httpsProtocolName(), Connection::create<StandardConnection>() }
         };
 
         std::shared_ptr<Protocol> protocol     = currentProtocol();
@@ -73,21 +73,21 @@ namespace rs
         
         std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
             
-           if (aError.code == kRSNoErrorCode)
+           if (aError.code == noErrorCode())
            {
               Configuration configuration = ConfigurationProcessor::processConfigurationData(aData);
               mDataStorage->saveConfiguration(configuration);
               mConfiguration = std::make_shared<Configuration>(configuration);
                
-              if (!configurationRefreshTimer)
+              if (!mConfigurationRefreshTimer)
               {
                   std::function<void()> scheduledFunction = [this](){
                   
                       loadConfiguration();
                   };
                   
-                  configurationRefreshTimer = new Timer(mConfiguration.get()->refreshInterval, scheduledFunction);
-                  configurationRefreshTimer->start();
+                  mConfigurationRefreshTimer = new Timer(mConfiguration.get()->refreshInterval, scheduledFunction);
+                  mConfigurationRefreshTimer->start();
               }
            }
            else

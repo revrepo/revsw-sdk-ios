@@ -9,7 +9,6 @@
 #include <iostream>
 
 #include "ConnectionProxy.h"
-#include "RSUtils.h"
 #include "Request.hpp"
 #include "Model.hpp"
 #include "Data.hpp"

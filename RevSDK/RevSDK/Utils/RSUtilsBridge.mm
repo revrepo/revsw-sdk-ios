@@ -22,4 +22,9 @@ namespace rs
     {
         return kRSNoErrorCode;
     }
+    
+    std::string httpsProtocolName()
+    {
+        return kRSHTTPSProtocolName;
+    }
 }

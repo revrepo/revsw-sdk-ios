@@ -23,7 +23,7 @@ namespace rs
     
     class Model
     {
-      Timer* configurationRefreshTimer;
+      Timer* mConfigurationRefreshTimer;
       Network* mNetwork;
       DataStorage* mDataStorage;
       std::shared_ptr<Configuration> mConfiguration;

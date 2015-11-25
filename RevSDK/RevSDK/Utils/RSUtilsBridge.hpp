@@ -17,6 +17,7 @@ namespace rs
 {
     std::string errorDescriptionKey();
     long noErrorCode();
+    std::string httpsProtocolName();
 }
 
 #endif /* RSUtilsBridge_hpp */
