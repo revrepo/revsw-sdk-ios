@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:ios/Hello World.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:RevClient/RevClient.xcodeproj">
    </FileRef>
    <FileRef

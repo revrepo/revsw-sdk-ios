@@ -21,12 +21,14 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
-    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request];
+    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request] && !request.URL.isFileURL;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)task
 {
-    return YES;
+    NSURLRequest* request = task.currentRequest;
+    
+    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request] && !request.URL.isFileURL;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
