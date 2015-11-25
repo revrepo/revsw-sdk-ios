@@ -11,6 +11,21 @@
 #import "RSURLProtocol.h"
 #import "RSURLConnection.h"
 
+@interface NSURLRequest (FileRequest)
+
+@property (nonatomic, readonly) BOOL isFileRequest;
+
+@end
+
+@implementation NSURLRequest(FileRequest)
+
+- (BOOL)isFileRequest
+{
+    return self.URL && self.URL.isFileURL;
+}
+
+@end
+
 @interface RSURLProtocol ()<RSURLConnectionDelegate>
 
 @property (nonatomic, strong) RSURLConnection* connection;
@@ -19,19 +34,20 @@
 
 @implementation RSURLProtocol
 
-+ (BOOL)canInitWithRequest:(NSURLRequest *)request
++ (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request];
+    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] && !aRequest.isFileRequest;
 }
 
-+ (BOOL)canInitWithTask:(NSURLSessionTask *)task
++ (BOOL)canInitWithTask:(NSURLSessionTask *)aTask
 {
-    return YES;
+    NSURLRequest* request = [aTask currentRequest];
+    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request] && !request.isFileRequest;
 }
 
-+ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)aRequest
 {
-    return request;
+    return aRequest;
 }
 
 - (void)startLoading
