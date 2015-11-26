@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RTStartViewController">
+            <connections>
+                <outlet property="view" destination="FcW-Ty-hPZ" id="ekx-xg-Tp6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="FcW-Ty-hPZ">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R3K-R8-cR3">
+                    <rect key="frame" x="203" y="93" width="195" height="41"/>
+                    <animations/>
+                    <string key="text">Which type of application
+you want to test?</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HaO-pc-pVV">
+                    <rect key="frame" x="237" y="215" width="126" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Native Mobile App"/>
+                    <connections>
+                        <action selector="nativeMobile:" destination="-1" eventType="touchUpInside" id="Fde-Vt-tpP"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5xx-wR-fUs">
+                    <rect key="frame" x="236" y="285" width="128" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Hybrid Mobile App"/>
+                    <connections>
+                        <action selector="hybridMobile:" destination="-1" eventType="touchUpInside" id="CSO-Pc-w3W"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uor-wC-bXe">
+                    <rect key="frame" x="260" y="355" width="81" height="30"/>
+                    <animations/>
+                    <state key="normal" title="Mobile Web"/>
+                    <connections>
+                        <action selector="mobileWeb:" destination="-1" eventType="touchUpInside" id="RJz-dS-slx"/>
+                    </connections>
+                </button>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="HaO-pc-pVV" firstAttribute="centerX" secondItem="FcW-Ty-hPZ" secondAttribute="centerX" id="4hR-A0-eaW"/>
+                <constraint firstItem="Uor-wC-bXe" firstAttribute="centerX" secondItem="FcW-Ty-hPZ" secondAttribute="centerX" id="5Gk-xc-FSB"/>
+                <constraint firstItem="5xx-wR-fUs" firstAttribute="centerY" secondItem="FcW-Ty-hPZ" secondAttribute="centerY" id="TVt-fA-Rhw"/>
+                <constraint firstItem="R3K-R8-cR3" firstAttribute="top" secondItem="FcW-Ty-hPZ" secondAttribute="top" constant="93" id="VaE-Im-r3f"/>
+                <constraint firstItem="5xx-wR-fUs" firstAttribute="centerX" secondItem="FcW-Ty-hPZ" secondAttribute="centerX" id="XZL-qg-prd"/>
+                <constraint firstItem="5xx-wR-fUs" firstAttribute="top" secondItem="HaO-pc-pVV" secondAttribute="bottom" constant="40" id="nAW-oX-Nji"/>
+                <constraint firstItem="R3K-R8-cR3" firstAttribute="centerX" secondItem="FcW-Ty-hPZ" secondAttribute="centerX" id="slf-KP-TuV"/>
+                <constraint firstItem="Uor-wC-bXe" firstAttribute="top" secondItem="5xx-wR-fUs" secondAttribute="bottom" constant="40" id="szI-L7-pSC"/>
+            </constraints>
+            <point key="canvasLocation" x="448" y="382"/>
+        </view>
+    </objects>
+</document>

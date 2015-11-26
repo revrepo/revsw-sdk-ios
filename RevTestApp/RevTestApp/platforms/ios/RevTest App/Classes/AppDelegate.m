@@ -27,14 +27,21 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "RTStartViewController.h"
 
 #import <Cordova/CDVPlugin.h>
 
 #import <RevSDK/RevSDK.h>
 
+@interface AppDelegate ()
+
+@property (nonatomic, strong) UINavigationController* navigationController;
+
+@end
+
 @implementation AppDelegate
 
-@synthesize window, viewController;
+@synthesize window;
 
 - (id)init
 {
@@ -77,7 +84,7 @@
     self.window.autoresizesSubviews = YES;
 
 #if __has_feature(objc_arc)
-        self.viewController = [[MainViewController alloc] init];
+      //  self.viewController = [[MainViewController alloc] init];
 #else
         self.viewController = [[[MainViewController alloc] init] autorelease];
 #endif
@@ -89,7 +96,10 @@
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
 
-    self.window.rootViewController = self.viewController;
+   
+    RTStartViewController* startViewController = [[RTStartViewController alloc] initWithNibName:@"RTStartViewController" bundle:[NSBundle mainBundle]];
+    self.navigationController = [[UINavigationController alloc] initWithRootViewController:startViewController];
+    self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
 
     return YES;
