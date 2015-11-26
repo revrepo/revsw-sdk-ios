@@ -21,32 +21,45 @@
 
     rs::Model::instance()->initialize();
     
-    rs::Model::instance()->mCurrentMode = kRSOperationModeInnerTransportAndReport;
+    rs::Model::instance()->mCurrentMode = rs::kRSOperationModeInnerTransportAndReport;
 }
 
 + (void)setOperationMode:(RSOperationMode)aOperationMode
 {
-    RSOperationModeInner innerMode;
+    rs::RSOperationModeInner innerMode;
     
     switch (aOperationMode)
     {
         case kRSOperationModeOff:
-            innerMode = kRSOperationModeInnerOff;
+            innerMode = rs::kRSOperationModeInnerOff;
             break;
         case kRSOperationModeTransport:
-            innerMode = kRSOperationModeInnerTransport;
+            innerMode = rs::kRSOperationModeInnerTransport;
             break;
         case kRSOperationModeReport:
-            innerMode = kRSOperationModeInnerReport;
+            innerMode = rs::kRSOperationModeInnerReport;
             break;
         case kRSOperationModeTransportAndReport:
-            innerMode = kRSOperationModeInnerTransportAndReport;
+            innerMode = rs::kRSOperationModeInnerTransportAndReport;
             break;
             
         default: break;
     }
     
     rs::Model::instance()->mCurrentMode = innerMode;
+}
+
++ (RSOperationMode)operationMode
+{
+    rs::RSOperationModeInner innerMode = rs::Model::instance()->mCurrentMode;
+    
+    switch (innerMode)
+    {
+        case rs::kRSOperationModeInnerOff: return kRSOperationModeOff;
+        case rs::kRSOperationModeInnerReport: return kRSOperationModeReport;
+        case rs::kRSOperationModeInnerTransport: return kRSOperationModeTransport;
+        case rs::kRSOperationModeInnerTransportAndReport: return kRSOperationModeTransportAndReport;
+    }
 }
 
 @end

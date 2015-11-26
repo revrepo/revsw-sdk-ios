@@ -6,15 +6,19 @@
 //
 //
 
+#import "objc/runtime.h"
+
+#import <RevSDK/RevSDK.h>
+
 #import "RTMobileWebViewController.h"
 #import "NSURL+RTUTils.h"
 #import "UIViewController+RTUtils.h"
 
-#import "objc/runtime.h"
+static const NSUInteger kDefaultNumberOfTests = 5;
 
-void setBeingRemoved(BOOL removed)
+id setBeingRemoved(id self, SEL selector, ...)
 {
-
+    return nil;
 }
 
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIWebViewDelegate>
@@ -22,6 +26,8 @@ void setBeingRemoved(BOOL removed)
     BOOL mIsPerformingTest;
     NSUInteger mTestsCounter;
     NSUInteger mNumberOfTestsToPerform;
+    BOOL mIsLoading;
+    NSDate* mStartDate;
 }
 
 @property (nonatomic, strong) UIPickerView* pickerView;
@@ -39,16 +45,19 @@ void setBeingRemoved(BOOL removed)
 {
     [super viewDidLoad];
     
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
     Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
     class_addMethod(class, @selector(willBeRemoved), setBeingRemoved, NULL);
     class_addMethod(class, @selector(removeFromSuperview), setBeingRemoved, NULL);
+#pragma clang diagnostic pop
     
     self.testResults = [NSMutableArray array];
     self.sdkTestResults = [NSMutableArray array];
     
     mIsPerformingTest       = NO;
     mTestsCounter           = 0;
-    mNumberOfTestsToPerform = 5;
+    mNumberOfTestsToPerform = kDefaultNumberOfTests;
     
     self.pickerView = [[UIPickerView alloc] init];
     self.pickerView.dataSource    = self;
@@ -81,6 +90,8 @@ void setBeingRemoved(BOOL removed)
 
 - (IBAction)start:(id)sender
 {
+    [RevSDK setOperationMode:kRSOperationModeOff];
+    
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
     
@@ -113,7 +124,7 @@ void setBeingRemoved(BOOL removed)
 
 - (void)done
 {
-    mNumberOfTestsToPerform = [self.pickerView selectedRowInComponent:0] + 6;
+    mNumberOfTestsToPerform = [self.pickerView selectedRowInComponent:0] + kDefaultNumberOfTests + 1;
     self.testsTextField.text = [NSString stringWithFormat:@"%ld", mNumberOfTestsToPerform];
     [self.testsTextField resignFirstResponder];
 }
@@ -131,7 +142,9 @@ void setBeingRemoved(BOOL removed)
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 15;
+    static const NSUInteger kNumberOfRows = 15;
+    
+    return kNumberOfRows;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -141,13 +154,10 @@ void setBeingRemoved(BOOL removed)
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%ld", row + 6];
+    return [NSString stringWithFormat:@"%ld", row + kDefaultNumberOfTests + 1];
 }
 
 #pragma mark - UIWebViewDelegate
-
-static NSDate* startDate = nil;
-static BOOL isLoading = NO;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
@@ -163,15 +173,16 @@ static BOOL isLoading = NO;
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
-    if (!isLoading)
+    if (!mIsLoading)
     {
-        isLoading = YES;
-         mIsPerformingTest = YES;
-        startDate = [NSDate date];
-        NSLog(@"DID START %@ %d", webView.request.URL, webView.isLoading);
-        [self.activityIndicatorView startAnimating];
+        ++mTestsCounter;
+        
+        mIsLoading                        = YES;
+        mIsPerformingTest                 = YES;
         self.activityIndicatorView.hidden = NO;
-
+        mStartDate                        = [NSDate date];
+        
+        [self.activityIndicatorView startAnimating];
     }
 }
 
@@ -179,22 +190,19 @@ static BOOL isLoading = NO;
 {
     if (!webView.isLoading)
     {
-        mIsPerformingTest = NO;
-        isLoading = NO;
+        mStartDate              = nil;
+        mIsPerformingTest       = NO;
+        mIsLoading              = NO;
+        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
         
-        NSLog(@"DID FINISH %@ %d", webView.request, webView.isLoading);
-        
-        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:startDate];
-        startDate = nil;
-        
-        [self.testResults addObject:@(interval)];
-        
+        NSMutableArray* array = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
+        [array addObject:@(interval)];
+    
         [self.activityIndicatorView stopAnimating];
         self.activityIndicatorView.hidden = YES;
         
         if (mTestsCounter < mNumberOfTestsToPerform)
         {
-            mTestsCounter++;
             [self performSelector:@selector(startLoading)
                        withObject:nil
                        afterDelay:1.0];
@@ -203,15 +211,12 @@ static BOOL isLoading = NO;
         {
             if (self.sdkTestResults.count == 0)
             {
+                [RevSDK setOperationMode:kRSOperationModeTransport];
+                
                 mTestsCounter = 0;
                 [self performSelector:@selector(startLoading)
                            withObject:nil
                            afterDelay:1.0];
-            }
-            else
-            {
-                 NSLog(@"Test results %@", self.testResults);
-                 NSLog(@"SDK Test results %@", self.sdkTestResults);
             }
         }
     }
