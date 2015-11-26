@@ -14,6 +14,14 @@
 
 namespace rs
 {
+    typedef enum
+    {
+        kRSOperationModeInnerOff,
+        kRSOperationModeInnerTransport,
+        kRSOperationModeInnerReport,
+        kRSOperationModeInnerTransportAndReport
+    }RSOperationModeInner;
+    
     class Protocol;
     class Connection;
     class Network;
@@ -39,6 +47,8 @@ namespace rs
         
         void loadConfiguration();
         void initialize();
+        
+        RSOperationModeInner mCurrentMode;
     };
 }
 
