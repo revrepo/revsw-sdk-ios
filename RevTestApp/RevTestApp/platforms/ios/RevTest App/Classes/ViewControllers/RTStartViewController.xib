@@ -50,7 +50,7 @@ you want to test?</string>
                 </button>
             </subviews>
             <animations/>
-            <color key="backgroundColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="HaO-pc-pVV" firstAttribute="centerX" secondItem="FcW-Ty-hPZ" secondAttribute="centerX" id="4hR-A0-eaW"/>
                 <constraint firstItem="Uor-wC-bXe" firstAttribute="centerX" secondItem="FcW-Ty-hPZ" secondAttribute="centerX" id="5Gk-xc-FSB"/>

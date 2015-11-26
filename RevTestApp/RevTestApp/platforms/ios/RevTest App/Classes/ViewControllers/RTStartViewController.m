@@ -6,7 +6,10 @@
 //
 //
 
+#import "UIViewController+RTUtils.h"
+
 #import "RTStartViewController.h"
+#import "RTMobileWebViewController.h"
 
 @implementation RTStartViewController
 
@@ -29,7 +32,13 @@
 
 - (IBAction)mobileWeb:(id)sender
 {
-    
+    UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
+    [self pushViewController:startViewController];
+}
+
+- (void)pushViewController:(UIViewController *)aViewController
+{
+    [self.navigationController pushViewController:aViewController animated:YES];
 }
 
 @end

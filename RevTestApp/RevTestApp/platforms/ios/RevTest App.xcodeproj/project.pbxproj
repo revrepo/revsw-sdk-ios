@@ -32,6 +32,10 @@
 		5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DDDDE1C061663003935A3 /* RevSDK.framework */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
 		5BEC8CA01C06FB2B0019BCD1 /* RTStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */; };
+		5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */; };
+		5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */; };
+		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
+		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -94,6 +98,13 @@
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
 		5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTStartViewController.m; sourceTree = "<group>"; };
 		5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTStartViewController.xib; sourceTree = "<group>"; };
+		5BEC8CA21C0706A00019BCD1 /* RTMobileWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTMobileWebViewController.h; sourceTree = "<group>"; };
+		5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTMobileWebViewController.m; sourceTree = "<group>"; };
+		5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTMobileWebViewController.xib; sourceTree = "<group>"; };
+		5BEC8CA81C0707F80019BCD1 /* UIViewController+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTUtils.h"; sourceTree = "<group>"; };
+		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
+		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
+		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -131,6 +142,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5BEC8CA71C0707D60019BCD1 /* Categories */,
 				5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */,
 				302D95EE14D2391D003F00A1 /* MainViewController.h */,
 				302D95EF14D2391D003F00A1 /* MainViewController.m */,
@@ -261,8 +273,22 @@
 				5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */,
 				5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */,
 				5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */,
+				5BEC8CA21C0706A00019BCD1 /* RTMobileWebViewController.h */,
+				5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */,
+				5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		5BEC8CA71C0707D60019BCD1 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5BEC8CA81C0707F80019BCD1 /* UIViewController+RTUtils.h */,
+				5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */,
+				5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */,
+				5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 		EB87FDF11871DA420020F90C /* Staging */ = {
@@ -368,6 +394,7 @@
 				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
+				5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
@@ -403,9 +430,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
+				5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
