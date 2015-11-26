@@ -20,6 +20,33 @@
     [NSURLProtocol registerClass:[RSURLProtocol class]];
 
     rs::Model::instance()->initialize();
+    
+    rs::Model::instance()->mCurrentMode = kRSOperationModeInnerTransportAndReport;
+}
+
++ (void)setOperationMode:(RSOperationMode)aOperationMode
+{
+    RSOperationModeInner innerMode;
+    
+    switch (aOperationMode)
+    {
+        case kRSOperationModeOff:
+            innerMode = kRSOperationModeInnerOff;
+            break;
+        case kRSOperationModeTransport:
+            innerMode = kRSOperationModeInnerTransport;
+            break;
+        case kRSOperationModeReport:
+            innerMode = kRSOperationModeInnerReport;
+            break;
+        case kRSOperationModeTransportAndReport:
+            innerMode = kRSOperationModeInnerTransportAndReport;
+            break;
+            
+        default: break;
+    }
+    
+    rs::Model::instance()->mCurrentMode = innerMode;
 }
 
 @end

@@ -11,6 +11,8 @@
 #import "RSURLProtocol.h"
 #import "RSURLConnection.h"
 
+#import "Model.hpp"
+
 @interface NSURLRequest (FileRequest)
 
 @property (nonatomic, readonly) BOOL isFileRequest;
@@ -36,6 +38,11 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
+    if (rs::Model::instance()->mCurrentMode == rs::kRSOperationModeInnerOff || rs::Model::instance()->mCurrentMode == rs::kRSOperationModeInnerReport)
+    {
+        return NO;
+    }
+    
     return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] && !aRequest.isFileRequest;
 }
 
