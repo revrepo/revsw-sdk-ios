@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace rs
 {
@@ -37,6 +39,7 @@ namespace rs
       std::shared_ptr<Configuration> mConfiguration;
         
       RSOperationModeInner mCurrentOperationMode;
+      std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
       public:
         
@@ -54,6 +57,10 @@ namespace rs
         RSOperationModeInner currentOperationMode()const;
         
         bool canTransport()const;
+        
+        void switchWhiteListOption(bool aOn);
+        
+        bool shouldTransportDomainName(std::string aDomainName);
     };
 }
 

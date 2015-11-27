@@ -49,4 +49,9 @@
     rs::Model::instance()->setOperationMode(innerMode);
 }
 
++ (void)setWhiteListOption:(BOOL)aOn
+{
+    rs::Model::instance()->switchWhiteListOption(aOn);
+}
+
 @end

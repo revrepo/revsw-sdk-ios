@@ -8,6 +8,7 @@
 
 #include <mutex>
 #include <map>
+#include <algorithm>
 
 #include "Model.hpp"
 #include "StandardProtocol.hpp"
@@ -30,6 +31,7 @@ namespace rs
         mConfigurationRefreshTimer = nullptr;
         mNetwork                   = new Network;
         mDataStorage               = new DataStorage;
+        mSpareDomainsWhiteList     = std::vector<std::string>();
     }
     
     Model* Model::instance()
@@ -79,6 +81,7 @@ namespace rs
               mDataStorage->saveConfiguration(configuration);
               mConfiguration = std::make_shared<Configuration>(configuration);
                
+               
               if (!mConfigurationRefreshTimer)
               {
                   std::function<void()> scheduledFunction = [this](){
@@ -117,5 +120,39 @@ namespace rs
     bool Model::canTransport()const
     {
         return mCurrentOperationMode == kRSOperationModeInnerTransport || mCurrentOperationMode == kRSOperationModeInnerTransportAndReport;
+    }
+    
+    void Model::switchWhiteListOption(bool aOn)
+    {
+       if (aOn)
+       {
+           mConfiguration->domainsWhiteList = mSpareDomainsWhiteList;
+       }
+       else
+       {
+           mSpareDomainsWhiteList = mConfiguration->domainsWhiteList;
+           mConfiguration->domainsWhiteList.clear();
+       }
+    }
+    
+    bool Model::shouldTransportDomainName(std::string aDomainName)
+    {
+        auto begin = mConfiguration->domainsBlackList.begin();
+        auto end   = mConfiguration->domainsBlackList.end();
+        
+        if (std::find(begin, end, aDomainName) != end)
+        {
+            return false;
+        }
+        
+        begin = mConfiguration->domainsWhiteList.begin();
+        end   = mConfiguration->domainsWhiteList.end();
+        
+        if (std::find(begin, end, aDomainName) != end)
+        {
+            return true;
+        }
+
+        return mConfiguration->domainsWhiteList.empty();
     }
 }
