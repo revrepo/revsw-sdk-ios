@@ -38,7 +38,11 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    return rs::Model::instance()->canTransport() &&
+    NSURL* URL             = [aRequest URL];
+    NSString* host         = [URL host];
+    std::string domainName = rs::stdStringFromNSString(host);
+    
+    return rs::Model::instance()->shouldTransportDomainName(domainName) &&
            ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
            !aRequest.isFileRequest;
 }

@@ -137,6 +137,11 @@ namespace rs
     
     bool Model::shouldTransportDomainName(std::string aDomainName)
     {
+        if (!canTransport())
+        {
+            return false;
+        }
+        
         auto begin = mConfiguration->domainsBlackList.begin();
         auto end   = mConfiguration->domainsBlackList.end();
         
