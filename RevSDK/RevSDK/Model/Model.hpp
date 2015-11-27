@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 #include <memory>
+#include <string>
+#include <vector>
 
 namespace rs
 {
@@ -36,6 +38,9 @@ namespace rs
       DataStorage* mDataStorage;
       std::shared_ptr<Configuration> mConfiguration;
         
+      RSOperationModeInner mCurrentOperationMode;
+      std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
+        
       public:
         
         Model();
@@ -48,7 +53,14 @@ namespace rs
         void loadConfiguration();
         void initialize();
         
-        RSOperationModeInner mCurrentMode;
+        void setOperationMode(const RSOperationModeInner& aOperationMode);
+        RSOperationModeInner currentOperationMode()const;
+        
+        bool canTransport()const;
+        
+        void switchWhiteListOption(bool aOn);
+        
+        bool shouldTransportDomainName(std::string aDomainName);
     };
 }
 

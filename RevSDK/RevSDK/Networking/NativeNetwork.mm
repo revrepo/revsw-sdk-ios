@@ -43,7 +43,6 @@ namespace rs
             \"domains_white_list\" : [\"mbeans.com\"],\
             \"domains_black_list\" : [] }}";
             
-            
             NSData* jsonData  = [json dataUsingEncoding:NSUTF8StringEncoding];
             Data data         = dataFromNSData(jsonData);
             Error error       = Error::notError();

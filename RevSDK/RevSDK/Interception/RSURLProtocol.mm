@@ -38,12 +38,13 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    if (rs::Model::instance()->mCurrentMode == rs::kRSOperationModeInnerOff || rs::Model::instance()->mCurrentMode == rs::kRSOperationModeInnerReport)
-    {
-        return NO;
-    }
+    NSURL* URL             = [aRequest URL];
+    NSString* host         = [URL host];
+    std::string domainName = rs::stdStringFromNSString(host);
     
-    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] && !aRequest.isFileRequest;
+    return rs::Model::instance()->shouldTransportDomainName(domainName) &&
+           ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
+           !aRequest.isFileRequest;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask

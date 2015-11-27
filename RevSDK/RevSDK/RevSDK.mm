@@ -46,7 +46,12 @@
         default: break;
     }
     
-    rs::Model::instance()->mCurrentMode = innerMode;
+    rs::Model::instance()->setOperationMode(innerMode);
+}
+
++ (void)setWhiteListOption:(BOOL)aOn
+{
+    rs::Model::instance()->switchWhiteListOption(aOn);
 }
 
 + (RSOperationMode)operationMode
