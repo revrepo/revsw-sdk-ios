@@ -59,6 +59,9 @@
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hnH-P0-bTe">
                         <rect key="frame" x="479" y="79" width="51" height="31"/>
                         <animations/>
+                        <connections>
+                            <action selector="switchValueChanged:" destination="pwK-4f-bWK" eventType="valueChanged" id="gM4-Hl-dJS"/>
+                        </connections>
                     </switch>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgo-Xo-0WF">
                         <rect key="frame" x="538" y="80" width="34" height="30"/>

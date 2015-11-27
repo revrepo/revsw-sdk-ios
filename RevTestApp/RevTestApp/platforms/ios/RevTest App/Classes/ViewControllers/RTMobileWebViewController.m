@@ -78,6 +78,8 @@ id setBeingRemoved(id self, SEL selector, ...)
     self.activityIndicatorView.hidden = YES;
     
     [self.view addSubview:self.activityIndicatorView];
+    
+    [RevSDK setWhiteListOption:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -86,7 +88,22 @@ id setBeingRemoved(id self, SEL selector, ...)
     [super viewWillAppear:animated];
 }
 
+- (void)willMoveToParentViewController:(UIViewController *)parent
+{
+    [super willMoveToParentViewController:parent];
+    
+    if (!parent)
+    {
+        [RevSDK setWhiteListOption:YES];
+    }
+}
+
 #pragma mark - Actions
+
+- (IBAction)switchValueChanged:(UISwitch*)aSender
+{
+    [RevSDK setWhiteListOption:!aSender.on];
+}
 
 - (IBAction)start:(id)sender
 {
