@@ -27,7 +27,8 @@ namespace rs
         Network();
         ~Network();
         
-        void loadConfigurationWithCompletionBlock(std::function<void(const Data&, const Error&)>);
+        //void loadConfigurationWithCompletionBlock(std::function<void(const Data&, const Error&)>);
+        void performRequest(std::string aURL, std::function<void(const Data&, const Error&)> aCompletionBlock);
     };
 }
 

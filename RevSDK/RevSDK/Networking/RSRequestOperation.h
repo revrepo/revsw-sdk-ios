@@ -10,9 +10,9 @@
 
 @interface RSRequestOperation : NSOperation
 
-- (instancetype)initWithEndPoint:(NSString *)aEndPoint
-                          method:(NSString *)aMethod
-                      parameters:(NSDictionary *)aParameters
-               completionHandler:(void(^)(NSData*, NSURLResponse*, NSError*))aCompletionHandler;
+- (instancetype)initWithURLString:(NSString *)aURLString
+                           method:(NSString *)aMethod
+                       parameters:(NSDictionary *)aParameters
+                completionHandler:(void(^)(NSData*, NSURLResponse*, NSError*))aCompletionHandler;
 
 @end

@@ -26,15 +26,6 @@ namespace rs
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
     
-    //edge host
-    const std::string kRSEdgeHost = "rev-200.revdn.net";
-    
-    NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint)
-    {
-        NSString* host = NSStringFromStdString(kRSEdgeHost);
-        return [NSString stringWithFormat:@"https://%@/%@", host, aEndPoint];
-    }
-    
     std::vector<std::string> vectorFromNSArray(NSArray<NSString *>* aArray)
     {
         std::vector<std::string> vector;
@@ -181,8 +172,11 @@ namespace rs
     
     std::shared_ptr<Request> requestFromURLRequest(NSURLRequest* aURLRequest)
     {
-        std::string URLString            = stdStringFromNSString(aURLRequest.URL.absoluteString);
-        std::shared_ptr<Request> request = std::make_shared<Request>(URLString);
+        std::string URLString                      = stdStringFromNSString(aURLRequest.URL.absoluteString);
+        std::string method                         = stdStringFromNSString(aURLRequest.HTTPMethod);
+        std::map<std::string, std::string> headers = stdMapFromNSDictionary(aURLRequest.allHTTPHeaderFields);
+        Data body                                  = dataFromNSData(aURLRequest.HTTPBody);
+        std::shared_ptr<Request> request           = std::make_shared<Request>(URLString, headers, method, body);
         
         return request;
     }

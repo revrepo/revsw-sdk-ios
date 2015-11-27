@@ -20,7 +20,7 @@ namespace rs
     class NativeNetwork
     {
       public:
-        void loadConfigurationWithCompletion(std::function<void(const Data&, const Response&, const Error&)>);
+          void performRequest(std::string aURL, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock);
     };
 }
 #endif

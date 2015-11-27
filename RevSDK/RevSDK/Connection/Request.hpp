@@ -12,19 +12,28 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <map>
+
+#include "Data.hpp"
 
 namespace rs
 {
    class Request
    {
+       std::string mMethod;
        std::string mURL;
+       std::map<std::string, std::string> mHeaders;
+       Data mBody;
        
    public:
        
-       Request(std::string aURL);
+       Request(std::string aURL, std::map<std::string, std::string> aHeaders, std::string aMethod, Data aBody);
        ~Request(){ printf("Request destructor called\n");}
        
-       std::string URL(){ return mURL; }
+       std::string method() const { return mMethod; }
+       std::string URL() const { return mURL; }
+       std::map<std::string, std::string> headers() const { return mHeaders; }
+       Data body() const { return mBody; }
    };
 }
 

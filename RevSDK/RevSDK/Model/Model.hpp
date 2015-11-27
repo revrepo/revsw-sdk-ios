@@ -30,9 +30,13 @@ namespace rs
     class DataStorage;
     class Configuration;
     class Timer;
+    class Request;
     
     class Model
     {
+        
+      std::string mSDKKey;
+        
       Timer* mConfigurationRefreshTimer;
       Network* mNetwork;
       DataStorage* mDataStorage;
@@ -49,18 +53,19 @@ namespace rs
         
         std::shared_ptr<Protocol> currentProtocol();
         std::shared_ptr<Connection> currentConnection();
+        std::string SDKKey()const { return mSDKKey; };
+        std::string edgeHost()const;
         
         void loadConfiguration();
-        void initialize();
+        void initialize(std::string aSDKKey);
         
         void setOperationMode(const RSOperationModeInner& aOperationMode);
         RSOperationModeInner currentOperationMode()const;
         
         bool canTransport()const;
-        
         void switchWhiteListOption(bool aOn);
-        
         bool shouldTransportDomainName(std::string aDomainName);
+        bool isDomainNameProvisioned(std::string aDomainName);
     };
 }
 
