@@ -183,10 +183,17 @@ namespace rs
     
     NSURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest)
     {
-        NSString* URLString = NSStringFromStdString(aRequest.get()->URL());
-        NSURL* URL          = [NSURL URLWithString:URLString];
+        NSString* URLString          = NSStringFromStdString(aRequest->URL());
+        NSURL* URL                   = [NSURL URLWithString:URLString];
+        NSString* method             = NSStringFromStdString(aRequest->method());
+        NSDictionary* headers        = NSDictionaryFromStdMap(aRequest->headers());
+        NSData* body                 = NSDataFromData(aRequest->body());
+        NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:URL];
+        request.HTTPBody             = body;
+        request.allHTTPHeaderFields  = headers;
+        request.HTTPMethod           = method;
         
-        return [NSURLRequest requestWithURL:URL];
+        return request;
     }
     
     std::shared_ptr<Response> responseFromHTTPURLResponse(NSHTTPURLResponse* aHTTPURLResponse)
