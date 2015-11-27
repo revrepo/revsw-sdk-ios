@@ -38,12 +38,9 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    if (rs::Model::instance()->mCurrentMode == rs::kRSOperationModeInnerOff || rs::Model::instance()->mCurrentMode == rs::kRSOperationModeInnerReport)
-    {
-        return NO;
-    }
-    
-    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] && !aRequest.isFileRequest;
+    return rs::Model::instance()->canTransport() &&
+           ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
+           !aRequest.isFileRequest;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask

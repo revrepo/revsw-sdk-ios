@@ -103,4 +103,19 @@ namespace rs
     {
         loadConfiguration();
     }
+    
+    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
+    {
+        mCurrentOperationMode = aOperationMode;
+    }
+    
+    RSOperationModeInner Model::currentOperationMode() const
+    {
+        return mCurrentOperationMode;
+    }
+    
+    bool Model::canTransport()const
+    {
+        return mCurrentOperationMode == kRSOperationModeInnerTransport || mCurrentOperationMode == kRSOperationModeInnerTransportAndReport;
+    }
 }

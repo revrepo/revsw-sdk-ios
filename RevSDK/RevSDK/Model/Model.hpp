@@ -36,6 +36,8 @@ namespace rs
       DataStorage* mDataStorage;
       std::shared_ptr<Configuration> mConfiguration;
         
+      RSOperationModeInner mCurrentOperationMode;
+        
       public:
         
         Model();
@@ -48,7 +50,10 @@ namespace rs
         void loadConfiguration();
         void initialize();
         
-        RSOperationModeInner mCurrentMode;
+        void setOperationMode(const RSOperationModeInner& aOperationMode);
+        RSOperationModeInner currentOperationMode()const;
+        
+        bool canTransport()const;
     };
 }
 
