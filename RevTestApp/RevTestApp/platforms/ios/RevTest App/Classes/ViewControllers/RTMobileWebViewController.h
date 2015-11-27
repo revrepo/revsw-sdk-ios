@@ -14,5 +14,6 @@
 @property (nonatomic, weak) IBOutlet UITextField* testsTextField;
 @property (nonatomic, weak) IBOutlet UISwitch*    redirectSwitch;
 @property (nonatomic, weak) IBOutlet UIWebView*   webView;
+@property (nonatomic, weak) IBOutlet UIButton*    startButton;
 
 @end

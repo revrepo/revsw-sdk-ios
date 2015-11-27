@@ -176,12 +176,12 @@ id setBeingRemoved(id self, SEL selector, ...)
     if (!mIsLoading)
     {
         ++mTestsCounter;
-        
+     
+        self.startButton.enabled          = NO;
         mIsLoading                        = YES;
         mIsPerformingTest                 = YES;
         self.activityIndicatorView.hidden = NO;
         mStartDate                        = [NSDate date];
-        
         [self.activityIndicatorView startAnimating];
     }
 }
@@ -218,15 +218,20 @@ id setBeingRemoved(id self, SEL selector, ...)
                            withObject:nil
                            afterDelay:1.0];
             }
+            else
+            {
+                self.startButton.enabled = YES;
+            }
         }
     }
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
     [self.activityIndicatorView stopAnimating];
     self.activityIndicatorView.hidden = YES;
-    mIsPerformingTest = NO;
+    mIsPerformingTest                 = NO;
+    mIsLoading                        = NO;
 }
 
 @end

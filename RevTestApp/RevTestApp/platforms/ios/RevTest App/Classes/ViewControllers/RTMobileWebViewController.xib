@@ -107,6 +107,7 @@
             <connections>
                 <outlet property="URLTextField" destination="xg6-Ww-Oll" id="8nk-Bp-V4S"/>
                 <outlet property="redirectSwitch" destination="hnH-P0-bTe" id="WAZ-Ps-6cj"/>
+                <outlet property="startButton" destination="fgo-Xo-0WF" id="QUR-gx-lqY"/>
                 <outlet property="testsTextField" destination="J4i-zZ-dW6" id="zvO-Gv-Njw"/>
                 <outlet property="webView" destination="Gjf-Ce-513" id="BOV-Ca-uXe"/>
             </connections>
