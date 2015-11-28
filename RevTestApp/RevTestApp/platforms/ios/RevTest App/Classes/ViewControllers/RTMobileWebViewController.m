@@ -45,6 +45,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     [super viewDidLoad];
     
+    // in order to get rid of iOS bug. unrecognized selector exception is thrown in the WebActionDisablingCALayerDelegate private Apple class otherwise
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
@@ -207,12 +208,11 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     if (!webView.isLoading)
     {
-        mStartDate              = nil;
         mIsPerformingTest       = NO;
         mIsLoading              = NO;
         NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
-        
-        NSMutableArray* array = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
+        mStartDate              = nil;
+        NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
         [array addObject:@(interval)];
     
         [self.activityIndicatorView stopAnimating];
