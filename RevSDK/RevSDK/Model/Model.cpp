@@ -160,6 +160,14 @@ namespace rs
             return false;
         }
         
+        begin = mConfiguration->domainsProvisionedList.begin();
+        end   = mConfiguration->domainsProvisionedList.end();
+        
+        if (std::find(begin, end, aDomainName) != end)
+        {
+            return true;
+        }
+        
         begin = mConfiguration->domainsWhiteList.begin();
         end   = mConfiguration->domainsWhiteList.end();
         
