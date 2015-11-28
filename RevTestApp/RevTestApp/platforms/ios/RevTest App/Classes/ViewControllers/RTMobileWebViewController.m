@@ -247,7 +247,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
-   // NSLog(@"Webview error %@", aError);
+    NSLog(@"Webview error %@", aError);
     
     [self.activityIndicatorView stopAnimating];
     self.activityIndicatorView.hidden = YES;

@@ -39,7 +39,7 @@ namespace rs
             \"stats_reporting_interval\" : 100,\
             \"stats_reporting_level\" : \"out_of_band\",\
             \"stats_reporting_max_request_per_report\" : 1,\
-            \"domains_provisioned_list\" : [ \"mbeans.com\"],\
+            \"domains_provisioned_list\" : [ \"mbeans.com\", \"cnn.com\"],\
             \"domains_white_list\" : [\"mbeans.com\"],\
             \"domains_black_list\" : [] }}";
             
