@@ -54,7 +54,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     [newRequest setHTTPMethod:aRequest.HTTPMethod];
     [newRequest setHTTPBody:aRequest.HTTPBody];
     
-    return aRequest;
+    return newRequest;
 }
 
 @end
