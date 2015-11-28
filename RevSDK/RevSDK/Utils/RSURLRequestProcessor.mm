@@ -36,7 +36,6 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     }
     else
     {
-        
         scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
@@ -46,13 +45,21 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
         [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
     }
     
+    scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
+    std::string SDKKey          = rs::Model::instance()->SDKKey();
+    NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
+    NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
+    
+    [newRequest addValue:hostHeader forHTTPHeaderField:kRSHostHeader];
+    [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
+    
     NSString* newHost              = [absoluteString stringByReplacingOccurrencesOfString:host withString:transformedEdgeHost];
     NSURLComponents* URLComponents = [NSURLComponents new];
     URLComponents.host             = newHost;
     URLComponents.scheme           = scheme;
-    NSURL* newURL                  = URLComponents.URL;
+   // NSURL* newURL                  = URLComponents.URL;
     
-    [newRequest setURL:newURL];
+    [newRequest setURL:[NSURL URLWithString:@"http://testsjc20-bp01.revsw.net/"]];
     [newRequest setHTTPMethod:aRequest.HTTPMethod];
     [newRequest setHTTPBody:aRequest.HTTPBody];
     
