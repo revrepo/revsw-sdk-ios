@@ -11,6 +11,7 @@
 
 #import "RSUtils.h"
 #import "RSURLConnection.h"
+#import "RSURLRequestProcessor.h"
 
 #import "ConnectionProxy.h"
 #import "Data.hpp"
@@ -64,7 +65,8 @@
             [self.delegate connection:self didFailWithError:error];
         };
         
-        connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(aRequest));
+        NSURLRequest* newRequest = [RSURLRequestProcessor proccessRequest:aRequest];
+        connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     

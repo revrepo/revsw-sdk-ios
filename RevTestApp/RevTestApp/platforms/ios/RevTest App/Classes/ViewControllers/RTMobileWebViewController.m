@@ -58,7 +58,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     
     mIsPerformingTest       = NO;
     mTestsCounter           = 0;
-    mNumberOfTestsToPerform = kDefaultNumberOfTests;
+    mNumberOfTestsToPerform = self.testsTextField.text.integerValue;
     
     self.pickerView = [[UIPickerView alloc] init];
     self.pickerView.dataSource    = self;
@@ -108,6 +108,8 @@ id setBeingRemoved(id self, SEL selector, ...)
 
 - (IBAction)start:(id)sender
 {
+    mTestsCounter = 0;
+    
     [RevSDK setOperationMode:kRSOperationModeOff];
     
     [self.testResults removeAllObjects];
