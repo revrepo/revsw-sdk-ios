@@ -27,7 +27,6 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     BOOL isProvisioned              = rs::Model::instance()->isDomainNameProvisioned(stdHost);
     std::string edgeHost            = rs::Model::instance()->edgeHost();
     NSString* transformedEdgeHost   = rs::NSStringFromStdString(edgeHost);
-    NSString* absoluteString        = aRequest.URL.absoluteString;
     NSString* scheme                = URL.scheme;
     
     if (isProvisioned)
@@ -46,9 +45,8 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
         [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
     }
     
-    NSString* newHost              = [absoluteString stringByReplacingOccurrencesOfString:host withString:transformedEdgeHost];
     NSURLComponents* URLComponents = [NSURLComponents new];
-    URLComponents.host             = newHost;
+    URLComponents.host             = transformedEdgeHost;
     URLComponents.scheme           = scheme;
     NSURL* newURL                  = URLComponents.URL;
     
@@ -56,7 +54,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     [newRequest setHTTPMethod:aRequest.HTTPMethod];
     [newRequest setHTTPBody:aRequest.HTTPBody];
     
-    return newRequest;
+    return aRequest;
 }
 
 @end
