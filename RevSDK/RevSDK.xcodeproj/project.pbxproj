@@ -48,6 +48,8 @@
 		5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3431BFB7AE200217971 /* StandardConnection.hpp */; };
 		5B54C3481BFB7B8700217971 /* QUICConnection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3461BFB7B8700217971 /* QUICConnection.cpp */; };
 		5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3471BFB7B8700217971 /* QUICConnection.hpp */; };
+		5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */; };
+		5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */; };
 		5BC497B31C03609300FF0922 /* ConfigurationProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC497B11C03609300FF0922 /* ConfigurationProcessor.cpp */; };
 		5BC497B41C03609300FF0922 /* ConfigurationProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BC497B21C03609300FF0922 /* ConfigurationProcessor.hpp */; };
 		5BC497B71C03782B00FF0922 /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC497B51C03782B00FF0922 /* Configuration.cpp */; };
@@ -119,6 +121,8 @@
 		5B54C3431BFB7AE200217971 /* StandardConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StandardConnection.hpp; sourceTree = "<group>"; };
 		5B54C3461BFB7B8700217971 /* QUICConnection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QUICConnection.cpp; sourceTree = "<group>"; };
 		5B54C3471BFB7B8700217971 /* QUICConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QUICConnection.hpp; sourceTree = "<group>"; };
+		5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLRequestProcessor.h; sourceTree = "<group>"; };
+		5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLRequestProcessor.mm; sourceTree = "<group>"; };
 		5BC497B11C03609300FF0922 /* ConfigurationProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationProcessor.cpp; sourceTree = "<group>"; };
 		5BC497B21C03609300FF0922 /* ConfigurationProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConfigurationProcessor.hpp; sourceTree = "<group>"; };
 		5BC497B51C03782B00FF0922 /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Configuration.cpp; sourceTree = "<group>"; };
@@ -247,6 +251,8 @@
 				5BC497B21C03609300FF0922 /* ConfigurationProcessor.hpp */,
 				5BC497B51C03782B00FF0922 /* Configuration.cpp */,
 				5BC497B61C03782B00FF0922 /* Configuration.hpp */,
+				5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */,
+				5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -356,6 +362,7 @@
 				5BE3F8721C04A0DE0087BC28 /* NativeTimer.h in Headers */,
 				5BC497B41C03609300FF0922 /* ConfigurationProcessor.hpp in Headers */,
 				5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */,
+				5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */,
 				5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */,
 				5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */,
 				5B4FCD3A1C033EA400C8D320 /* RSUtilsBridge.hpp in Headers */,
@@ -519,6 +526,7 @@
 				5B54C3481BFB7B8700217971 /* QUICConnection.cpp in Sources */,
 				5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */,
 				5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */,
+				5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */,
 				5BC497B31C03609300FF0922 /* ConfigurationProcessor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

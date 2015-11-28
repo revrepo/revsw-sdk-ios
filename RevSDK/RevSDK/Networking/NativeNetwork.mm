@@ -19,7 +19,7 @@ namespace rs
 {
     static NSOperationQueue* operationQueue = [NSOperationQueue new];
     
-    void NativeNetwork::loadConfigurationWithCompletion(std::function<void(const Data& aData, const Response& aResponse, const Error& aError)> aCompletion)
+    void NativeNetwork::performRequest(std::string aURL, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock)
     {
         void (^completionHandler)(NSData*, NSURLResponse*, NSError*) = ^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
             
@@ -48,13 +48,13 @@ namespace rs
             Error error       = Error::notError();
             Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse).get());
             
-            aCompletion(data, response, error);
+            aCompletionBlock(data, response, error);
         };
         
-        RSRequestOperation* requestOperation = [[RSRequestOperation alloc] initWithEndPoint:@"sdk/config"
-                                                                                     method:@"GET"
-                                                                                 parameters:nil
-                                                                          completionHandler:completionHandler];
+        RSRequestOperation* requestOperation = [[RSRequestOperation alloc] initWithURLString:NSStringFromStdString(aURL)
+                                                                                      method:@"GET"
+                                                                                  parameters:nil
+                                                                           completionHandler:completionHandler];
         [operationQueue addOperation:requestOperation];
     }
 }

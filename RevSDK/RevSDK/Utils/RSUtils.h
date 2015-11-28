@@ -36,10 +36,6 @@ namespace rs
     //protocols
     extern const std::string kRSHTTPSProtocolName;
     
-    //edge host
-    extern const std::string kRSEdgeHost;
-    NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint);
-    
     Configuration configurationFromNSDictionary(NSDictionary* aDictionary);
     NSDictionary* NSDictionaryFromConfiguration(const Configuration&);
     

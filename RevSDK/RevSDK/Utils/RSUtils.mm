@@ -26,15 +26,6 @@ namespace rs
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
     
-    //edge host
-    const std::string kRSEdgeHost = "rev-200.revdn.net";
-    
-    NSString* absoluteURLStringFromEndPoint(NSString* aEndPoint)
-    {
-        NSString* host = NSStringFromStdString(kRSEdgeHost);
-        return [NSString stringWithFormat:@"https://%@/%@", host, aEndPoint];
-    }
-    
     std::vector<std::string> vectorFromNSArray(NSArray<NSString *>* aArray)
     {
         std::vector<std::string> vector;
@@ -181,18 +172,28 @@ namespace rs
     
     std::shared_ptr<Request> requestFromURLRequest(NSURLRequest* aURLRequest)
     {
-        std::string URLString            = stdStringFromNSString(aURLRequest.URL.absoluteString);
-        std::shared_ptr<Request> request = std::make_shared<Request>(URLString);
+        std::string URLString                      = stdStringFromNSString(aURLRequest.URL.absoluteString);
+        std::string method                         = stdStringFromNSString(aURLRequest.HTTPMethod);
+        std::map<std::string, std::string> headers = stdMapFromNSDictionary(aURLRequest.allHTTPHeaderFields);
+        Data body                                  = dataFromNSData(aURLRequest.HTTPBody);
+        std::shared_ptr<Request> request           = std::make_shared<Request>(URLString, headers, method, body);
         
         return request;
     }
     
     NSURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest)
     {
-        NSString* URLString = NSStringFromStdString(aRequest.get()->URL());
-        NSURL* URL          = [NSURL URLWithString:URLString];
+        NSString* URLString          = NSStringFromStdString(aRequest->URL());
+        NSURL* URL                   = [NSURL URLWithString:URLString];
+        NSString* method             = NSStringFromStdString(aRequest->method());
+        NSDictionary* headers        = NSDictionaryFromStdMap(aRequest->headers());
+        NSData* body                 = NSDataFromData(aRequest->body());
+        NSMutableURLRequest* request = [[NSMutableURLRequest alloc] initWithURL:URL];
+        request.HTTPBody             = body;
+        request.allHTTPHeaderFields  = headers;
+        request.HTTPMethod           = method;
         
-        return [NSURLRequest requestWithURL:URL];
+        return request;
     }
     
     std::shared_ptr<Response> responseFromHTTPURLResponse(NSHTTPURLResponse* aHTTPURLResponse)

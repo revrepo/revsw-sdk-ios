@@ -23,6 +23,7 @@
 #include "Configuration.hpp"
 #include "DataStorage.hpp"
 #include "Timer.hpp"
+#include "Request.hpp"
 
 namespace rs
 {
@@ -47,6 +48,11 @@ namespace rs
         }
         
         return _instance;
+    }
+    
+    std::string Model::edgeHost() const
+    {
+        return mConfiguration->edgeHost;
     }
     
     std::shared_ptr<Protocol>  Model::currentProtocol()
@@ -99,11 +105,15 @@ namespace rs
            }
         };
         
-        mNetwork->loadConfigurationWithCompletionBlock(completionBlock);
+        const std::string kConfigurationEndPoint = "sdk/config";
+        std::string URL                          = edgeHost() + kConfigurationEndPoint;
+        mNetwork->performRequest(URL, completionBlock);
     }
     
-    void Model::initialize()
+    void Model::initialize(std::string aSDKKey)
     {
+        mSDKKey = aSDKKey;
+        setOperationMode(rs::kRSOperationModeInnerTransportAndReport);
         loadConfiguration();
     }
     
@@ -159,5 +169,12 @@ namespace rs
         }
 
         return mConfiguration->domainsWhiteList.empty();
+    }
+    
+    bool Model::isDomainNameProvisioned(std::string aDomainName)
+    {
+        auto begin = mConfiguration->domainsProvisionedList.begin();
+        auto end   = mConfiguration->domainsProvisionedList.end();
+        return std::find(begin, end, aDomainName) != end;
     }
 }

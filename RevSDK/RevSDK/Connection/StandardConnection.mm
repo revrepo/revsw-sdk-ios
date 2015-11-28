@@ -38,13 +38,6 @@ namespace rs
         }
         
         [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
-        [mutableRequest addValue:targetHost forHTTPHeaderField:@"Host"];
-        
-        NSString* edgeHost       = NSStringFromStdString(kRSEdgeHost);
-        NSString* absoluteString = request.URL.absoluteString;
-        NSString* newURL         = [absoluteString stringByReplacingOccurrencesOfString:targetHost
-                                              withString:edgeHost];
-        [mutableRequest setURL:[NSURL URLWithString:newURL]];
 
         NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration];

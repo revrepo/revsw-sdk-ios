@@ -12,6 +12,7 @@
 #import "RSURLProtocol.h"
 
 #import "Model.hpp"
+#import "RSUtils.h"
 
 @implementation RevSDK
 
@@ -19,9 +20,7 @@
 {
     [NSURLProtocol registerClass:[RSURLProtocol class]];
 
-    rs::Model::instance()->initialize();
-    
-    rs::Model::instance()->setOperationMode(rs::kRSOperationModeInnerTransportAndReport);
+    rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
 }
 
 + (void)setOperationMode:(RSOperationMode)aOperationMode
