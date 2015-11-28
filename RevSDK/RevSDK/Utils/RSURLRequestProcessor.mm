@@ -52,17 +52,15 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     [newRequest addValue:hostHeader forHTTPHeaderField:kRSHostHeader];
     [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
     
-    NSString* newHost              = [absoluteString stringByReplacingOccurrencesOfString:host withString:transformedEdgeHost];
     NSURLComponents* URLComponents = [NSURLComponents new];
     URLComponents.host             = transformedEdgeHost;
     URLComponents.scheme           = scheme;
-   // NSURL* newURL                  = URLComponents.URL;
     
     [newRequest setURL:[NSURL URLWithString:@"http://testsjc20-bp01.revsw.net/"]];
     [newRequest setHTTPMethod:aRequest.HTTPMethod];
     [newRequest setHTTPBody:aRequest.HTTPBody];
     
-    return aRequest;
+    return newRequest;
 }
 
 @end
