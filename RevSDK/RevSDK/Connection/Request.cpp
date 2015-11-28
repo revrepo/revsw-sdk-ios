@@ -10,7 +10,7 @@
 
 namespace rs
 {
-    Request::Request(std::string aURL): mURL(aURL)
+    Request::Request(std::string aURL, std::map<std::string, std::string> aHeaders, std::string aMethod, Data aBody): mURL(aURL), mHeaders(aHeaders), mMethod(aMethod), mBody(aBody)
     {
         
     }

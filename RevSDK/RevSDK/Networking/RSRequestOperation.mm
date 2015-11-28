@@ -14,7 +14,7 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
 @interface RSRequestOperation ()
 
 @property (nonatomic, copy) NSString* method;
-@property (nonatomic, copy) NSString* endPoint;
+@property (nonatomic, copy) NSString* URLString;
 @property (nonatomic, strong) NSDictionary* parameters;
 @property (nonatomic, copy) void (^completionHandler)(NSData*, NSURLResponse*, NSError*);
 
@@ -22,13 +22,13 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
 
 @implementation RSRequestOperation
 
-- (instancetype)initWithEndPoint:(NSString *)aEndPoint method:(NSString *)aMethod parameters:(NSDictionary *)aParameters completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))aCompletionHandler
+- (instancetype)initWithURLString:(NSString *)aURLString method:(NSString *)aMethod parameters:(NSDictionary *)aParameters completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))aCompletionHandler
 {
     self = [super init];
     
     if (self)
     {
-        self.endPoint          = aEndPoint;
+        self.URLString         = aURLString;
         self.method            = aMethod;
         self.parameters        = aParameters;
         self.completionHandler = aCompletionHandler;
@@ -39,9 +39,7 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
 
 - (void)main
 {
-    NSString* absoluteURLString = rs::absoluteURLStringFromEndPoint(self.endPoint);
-    
-    NSURL* URL = [NSURL URLWithString:absoluteURLString];
+    NSURL* URL                   = [NSURL URLWithString:self.URLString];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
     
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
