@@ -179,18 +179,6 @@ id setBeingRemoved(id self, SEL selector, ...)
 
 #pragma mark - UIWebViewDelegate
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    if (request.URL.isValid)
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
-}
-
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     if (!mIsLoading)
@@ -247,10 +235,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
-    [self.activityIndicatorView stopAnimating];
-    self.activityIndicatorView.hidden = YES;
-    mIsPerformingTest                 = NO;
-    mIsLoading                        = NO;
+    NSLog(@"Failure %@ description %@", [aWebView stringByEvaluatingJavaScriptFromString:@"window.location.href"], aError);
 }
 
 @end
