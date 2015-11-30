@@ -13,6 +13,8 @@
 #import "RTMobileWebViewController.h"
 #import "NSURL+RTUTils.h"
 #import "UIViewController+RTUtils.h"
+#import "RSContainerViewController.h"
+#import "RSReportViewController.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 
@@ -51,6 +53,12 @@ id setBeingRemoved(id self, SEL selector, ...)
     Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
     class_addMethod(class, @selector(willBeRemoved), setBeingRemoved, NULL);
     class_addMethod(class, @selector(removeFromSuperview), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(setBeingRemoved:), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(_webCustomViewWillBeRemovedFromSuperview), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(layer), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(superview), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(setNode:), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), setBeingRemoved, NULL);
 #pragma clang diagnostic pop
     
     self.testResults = [NSMutableArray array];
@@ -179,10 +187,15 @@ id setBeingRemoved(id self, SEL selector, ...)
 
 #pragma mark - UIWebViewDelegate
 
+static int scounter;
+static int fcounter;
+
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
     if (!mIsLoading)
     {
+        NSLog(@"Start %d", ++scounter);
+        
         ++mTestsCounter;
      
         self.startButton.enabled          = NO;
@@ -198,6 +211,8 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     if (!webView.isLoading)
     {
+        NSLog(@"Finish %d", ++fcounter);
+        
         mIsPerformingTest       = NO;
         mIsLoading              = NO;
         NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
@@ -227,9 +242,13 @@ id setBeingRemoved(id self, SEL selector, ...)
             }
             else
             {
-                NSLog(@"Results %@ sdk results %@", self.testResults, self.sdkTestResults);
+                self.startButton.enabled                     = YES;
                 
-                self.startButton.enabled = YES;
+                RSContainerViewController* containerViewController = [RSContainerViewController new];
+                containerViewController.directResults = self.testResults;
+                containerViewController.sdkResults = self.sdkTestResults;
+                
+                [self.navigationController pushViewController:containerViewController animated:YES];
             }
         }
     }

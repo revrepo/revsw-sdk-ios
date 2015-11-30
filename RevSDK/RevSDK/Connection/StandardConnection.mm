@@ -46,6 +46,8 @@ namespace rs
         // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
         // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
         
+        NSLog(@"Request URL %@", mutableRequest.URL);
+        
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                                                                            
