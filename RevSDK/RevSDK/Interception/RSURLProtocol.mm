@@ -51,7 +51,7 @@
 {
     NSURLRequest* request = [aTask currentRequest];
 
-    return ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:request] && !request.isFileRequest;
+    return [self canInitWithRequest:request];
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)aRequest

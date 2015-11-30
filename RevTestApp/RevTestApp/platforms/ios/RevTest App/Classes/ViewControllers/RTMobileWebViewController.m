@@ -249,11 +249,11 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     NSLog(@"Webview error %@", aError);
     
-    [self.activityIndicatorView stopAnimating];
+   /* [self.activityIndicatorView stopAnimating];
     self.activityIndicatorView.hidden = YES;
     mIsPerformingTest                 = NO;
     mIsLoading                        = NO;
-    self.startButton.enabled          = YES;
+    self.startButton.enabled          = YES;*/
 }
 
 @end
