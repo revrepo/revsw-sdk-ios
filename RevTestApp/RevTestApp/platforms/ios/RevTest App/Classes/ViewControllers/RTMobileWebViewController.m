@@ -227,6 +227,8 @@ id setBeingRemoved(id self, SEL selector, ...)
             }
             else
             {
+                NSLog(@"Results %@ sdk results %@", self.testResults, self.sdkTestResults);
+                
                 self.startButton.enabled = YES;
             }
         }

@@ -28,6 +28,8 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
+		5B0BFEDA1C0C53DE0057715A /* RSReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFED91C0C53DE0057715A /* RSReportViewController.m */; };
+		5B0BFEDC1C0C53F40057715A /* RSReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEDB1C0C53F40057715A /* RSReportViewController.xib */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DDDDE1C061663003935A3 /* RevSDK.framework */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
@@ -93,6 +95,9 @@
 		30C1856519D5FC0A00212699 /* icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@3x.png"; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* RevTest App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RevTest App-Prefix.pch"; sourceTree = "<group>"; };
+		5B0BFED81C0C53DE0057715A /* RSReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReportViewController.h; sourceTree = "<group>"; };
+		5B0BFED91C0C53DE0057715A /* RSReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReportViewController.m; sourceTree = "<group>"; };
+		5B0BFEDB1C0C53F40057715A /* RSReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSReportViewController.xib; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5B5DDDDE1C061663003935A3 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
@@ -276,6 +281,9 @@
 				5BEC8CA21C0706A00019BCD1 /* RTMobileWebViewController.h */,
 				5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */,
 				5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */,
+				5B0BFED81C0C53DE0057715A /* RSReportViewController.h */,
+				5B0BFED91C0C53DE0057715A /* RSReportViewController.m */,
+				5B0BFEDB1C0C53F40057715A /* RSReportViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -397,6 +405,7 @@
 				5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
+				5B0BFEDC1C0C53F40057715A /* RSReportViewController.xib in Resources */,
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
 				30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */,
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
@@ -433,6 +442,7 @@
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
+				5B0BFEDA1C0C53DE0057715A /* RSReportViewController.m in Sources */,
 				5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
