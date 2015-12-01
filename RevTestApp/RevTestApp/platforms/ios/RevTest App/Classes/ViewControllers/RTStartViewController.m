@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+RTUtils.h"
-
+#import "MainViewController.h"
 #import "RTStartViewController.h"
 #import "RTMobileWebViewController.h"
 
@@ -27,7 +27,7 @@
 
 - (IBAction)hybridMobile:(id)sender
 {
-    
+    [self pushViewController:[MainViewController new]];
 }
 
 - (IBAction)mobileWeb:(id)sender
