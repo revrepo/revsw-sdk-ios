@@ -38,7 +38,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
         scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
+        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", @"0efbbd35-a131-4419-b330-00de5eb3696b", transformedEdgeHost];
         
         [newRequest addValue:hostHeader forHTTPHeaderField:kRSHostHeader];
         [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
@@ -47,17 +47,17 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
     std::string SDKKey          = rs::Model::instance()->SDKKey();
     NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-    NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
+    NSString* hostHeader        = @"0efbbd35-a131-4419-b330-00de5eb3696b.revdn.net";//[NSString stringWithFormat:@"%@.%@", @"0efbbd35-a131-4419-b330-00de5eb3696b", transformedEdgeHost];
     
-    [newRequest addValue:hostHeader forHTTPHeaderField:kRSHostHeader];
-    [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
+    [newRequest setValue:@"0efbbd35-a131-4419-b330-00de5eb3696b.revdn.net" forHTTPHeaderField:kRSHostHeader];
+    [newRequest setValue:@"edition.cnn.com" forHTTPHeaderField:kRSRevHostHeader];
     
     NSURLComponents* URLComponents = [NSURLComponents new];
     URLComponents.host             = transformedEdgeHost;
     URLComponents.scheme           = scheme;
     
-    [newRequest setURL:[NSURL URLWithString:@"http://testsjc20-bp01.revsw.net/"]];
-    [newRequest setHTTPMethod:aRequest.HTTPMethod];
+    [newRequest setURL:[NSURL URLWithString:@"http://rev-200.revdn.net"]];//@"http://testsjc20-bp01.revsw.net/"]];
+    [newRequest setHTTPMethod:@"GET"];
     [newRequest setHTTPBody:aRequest.HTTPBody];
     
     return newRequest;

@@ -110,7 +110,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     mTestsCounter = 0;
     
-    [RevSDK setOperationMode:kRSOperationModeOff];
+    //[RevSDK setOperationMode:kRSOperationModeOff];
     
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
@@ -195,6 +195,8 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     if (!mIsLoading)
     {
+        NSLog(@"Start");
+        
         ++mTestsCounter;
      
         self.startButton.enabled          = NO;
@@ -210,6 +212,8 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     if (!webView.isLoading)
     {
+        NSLog(@"Finish");
+        
         mIsPerformingTest       = NO;
         mIsLoading              = NO;
         NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
@@ -230,7 +234,7 @@ id setBeingRemoved(id self, SEL selector, ...)
         {
             if (self.sdkTestResults.count == 0)
             {
-                [RevSDK setOperationMode:kRSOperationModeTransport];
+               // [RevSDK setOperationMode:kRSOperationModeTransport];
                 
                 mTestsCounter = 0;
                 [self performSelector:@selector(startLoading)
