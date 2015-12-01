@@ -56,7 +56,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     URLComponents.host             = transformedEdgeHost;
     URLComponents.scheme           = scheme;
     
-    [newRequest setURL:[NSURL URLWithString:@"http://rev-200.revdn.net"]];//@"http://testsjc20-bp01.revsw.net/"]];
+    [newRequest setURL:[NSURL URLWithString:@"https://rev-200.revdn.net"]];//@"http://testsjc20-bp01.revsw.net/"]];
     [newRequest setHTTPMethod:@"GET"];
     [newRequest setHTTPBody:aRequest.HTTPBody];
     
