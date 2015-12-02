@@ -13,6 +13,9 @@
 
 #include <string>
 
+static NSString* const kRSNonVPNURL = @"https://rev-200.revdn.net";
+static NSString* const kRSVPNURL = @"http://testsjc20-bp01.revsw.net/";
+
 static NSString* const kRSHostHeader = @"Host";
 static NSString* const kRSRevHostHeader = @"X-Rev-Host";
 
@@ -20,7 +23,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
 
 + (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest
 {
-    NSMutableURLRequest* newRequest = [NSMutableURLRequest new];
+    NSMutableURLRequest* newRequest = [aRequest mutableCopy];
     NSURL* URL                      = aRequest.URL;
     NSString* host                  = URL.host;
     std::string  stdHost            = rs::stdStringFromNSString(host);
@@ -38,27 +41,17 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
         scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", @"0efbbd35-a131-4419-b330-00de5eb3696b", transformedEdgeHost];
+        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
         
-        [newRequest addValue:hostHeader forHTTPHeaderField:kRSHostHeader];
-        [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
+        [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
+        [newRequest setValue:host forHTTPHeaderField:kRSRevHostHeader];
     }
-    
-    scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
-    std::string SDKKey          = rs::Model::instance()->SDKKey();
-    NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-    NSString* hostHeader        = @"0efbbd35-a131-4419-b330-00de5eb3696b.revdn.net";//[NSString stringWithFormat:@"%@.%@", @"0efbbd35-a131-4419-b330-00de5eb3696b", transformedEdgeHost];
-    
-    [newRequest setValue:@"0efbbd35-a131-4419-b330-00de5eb3696b.revdn.net" forHTTPHeaderField:kRSHostHeader];
-    [newRequest setValue:@"edition.cnn.com" forHTTPHeaderField:kRSRevHostHeader];
     
     NSURLComponents* URLComponents = [NSURLComponents new];
     URLComponents.host             = transformedEdgeHost;
     URLComponents.scheme           = scheme;
     
-    [newRequest setURL:[NSURL URLWithString:@"https://rev-200.revdn.net"]];//@"http://testsjc20-bp01.revsw.net/"]];
-    [newRequest setHTTPMethod:@"GET"];
-    [newRequest setHTTPBody:aRequest.HTTPBody];
+    [newRequest setURL:[NSURL URLWithString:kRSNonVPNURL]];
     
     return newRequest;
 }

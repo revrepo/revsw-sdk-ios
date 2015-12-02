@@ -72,7 +72,7 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [RevSDK startWithSDKKey:@"sdk_key"];
+    [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 

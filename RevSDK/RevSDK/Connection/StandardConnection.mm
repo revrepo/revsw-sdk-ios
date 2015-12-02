@@ -46,18 +46,23 @@ namespace rs
         // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
         // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
         
-        NSLog(@"Request %@ headers %@", request, request.allHTTPHeaderFields);
+        NSLog(@"Request %p headers %@", request, request.allHTTPHeaderFields);
         
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                                
-                                                
-                                                NSLog(@"String %@", [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding]);
-                                                NSLog(@"Response %@", aResponse);
+       
+       
+                                               // NSLog(@"String %@", [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding]);
+                                                //NSLog(@"Response %@", aResponse);
                                                 
                                                 std::shared_ptr<Connection> anchor = oAnchor;
 
                                                 NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
+                                                
+                                                if (httpResponse.statusCode != 200)
+                                                {
+                                                    NSLog(@"Response %@ current request %p ", httpResponse, request);
+                                                }
                                                 
                                                 if (!aError)
                                                 {

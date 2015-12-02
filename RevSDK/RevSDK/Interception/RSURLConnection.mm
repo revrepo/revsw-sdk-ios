@@ -65,7 +65,7 @@
             [self.delegate connection:self didFailWithError:error];
         };
         
-        NSURLRequest* newRequest = [RSURLRequestProcessor proccessRequest:aRequest];
+        NSURLRequest* newRequest = aRequest.URL.host ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
         connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }

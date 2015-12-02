@@ -110,7 +110,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     mTestsCounter = 0;
     
-    //[RevSDK setOperationMode:kRSOperationModeOff];
+    [RevSDK setOperationMode:kRSOperationModeOff];
     
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
@@ -181,21 +181,14 @@ id setBeingRemoved(id self, SEL selector, ...)
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    if (request.URL.isValid)
-    {
-        return YES;
-    }
-    else
-    {
-        return NO;
-    }
+    return request.URL.isValid;
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
     if (!mIsLoading)
     {
-        NSLog(@"Start");
+        NSLog(@"Start %@", aWebView.request.URL.absoluteString);
         
         ++mTestsCounter;
      
@@ -234,7 +227,7 @@ id setBeingRemoved(id self, SEL selector, ...)
         {
             if (self.sdkTestResults.count == 0)
             {
-               // [RevSDK setOperationMode:kRSOperationModeTransport];
+                [RevSDK setOperationMode:kRSOperationModeTransport];
                 
                 mTestsCounter = 0;
                 [self performSelector:@selector(startLoading)

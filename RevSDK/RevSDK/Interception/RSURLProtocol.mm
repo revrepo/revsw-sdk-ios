@@ -41,10 +41,11 @@
     NSURL* URL             = [aRequest URL];
     NSString* host         = [URL host];
     std::string domainName = rs::stdStringFromNSString(host);
+    BOOL can               = rs::Model::instance()->shouldTransportDomainName(domainName) &&
+                             ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
+                             !aRequest.isFileRequest;
     
-    return rs::Model::instance()->shouldTransportDomainName(domainName) &&
-           ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
-           !aRequest.isFileRequest;
+    return can;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask

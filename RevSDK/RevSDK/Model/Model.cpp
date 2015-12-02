@@ -87,9 +87,10 @@ namespace rs
               mDataStorage->saveConfiguration(configuration);
               mConfiguration = std::make_shared<Configuration>(configuration);
                
-               
               if (!mConfigurationRefreshTimer)
               {
+                  std::cout << "Configuration loaded\n";
+                  
                   std::function<void()> scheduledFunction = [this](){
                   
                       loadConfiguration();
@@ -106,7 +107,7 @@ namespace rs
         };
         
         const std::string kConfigurationEndPoint = "sdk/config";
-        std::string URL                          = edgeHost() + kConfigurationEndPoint;
+        std::string URL                          = "http://" + edgeHost() + "/" + kConfigurationEndPoint;
         mNetwork->performRequest(URL, completionBlock);
     }
     
@@ -175,7 +176,7 @@ namespace rs
         {
             return true;
         }
-
+        
         return mConfiguration->domainsWhiteList.empty();
     }
     
