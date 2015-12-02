@@ -89,7 +89,6 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
-		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		302D95F014D2391D003F00A1 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
@@ -135,9 +134,7 @@
 		8D1107310486CEB800E47090 /* RevTest App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "RevTest App-Info.plist"; path = "../RevTest App-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
-		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
-		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "RevTest App/config.xml"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +157,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5B0BFEE31C0C6BFA0057715A /* Views */,
 				5BEC8CA71C0707D60019BCD1 /* Categories */,
 				5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */,
 				302D95EE14D2391D003F00A1 /* MainViewController.h */,
@@ -185,9 +183,7 @@
 			children = (
 				5B0BFEDE1C0C5D3A0057715A /* RevSDK.framework */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
-				EB87FDF31871DA8E0020F90C /* www */,
 				EB87FDF21871DA7A0020F90C /* merges */,
-				EB87FDF11871DA420020F90C /* Staging */,
 				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				307C750510C5A3420062BCA9 /* Plugins */,
@@ -242,6 +238,8 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				5B04C9C51C0DBBE900621B67 /* RSPlugin.h */,
+				5B04C9C61C0DBBE900621B67 /* RSPlugin.m */,
 			);
 			name = Plugins;
 			path = "RevTest App/Plugins";
@@ -286,15 +284,316 @@
 			path = splash;
 			sourceTree = "<group>";
 		};
+		5B04C9041C0D88A300621B67 /* www */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9051C0D88A300621B67 /* cordova-js-src */,
+				5B04C9081C0D88A300621B67 /* cordova.js */,
+				5B04C9091C0D88A300621B67 /* cordova_plugins.js */,
+				5B04C90A1C0D88A300621B67 /* css */,
+				5B04C90C1C0D88A300621B67 /* icon.png */,
+				5B04C90D1C0D88A300621B67 /* img */,
+				5B04C90F1C0D88A300621B67 /* index.html */,
+				5B04C9101C0D88A300621B67 /* js */,
+				5B04C9121C0D88A300621B67 /* res */,
+				5B04C9511C0D88A300621B67 /* spec */,
+				5B04C95A1C0D88A300621B67 /* spec.html */,
+			);
+			path = www;
+			sourceTree = "<group>";
+		};
+		5B04C9051C0D88A300621B67 /* cordova-js-src */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9061C0D88A300621B67 /* exec.js */,
+				5B04C9071C0D88A300621B67 /* platform.js */,
+			);
+			path = "cordova-js-src";
+			sourceTree = "<group>";
+		};
+		5B04C90A1C0D88A300621B67 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C90B1C0D88A300621B67 /* index.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		5B04C90D1C0D88A300621B67 /* img */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C90E1C0D88A300621B67 /* logo.png */,
+			);
+			path = img;
+			sourceTree = "<group>";
+		};
+		5B04C9101C0D88A300621B67 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9111C0D88A300621B67 /* index.js */,
+			);
+			path = js;
+			sourceTree = "<group>";
+		};
+		5B04C9121C0D88A300621B67 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9131C0D88A300621B67 /* .pgbomit */,
+				5B04C9141C0D88A300621B67 /* icon */,
+				5B04C92F1C0D88A300621B67 /* screen */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		5B04C9141C0D88A300621B67 /* icon */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9151C0D88A300621B67 /* android */,
+				5B04C91A1C0D88A300621B67 /* bada */,
+				5B04C91C1C0D88A300621B67 /* bada-wac */,
+				5B04C9201C0D88A300621B67 /* blackberry */,
+				5B04C9221C0D88A300621B67 /* ios */,
+				5B04C9271C0D88A300621B67 /* tizen */,
+				5B04C9291C0D88A300621B67 /* webos */,
+				5B04C92B1C0D88A300621B67 /* windows-phone */,
+			);
+			path = icon;
+			sourceTree = "<group>";
+		};
+		5B04C9151C0D88A300621B67 /* android */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9161C0D88A300621B67 /* icon-36-ldpi.png */,
+				5B04C9171C0D88A300621B67 /* icon-48-mdpi.png */,
+				5B04C9181C0D88A300621B67 /* icon-72-hdpi.png */,
+				5B04C9191C0D88A300621B67 /* icon-96-xhdpi.png */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		5B04C91A1C0D88A300621B67 /* bada */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C91B1C0D88A300621B67 /* icon-128.png */,
+			);
+			path = bada;
+			sourceTree = "<group>";
+		};
+		5B04C91C1C0D88A300621B67 /* bada-wac */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C91D1C0D88A300621B67 /* icon-48-type5.png */,
+				5B04C91E1C0D88A300621B67 /* icon-50-type3.png */,
+				5B04C91F1C0D88A300621B67 /* icon-80-type4.png */,
+			);
+			path = "bada-wac";
+			sourceTree = "<group>";
+		};
+		5B04C9201C0D88A300621B67 /* blackberry */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9211C0D88A300621B67 /* icon-80.png */,
+			);
+			path = blackberry;
+			sourceTree = "<group>";
+		};
+		5B04C9221C0D88A300621B67 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9231C0D88A300621B67 /* icon-57-2x.png */,
+				5B04C9241C0D88A300621B67 /* icon-57.png */,
+				5B04C9251C0D88A300621B67 /* icon-72-2x.png */,
+				5B04C9261C0D88A300621B67 /* icon-72.png */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		5B04C9271C0D88A300621B67 /* tizen */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9281C0D88A300621B67 /* icon-128.png */,
+			);
+			path = tizen;
+			sourceTree = "<group>";
+		};
+		5B04C9291C0D88A300621B67 /* webos */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C92A1C0D88A300621B67 /* icon-64.png */,
+			);
+			path = webos;
+			sourceTree = "<group>";
+		};
+		5B04C92B1C0D88A300621B67 /* windows-phone */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C92C1C0D88A300621B67 /* icon-173-tile.png */,
+				5B04C92D1C0D88A300621B67 /* icon-48.png */,
+				5B04C92E1C0D88A300621B67 /* icon-62-tile.png */,
+			);
+			path = "windows-phone";
+			sourceTree = "<group>";
+		};
+		5B04C92F1C0D88A300621B67 /* screen */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9301C0D88A300621B67 /* android */,
+				5B04C9391C0D88A300621B67 /* bada */,
+				5B04C93B1C0D88A300621B67 /* bada-wac */,
+				5B04C93F1C0D88A300621B67 /* blackberry */,
+				5B04C9411C0D88A300621B67 /* ios */,
+				5B04C94B1C0D88A300621B67 /* tizen */,
+				5B04C94D1C0D88A300621B67 /* webos */,
+				5B04C94F1C0D88A300621B67 /* windows-phone */,
+			);
+			path = screen;
+			sourceTree = "<group>";
+		};
+		5B04C9301C0D88A300621B67 /* android */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9311C0D88A300621B67 /* screen-hdpi-landscape.png */,
+				5B04C9321C0D88A300621B67 /* screen-hdpi-portrait.png */,
+				5B04C9331C0D88A300621B67 /* screen-ldpi-landscape.png */,
+				5B04C9341C0D88A300621B67 /* screen-ldpi-portrait.png */,
+				5B04C9351C0D88A300621B67 /* screen-mdpi-landscape.png */,
+				5B04C9361C0D88A300621B67 /* screen-mdpi-portrait.png */,
+				5B04C9371C0D88A300621B67 /* screen-xhdpi-landscape.png */,
+				5B04C9381C0D88A300621B67 /* screen-xhdpi-portrait.png */,
+			);
+			path = android;
+			sourceTree = "<group>";
+		};
+		5B04C9391C0D88A300621B67 /* bada */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C93A1C0D88A300621B67 /* screen-portrait.png */,
+			);
+			path = bada;
+			sourceTree = "<group>";
+		};
+		5B04C93B1C0D88A300621B67 /* bada-wac */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C93C1C0D88A300621B67 /* screen-type3.png */,
+				5B04C93D1C0D88A300621B67 /* screen-type4.png */,
+				5B04C93E1C0D88A300621B67 /* screen-type5.png */,
+			);
+			path = "bada-wac";
+			sourceTree = "<group>";
+		};
+		5B04C93F1C0D88A300621B67 /* blackberry */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9401C0D88A300621B67 /* screen-225.png */,
+			);
+			path = blackberry;
+			sourceTree = "<group>";
+		};
+		5B04C9411C0D88A300621B67 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9421C0D88A300621B67 /* screen-ipad-landscape-2x.png */,
+				5B04C9431C0D88A300621B67 /* screen-ipad-landscape.png */,
+				5B04C9441C0D88A300621B67 /* screen-ipad-portrait-2x.png */,
+				5B04C9451C0D88A300621B67 /* screen-ipad-portrait.png */,
+				5B04C9461C0D88A300621B67 /* screen-iphone-landscape-2x.png */,
+				5B04C9471C0D88A300621B67 /* screen-iphone-landscape.png */,
+				5B04C9481C0D88A300621B67 /* screen-iphone-portrait-2x.png */,
+				5B04C9491C0D88A300621B67 /* screen-iphone-portrait-568h-2x.png */,
+				5B04C94A1C0D88A300621B67 /* screen-iphone-portrait.png */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		5B04C94B1C0D88A300621B67 /* tizen */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C94C1C0D88A300621B67 /* README.md */,
+			);
+			path = tizen;
+			sourceTree = "<group>";
+		};
+		5B04C94D1C0D88A300621B67 /* webos */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C94E1C0D88A300621B67 /* screen-64.png */,
+			);
+			path = webos;
+			sourceTree = "<group>";
+		};
+		5B04C94F1C0D88A300621B67 /* windows-phone */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9501C0D88A300621B67 /* screen-portrait.jpg */,
+			);
+			path = "windows-phone";
+			sourceTree = "<group>";
+		};
+		5B04C9511C0D88A300621B67 /* spec */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9521C0D88A300621B67 /* helper.js */,
+				5B04C9531C0D88A300621B67 /* index.js */,
+				5B04C9541C0D88A300621B67 /* lib */,
+			);
+			path = spec;
+			sourceTree = "<group>";
+		};
+		5B04C9541C0D88A300621B67 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9551C0D88A300621B67 /* jasmine-1.2.0 */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		5B04C9551C0D88A300621B67 /* jasmine-1.2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				5B04C9561C0D88A300621B67 /* jasmine-html.js */,
+				5B04C9571C0D88A300621B67 /* jasmine.css */,
+				5B04C9581C0D88A300621B67 /* jasmine.js */,
+				5B04C9591C0D88A300621B67 /* MIT.LICENSE */,
+			);
+			path = "jasmine-1.2.0";
+			sourceTree = "<group>";
+		};
+		5B0BFEE31C0C6BFA0057715A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B0BFEE41C0C6BFA0057715A /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5B0BFEE41C0C6BFA0057715A /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5B0BFEE51C0C6C1B0057715A /* RSReportCell.h */,
+				5B0BFEE61C0C6C1B0057715A /* RSReportCell.m */,
+				5B0BFEE81C0C6C2E0057715A /* RSReportCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5B0BFEFB1C0CACC90057715A /* RSReportViewController.xib */,
 				5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */,
 				5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */,
 				5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */,
 				5BEC8CA21C0706A00019BCD1 /* RTMobileWebViewController.h */,
 				5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */,
 				5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */,
+				5B0BFED81C0C53DE0057715A /* RSReportViewController.h */,
+				5B0BFED91C0C53DE0057715A /* RSReportViewController.m */,
+				5B0BFEEA1C0C82C30057715A /* RSContainerViewController.h */,
+				5B0BFEEB1C0C82C30057715A /* RSContainerViewController.m */,
+				5B0BFEED1C0C86ED0057715A /* RSTestStatsViewController.h */,
+				5B0BFEEE1C0C86ED0057715A /* RSTestStatsViewController.m */,
+				5B0BFEEF1C0C86ED0057715A /* RSTestStatsViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -306,17 +605,10 @@
 				5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */,
 				5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */,
 				5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */,
+				5B0BFEF31C0CA0890057715A /* NSArray+Stats.h */,
+				5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */,
 			);
 			path = Categories;
-			sourceTree = "<group>";
-		};
-		EB87FDF11871DA420020F90C /* Staging */ = {
-			isa = PBXGroup;
-			children = (
-				F840E1F0165FE0F500CFE078 /* config.xml */,
-				301BF56E109A69640062928A /* www */,
-			);
-			name = Staging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,33 +686,95 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B04C9951C0D88A300621B67 /* MIT.LICENSE in Resources */,
+				5B04C9961C0D88A300621B67 /* spec.html in Resources */,
+				5B04C9791C0D88A300621B67 /* screen-ldpi-landscape.png in Resources */,
+				5B04C9651C0D88A300621B67 /* icon-36-ldpi.png in Resources */,
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
 				5BEC8CA01C06FB2B0019BCD1 /* RTStartViewController.xib in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
+				5B04C9721C0D88A300621B67 /* icon-128.png in Resources */,
+				5B04C9761C0D88A300621B67 /* icon-62-tile.png in Resources */,
+				5B04C9621C0D88A300621B67 /* index.html in Resources */,
+				5B04C9731C0D88A300621B67 /* icon-64.png in Resources */,
+				5B04C97A1C0D88A300621B67 /* screen-ldpi-portrait.png in Resources */,
+				5B04C95E1C0D88A300621B67 /* cordova_plugins.js in Resources */,
+				5B04C98F1C0D88A300621B67 /* screen-portrait.jpg in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
+				5B04C9891C0D88A300621B67 /* screen-iphone-landscape.png in Resources */,
 				30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */,
+				5B04C9931C0D88A300621B67 /* jasmine.css in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
+				5B04C96D1C0D88A300621B67 /* icon-80.png in Resources */,
+				5B04C9661C0D88A300621B67 /* icon-48-mdpi.png in Resources */,
+				5B04C95F1C0D88A300621B67 /* index.css in Resources */,
+				5B04C97E1C0D88A300621B67 /* screen-xhdpi-portrait.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
 				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
+				5B04C96A1C0D88A300621B67 /* icon-48-type5.png in Resources */,
+				5B04C9611C0D88A300621B67 /* logo.png in Resources */,
 				7E7966E61810823500FA85AD /* icon-small.png in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
+				5B04C98E1C0D88A300621B67 /* screen-64.png in Resources */,
+				5B04C9751C0D88A300621B67 /* icon-48.png in Resources */,
+				5B0BFEF11C0C86ED0057715A /* RSTestStatsViewController.xib in Resources */,
+				5B04C9871C0D88A300621B67 /* screen-ipad-portrait.png in Resources */,
+				5B04C98B1C0D88A300621B67 /* screen-iphone-portrait-568h-2x.png in Resources */,
 				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
+				5B04C9681C0D88A300621B67 /* icon-96-xhdpi.png in Resources */,
+				5B04C97D1C0D88A300621B67 /* screen-xhdpi-landscape.png in Resources */,
+				5B04C9671C0D88A300621B67 /* icon-72-hdpi.png in Resources */,
+				5B04C9841C0D88A300621B67 /* screen-ipad-landscape-2x.png in Resources */,
+				5B04C9801C0D88A300621B67 /* screen-type3.png in Resources */,
+				5B04C96F1C0D88A300621B67 /* icon-57.png in Resources */,
+				5B04C96E1C0D88A300621B67 /* icon-57-2x.png in Resources */,
+				5B04C98C1C0D88A300621B67 /* screen-iphone-portrait.png in Resources */,
+				5B04C9701C0D88A300621B67 /* icon-72-2x.png in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
+				5B04C97F1C0D88A300621B67 /* screen-portrait.png in Resources */,
+				5B04C98A1C0D88A300621B67 /* screen-iphone-portrait-2x.png in Resources */,
 				7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */,
+				5B04C9861C0D88A300621B67 /* screen-ipad-portrait-2x.png in Resources */,
+				5B04C9711C0D88A300621B67 /* icon-72.png in Resources */,
 				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
+				5B04C97C1C0D88A300621B67 /* screen-mdpi-portrait.png in Resources */,
 				30B4F30019D5E07200D9F7D8 /* Default-667h.png in Resources */,
+				5B04C9901C0D88A300621B67 /* helper.js in Resources */,
 				7E7966DE1810823500FA85AD /* icon-40.png in Resources */,
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
+				5B04C9641C0D88A300621B67 /* .pgbomit in Resources */,
+				5B0BFEFC1C0CACC90057715A /* RSReportViewController.xib in Resources */,
+				5B04C9921C0D88A300621B67 /* jasmine-html.js in Resources */,
 				7E7966E21810823500FA85AD /* icon-60.png in Resources */,
+				5B04C9941C0D88A300621B67 /* jasmine.js in Resources */,
 				5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */,
+				5B04C96B1C0D88A300621B67 /* icon-50-type3.png in Resources */,
+				5B04C9691C0D88A300621B67 /* icon-128.png in Resources */,
+				5B04C96C1C0D88A300621B67 /* icon-80-type4.png in Resources */,
+				5B04C95B1C0D88A300621B67 /* exec.js in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
+				5B04C95C1C0D88A300621B67 /* platform.js in Resources */,
+				5B04C9741C0D88A300621B67 /* icon-173-tile.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
+				5B04C9601C0D88A300621B67 /* icon.png in Resources */,
+				5B04C9881C0D88A300621B67 /* screen-iphone-landscape-2x.png in Resources */,
 				30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */,
+				5B04C9811C0D88A300621B67 /* screen-type4.png in Resources */,
+				5B04C95D1C0D88A300621B67 /* cordova.js in Resources */,
+				5B04C9631C0D88A300621B67 /* index.js in Resources */,
+				5B04C9831C0D88A300621B67 /* screen-225.png in Resources */,
+				5B04C9851C0D88A300621B67 /* screen-ipad-landscape.png in Resources */,
 				7E7966E11810823500FA85AD /* icon-50@2x.png in Resources */,
+				5B04C9781C0D88A300621B67 /* screen-hdpi-portrait.png in Resources */,
+				5B04C97B1C0D88A300621B67 /* screen-mdpi-landscape.png in Resources */,
+				5B04C9821C0D88A300621B67 /* screen-type5.png in Resources */,
+				5B04C9911C0D88A300621B67 /* index.js in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
+				5B0BFEE91C0C6C2E0057715A /* RSReportCell.xib in Resources */,
+				5B04C9771C0D88A300621B67 /* screen-hdpi-landscape.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -450,11 +804,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0BFEE71C0C6C1B0057715A /* RSReportCell.m in Sources */,
+				5B04C9C71C0DBBE900621B67 /* RSPlugin.m in Sources */,
+				5B0BFEEC1C0C82C30057715A /* RSContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
+				5B04C98D1C0D88A300621B67 /* README.md in Sources */,
+				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
+				5B0BFEDA1C0C53DE0057715A /* RSReportViewController.m in Sources */,
 				5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
+				5B0BFEF01C0C86ED0057715A /* RSTestStatsViewController.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 			);
