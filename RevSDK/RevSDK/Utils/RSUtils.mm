@@ -154,20 +154,12 @@ namespace rs
     
     Data dataFromNSData(NSData* aData)
     {
-        NSUInteger length = aData.length;
-        Byte *byteData    = (Byte*) malloc(length);
-        memcpy(byteData, [aData bytes], length);
-        
-        Data data;
-        data.bytes  = byteData;
-        data.length = length;
-        
-        return data;
+        return Data(aData.bytes, aData.length);
     }
     
     NSData* NSDataFromData(Data aData)
     {
-        return [NSData dataWithBytes:aData.bytes length:aData.length];
+        return [NSData dataWithBytes:aData.bytes() length:aData.length()];
     }
     
     std::shared_ptr<Request> requestFromURLRequest(NSURLRequest* aURLRequest)

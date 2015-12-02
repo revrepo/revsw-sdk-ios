@@ -8,18 +8,79 @@
 
 #include "Data.hpp"
 
-namespace rs
+#include <iostream>
+
+using namespace rs;
+
+Data::Data(const void* aBytes, size_t aLength):
+    mBytes(nullptr),
+    mLength(0)
 {
-    std::string Data::toString()
+    if (aBytes != nullptr && aLength > 0)
     {
-        std::string str = "";
-        char* cPtr = (char *)bytes;
-        
-        for (int i = 0; i < length; i++)
-        {
-            str += *(cPtr++);
-        }
-        
-        return str;
+        mLength = aLength;
+        mBytes = ::malloc(mLength);
+        ::memcpy(mBytes, aBytes, mLength);
     }
 }
+
+Data::Data(const Data& aData):
+    mBytes(nullptr),
+    mLength(0)
+{
+    if (aData.mBytes != nullptr && aData.mLength > 0)
+    {
+        mLength = aData.mLength;
+        mBytes = ::malloc(mLength);
+        ::memcpy(mBytes, aData.mBytes, mLength);
+    }
+}
+
+Data::~Data()
+{
+    if (mBytes != nullptr)
+    {
+        free(mBytes);
+        mBytes = nullptr;
+    }
+}
+
+Data& Data::operator=(const Data& aData)
+{
+    if (this == &aData)
+        return *this;
+    
+    if (mBytes != nullptr)
+    {
+        free(mBytes);
+        mBytes = nullptr;
+    }
+    
+    if (aData.mBytes != nullptr && aData.mLength > 0)
+    {
+        mLength = aData.mLength;
+        mBytes = ::malloc(mLength);
+        ::memcpy(mBytes, aData.mBytes, mLength);
+    }
+
+    return *this;
+}
+
+
+std::string Data::toString()
+{
+//    std::string str = "";
+//    char* cPtr = (char*)mBytes;
+//    
+//    for (int i = 0; i < mLength; i++)
+//    {
+//        str += *(cPtr++);
+//    }
+//    
+//    return str;
+    
+    std::string result((char*)mBytes);
+    result += '\0';
+    return result;
+}
+
