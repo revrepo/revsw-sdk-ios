@@ -25,6 +25,8 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
+#import "objc/runtime.h"
+
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "RTStartViewController.h"
@@ -32,6 +34,11 @@
 #import <Cordova/CDVPlugin.h>
 
 #import <RevSDK/RevSDK.h>
+
+id setBeingRemoved(id self, SEL selector, ...)
+{
+    return nil;
+}
 
 @interface AppDelegate ()
 
@@ -101,6 +108,20 @@
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:startViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
+    
+    // in order to get rid of iOS bug. unrecognized selector exception is thrown in the WebActionDisablingCALayerDelegate private Apple class otherwise
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
+    class_addMethod(class, @selector(willBeRemoved), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(removeFromSuperview), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(setBeingRemoved:), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(_webCustomViewWillBeRemovedFromSuperview), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(layer), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(superview), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(setNode:), setBeingRemoved, NULL);
+    class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), setBeingRemoved, NULL);
+#pragma clang diagnostic pop
 
     return YES;
 }

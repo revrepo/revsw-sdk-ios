@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1151775F1C0F4E54009BA83F /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1151775E1C0F4E54009BA83F /* RevSDK.framework */; };
-		115177601C0F4E54009BA83F /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1151775E1C0F4E54009BA83F /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -144,7 +142,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				115177601C0F4E54009BA83F /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -152,7 +149,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1151775E1C0F4E54009BA83F /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/Alexander1/Library/Developer/Xcode/DerivedData/RevSDK-evtzuhfitxmxukbtzngfldtszrym/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* RevTest App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevTest App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -292,7 +288,6 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
-				1151775F1C0F4E54009BA83F /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +321,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				1151775E1C0F4E54009BA83F /* RevSDK.framework */,
 				5B04C9041C0D88A300621B67 /* www */,
 				5B0BFEDE1C0C5D3A0057715A /* RevSDK.framework */,
 				EB87FDF41871DAF40020F90C /* config.xml */,

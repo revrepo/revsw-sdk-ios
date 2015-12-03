@@ -26,9 +26,28 @@
         <!--<link rel="stylesheet" type="text/css" href="css/index.css"/>-->
         <script type="text/javascript" language="JavaScript">
             
+            var checkboxChecked = true;
+            
             function start()
             {
-                alert("Start!!!")
+                var textField = document.getElementById("URLTextField");
+                window.location = textField.value;
+            }
+        
+            function getTestsCount()
+            {
+                var textField = document.getElementById("testTextField");
+                return textField.value;
+            }
+        
+            function getCheckboxValue()
+            {
+                return checkboxChecked;
+            }
+        
+            function checkboxClicked()
+            {
+                checkboxChecked = !checkboxChecked;
             }
             
             </script>
@@ -44,14 +63,19 @@
         <div style="margin-left:5px;">
         <form>
             URL:
-            <input type="text" name="URL" style="width:80%" value = "https://mbeans.com">
+            <input type="text" id = "URLTextField" name="URL" style="width:80%" value = "http://edition.cnn.com">
                 <br>
                 Tests:
-                <input type="text" name="tests" style="width:10%" value = "5">
+                <input type="text" id = "testTextField" name="tests" style="width:10%" value = "5">
                     Redirect:
-                    <input type = "checkbox" checked>
+                    <input type = "checkbox" id = "switch" onclick = "checkboxClicked()" checked>
                     <input type = "button" value = "Start" onclick = "start()">
         </form>
         </div>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+            </script>
     </body>
 </html>

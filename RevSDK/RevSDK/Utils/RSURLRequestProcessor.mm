@@ -42,7 +42,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
         NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
-        
+        NSLog(@"HOST %@", host);
         [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
         [newRequest setValue:host forHTTPHeaderField:kRSRevHostHeader];
     }

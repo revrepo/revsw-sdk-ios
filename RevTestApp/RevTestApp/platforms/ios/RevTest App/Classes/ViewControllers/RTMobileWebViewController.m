@@ -6,8 +6,6 @@
 //
 //
 
-#import "objc/runtime.h"
-
 #import <RevSDK/RevSDK.h>
 
 #import "RTMobileWebViewController.h"
@@ -18,14 +16,8 @@
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 
-id setBeingRemoved(id self, SEL selector, ...)
-{
-    return nil;
-}
-
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIWebViewDelegate>
 {
-    BOOL mIsPerformingTest;
     NSUInteger mTestsCounter;
     NSUInteger mNumberOfTestsToPerform;
     BOOL mIsLoading;
@@ -47,24 +39,9 @@ id setBeingRemoved(id self, SEL selector, ...)
 {
     [super viewDidLoad];
     
-    // in order to get rid of iOS bug. unrecognized selector exception is thrown in the WebActionDisablingCALayerDelegate private Apple class otherwise
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wundeclared-selector"
-    Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
-    class_addMethod(class, @selector(willBeRemoved), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(removeFromSuperview), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(setBeingRemoved:), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(_webCustomViewWillBeRemovedFromSuperview), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(layer), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(superview), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(setNode:), setBeingRemoved, NULL);
-    class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), setBeingRemoved, NULL);
-#pragma clang diagnostic pop
-    
     self.testResults = [NSMutableArray array];
     self.sdkTestResults = [NSMutableArray array];
     
-    mIsPerformingTest       = NO;
     mTestsCounter           = 0;
     mNumberOfTestsToPerform = self.testsTextField.text.integerValue;
     
@@ -202,7 +179,6 @@ id setBeingRemoved(id self, SEL selector, ...)
      
         self.startButton.enabled          = NO;
         mIsLoading                        = YES;
-        mIsPerformingTest                 = YES;
         self.activityIndicatorView.hidden = NO;
         mStartDate                        = [NSDate date];
         [self.activityIndicatorView startAnimating];
@@ -215,7 +191,6 @@ id setBeingRemoved(id self, SEL selector, ...)
     {
         NSLog(@"Finish");
         
-        mIsPerformingTest       = NO;
         mIsLoading              = NO;
         NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
         mStartDate              = nil;
@@ -262,7 +237,6 @@ id setBeingRemoved(id self, SEL selector, ...)
     
    /* [self.activityIndicatorView stopAnimating];
     self.activityIndicatorView.hidden = YES;
-    mIsPerformingTest                 = NO;
     mIsLoading                        = NO;
     self.startButton.enabled          = YES;*/
 }
