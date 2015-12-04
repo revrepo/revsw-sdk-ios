@@ -26,4 +26,11 @@
                                        options:nil][0];
 }
 
+- (void)setNumberText:(NSString *)aNumberText directText:(NSString *)aDirectText sdkText:(NSString *)aSdkText
+{
+    self.numberLabel.text = aNumberText;
+    self.directLabel.text = aDirectText;
+    self.sdkLabel.text    = aSdkText;
+}
+
 @end

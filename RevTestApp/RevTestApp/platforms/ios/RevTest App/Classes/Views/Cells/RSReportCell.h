@@ -15,5 +15,6 @@
 @property (nonatomic, weak) IBOutlet UILabel* sdkLabel;
 
 + (instancetype)cell;
+- (void)setNumberText:(NSString *)aNumberText directText:(NSString *)aDirectText sdkText:(NSString *)aSdkText;
 
 @end

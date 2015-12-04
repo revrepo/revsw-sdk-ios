@@ -13,7 +13,7 @@
 #if SHOULD_CONSIDER_MIN_AND_MAX_VALUES
 #define OPERATION_ARRAY self
 #else
-#define OPERATION_ARRAY [self subarrayWithRange:NSMakeRange(1, [self count] - 2)]
+#define OPERATION_ARRAY [[self sortedArrayUsingSelector:@selector(compare:)] subarrayWithRange:NSMakeRange(1, [self count] - 2)]
 #endif
 
 @implementation NSArray (Statistics)
@@ -29,14 +29,12 @@
 {
     double runningTotal = 0.0;
     
-    NSArray* operationArray = OPERATION_ARRAY;
-    
-    for (NSNumber *number in operationArray)
+    for (NSNumber *number in self)
     {
         runningTotal += [number doubleValue];
     }
     
-    return [NSNumber numberWithDouble:(runningTotal / [operationArray count])];
+    return [NSNumber numberWithDouble:(runningTotal / [self count])];
 }
 
 - (NSNumber *)standardDeviation
