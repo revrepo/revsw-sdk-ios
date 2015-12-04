@@ -28,7 +28,6 @@
 #import "objc/runtime.h"
 
 #import "AppDelegate.h"
-#import "MainViewController.h"
 #import "RTStartViewController.h"
 
 #import <Cordova/CDVPlugin.h>

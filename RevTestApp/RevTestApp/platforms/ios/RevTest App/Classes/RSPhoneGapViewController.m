@@ -25,27 +25,22 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-#import <RevsdK/RevSDk.h>
-
-#import "MainViewController.h"
+#import "RSPhoneGapViewController.h"
 #import "RSContainerViewController.h"
+#import "RSTestModel.h"
 
-@interface MainViewController ()
+@interface RSPhoneGapViewController ()
 {
-    BOOL mIsLoading;
     BOOL mIndexFileLoaded;
-    NSUInteger mTestsCounter;
-    NSUInteger mNumberOfTestsToPerform;
-    NSDate* mStartDate;
+    BOOL mIsFirstTest;
 }
 
+@property (nonatomic, strong) RSTestModel* testModel;
 @property (nonatomic, strong) UIActivityIndicatorView* activityIndicatorView;
-@property (nonatomic, strong) NSMutableArray* testResults;
-@property (nonatomic, strong) NSMutableArray* sdkTestResults;
 
 @end
 
-@implementation MainViewController
+@implementation RSPhoneGapViewController
 
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
 {
@@ -95,21 +90,47 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    [RevSDK setOperationMode:kRSOperationModeOff];
-    
-    mStartDate       = nil;
-    mIsLoading       = NO;
     mIndexFileLoaded = NO;
-    mTestsCounter    = 0;
+    mIsFirstTest     = YES;
     
-    self.testResults    = [NSMutableArray array];
-    self.sdkTestResults = [NSMutableArray array];
+    __weak RSPhoneGapViewController* weakSelf = self;
+    self.testModel = [RSTestModel new];
+    
+    self.testModel.loadStartedBlock = ^{
+        weakSelf.activityIndicatorView.hidden = NO;
+        [weakSelf.activityIndicatorView startAnimating];
+    };
+    
+    self.testModel.loadFinishedBlock = ^{
+    
+        [weakSelf.activityIndicatorView stopAnimating];
+        weakSelf.activityIndicatorView.hidden = YES;
+        
+        [weakSelf.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+        [[NSURLCache sharedURLCache] removeAllCachedResponses];
+        [[NSURLCache sharedURLCache] setDiskCapacity:0];
+        [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+    };
+    
+    self.testModel.restartBlock = ^{
+        
+        [weakSelf.webView performSelector:@selector(loadRequest:)
+                           withObject:weakSelf.webView.request
+                           afterDelay:1.0];
+    };
+    
+    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkResults){
+    
+        RSContainerViewController* containerViewController = [RSContainerViewController new];
+        containerViewController.directResults              = aTestResults;
+        containerViewController.sdkResults                 = aSdkResults;
+        [weakSelf.navigationController pushViewController:containerViewController animated:YES];
+    };
     
     self.activityIndicatorView        = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicatorView.hidden = YES;
     
     [self.view addSubview:self.activityIndicatorView];
-    [RevSDK setWhiteListOption:NO];
 }
 
 - (void)viewDidUnload
@@ -136,34 +157,25 @@
 
 #pragma mark UIWebDelegate implementation
 
-static int start_counter;
-static int finish_counter;
-
 - (void) webViewDidStartLoad:(UIWebView*)theWebView
 {
     if (mIndexFileLoaded)
     {
-        if (!mIsLoading)
+        if (mIsFirstTest)
         {
-            NSLog(@"START %d", ++start_counter);
+            mIsFirstTest = NO;
             
-            if (mTestsCounter == 0 && self.testResults.count == 0)
-            {
-                NSString* testCount     = [self.webView stringByEvaluatingJavaScriptFromString:@"getTestsCount()"];
-                mNumberOfTestsToPerform = testCount.integerValue;
-                
-                NSString* redirect              = [self.webView stringByEvaluatingJavaScriptFromString:@"getCheckboxValue()"];
-                BOOL shouldRedirect3dPartyLinks = redirect.boolValue;
-                [RevSDK setWhiteListOption:!shouldRedirect3dPartyLinks];
-            }
+            NSString* testCount = [self.webView stringByEvaluatingJavaScriptFromString:@"getTestsCount()"];
+            [self.testModel setNumberOfTests:testCount.integerValue];
             
-            ++mTestsCounter;
-            mStartDate = [NSDate date];
-            mIsLoading = YES;
+            NSString* redirect              = [self.webView stringByEvaluatingJavaScriptFromString:@"getCheckboxValue()"];
+            BOOL shouldRedirect3dPartyLinks = redirect.boolValue;
+            [self.testModel setWhiteListOption:!shouldRedirect3dPartyLinks];
             
-            self.activityIndicatorView.hidden = NO;
-            [self.activityIndicatorView startAnimating];
+            [self.testModel start];
         }
+        
+        [self.testModel loadStarted];
     }
     
     [super webViewDidStartLoad:theWebView];
@@ -179,54 +191,9 @@ static int finish_counter;
     {
         if (!theWebView.isLoading)
         {
-            NSLog(@"FINISH %d MODE %d", ++finish_counter, [RevSDK operationMode]);
-            
-            mIsLoading = NO;
-            
-            [self.activityIndicatorView stopAnimating];
-            self.activityIndicatorView.hidden = YES;
-            
-            NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
-            NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
-            [array addObject:@(interval)];
-            
-            [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
-            [[NSURLCache sharedURLCache] removeAllCachedResponses];
-            [[NSURLCache sharedURLCache] setDiskCapacity:0];
-            [[NSURLCache sharedURLCache] setMemoryCapacity:0];
-            
-            if (mTestsCounter < mNumberOfTestsToPerform)
-            {
-                [self.webView performSelector:@selector(loadRequest:)
-                                   withObject:self.webView.request
-                                   afterDelay:1.0];
-            }
-            else
-            {
-                if (self.sdkTestResults.count == 0)
-                {
-                    [RevSDK setOperationMode:kRSOperationModeTransport];
-                    
-                    mTestsCounter = 0;
-                    [[NSURLCache sharedURLCache] removeAllCachedResponses];
-                    [self.webView performSelector:@selector(loadRequest:)
-                                       withObject:self.webView.request
-                                       afterDelay:1.0];
-                }
-                else
-                {
-                    RSContainerViewController* containerViewController = [RSContainerViewController new];
-                    containerViewController.directResults = self.testResults;
-                    containerViewController.sdkResults = self.sdkTestResults;
-                    
-                    [self.navigationController pushViewController:containerViewController animated:YES];
-                    
-                }
-            }
+            [self.testModel loadFinished];
         }
     }
-    
-   // NSLog(@"Results %@ sdk Results %@", self.testResults, self.sdkTestResults);
     
     if (!mIndexFileLoaded)
     {

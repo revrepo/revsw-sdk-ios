@@ -6,28 +6,20 @@
 //
 //
 
-#import <RevSDK/RevSDK.h>
-
 #import "RTMobileWebViewController.h"
 #import "NSURL+RTUTils.h"
 #import "UIViewController+RTUtils.h"
 #import "RSContainerViewController.h"
 #import "RSReportViewController.h"
+#import "RSTestModel.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIWebViewDelegate>
-{
-    NSUInteger mTestsCounter;
-    NSUInteger mNumberOfTestsToPerform;
-    BOOL mIsLoading;
-    NSDate* mStartDate;
-}
 
+@property (nonatomic, strong) RSTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UIActivityIndicatorView* activityIndicatorView;
-@property (nonatomic, strong) NSMutableArray* testResults;
-@property (nonatomic, strong) NSMutableArray* sdkTestResults;
 
 @end
 
@@ -39,11 +31,38 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     [super viewDidLoad];
     
-    self.testResults = [NSMutableArray array];
-    self.sdkTestResults = [NSMutableArray array];
+    __weak RTMobileWebViewController* weakSelf = self;
     
-    mTestsCounter           = 0;
-    mNumberOfTestsToPerform = self.testsTextField.text.integerValue;
+    self.testModel = [RSTestModel new];
+    self.testModel.loadStartedBlock = ^{
+        weakSelf.startButton.enabled          = NO;
+        weakSelf.activityIndicatorView.hidden = NO;
+        [weakSelf.activityIndicatorView startAnimating];
+    };
+    
+    self.testModel.loadFinishedBlock = ^{
+        [weakSelf.activityIndicatorView stopAnimating];
+         weakSelf.activityIndicatorView.hidden = YES;
+    };
+    
+    self.testModel.restartBlock = ^{
+        [weakSelf performSelector:@selector(startLoading)
+                       withObject:nil
+                       afterDelay:1.0];
+    };
+    
+    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
+    
+        weakSelf.startButton.enabled                       = YES;
+        RSContainerViewController* containerViewController = [RSContainerViewController new];
+        containerViewController.directResults              = aTestResults;
+        containerViewController.sdkResults                 = aSdkTestResults;
+        
+        [weakSelf.navigationController pushViewController:containerViewController animated:YES];
+    };
+    
+    NSUInteger numberOfTests = self.testsTextField.text.integerValue;
+    [self.testModel setNumberOfTests:numberOfTests];
     
     self.pickerView = [[UIPickerView alloc] init];
     self.pickerView.dataSource    = self;
@@ -64,8 +83,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     self.activityIndicatorView.hidden = YES;
     
     [self.view addSubview:self.activityIndicatorView];
-    
-    [RevSDK setWhiteListOption:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,7 +97,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     if (!parent)
     {
-        [RevSDK setWhiteListOption:YES];
+        [self.testModel setWhiteListOption:YES];
     }
 }
 
@@ -88,21 +105,14 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (IBAction)switchValueChanged:(UISwitch*)aSender
 {
-    [RevSDK setWhiteListOption:!aSender.on];
+    [self.testModel setWhiteListOption:!aSender.on];
 }
 
 - (IBAction)start:(id)sender
 {
-    mTestsCounter = 0;
-    
-    [RevSDK setOperationMode:kRSOperationModeOff];
-    
-    [self.testResults removeAllObjects];
-    [self.sdkTestResults removeAllObjects];
-    
+    [self.testModel start];
     [self.URLTextField resignFirstResponder];
     [self.testsTextField resignFirstResponder];
-    
     [self startLoading];
 }
 
@@ -129,8 +139,8 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)done
 {
-    mNumberOfTestsToPerform = [self.pickerView selectedRowInComponent:0] + kDefaultNumberOfTests + 1;
-    self.testsTextField.text = [NSString stringWithFormat:@"%ld", mNumberOfTestsToPerform];
+    NSUInteger numberOfTests = [self.pickerView selectedRowInComponent:0] + kDefaultNumberOfTests + 1;
+    [self.testModel setNumberOfTests:numberOfTests];
     [self.testsTextField resignFirstResponder];
 }
 
@@ -171,18 +181,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
-    if (!mIsLoading)
-    {
-        NSLog(@"Start %@", aWebView.request.URL.absoluteString);
-        
-        ++mTestsCounter;
-     
-        self.startButton.enabled          = NO;
-        mIsLoading                        = YES;
-        self.activityIndicatorView.hidden = NO;
-        mStartDate                        = [NSDate date];
-        [self.activityIndicatorView startAnimating];
-    }
+    [self.testModel loadStarted];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
@@ -191,54 +190,13 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     {
         NSLog(@"Finish");
         
-        mIsLoading              = NO;
-        NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
-        mStartDate              = nil;
-        NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
-        [array addObject:@(interval)];
-    
-        [self.activityIndicatorView stopAnimating];
-        self.activityIndicatorView.hidden = YES;
-        
-        if (mTestsCounter < mNumberOfTestsToPerform)
-        {
-            [self performSelector:@selector(startLoading)
-                       withObject:nil
-                       afterDelay:1.0];
-        }
-        else
-        {
-            if (self.sdkTestResults.count == 0)
-            {
-                [RevSDK setOperationMode:kRSOperationModeTransport];
-                
-                mTestsCounter = 0;
-                [self performSelector:@selector(startLoading)
-                           withObject:nil
-                           afterDelay:1.0];
-            }
-            else
-            {
-                self.startButton.enabled                     = YES;
-                
-                RSContainerViewController* containerViewController = [RSContainerViewController new];
-                containerViewController.directResults = self.testResults;
-                containerViewController.sdkResults = self.sdkTestResults;
-                
-                [self.navigationController pushViewController:containerViewController animated:YES];
-            }
-        }
+        [self.testModel loadFinished];
     }
 }
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
     NSLog(@"Webview error %@", aError);
-    
-   /* [self.activityIndicatorView stopAnimating];
-    self.activityIndicatorView.hidden = YES;
-    mIsLoading                        = NO;
-    self.startButton.enabled          = YES;*/
 }
 
 @end

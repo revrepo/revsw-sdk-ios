@@ -11,7 +11,7 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
-		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
+		302D95F114D2391D003F00A1 /* RSPhoneGapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* RSPhoneGapViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
 		305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
 		3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */; };
@@ -97,6 +97,7 @@
 		5B0BFEF11C0C86ED0057715A /* RSTestStatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEEF1C0C86ED0057715A /* RSTestStatsViewController.xib */; };
 		5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */; };
 		5B0BFEFC1C0CACC90057715A /* RSReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEFB1C0CACC90057715A /* RSReportViewController.xib */; };
+		5B10397A1C11763C003CA9A1 /* RSTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RSTestModel.m */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DDDDE1C061663003935A3 /* RevSDK.framework */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
@@ -155,8 +156,8 @@
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
-		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
-		302D95EF14D2391D003F00A1 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		302D95EE14D2391D003F00A1 /* RSPhoneGapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSPhoneGapViewController.h; sourceTree = "<group>"; };
+		302D95EF14D2391D003F00A1 /* RSPhoneGapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPhoneGapViewController.m; sourceTree = "<group>"; };
 		302D95F014D2391D003F00A1 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 		305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
@@ -250,6 +251,8 @@
 		5B0BFEF31C0CA0890057715A /* NSArray+Stats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Stats.h"; sourceTree = "<group>"; };
 		5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Stats.m"; sourceTree = "<group>"; };
 		5B0BFEFB1C0CACC90057715A /* RSReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSReportViewController.xib; sourceTree = "<group>"; };
+		5B1039781C11763C003CA9A1 /* RSTestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSTestModel.h; sourceTree = "<group>"; };
+		5B1039791C11763C003CA9A1 /* RSTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTestModel.m; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5B5DDDDE1C061663003935A3 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
@@ -297,11 +300,12 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5B1039771C1175F6003CA9A1 /* Model */,
 				5B0BFEE31C0C6BFA0057715A /* Views */,
 				5BEC8CA71C0707D60019BCD1 /* Categories */,
 				5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */,
-				302D95EE14D2391D003F00A1 /* MainViewController.h */,
-				302D95EF14D2391D003F00A1 /* MainViewController.m */,
+				302D95EE14D2391D003F00A1 /* RSPhoneGapViewController.h */,
+				302D95EF14D2391D003F00A1 /* RSPhoneGapViewController.m */,
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
@@ -718,6 +722,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		5B1039771C1175F6003CA9A1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5B1039781C11763C003CA9A1 /* RSTestModel.h */,
+				5B1039791C11763C003CA9A1 /* RSTestModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -947,6 +960,7 @@
 			files = (
 				5B0BFEE71C0C6C1B0057715A /* RSReportCell.m in Sources */,
 				5B04C9C71C0DBBE900621B67 /* RSPlugin.m in Sources */,
+				5B10397A1C11763C003CA9A1 /* RSTestModel.m in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RSContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
@@ -958,7 +972,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				5B0BFEF01C0C86ED0057715A /* RSTestStatsViewController.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
-				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				302D95F114D2391D003F00A1 /* RSPhoneGapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
