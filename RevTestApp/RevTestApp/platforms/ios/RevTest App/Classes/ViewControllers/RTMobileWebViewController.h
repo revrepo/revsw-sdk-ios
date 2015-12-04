@@ -11,8 +11,8 @@
 @interface RTMobileWebViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UITextField* URLTextField;
-@property (nonatomic, weak) IBOutlet UITextField* testsTextField;
-@property (nonatomic, weak) IBOutlet UISwitch*    redirectSwitch;
+@property (nonatomic, weak) IBOutlet UISlider*    slider;
+@property (nonatomic, weak) IBOutlet UILabel*     testsNumberLabel;
 @property (nonatomic, weak) IBOutlet UIWebView*   webView;
 @property (nonatomic, weak) IBOutlet UIButton*    startButton;
 

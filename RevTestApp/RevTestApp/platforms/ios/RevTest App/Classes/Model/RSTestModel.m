@@ -42,13 +42,6 @@
          mNumberOfTestsToPerform = 0;
         
          [RevSDK setWhiteListOption:NO];
-        
-        UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
-        
-        self.progressHUD = [[MBProgressHUD alloc] initWithWindow:window];
-        self.progressHUD.mode = MBProgressHUDModeIndeterminate;
-        
-        [window addSubview:self.progressHUD];
     }
     
     return self;
@@ -89,8 +82,16 @@
         NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", mTestsCounter, mNumberOfTestsToPerform];
         NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
         
-        self.progressHUD.labelText = text;
-        [self.progressHUD show:YES];
+        NSLog(@"Start %ld", mTestsCounter);
+        
+         UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            self.progressHUD = [MBProgressHUD showHUDAddedTo:window animated:YES];
+            self.progressHUD.mode = MBProgressHUDModeIndeterminate;
+            self.progressHUD.labelText = text;
+            self.progressHUD.removeFromSuperViewOnHide = YES;
+        });
         
         if (self.loadStartedBlock)
         {
@@ -101,7 +102,11 @@
 
 - (void)loadFinished
 {
-    [self.progressHUD hide:YES];
+    NSLog(@"Finish %ld", mTestsCounter);
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.progressHUD hide:YES];
+    });
     
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];

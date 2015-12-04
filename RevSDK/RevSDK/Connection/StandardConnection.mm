@@ -63,7 +63,7 @@ namespace rs
                                                 
                                                 if (httpResponse.statusCode != 200)
                                                 {
-                                                    NSLog(@"Response %@ current request %p ", httpResponse, request);
+                                                    //NSLog(@"Response %@ current request %p ", httpResponse, request);
                                                 }
                                                 
                                                 if (!aError)

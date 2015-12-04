@@ -56,13 +56,11 @@ static const NSUInteger kDefaultNumberOfTests = 5;
         [weakSelf.navigationController pushViewController:containerViewController animated:YES];
     };
     
-    NSUInteger numberOfTests = self.testsTextField.text.integerValue;
-    [self.testModel setNumberOfTests:numberOfTests];
+    [self.testModel setNumberOfTests:kDefaultNumberOfTests];
     
     self.pickerView = [[UIPickerView alloc] init];
     self.pickerView.dataSource    = self;
     self.pickerView.delegate      = self;
-    self.testsTextField.inputView = self.pickerView;
     
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
     [toolBar setBarStyle:UIBarStyleBlackOpaque];
@@ -72,17 +70,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
                                                                      action:@selector(done)];
     toolBar.items = @[barButtonDone];
     barButtonDone.tintColor=[UIColor blackColor];
-    self.testsTextField.inputAccessoryView = toolBar;
-    
-   /* self.activityIndicatorView        = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicatorView.hidden = YES;
-    
-    [self.view addSubview:self.activityIndicatorView];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-   //  self.activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.webView.frame));
     [super viewWillAppear:animated];
 }
 
@@ -98,16 +89,18 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 #pragma mark - Actions
 
-- (IBAction)switchValueChanged:(UISwitch*)aSender
+- (IBAction)sliderValueChanged:(UISlider *)aSender
 {
-    [self.testModel setWhiteListOption:!aSender.on];
+    NSUInteger numberOfTests = aSender.value;
+    
+    [self.testModel setNumberOfTests:numberOfTests];
+    self.testsNumberLabel.text = [NSString stringWithFormat:@"%ld", numberOfTests];
 }
 
 - (IBAction)start:(id)sender
 {
     [self.testModel start];
     [self.URLTextField resignFirstResponder];
-    [self.testsTextField resignFirstResponder];
     [self startLoading];
 }
 
@@ -136,7 +129,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     NSUInteger numberOfTests = [self.pickerView selectedRowInComponent:0] + kDefaultNumberOfTests + 1;
     [self.testModel setNumberOfTests:numberOfTests];
-    [self.testsTextField resignFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -183,8 +175,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     if (!webView.isLoading)
     {
-        NSLog(@"Finish");
-        
         [self.testModel loadFinished];
     }
 }
