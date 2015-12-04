@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x3f-7l-7ia">
-                        <rect key="frame" x="251" y="69" width="42" height="21"/>
+                        <rect key="frame" x="271" y="69" width="42" height="21"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -24,7 +24,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="chv-7Z-Xuo">
-                        <rect key="frame" x="453" y="69" width="42" height="21"/>
+                        <rect key="frame" x="473" y="69" width="42" height="21"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -44,8 +44,8 @@
                     <constraint firstItem="TsE-bV-cQb" firstAttribute="centerY" secondItem="AQv-a8-Qlo" secondAttribute="centerY" id="Mr0-IH-abv"/>
                     <constraint firstItem="chv-7Z-Xuo" firstAttribute="centerY" secondItem="x3f-7l-7ia" secondAttribute="centerY" id="Yhr-Oe-la5"/>
                     <constraint firstItem="chv-7Z-Xuo" firstAttribute="centerY" secondItem="AQv-a8-Qlo" secondAttribute="centerY" id="irh-ec-g5j"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="chv-7Z-Xuo" secondAttribute="trailing" constant="40" id="my8-U1-B6Z"/>
-                    <constraint firstItem="x3f-7l-7ia" firstAttribute="centerX" secondItem="AQv-a8-Qlo" secondAttribute="centerX" id="z3B-FX-iuf"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="chv-7Z-Xuo" secondAttribute="trailing" constant="20" id="my8-U1-B6Z"/>
+                    <constraint firstItem="x3f-7l-7ia" firstAttribute="centerX" secondItem="AQv-a8-Qlo" secondAttribute="centerX" constant="20" id="z3B-FX-iuf"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>

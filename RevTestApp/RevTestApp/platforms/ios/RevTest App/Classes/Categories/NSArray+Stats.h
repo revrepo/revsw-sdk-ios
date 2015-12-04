@@ -10,6 +10,8 @@
 
 @interface NSArray (Statistics)
 
-- (id)median;
+- (NSNumber *)median;
+- (NSNumber *)standardDeviation;
+- (NSNumber *)expectedValue;
 
 @end

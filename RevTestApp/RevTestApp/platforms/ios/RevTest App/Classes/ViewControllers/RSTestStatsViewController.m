@@ -23,7 +23,9 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 5;
+    static const NSInteger kNumberOfRows = 7;
+    
+    return kNumberOfRows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -82,7 +84,26 @@
                 cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f", sdkMedian.doubleValue];
                 cell.numberLabel.text = @"Median:";
             }
-
+    else
+    if (indexPath.row == 5)
+    {
+        NSNumber* directDeviation = [self.directResults standardDeviation];
+        NSNumber* sdkDeviation    = [self.sdkResults standardDeviation];
+        
+        cell.directLabel.text = [NSString stringWithFormat:@"%.3f", directDeviation.doubleValue];
+        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f", sdkDeviation.doubleValue];
+        cell.numberLabel.text = @"Stand. deviation:";
+    }
+    else
+    if (indexPath.row == 6)
+    {
+        NSNumber* directExpectedValue = [self.directResults expectedValue];
+        NSNumber* sdkExpectedValue    = [self.sdkResults expectedValue];
+        
+        cell.directLabel.text = [NSString stringWithFormat:@"%.3f", directExpectedValue.doubleValue];
+        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f", sdkExpectedValue.doubleValue];
+        cell.numberLabel.text = @"Expected value:";
+    }
     
     return cell;
 }
