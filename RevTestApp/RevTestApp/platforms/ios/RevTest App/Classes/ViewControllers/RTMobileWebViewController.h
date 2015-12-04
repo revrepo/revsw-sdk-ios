@@ -15,5 +15,6 @@
 @property (nonatomic, weak) IBOutlet UILabel*     testsNumberLabel;
 @property (nonatomic, weak) IBOutlet UIWebView*   webView;
 @property (nonatomic, weak) IBOutlet UIButton*    startButton;
+@property (nonatomic, weak) IBOutlet UIButton*    schemeButton;
 
 @end

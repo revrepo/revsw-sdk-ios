@@ -19,6 +19,9 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 @property (nonatomic, strong) RSTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
+@property (nonatomic, strong) UITextField* fakeTextField;
+@property (nonatomic, strong) NSURLComponents* URLComponents;
+@property (nonatomic, strong) NSArray* URLSchemes;
 
 @end
 
@@ -29,6 +32,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.URLComponents        = [NSURLComponents new];
+    self.URLSchemes           = @[@"http", @"https"];
+    self.URLComponents.scheme = self.URLSchemes[0];
     
     __weak RTMobileWebViewController* weakSelf = self;
     
@@ -61,15 +68,24 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     self.pickerView = [[UIPickerView alloc] init];
     self.pickerView.dataSource    = self;
     self.pickerView.delegate      = self;
+    self.pickerView.showsSelectionIndicator = YES;
     
-    UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, 44)];
+    UIToolbar *toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
     [toolBar setBarStyle:UIBarStyleBlackOpaque];
     UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(done)];
     toolBar.items = @[barButtonDone];
-    barButtonDone.tintColor=[UIColor blackColor];
+    barButtonDone.tintColor = [UIColor blackColor];
+    
+    self.fakeTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    [self.view addSubview:self.fakeTextField];
+    
+    self.fakeTextField.inputView = self.pickerView;
+    self.fakeTextField.inputAccessoryView = toolBar;
+
+    [[UIPickerView appearance] setBackgroundColor:[UIColor grayColor]];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -89,6 +105,13 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 #pragma mark - Actions
 
+- (IBAction)schemeButtonPressed
+{
+    [self.fakeTextField becomeFirstResponder];
+    [[self.pickerView.subviews objectAtIndex:1] setHidden:TRUE];
+    [[self.pickerView.subviews objectAtIndex:2] setHidden:TRUE];
+}
+
 - (IBAction)sliderValueChanged:(UISlider *)aSender
 {
     NSUInteger numberOfTests = aSender.value;
@@ -99,7 +122,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (IBAction)start:(id)sender
 {
+    self.URLComponents.host = self.URLTextField.text;
+    
     [self.testModel start];
+    [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
     [self startLoading];
 }
@@ -111,8 +137,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     
-    NSString* URLString = self.URLTextField.text;
-    NSURL* URL          = [NSURL URLWithString:URLString];
+    NSURL* URL = [self.URLComponents URL];
     
     if ([URL isValid])
     {
@@ -127,8 +152,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)done
 {
-    NSUInteger numberOfTests = [self.pickerView selectedRowInComponent:0] + kDefaultNumberOfTests + 1;
-    [self.testModel setNumberOfTests:numberOfTests];
+    NSString* scheme = self.URLSchemes[[self.pickerView selectedRowInComponent:0]];
+    self.URLComponents.scheme = scheme;
+    [self.schemeButton setTitle:scheme forState:UIControlStateNormal];
+    [self.fakeTextField resignFirstResponder];
 }
 
 #pragma mark - UITextFieldDelegate
@@ -144,9 +171,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    static const NSUInteger kNumberOfRows = 15;
-    
-    return kNumberOfRows;
+    return 2;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -156,7 +181,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [NSString stringWithFormat:@"%ld", row + kDefaultNumberOfTests + 1];
+    return self.URLSchemes[row];
 }
 
 #pragma mark - UIWebViewDelegate
