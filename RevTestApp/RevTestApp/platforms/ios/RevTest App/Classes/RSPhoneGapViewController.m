@@ -120,11 +120,14 @@
     };
     
     self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkResults){
-    
+
         RSContainerViewController* containerViewController = [RSContainerViewController new];
         containerViewController.directResults              = aTestResults;
         containerViewController.sdkResults                 = aSdkResults;
         [weakSelf.navigationController pushViewController:containerViewController animated:YES];
+        
+        [weakSelf.activityIndicatorView stopAnimating];
+        weakSelf.activityIndicatorView.hidden = YES;
     };
     
     self.activityIndicatorView        = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -146,6 +149,28 @@
     return [super shouldAutorotateToInterfaceOrientation:interfaceOrientation];
 }
 
+- (void)willMoveToParentViewController:(UIViewController *)parent
+{
+    [super willMoveToParentViewController:parent];
+    
+    if (!parent)
+    {
+        [self.testModel setWhiteListOption:YES];
+    }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    mIsFirstTest     = YES;
+    
+    NSURL* URL = [self performSelector:NSSelectorFromString(@"appUrl")];
+    NSURLRequest* request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
+    
+    [self.webView loadRequest:request];
+    
+    [super viewDidDisappear:animated];
+}
+
 /* Comment out the block below to over-ride */
 
 /*
@@ -155,10 +180,20 @@
 }
 */
 
+- (BOOL)isVisible
+{
+    return self.navigationController.viewControllers.lastObject == self;
+}
+
 #pragma mark UIWebDelegate implementation
 
 - (void) webViewDidStartLoad:(UIWebView*)theWebView
 {
+    if (![self isVisible])
+    {
+        return;
+    }
+    
     if (mIndexFileLoaded)
     {
         if (mIsFirstTest)
@@ -183,15 +218,19 @@
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
+    
     // Black base color for background matches the native apps
     theWebView.backgroundColor = [UIColor blackColor];
     [super webViewDidFinishLoad:theWebView];
-    
-    if (mIndexFileLoaded)
+   
+    if ([self isVisible])
     {
-        if (!theWebView.isLoading)
+        if (mIndexFileLoaded)
         {
-            [self.testModel loadFinished];
+            if (!theWebView.isLoading)
+            {
+                [self.testModel loadFinished];
+            }
         }
     }
     

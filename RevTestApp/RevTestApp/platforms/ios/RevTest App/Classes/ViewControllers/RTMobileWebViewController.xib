@@ -24,7 +24,7 @@
                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="http://edition.cnn.com" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xg6-Ww-Oll">
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://mbeans.com" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xg6-Ww-Oll">
                         <rect key="frame" x="75" y="38" width="497" height="30"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -41,23 +41,24 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Redirect:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-SG-yOv">
-                        <rect key="frame" x="411" y="86" width="58" height="17"/>
+                        <rect key="frame" x="391" y="86" width="58" height="17"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hnH-P0-bTe">
-                        <rect key="frame" x="479" y="79" width="51" height="31"/>
+                        <rect key="frame" x="459" y="79" width="51" height="31"/>
                         <animations/>
                         <connections>
                             <action selector="switchValueChanged:" destination="pwK-4f-bWK" eventType="valueChanged" id="gM4-Hl-dJS"/>
                         </connections>
                     </switch>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgo-Xo-0WF">
-                        <rect key="frame" x="538" y="80" width="34" height="30"/>
+                        <rect key="frame" x="513" y="78" width="59" height="34"/>
                         <animations/>
-                        <state key="normal" title="Start"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                        <state key="normal" title="  Start  "/>
                         <connections>
                             <action selector="start:" destination="pwK-4f-bWK" eventType="touchUpInside" id="TSx-g6-RSA"/>
                         </connections>
@@ -71,7 +72,7 @@
                         </connections>
                     </webView>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5" borderStyle="roundedRect" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="J4i-zZ-dW6">
-                        <rect key="frame" x="75" y="80" width="326" height="30"/>
+                        <rect key="frame" x="75" y="80" width="306" height="30"/>
                         <animations/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <textInputTraits key="textInputTraits"/>
@@ -100,7 +101,7 @@
                     <constraint firstItem="Vem-SG-yOv" firstAttribute="leading" secondItem="J4i-zZ-dW6" secondAttribute="trailing" constant="10" id="e1K-vu-Xvl"/>
                     <constraint firstItem="xg6-Ww-Oll" firstAttribute="centerY" secondItem="qcO-ke-OPx" secondAttribute="centerY" id="fKg-63-cYP"/>
                     <constraint firstItem="hnH-P0-bTe" firstAttribute="centerY" secondItem="Vem-SG-yOv" secondAttribute="centerY" id="fe1-cl-oBl"/>
-                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="leading" secondItem="hnH-P0-bTe" secondAttribute="trailing" constant="10" id="hbE-XA-shh"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="leading" secondItem="hnH-P0-bTe" secondAttribute="trailing" constant="5" id="hbE-XA-shh"/>
                     <constraint firstItem="hTX-Ma-AF1" firstAttribute="leading" secondItem="qcO-ke-OPx" secondAttribute="leading" id="hww-9e-IlP"/>
                     <constraint firstItem="J4i-zZ-dW6" firstAttribute="centerY" secondItem="hTX-Ma-AF1" secondAttribute="centerY" id="nHY-E3-Ngg"/>
                     <constraint firstItem="fgo-Xo-0WF" firstAttribute="centerY" secondItem="hnH-P0-bTe" secondAttribute="centerY" id="upA-7b-2Vg"/>

@@ -168,7 +168,7 @@ id setBeingRemoved(id self, SEL selector, ...)
         [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
     }
 #endif
-
+/*
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 90000
 - (NSUInteger)application:(UIApplication*)application supportedInterfaceOrientationsForWindow:(UIWindow*)window
 #else
@@ -180,7 +180,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 
     return supportedInterfaceOrientations;
 }
-
+*/
 - (void)applicationDidReceiveMemoryWarning:(UIApplication*)application
 {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
