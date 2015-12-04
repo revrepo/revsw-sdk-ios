@@ -98,10 +98,10 @@
 		5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */; };
 		5B0BFEFC1C0CACC90057715A /* RSReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEFB1C0CACC90057715A /* RSReportViewController.xib */; };
 		5B10397A1C11763C003CA9A1 /* RSTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RSTestModel.m */; };
-		5B1039951C11BA5A003CA9A1 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0BFEDE1C0C5D3A0057715A /* RevSDK.framework */; };
-		5B1039961C11BA5A003CA9A1 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0BFEDE1C0C5D3A0057715A /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DDDDE1C061663003935A3 /* RevSDK.framework */; };
+		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
+		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
 		5BEC8CA01C06FB2B0019BCD1 /* RTStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */; };
 		5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */; };
@@ -145,7 +145,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5B1039961C11BA5A003CA9A1 /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,7 +241,6 @@
 		5B04C9C61C0DBBE900621B67 /* RSPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSPlugin.m; sourceTree = "<group>"; };
 		5B0BFED81C0C53DE0057715A /* RSReportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReportViewController.h; sourceTree = "<group>"; };
 		5B0BFED91C0C53DE0057715A /* RSReportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReportViewController.m; sourceTree = "<group>"; };
-		5B0BFEDE1C0C5D3A0057715A /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5B0BFEE51C0C6C1B0057715A /* RSReportCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReportCell.h; sourceTree = "<group>"; };
 		5B0BFEE61C0C6C1B0057715A /* RSReportCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReportCell.m; sourceTree = "<group>"; };
 		5B0BFEE81C0C6C2E0057715A /* RSReportCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSReportCell.xib; sourceTree = "<group>"; };
@@ -258,6 +256,8 @@
 		5B1039791C11763C003CA9A1 /* RSTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTestModel.m; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5B5DDDDE1C061663003935A3 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
+		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
+		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
 		5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTStartViewController.m; sourceTree = "<group>"; };
 		5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTStartViewController.xib; sourceTree = "<group>"; };
@@ -292,7 +292,6 @@
 				5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
-				5B1039951C11BA5A003CA9A1 /* RevSDK.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 			);
@@ -330,7 +329,6 @@
 			isa = PBXGroup;
 			children = (
 				5B04C9041C0D88A300621B67 /* www */,
-				5B0BFEDE1C0C5D3A0057715A /* RevSDK.framework */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
 				EB87FDF21871DA7A0020F90C /* merges */,
 				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
@@ -360,6 +358,7 @@
 				308D052D1370CCF300D202BF /* icons */,
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* RevTest App-Info.plist */,
+				5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */,
 			);
 			name = Resources;
 			path = "RevTest App/Resources";
@@ -419,6 +418,7 @@
 		308D05311370CCF300D202BF /* splash */ = {
 			isa = PBXGroup;
 			children = (
+				5B925DEB1C11BFF10021B077 /* logo_revAPM.png */,
 				30B4F2FD19D5E07200D9F7D8 /* Default-667h.png */,
 				30B4F2FE19D5E07200D9F7D8 /* Default-736h.png */,
 				30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */,
@@ -909,10 +909,12 @@
 				5B04C9941C0D88A300621B67 /* jasmine.js in Resources */,
 				5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */,
 				5B04C96B1C0D88A300621B67 /* icon-50-type3.png in Resources */,
+				5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */,
 				5B04C9691C0D88A300621B67 /* icon-128.png in Resources */,
 				5B04C96C1C0D88A300621B67 /* icon-80-type4.png in Resources */,
 				5B04C95B1C0D88A300621B67 /* exec.js in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
+				5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */,
 				5B04C95C1C0D88A300621B67 /* platform.js in Resources */,
 				5B04C9741C0D88A300621B67 /* icon-173-tile.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
