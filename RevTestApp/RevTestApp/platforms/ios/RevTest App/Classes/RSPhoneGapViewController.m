@@ -36,7 +36,6 @@
 }
 
 @property (nonatomic, strong) RSTestModel* testModel;
-@property (nonatomic, strong) UIActivityIndicatorView* activityIndicatorView;
 
 @end
 
@@ -81,7 +80,6 @@
     // View defaults to full size.  If you want to customize the view's size, or its subviews (e.g. webView),
     // you can do so here.
 
-    self.activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.webView.frame));
     [super viewWillAppear:animated];
 }
 
@@ -97,14 +95,10 @@
     self.testModel = [RSTestModel new];
     
     self.testModel.loadStartedBlock = ^{
-        weakSelf.activityIndicatorView.hidden = NO;
-        [weakSelf.activityIndicatorView startAnimating];
+        
     };
     
     self.testModel.loadFinishedBlock = ^{
-    
-        [weakSelf.activityIndicatorView stopAnimating];
-        weakSelf.activityIndicatorView.hidden = YES;
         
         [weakSelf.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -125,15 +119,7 @@
         containerViewController.directResults              = aTestResults;
         containerViewController.sdkResults                 = aSdkResults;
         [weakSelf.navigationController pushViewController:containerViewController animated:YES];
-        
-        [weakSelf.activityIndicatorView stopAnimating];
-        weakSelf.activityIndicatorView.hidden = YES;
     };
-    
-    self.activityIndicatorView        = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.activityIndicatorView.hidden = YES;
-    
-    [self.view addSubview:self.activityIndicatorView];
 }
 
 - (void)viewDidUnload
