@@ -19,7 +19,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 @property (nonatomic, strong) RSTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
-@property (nonatomic, strong) UIActivityIndicatorView* activityIndicatorView;
 
 @end
 
@@ -35,14 +34,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     self.testModel = [RSTestModel new];
     self.testModel.loadStartedBlock = ^{
-        weakSelf.startButton.enabled          = NO;
-        weakSelf.activityIndicatorView.hidden = NO;
-        [weakSelf.activityIndicatorView startAnimating];
+        weakSelf.startButton.enabled = NO;
     };
     
     self.testModel.loadFinishedBlock = ^{
-        [weakSelf.activityIndicatorView stopAnimating];
-         weakSelf.activityIndicatorView.hidden = YES;
     };
     
     self.testModel.restartBlock = ^{
@@ -79,15 +74,15 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     barButtonDone.tintColor=[UIColor blackColor];
     self.testsTextField.inputAccessoryView = toolBar;
     
-    self.activityIndicatorView        = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+   /* self.activityIndicatorView        = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.activityIndicatorView.hidden = YES;
     
-    [self.view addSubview:self.activityIndicatorView];
+    [self.view addSubview:self.activityIndicatorView];*/
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
-     self.activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.webView.frame));
+   //  self.activityIndicatorView.center = CGPointMake(CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.webView.frame));
     [super viewWillAppear:animated];
 }
 

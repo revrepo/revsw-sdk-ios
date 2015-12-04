@@ -1,13 +1,16 @@
 PODS:
   - jsoncpp (0.6.0.rc2)
+  - MBProgressHUD (0.9.1)
   - RadioButton (1.0)
 
 DEPENDENCIES:
   - jsoncpp (>= 0.6.beta.0)
+  - MBProgressHUD (~> 0.9.1)
   - RadioButton
 
 SPEC CHECKSUMS:
   jsoncpp: d8faee4c30ac83b28dc0b63f130dba9849d1f74d
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   RadioButton: 7ef053baf6ff0e7f9e777016c28e9ba4e330edba
 
 COCOAPODS: 0.39.0

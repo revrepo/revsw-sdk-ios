@@ -6,6 +6,7 @@
 //
 //
 
+#import "MBProgressHUD.h"
 #import <RevSDK/RevSDK.h>
 
 #import "RSTestModel.h"
@@ -18,6 +19,7 @@
     NSDate* mStartDate;    
 }
 
+@property (nonatomic, strong) MBProgressHUD* progressHUD;
 @property (nonatomic, strong) NSMutableArray* testResults;
 @property (nonatomic, strong) NSMutableArray* sdkTestResults;
 
@@ -40,9 +42,21 @@
          mNumberOfTestsToPerform = 0;
         
          [RevSDK setWhiteListOption:NO];
+        
+        UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
+        
+        self.progressHUD = [[MBProgressHUD alloc] initWithWindow:window];
+        self.progressHUD.mode = MBProgressHUDModeIndeterminate;
+        
+        [window addSubview:self.progressHUD];
     }
     
     return self;
+}
+
+- (void)dealloc
+{
+    [self.progressHUD removeFromSuperview];
 }
 
 - (void)start
@@ -68,8 +82,15 @@
     if (!mIsLoading)
     {
         ++mTestsCounter;
-        mIsLoading                        = YES;
-        mStartDate                        = [NSDate date];
+        mIsLoading = YES;
+        mStartDate = [NSDate date];
+        
+        NSString* type = [RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
+        NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", mTestsCounter, mNumberOfTestsToPerform];
+        NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
+        
+        self.progressHUD.labelText = text;
+        [self.progressHUD show:YES];
         
         if (self.loadStartedBlock)
         {
@@ -80,6 +101,8 @@
 
 - (void)loadFinished
 {
+    [self.progressHUD hide:YES];
+    
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
