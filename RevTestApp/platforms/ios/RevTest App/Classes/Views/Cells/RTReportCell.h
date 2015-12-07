@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSReportCell : UITableViewCell
+@interface RTReportCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel* numberLabel;
 @property (nonatomic, weak) IBOutlet UILabel* directLabel;

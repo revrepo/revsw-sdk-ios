@@ -9,9 +9,9 @@
 #import "MBProgressHUD.h"
 #import <RevSDK/RevSDK.h>
 
-#import "RSTestModel.h"
+#import "RTTestModel.h"
 
-@interface RSTestModel ()
+@interface RTTestModel ()
 {
     NSUInteger mTestsCounter;
     NSUInteger mNumberOfTestsToPerform;
@@ -25,7 +25,7 @@
 
 @end
 
-@implementation RSTestModel
+@implementation RTTestModel
 
 - (instancetype)init
 {

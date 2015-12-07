@@ -6,15 +6,15 @@
 //
 //
 
-#import "RSReportViewController.h"
+#import "RTReportViewController.h"
 
-#import "RSReportCell.h"
+#import "RTReportCell.h"
 
-@interface RSReportViewController ()<UITableViewDataSource, UITableViewDelegate>
+@interface RTReportViewController ()<UITableViewDataSource, UITableViewDelegate>
 
 @end
 
-@implementation RSReportViewController
+@implementation RTReportViewController
 
 - (void)viewDidLoad
 {
@@ -39,11 +39,11 @@
 {
     static NSString* const kIdentifier = @"kIdentifier";
     
-    RSReportCell* cell = (RSReportCell *)[tableView dequeueReusableCellWithIdentifier:kIdentifier];
+    RTReportCell* cell = (RTReportCell *)[tableView dequeueReusableCellWithIdentifier:kIdentifier];
     
     if (!cell)
     {
-        cell = [RSReportCell cell];
+        cell = [RTReportCell cell];
     }
     
     if (indexPath.row == 0)

@@ -29,7 +29,7 @@
 #import <Cordova/CDVCommandDelegateImpl.h>
 #import <Cordova/CDVCommandQueue.h>
 
-@interface RSPhoneGapViewController : CDVViewController
+@interface RTPhoneGapViewController : CDVViewController
 
 @end
 

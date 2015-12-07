@@ -6,9 +6,9 @@
 //
 //
 
-#import "RSReportCell.h"
+#import "RTReportCell.h"
 
-@implementation RSReportCell
+@implementation RTReportCell
 
 - (void)prepareForReuse
 {

@@ -6,30 +6,30 @@
 //
 //
 
-#import "RSTestStatsViewController.h"
-#import "RSReportCell.h"
+#import "RTTestStatsViewController.h"
+#import "RTReportCell.h"
 #import "NSArray+Stats.h"
 
-@interface RSTestStatsViewController ()<UITableViewDataSource, UITableViewDataSource>
+@interface RTTestStatsViewController ()<UITableViewDataSource, UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray* cellProcessBlocks;
 
 @end
 
-@implementation RSTestStatsViewController
+@implementation RTTestStatsViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
     self.cellProcessBlocks = @[
-                               ^(RSReportCell* cell){
+                               ^(RTReportCell* cell){
                                    
                                    [cell setNumberText:@""
                                             directText:@"Direct"
                                                sdkText:@"SDK"];
                                },
-                                ^(RSReportCell* cell){
+                                ^(RTReportCell* cell){
                                    
                                     NSNumber* directMin = [self.directResults valueForKeyPath:@"@min.doubleValue"];
                                     NSNumber* sdkMin    = [self.sdkResults valueForKeyPath:@"@min.doubleValue"];
@@ -39,7 +39,7 @@
                                                 sdkText:[NSString stringWithFormat:@"%.3f", sdkMin.doubleValue]];
 
                                 },
-                                ^(RSReportCell* cell){
+                                ^(RTReportCell* cell){
                                     
                                     NSNumber* directMax = [self.directResults valueForKeyPath:@"@max.doubleValue"];
                                     NSNumber* sdkMax    = [self.sdkResults valueForKeyPath:@"@max.doubleValue"];
@@ -49,7 +49,7 @@
                                                 sdkText:[NSString stringWithFormat:@"%.3f", sdkMax.doubleValue]];
 
                                 },
-                                ^(RSReportCell* cell){
+                                ^(RTReportCell* cell){
                                     
                                     NSNumber* directAvg = [self.directResults valueForKeyPath:@"@avg.doubleValue"];
                                     NSNumber* sdkAvg    = [self.sdkResults valueForKeyPath:@"@avg.doubleValue"];
@@ -59,7 +59,7 @@
                                                 sdkText:[NSString stringWithFormat:@"%.3f", sdkAvg.doubleValue]];
                                     
                                 },
-                                ^(RSReportCell* cell){
+                                ^(RTReportCell* cell){
                                     
                                     NSNumber* directMedian = [self.directResults median];
                                     NSNumber* sdkMedian    = [self.sdkResults median];
@@ -68,7 +68,7 @@
                                              directText:[NSString stringWithFormat:@"%.3f", directMedian.doubleValue]
                                                 sdkText:[NSString stringWithFormat:@"%.3f", sdkMedian.doubleValue]];
                                 },
-                                ^(RSReportCell* cell){
+                                ^(RTReportCell* cell){
                                     
                                     NSNumber* directDeviation = [self.directResults standardDeviation];
                                     NSNumber* sdkDeviation    = [self.sdkResults standardDeviation];
@@ -77,7 +77,7 @@
                                              directText:[NSString stringWithFormat:@"%.3f", directDeviation.doubleValue]
                                                 sdkText:[NSString stringWithFormat:@"%.3f", sdkDeviation.doubleValue]];
                                 },
-                                ^(RSReportCell* cell){
+                                ^(RTReportCell* cell){
                                     
                                     NSNumber* directExpectedValue = [self.directResults expectedValue];
                                     NSNumber* sdkExpectedValue    = [self.sdkResults expectedValue];
@@ -101,14 +101,14 @@
 {
     static NSString* const kIdentifier = @"kIdentifier";
     
-    RSReportCell* cell = [tableView dequeueReusableCellWithIdentifier:kIdentifier];
+    RTReportCell* cell = [tableView dequeueReusableCellWithIdentifier:kIdentifier];
     
     if (!cell)
     {
-        cell = [RSReportCell cell];
+        cell = [RTReportCell cell];
     }
     
-    void (^block)(RSReportCell *) = self.cellProcessBlocks[indexPath.row];
+    void (^block)(RTReportCell *) = self.cellProcessBlocks[indexPath.row];
     block(cell);
     
     return cell;

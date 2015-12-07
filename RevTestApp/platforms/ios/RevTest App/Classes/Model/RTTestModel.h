@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RSTestModel : NSObject
+@interface RTTestModel : NSObject
 
 @property (nonatomic, copy) void (^loadStartedBlock)(void);
 @property (nonatomic, copy) void (^loadFinishedBlock)(void);

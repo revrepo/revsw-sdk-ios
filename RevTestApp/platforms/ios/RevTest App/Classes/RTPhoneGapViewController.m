@@ -25,21 +25,21 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-#import "RSPhoneGapViewController.h"
-#import "RSContainerViewController.h"
-#import "RSTestModel.h"
+#import "RTPhoneGapViewController.h"
+#import "RTContainerViewController.h"
+#import "RTTestModel.h"
 
-@interface RSPhoneGapViewController ()
+@interface RTPhoneGapViewController ()
 {
     BOOL mIndexFileLoaded;
     BOOL mIsFirstTest;
 }
 
-@property (nonatomic, strong) RSTestModel* testModel;
+@property (nonatomic, strong) RTTestModel* testModel;
 
 @end
 
-@implementation RSPhoneGapViewController
+@implementation RTPhoneGapViewController
 
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
 {
@@ -93,8 +93,8 @@
     mIndexFileLoaded = NO;
     mIsFirstTest     = YES;
     
-    __weak RSPhoneGapViewController* weakSelf = self;
-    self.testModel = [RSTestModel new];
+    __weak RTPhoneGapViewController* weakSelf = self;
+    self.testModel = [RTTestModel new];
     
     self.testModel.loadStartedBlock = ^{
         
@@ -117,7 +117,7 @@
     
     self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkResults){
 
-        RSContainerViewController* containerViewController = [RSContainerViewController new];
+        RTContainerViewController* containerViewController = [RTContainerViewController new];
         containerViewController.directResults              = aTestResults;
         containerViewController.sdkResults                 = aSdkResults;
         [weakSelf.navigationController pushViewController:containerViewController animated:YES];

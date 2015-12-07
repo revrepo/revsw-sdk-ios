@@ -9,15 +9,15 @@
 #import "RTMobileWebViewController.h"
 #import "NSURL+RTUTils.h"
 #import "UIViewController+RTUtils.h"
-#import "RSContainerViewController.h"
-#import "RSReportViewController.h"
-#import "RSTestModel.h"
+#import "RTContainerViewController.h"
+#import "RTReportViewController.h"
+#import "RTTestModel.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIWebViewDelegate>
 
-@property (nonatomic, strong) RSTestModel* testModel;
+@property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
 @property (nonatomic, strong) NSURLComponents* URLComponents;
@@ -41,7 +41,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     __weak RTMobileWebViewController* weakSelf = self;
     
-    self.testModel = [RSTestModel new];
+    self.testModel = [RTTestModel new];
     self.testModel.loadStartedBlock = ^{
         weakSelf.startButton.enabled = NO;
     };
@@ -58,7 +58,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
     
         weakSelf.startButton.enabled                       = YES;
-        RSContainerViewController* containerViewController = [RSContainerViewController new];
+        RTContainerViewController* containerViewController = [RTContainerViewController new];
         containerViewController.directResults              = aTestResults;
         containerViewController.sdkResults                 = aSdkTestResults;
         

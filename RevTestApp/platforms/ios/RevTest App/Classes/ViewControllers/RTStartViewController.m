@@ -7,9 +7,10 @@
 //
 
 #import "UIViewController+RTUtils.h"
-#import "RSPhoneGapViewController.h"
+#import "RTPhoneGapViewController.h"
 #import "RTStartViewController.h"
 #import "RTMobileWebViewController.h"
+#import "RTNativeMobileViewController.h"
 
 @implementation RTStartViewController
 
@@ -22,23 +23,20 @@
 
 - (IBAction)nativeMobile:(id)sender
 {
-    
+    UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
+    [self.navigationController pushViewController:startViewController animated:YES];
+
 }
 
 - (IBAction)hybridMobile:(id)sender
 {
-    [self pushViewController:[RSPhoneGapViewController new]];
+    [self.navigationController pushViewController:[RTPhoneGapViewController new] animated:YES];
 }
 
 - (IBAction)mobileWeb:(id)sender
 {
     UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
-    [self pushViewController:startViewController];
-}
-
-- (void)pushViewController:(UIViewController *)aViewController
-{
-    [self.navigationController pushViewController:aViewController animated:YES];
+    [self.navigationController pushViewController:startViewController animated:YES];
 }
 
 - (BOOL)shouldAutorotate

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RSContainerViewController : UIViewController
+@interface RTContainerViewController : UIViewController
 
 @property (nonatomic, strong) NSArray* directResults;
 @property (nonatomic, strong) NSArray* sdkResults;

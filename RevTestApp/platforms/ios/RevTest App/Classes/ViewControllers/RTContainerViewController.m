@@ -8,19 +8,19 @@
 
 #import "UIViewController+RTUtils.h"
 
-#import "RSContainerViewController.h"
-#import "RSReportViewController.h"
-#import "RSTestStatsViewController.h"
+#import "RTContainerViewController.h"
+#import "RTReportViewController.h"
+#import "RTTestStatsViewController.h"
 
-@interface RSContainerViewController ()<UIPageViewControllerDataSource>
+@interface RTContainerViewController ()<UIPageViewControllerDataSource>
 
 @property (nonatomic, strong) UIPageViewController* pageViewController;
-@property (nonatomic, strong) RSReportViewController* reportViewController;
-@property (nonatomic, strong) RSTestStatsViewController* testStatsViewController;
+@property (nonatomic, strong) RTReportViewController* reportViewController;
+@property (nonatomic, strong) RTTestStatsViewController* testStatsViewController;
 
 @end
 
-@implementation RSContainerViewController
+@implementation RTContainerViewController
 
 - (void)viewDidLoad
 {
@@ -31,11 +31,11 @@
     
     self.navigationItem.title = @"Report";
     
-    self.reportViewController  = [RSReportViewController viewControllerFromXib];
+    self.reportViewController  = [RTReportViewController viewControllerFromXib];
     self.reportViewController.directResults = self.directResults;
     self.reportViewController.sdkResults = self.sdkResults;
     
-    self.testStatsViewController = [RSTestStatsViewController viewControllerFromXib];
+    self.testStatsViewController = [RTTestStatsViewController viewControllerFromXib];
     
     self.testStatsViewController.directResults = self.directResults;
     self.testStatsViewController.sdkResults = self.sdkResults;
