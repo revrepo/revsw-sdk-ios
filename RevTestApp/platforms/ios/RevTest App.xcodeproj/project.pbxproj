@@ -51,7 +51,6 @@
 		5B04C96F1C0D88A300621B67 /* icon-57.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9241C0D88A300621B67 /* icon-57.png */; };
 		5B04C9701C0D88A300621B67 /* icon-72-2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9251C0D88A300621B67 /* icon-72-2x.png */; };
 		5B04C9711C0D88A300621B67 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9261C0D88A300621B67 /* icon-72.png */; };
-		5B04C9721C0D88A300621B67 /* icon-128.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9281C0D88A300621B67 /* icon-128.png */; };
 		5B04C9731C0D88A300621B67 /* icon-64.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C92A1C0D88A300621B67 /* icon-64.png */; };
 		5B04C9741C0D88A300621B67 /* icon-173-tile.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C92C1C0D88A300621B67 /* icon-173-tile.png */; };
 		5B04C9751C0D88A300621B67 /* icon-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C92D1C0D88A300621B67 /* icon-48.png */; };
@@ -205,7 +204,6 @@
 		5B04C9241C0D88A300621B67 /* icon-57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-57.png"; sourceTree = "<group>"; };
 		5B04C9251C0D88A300621B67 /* icon-72-2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72-2x.png"; sourceTree = "<group>"; };
 		5B04C9261C0D88A300621B67 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
-		5B04C9281C0D88A300621B67 /* icon-128.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-128.png"; sourceTree = "<group>"; };
 		5B04C92A1C0D88A300621B67 /* icon-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-64.png"; sourceTree = "<group>"; };
 		5B04C92C1C0D88A300621B67 /* icon-173-tile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-173-tile.png"; sourceTree = "<group>"; };
 		5B04C92D1C0D88A300621B67 /* icon-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-48.png"; sourceTree = "<group>"; };
@@ -582,7 +580,6 @@
 		5B04C9271C0D88A300621B67 /* tizen */ = {
 			isa = PBXGroup;
 			children = (
-				5B04C9281C0D88A300621B67 /* icon-128.png */,
 			);
 			path = tizen;
 			sourceTree = "<group>";
@@ -876,7 +873,6 @@
 				7E7966E41810823500FA85AD /* icon-76.png in Resources */,
 				5BEC8CA01C06FB2B0019BCD1 /* RTStartViewController.xib in Resources */,
 				7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */,
-				5B04C9721C0D88A300621B67 /* icon-128.png in Resources */,
 				5B04C9761C0D88A300621B67 /* icon-62-tile.png in Resources */,
 				5B04C9621C0D88A300621B67 /* index.html in Resources */,
 				5B04C9731C0D88A300621B67 /* icon-64.png in Resources */,
