@@ -88,6 +88,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.navigationItem.title = @"Hybrid Mobile";
+    
     mIndexFileLoaded = NO;
     mIsFirstTest     = YES;
     
@@ -188,11 +190,6 @@
             
             NSString* testCount = [self.webView stringByEvaluatingJavaScriptFromString:@"getTestsCount()"];
             [self.testModel setNumberOfTests:testCount.integerValue];
-            
-            NSString* redirect              = [self.webView stringByEvaluatingJavaScriptFromString:@"getCheckboxValue()"];
-            BOOL shouldRedirect3dPartyLinks = redirect.boolValue;
-            [self.testModel setWhiteListOption:!shouldRedirect3dPartyLinks];
-            
             [self.testModel start];
         }
         
@@ -235,7 +232,10 @@
 
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
-  //  [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+    if (request.URL.isFileURL && mIndexFileLoaded)
+    {
+        return NO;
+    }
     
     return [super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType];
 }

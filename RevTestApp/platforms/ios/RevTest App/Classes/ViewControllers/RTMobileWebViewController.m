@@ -33,6 +33,8 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Mobile Web";
+    
     self.URLComponents        = [NSURLComponents new];
     self.URLSchemes           = @[@"http", @"https"];
     self.URLComponents.scheme = self.URLSchemes[0];

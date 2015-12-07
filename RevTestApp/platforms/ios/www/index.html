@@ -25,31 +25,33 @@
         <title>Zombie Apocalypse To-Do List</title>
         <!--<link rel="stylesheet" type="text/css" href="css/index.css"/>-->
         <script type="text/javascript" language="JavaScript">
-            
-            var checkboxChecked = true;
-            
-            function start()
+        
+            function getSelectValue()
             {
-                var textField = document.getElementById("URLTextField");
-                window.location = textField.value;
+                var select = document.getElementById("select");
+                return select.options[select.selectedIndex].text;
+            }
+        
+            function startLoading()
+            {
+                var textField   = document.getElementById("URLTextField");
+                var text        = textField.value;
+                var URL         = getSelectValue() + "://" + text;
+                window.location = URL;
             }
         
             function getTestsCount()
             {
-                var textField = document.getElementById("testTextField");
-                return textField.value;
+                var label = document.getElementById("tests_label");
+                return label.innerHTML;
             }
         
-            function getCheckboxValue()
+            function sliderValueChanged(value)
             {
-                return checkboxChecked;
+                var label       = document.getElementById("tests_label");
+                label.innerHTML = value;
             }
         
-            function checkboxClicked()
-            {
-                checkboxChecked = !checkboxChecked;
-            }
-            
             </script>
         <style>
             input[type=checkbox] {
@@ -57,24 +59,44 @@
                 vertical-align: -3px;
             }
         
+            input[type=range]
+            {
+                vertical-align: -14px;
+            }
+        
+        #start
+        {
+            vertical-align: -9px;
+        }
+        
+        label{
+            vertical-align: -11px;
+        }
+        
         </style>
     </head>
     <body >
         <div style="margin-left:5px;">
         <form>
-            URL:
-            <input type="text" id = "URLTextField" name="URL" style="width:80%" value = "https://mbeans.com">
-                <br>
-                Tests:
-                <input type="text" id = "testTextField" name="tests" style="width:10%" value = "5">
-                    Redirect:
-                    <input type = "checkbox" id = "switch" onclick = "checkboxClicked()" checked>
-                    <input type = "button" value = "Start" onclick = "start()">
+        
+        <select style = "height:25px;" id = "select">
+            <option value = "http">http</option>
+            <option value = "https">https</option>
+        </select>
+        
+            <input type="text" id = "URLTextField" name="URL" style="width:60%; height:20px" value = "mbeans.com">
+            <br>
+        </form>
+        <form>
+           <div style="width: 53%; float: left"><input type="range" name="points" min="3" max="20" value = "5" oninput = "sliderValueChanged(this.value)">
+            <label color = "black" id = "tests_label">5</label></div>
+            <input type = "button" value = "Start" onclick = "startLoading()" id = "start" >
         </form>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
+            
             app.initialize();
             </script>
     </body>
