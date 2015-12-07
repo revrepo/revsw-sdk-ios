@@ -100,6 +100,8 @@
 		5B10397A1C11763C003CA9A1 /* RSTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RSTestModel.m */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DDDDE1C061663003935A3 /* RevSDK.framework */; };
+		5B89276A1C1580CF008C43AE /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8927691C1580CF008C43AE /* RevSDK.framework */; };
+		5B89276B1C1580CF008C43AE /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B8927691C1580CF008C43AE /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
@@ -108,6 +110,7 @@
 		5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */; };
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
+		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -145,6 +148,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5B89276B1C1580CF008C43AE /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -155,6 +159,7 @@
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* RevTest App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevTest App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		20BBD25748E5071B5D44919B /* Pods-RevTest App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevTest App.release.xcconfig"; path = "../../../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App.release.xcconfig"; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
@@ -256,6 +261,7 @@
 		5B1039791C11763C003CA9A1 /* RSTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSTestModel.m; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5B5DDDDE1C061663003935A3 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
+		5B8927691C1580CF008C43AE /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
@@ -279,9 +285,11 @@
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* RevTest App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "RevTest App-Info.plist"; path = "../RevTest App-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevTest App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		EB87FDF21871DA7A0020F90C /* merges */ = {isa = PBXFileReference; lastKnownFileType = folder; name = merges; path = ../../merges; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
+		F428827FA081FFE43E995293 /* Pods-RevTest App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevTest App.debug.xcconfig"; path = "../../../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -294,6 +302,8 @@
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
+				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
+				5B89276A1C1580CF008C43AE /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -328,6 +338,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				5B8927691C1580CF008C43AE /* RevSDK.framework */,
 				5B04C9041C0D88A300621B67 /* www */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
 				EB87FDF21871DA7A0020F90C /* merges */,
@@ -338,6 +349,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				303D12435DC400AD48C70BB2 /* Pods */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -371,6 +383,7 @@
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
+				8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -381,6 +394,15 @@
 				301BF535109A57CC0062928A /* libCordova.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		303D12435DC400AD48C70BB2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F428827FA081FFE43E995293 /* Pods-RevTest App.debug.xcconfig */,
+				20BBD25748E5071B5D44919B /* Pods-RevTest App.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		307C750510C5A3420062BCA9 /* Plugins */ = {
@@ -776,11 +798,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "RevTest App" */;
 			buildPhases = (
+				B669366B170F4E14DD4A8278 /* Check Pods Manifest.lock */,
 				304B58A110DAC018002A0835 /* Copy www directory */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				5B0BFEE11C0C5D3B0057715A /* Embed Frameworks */,
+				5C96B74CB3B997516D0ED1E3 /* Embed Pods Frameworks */,
+				82C4D0D12F137246DFBD27DA /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -957,6 +982,51 @@
 			shellScript = "NODEJS_PATH=/usr/local/bin; NVM_NODE_PATH=~/.nvm/versions/node/`nvm version 2>/dev/null`/bin; N_NODE_PATH=`find /usr/local/n/versions/node/* -maxdepth 0 -type d 2>/dev/null | tail -1`/bin; XCODE_NODE_PATH=`xcode-select --print-path`/usr/share/xcs/Node/bin; PATH=$NODEJS_PATH:$NVM_NODE_PATH:$N_NODE_PATH:$XCODE_NODE_PATH:$PATH && node cordova/lib/copy-www-build-step.js";
 			showEnvVarsInLog = 0;
 		};
+		5C96B74CB3B997516D0ED1E3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../../../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		82C4D0D12F137246DFBD27DA /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../../../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B669366B170F4E14DD4A8278 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -995,6 +1065,7 @@
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F428827FA081FFE43E995293 /* Pods-RevTest App.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1021,6 +1092,7 @@
 					CoreMedia,
 					"-weak-lSystem",
 					"-ObjC",
+					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevTest App";
@@ -1031,6 +1103,7 @@
 		};
 		1D6058950D05DD3E006BFB54 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 20BBD25748E5071B5D44919B /* Pods-RevTest App.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -1055,6 +1128,7 @@
 					CoreMedia,
 					"-weak-lSystem",
 					"-ObjC",
+					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevTest App";

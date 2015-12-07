@@ -137,7 +137,9 @@
 		5BE3F86C1C04A0C50087BC28 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
 		5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NativeTimer.mm; sourceTree = "<group>"; };
 		5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeTimer.h; sourceTree = "<group>"; };
+		5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
 		88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
+		B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -329,6 +331,8 @@
 			children = (
 				88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */,
 				31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */,
+				B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */,
+				5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -491,7 +495,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -640,7 +644,7 @@
 		};
 		5B3096CB1BFA02770045024C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */;
+			baseConfigurationReference = B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -650,6 +654,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RevSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -659,7 +664,7 @@
 		};
 		5B3096CC1BFA02770045024C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */;
+			baseConfigurationReference = 5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */;
 			buildSettings = {
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -669,6 +674,7 @@
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = RevSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
