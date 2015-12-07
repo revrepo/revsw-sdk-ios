@@ -1128,7 +1128,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevTest App";
-				PROVISIONING_PROFILE = "a958ed11-4cd6-44be-87df-e91619039390";
+				PROVISIONING_PROFILE = "8c70591b-c320-42f1-958a-a40b81b3c859";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
