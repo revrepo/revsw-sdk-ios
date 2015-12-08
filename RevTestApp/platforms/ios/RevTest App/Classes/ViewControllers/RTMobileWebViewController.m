@@ -190,7 +190,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return request.URL.isValid;
+    return request.URL.isValid && self.testModel.shouldLoad;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView

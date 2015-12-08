@@ -35,6 +35,7 @@
     {
          mIsLoading = NO;
         
+         self.shouldLoad     = NO;
          self.testResults    = [NSMutableArray array];
          self.sdkTestResults = [NSMutableArray array];
          
@@ -54,6 +55,7 @@
 
 - (void)start
 {
+    self.shouldLoad = YES;
     mTestsCounter = 0;
     [RevSDK setOperationMode:kRSOperationModeOff];
     [self.testResults removeAllObjects];
@@ -145,6 +147,8 @@
             {
                 self.completionBlock(self.testResults, self.sdkTestResults);
             }
+            
+            self.shouldLoad = NO;
         }
     }
 }

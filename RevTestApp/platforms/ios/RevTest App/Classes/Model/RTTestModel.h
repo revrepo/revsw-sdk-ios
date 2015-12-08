@@ -10,6 +10,7 @@
 
 @interface RTTestModel : NSObject
 
+@property (nonatomic, assign) BOOL shouldLoad;
 @property (nonatomic, copy) void (^loadStartedBlock)(void);
 @property (nonatomic, copy) void (^loadFinishedBlock)(void);
 @property (nonatomic, copy) void (^restartBlock)(void);
