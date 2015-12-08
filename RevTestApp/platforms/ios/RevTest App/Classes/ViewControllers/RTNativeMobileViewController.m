@@ -8,12 +8,15 @@
 
 #import "RTNativeMobileViewController.h"
 #import "RTUtils.h"
+#import "RTTestModel.h"
+#import "RTContainerViewController.h"
 
+static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kSchemePickerTag = 1;
 static const NSInteger kMethodPickerTag = 2;
 static const NSInteger kFormatPickerTag = 3;
 
-@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, NSURLSessionDataDelegate>
 
 @property (nonatomic, strong) UITextField* fakeTextField;
 @property (nonatomic, strong) NSArray* schemes;
@@ -22,6 +25,7 @@ static const NSInteger kFormatPickerTag = 3;
 @property (nonatomic, copy) NSString* scheme;
 @property (nonatomic, copy) NSString* method;
 @property (nonatomic, copy) NSString* format;
+@property (nonatomic, strong) RTTestModel* testModel;
 
 @end
 
@@ -32,19 +36,56 @@ static const NSInteger kFormatPickerTag = 3;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    self.schemes       = @[@"http", @"https"];
-    self.methods       = @[@"GET", @"POST", @"PUT"];
-    self.formats       = @[@"JSON", @"XML"];
-    self.scheme        = self.schemes.firstObject;
-    self.method        = self.methods.firstObject;
-    self.format        = self.formats.firstObject;
+    self.testModel = [RTTestModel new];
+    
+    [self.testModel setWhiteListOption:NO];
+    
+    self.schemes = @[@"http", @"https"];
+    self.methods = @[@"GET", @"POST", @"PUT"];
+    self.formats = @[@"JSON", @"XML"];
+    self.scheme  = self.schemes.firstObject;
+    self.method  = self.methods.firstObject;
+    self.format  = self.formats.firstObject;
     
     self.navigationItem.title = @"Native Mobile";
     self.fakeTextField        = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self.view addSubview:self.fakeTextField];
     
+    [self.testModel setNumberOfTests:kDefaultNumberOfTests];
      [[UIPickerView appearance] setBackgroundColor:[UIColor grayColor]];
+    
+    __weak RTNativeMobileViewController* weakSelf = self;
+    
+    self.testModel.loadStartedBlock = ^{
+        weakSelf.startButton.enabled = NO;
+    };
+    
+    self.testModel.loadFinishedBlock = ^{
+    };
+    
+    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+        
+            weakSelf.startButton.enabled                       = YES;
+            RTContainerViewController* containerViewController = [RTContainerViewController new];
+            containerViewController.directResults              = aTestResults;
+            containerViewController.sdkResults                 = aSdkTestResults;
+            
+            [weakSelf.navigationController pushViewController:containerViewController animated:YES];
+        });
+    };
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent
+{
+    [super willMoveToParentViewController:parent];
+    
+    if (!parent)
+    {
+        [self.testModel setWhiteListOption:YES];
+    }
 }
 
 #pragma mark - Actions
@@ -56,6 +97,11 @@ static const NSInteger kFormatPickerTag = 3;
     NSString* text    = [NSString stringWithFormat:isTestsCount ? @"%ld" : @"%ld KB", value];
     UILabel* label    = isTestsCount ? self.testsCountLabel : self.payloadSizeLabel;
     label.text        = text;
+    
+    if (isTestsCount)
+    {
+        [self.testModel setNumberOfTests:value];
+    }
 }
 
 - (IBAction)start
@@ -73,13 +119,30 @@ static const NSInteger kFormatPickerTag = 3;
        request.HTTPBody = [RTUtils xmlDataOfSize:payloadSize];
     }
     
+    __weak id weakSelf = self;
+    
+    self.testModel.restartBlock = ^{
+    
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+           
+            [weakSelf loadRequest:request];
+        });
+    };
+    
+    [self.testModel start];
+    [self loadRequest:request];
+}
+
+- (void)loadRequest:(NSURLRequest *)aRequest
+{
     NSURLSession* session = [NSURLSession sharedSession];
     
-    NSURLSessionTask* task = [session dataTaskWithRequest:request
+    [self.testModel loadStarted];
+    
+    NSURLSessionTask* task = [session dataTaskWithRequest:aRequest
                                         completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                        
-                                            NSLog(@"Response %@ error %@ data %@", aResponse, aError, aData);
                                             
+                                            [self.testModel loadFinished];
                                         }];
     [task resume];
 }
@@ -193,6 +256,13 @@ static const NSInteger kFormatPickerTag = 3;
     {
         return self.formats[row];
     }
+}
+
+#pragma mark - NSURLSessionDataDelegate
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
+{
+    
 }
 
 @end

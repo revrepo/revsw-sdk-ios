@@ -40,7 +40,7 @@ namespace rs
             \"stats_reporting_level\" : \"out_of_band\",\
             \"stats_reporting_max_request_per_report\" : 1,\
             \"domains_provisioned_list\" : [],\
-            \"domains_white_list\" : [\"mbeans.com\", \"edition.cnn.com\"],\
+            \"domains_white_list\" : [\"mbeans.com\", \"edition.cnn.com\", \"httpbin.org\"],\
             \"domains_black_list\" : [] }}";
             
             NSData* jsonData  = [json dataUsingEncoding:NSUTF8StringEncoding];

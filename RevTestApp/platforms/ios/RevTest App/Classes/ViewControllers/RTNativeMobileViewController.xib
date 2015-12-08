@@ -166,6 +166,7 @@
                 <outlet property="payloadSizeLabel" destination="kHG-TZ-ECP" id="SZh-4b-266"/>
                 <outlet property="payloadSizeSlider" destination="5pC-VQ-WbM" id="M6a-ja-AXk"/>
                 <outlet property="schemeButton" destination="Zlr-FT-G1x" id="B8O-qz-Hqa"/>
+                <outlet property="startButton" destination="fpg-a4-EdW" id="2jY-rW-0eW"/>
                 <outlet property="testsCountLabel" destination="qcM-Si-tcc" id="LRo-Wd-HOW"/>
                 <outlet property="testsCountSlider" destination="ZjV-AI-BxT" id="G3m-VJ-kwf"/>
             </connections>

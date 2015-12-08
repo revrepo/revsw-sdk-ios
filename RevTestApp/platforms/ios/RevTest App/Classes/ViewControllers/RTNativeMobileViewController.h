@@ -18,5 +18,6 @@
 @property (nonatomic, weak) IBOutlet UIButton* schemeButton;
 @property (nonatomic, weak) IBOutlet UIButton* methodButton;
 @property (nonatomic, weak) IBOutlet UIButton* formatButton;
+@property (nonatomic, weak) IBOutlet UIButton* startButton;
 
 @end

@@ -48,14 +48,10 @@ namespace rs
         
         //NSLog(@"Request %p headers %@", request, request.allHTTPHeaderFields);
         
-        NSLog(@"CONNECTION %@", mutableRequest.URL);
+        //NSLog(@"CONNECTION %@", mutableRequest.URL);
         
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-       
-       
-                                               // NSLog(@"String %@", [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding]);
-                                                //NSLog(@"Response %@", aResponse);
                                                 
                                                 std::shared_ptr<Connection> anchor = oAnchor;
 

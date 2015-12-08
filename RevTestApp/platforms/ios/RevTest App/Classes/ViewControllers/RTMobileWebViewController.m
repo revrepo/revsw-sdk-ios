@@ -90,11 +90,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     [[UIPickerView appearance] setBackgroundColor:[UIColor grayColor]];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
 - (void)willMoveToParentViewController:(UIViewController *)parent
 {
     [super willMoveToParentViewController:parent];
