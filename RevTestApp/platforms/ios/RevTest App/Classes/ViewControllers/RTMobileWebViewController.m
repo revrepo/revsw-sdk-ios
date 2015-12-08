@@ -72,7 +72,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     self.pickerView.delegate      = self;
     self.pickerView.showsSelectionIndicator = YES;
     
-    UIToolbar *toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0,320,44)];
+    UIToolbar *toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, 44)];
     [toolBar setBarStyle:UIBarStyleBlackOpaque];
     UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                       style:UIBarButtonItemStylePlain

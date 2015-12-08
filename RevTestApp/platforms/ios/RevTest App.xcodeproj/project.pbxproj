@@ -98,6 +98,7 @@
 		5B0BFEFC1C0CACC90057715A /* RTReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEFB1C0CACC90057715A /* RTReportViewController.xib */; };
 		5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RTTestModel.m */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		5B25817F1C17155F00C55959 /* RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25817E1C17155F00C55959 /* RTUtils.m */; };
 		5B5DDDDF1C061663003935A3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B5DDDDE1C061663003935A3 /* RevSDK.framework */; };
 		5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */; };
 		5B7804E11C15E241003AD4F5 /* RTNativeMobileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */; };
@@ -257,6 +258,8 @@
 		5B1039781C11763C003CA9A1 /* RTTestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTestModel.h; sourceTree = "<group>"; };
 		5B1039791C11763C003CA9A1 /* RTTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestModel.m; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		5B25817D1C17155F00C55959 /* RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTUtils.h; sourceTree = "<group>"; };
+		5B25817E1C17155F00C55959 /* RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTUtils.m; sourceTree = "<group>"; };
 		5B5DDDDE1C061663003935A3 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5B7804DD1C15E241003AD4F5 /* RTNativeMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNativeMobileViewController.h; sourceTree = "<group>"; };
 		5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNativeMobileViewController.m; sourceTree = "<group>"; };
@@ -311,6 +314,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5B25817C1C17154C00C55959 /* Utils */,
 				5B1039771C1175F6003CA9A1 /* Model */,
 				5B0BFEE31C0C6BFA0057715A /* Views */,
 				5BEC8CA71C0707D60019BCD1 /* Categories */,
@@ -753,6 +757,15 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		5B25817C1C17154C00C55959 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				5B25817D1C17155F00C55959 /* RTUtils.h */,
+				5B25817E1C17155F00C55959 /* RTUtils.m */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 		5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1038,6 +1051,7 @@
 				5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
+				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5B04C98D1C0D88A300621B67 /* README.md in Sources */,
 				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,

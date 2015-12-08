@@ -23,7 +23,7 @@
 
 - (IBAction)nativeMobile:(id)sender
 {
-    UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
+    UIViewController* startViewController = [RTNativeMobileViewController viewControllerFromXib];
     [self.navigationController pushViewController:startViewController animated:YES];
 
 }
