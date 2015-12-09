@@ -7,23 +7,21 @@
 //
 
 #import "UIViewController+RTUtils.h"
+#import "NSURL+RTUtils.h"
 
 #import "RTNativeMobileViewController.h"
 #import "RTUtils.h"
 #import "RTContainerViewController.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
-static const NSInteger kSchemePickerTag = 1;
-static const NSInteger kMethodPickerTag = 2;
-static const NSInteger kFormatPickerTag = 3;
+static const NSInteger kMethodPickerTag = 1;
+static const NSInteger kFormatPickerTag = 2;
 
-@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, NSURLSessionDataDelegate>
+@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, strong) UITextField* fakeTextField;
-@property (nonatomic, strong) NSArray* schemes;
 @property (nonatomic, strong) NSArray* methods;
 @property (nonatomic, strong) NSArray* formats;
-@property (nonatomic, copy) NSString* scheme;
 @property (nonatomic, copy) NSString* method;
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
@@ -37,12 +35,8 @@ static const NSInteger kFormatPickerTag = 3;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-   // self.testModel = [RTTestModel new];
-    
-    self.schemes = @[@"http", @"https"];
     self.methods = @[@"GET", @"POST", @"PUT"];
     self.formats = @[@"JSON", @"XML"];
-    self.scheme  = self.schemes.firstObject;
     self.method  = self.methods.firstObject;
     self.format  = self.formats.firstObject;
     
@@ -100,11 +94,23 @@ static const NSInteger kFormatPickerTag = 3;
 
 - (IBAction)start
 {
-    const NSUInteger kBytesInKB = 1024;
-    NSString* URLString         = [NSString stringWithFormat:@"%@://%@", self.scheme, self.URLTextField.text];
-    NSURL* URL                  = [NSURL URLWithString:URLString];
-    NSUInteger payloadSize      = self.payloadSizeSlider.value * kBytesInKB;
+    NSString* URLString = self.URLTextField.text;
     
+    if (!([URLString hasPrefix:@"http://"] || [URLString hasPrefix:@"https://"]))
+    {
+        URLString = [@"http://" stringByAppendingString:URLString];
+    }
+    
+    const NSUInteger kBytesInKB = 1024;
+    NSURL* URL                  = [NSURL URLWithString:URLString];
+
+    if (![URL isValid])
+    {
+        [self showErrorAlertWithMessage:@"Invalid URL"];
+        return;
+    }
+    
+    NSUInteger payloadSize       = self.payloadSizeSlider.value * kBytesInKB;
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
     request.HTTPMethod           = self.method;
     
@@ -156,11 +162,6 @@ static const NSInteger kFormatPickerTag = 3;
     [task resume];
 }
 
-- (IBAction)schemeButtonPressed
-{
-    [self showPickerViewWithTag:kSchemePickerTag];
-}
-
 - (IBAction)methodButtonPressed
 {
     [self showPickerViewWithTag:kMethodPickerTag];
@@ -173,9 +174,9 @@ static const NSInteger kFormatPickerTag = 3;
 
 - (void)pickerDone
 {
-    NSArray* strings         = @[@"setScheme:", @"setMethod:", @"setFormat:"];
-    NSArray* arrays          = @[self.schemes, self.methods, self.formats];
-    NSArray* buttons         = @[self.schemeButton, self.methodButton, self.formatButton];
+    NSArray* strings         = @[@"setMethod:", @"setFormat:"];
+    NSArray* arrays          = @[self.methods, self.formats];
+    NSArray* buttons         = @[self.methodButton, self.formatButton];
     UIPickerView* pickerView = (UIPickerView *)self.fakeTextField.inputView;
     NSArray* array           = arrays[pickerView.tag - 1];
     UIButton* button         = buttons[pickerView.tag - 1];
@@ -230,11 +231,6 @@ static const NSInteger kFormatPickerTag = 3;
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (pickerView.tag == kSchemePickerTag)
-    {
-        return self.schemes.count;
-    }
-    else
     if (pickerView.tag == kMethodPickerTag)
     {
         return self.methods.count;
@@ -252,11 +248,6 @@ static const NSInteger kFormatPickerTag = 3;
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (pickerView.tag == kSchemePickerTag)
-    {
-        return self.schemes[row];
-    }
-    else
     if (pickerView.tag == kMethodPickerTag)
     {
         return self.methods[row];
@@ -265,13 +256,6 @@ static const NSInteger kFormatPickerTag = 3;
     {
         return self.formats[row];
     }
-}
-
-#pragma mark - NSURLSessionDataDelegate
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
-{
-    
 }
 
 @end

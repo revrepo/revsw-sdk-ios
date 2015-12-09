@@ -15,7 +15,7 @@
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 
-@interface RTMobileWebViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UIWebViewDelegate>
+@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
@@ -52,29 +52,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
      [self initializeTestModel];
      [self setNumberOfTests:kDefaultNumberOfTests];
     
-    self.pickerView = [[UIPickerView alloc] init];
-    self.pickerView.dataSource    = self;
-    self.pickerView.delegate      = self;
-    self.pickerView.showsSelectionIndicator = YES;
-    
-    UIToolbar *toolBar= [[UIToolbar alloc] initWithFrame:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, 44)];
-    [toolBar setBarStyle:UIBarStyleBlackOpaque];
-    UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done"
-                                                                      style:UIBarButtonItemStylePlain
-                                                                     target:self
-                                                                     action:@selector(done)];
-    toolBar.items = @[barButtonDone];
-    barButtonDone.tintColor = [UIColor blackColor];
-    
-    self.fakeTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
-    [self.view addSubview:self.fakeTextField];
-    
-    self.fakeTextField.inputView = self.pickerView;
-    self.fakeTextField.inputAccessoryView = toolBar;
-
-    [[UIPickerView appearance] setBackgroundColor:[UIColor grayColor]];
-    
-    self.startButton.layer.cornerRadius = 8.f;
+     self.startButton.layer.cornerRadius = 8.f;
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent
@@ -139,13 +117,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     }
 }
 
-/*- (void)done
-{
-    NSString* scheme = self.URLSchemes[[self.pickerView selectedRowInComponent:0]];
-    [self.schemeButton setTitle:scheme forState:UIControlStateNormal];
-    [self.fakeTextField resignFirstResponder];
-}*/
-
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)aTextField
@@ -154,23 +125,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     return YES;
 }
-
-/*#pragma mark - UIPickerViewDelegate
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return 2;
-}
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    return self.URLSchemes[row];
-}*/
 
 #pragma mark - UIWebViewDelegate
 

@@ -15,7 +15,6 @@
 @property (nonatomic, weak) IBOutlet UILabel* payloadSizeLabel;
 @property (nonatomic, weak) IBOutlet UISlider* testsCountSlider;
 @property (nonatomic, weak) IBOutlet UISlider* payloadSizeSlider;
-@property (nonatomic, weak) IBOutlet UIButton* schemeButton;
 @property (nonatomic, weak) IBOutlet UIButton* methodButton;
 @property (nonatomic, weak) IBOutlet UIButton* formatButton;
 @property (nonatomic, weak) IBOutlet UIButton* startButton;
