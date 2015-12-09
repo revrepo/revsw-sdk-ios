@@ -20,8 +20,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
-@property (nonatomic, strong) NSURLComponents* URLComponents;
-@property (nonatomic, strong) NSArray* URLSchemes;
 
 @end
 
@@ -34,10 +32,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     [super viewDidLoad];
     
     self.navigationItem.title = @"Mobile Web";
-    
-    self.URLComponents        = [NSURLComponents new];
-    self.URLSchemes           = @[@"http", @"https"];
-    self.URLComponents.scheme = self.URLSchemes[0];
     
     __weak RTMobileWebViewController* weakSelf = self;
     
@@ -112,8 +106,6 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (IBAction)start:(id)sender
 {
-    self.URLComponents.host = self.URLTextField.text;
-    
     [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
@@ -127,7 +119,14 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
     
-    NSURL* URL = [self.URLComponents URL];
+    NSString* URLString = self.URLTextField.text;
+    
+    if (!([URLString hasPrefix:@"http://"] || [URLString hasPrefix:@"https://"]))
+    {
+        URLString = [@"http://" stringByAppendingString:URLString];
+    }
+   
+    NSURL* URL = [NSURL URLWithString:URLString];
     
     if ([URL isValid])
     {
@@ -140,13 +139,12 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     }
 }
 
-- (void)done
+/*- (void)done
 {
     NSString* scheme = self.URLSchemes[[self.pickerView selectedRowInComponent:0]];
-    self.URLComponents.scheme = scheme;
     [self.schemeButton setTitle:scheme forState:UIControlStateNormal];
     [self.fakeTextField resignFirstResponder];
-}
+}*/
 
 #pragma mark - UITextFieldDelegate
 
@@ -157,7 +155,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     return YES;
 }
 
-#pragma mark - UIPickerViewDelegate
+/*#pragma mark - UIPickerViewDelegate
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
@@ -172,7 +170,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     return self.URLSchemes[row];
-}
+}*/
 
 #pragma mark - UIWebViewDelegate
 

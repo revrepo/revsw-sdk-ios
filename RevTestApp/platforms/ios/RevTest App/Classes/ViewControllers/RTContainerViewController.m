@@ -38,7 +38,7 @@
     self.testStatsViewController = [RTTestStatsViewController viewControllerFromXib];
     
     self.testStatsViewController.directResults = self.directResults;
-    self.testStatsViewController.sdkResults = self.sdkResults;
+    self.testStatsViewController.sdkResults    = self.sdkResults;
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                               navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal

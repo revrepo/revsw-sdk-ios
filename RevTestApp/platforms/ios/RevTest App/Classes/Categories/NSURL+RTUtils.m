@@ -12,7 +12,10 @@
 
 - (BOOL)isValid
 {
-    return self.scheme.length && self.host.length;
+    NSString *urlRegEx =
+    @"(http|https)://((\\w)*|([0-9]*)|([-|_])*)+([\\.|/]((\\w)*|([0-9]*)|([-|_])*))+";
+    NSPredicate *urlTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", urlRegEx];
+    return [urlTest evaluateWithObject:self.absoluteString];
 }
 
 @end
