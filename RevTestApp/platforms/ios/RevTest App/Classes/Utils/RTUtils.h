@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+#define RTPerformBlockOnQueue(queue, block, ...)\
+if (block)\
+{\
+dispatch_async(queue, ^{\
+block(__VA_ARGS__);\
+});\
+}\
+
+#define RTPerformBlockOnMainQueue(block, ...)\
+RTPerformBlockOnQueue(dispatch_get_main_queue(), block, __VA_ARGS__)
+
+
 @interface RTUtils : NSObject
 
 + (NSData *)jsonDataOfSize:(NSUInteger)aSize;

@@ -6,12 +6,12 @@
 //
 //
 
-#import "RTMobileWebViewController.h"
 #import "NSURL+RTUTils.h"
+
+#import "RTMobileWebViewController.h"
 #import "UIViewController+RTUtils.h"
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
-#import "RTTestModel.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 
@@ -41,34 +41,22 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     __weak RTMobileWebViewController* weakSelf = self;
     
-    self.testModel = [RTTestModel new];
-    self.testModel.loadStartedBlock = ^(NSString* aText){
+    self.loadStartedBlock = ^{
         weakSelf.startButton.enabled = NO;
-        [self showHudWithText:aText];
     };
     
-    self.testModel.loadFinishedBlock = ^{
-        
-        [self hideHud];
-    };
-    
-    self.testModel.restartBlock = ^{
+    self.restartBlock = ^{
         [weakSelf performSelector:@selector(startLoading)
                        withObject:nil
                        afterDelay:1.0];
     };
     
-    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
-    
-        weakSelf.startButton.enabled                       = YES;
-        RTContainerViewController* containerViewController = [RTContainerViewController new];
-        containerViewController.directResults              = aTestResults;
-        containerViewController.sdkResults                 = aSdkTestResults;
-        
-        [weakSelf.navigationController pushViewController:containerViewController animated:YES];
+    self.completionBlock = ^{
+        weakSelf.startButton.enabled = YES;
     };
     
-    [self.testModel setNumberOfTests:kDefaultNumberOfTests];
+     [self initializeTestModel];
+     [self setNumberOfTests:kDefaultNumberOfTests];
     
     self.pickerView = [[UIPickerView alloc] init];
     self.pickerView.dataSource    = self;
@@ -99,7 +87,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     if (!parent)
     {
-        [self.testModel setWhiteListOption:YES];
+        [self setWhiteListOption:YES];
     }
 }
 
@@ -116,7 +104,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     NSUInteger numberOfTests = aSender.value;
     
-    [self.testModel setNumberOfTests:numberOfTests];
+    [self setNumberOfTests:numberOfTests];
     self.testsNumberLabel.text = [NSString stringWithFormat:@"%ld", numberOfTests];
 }
 
@@ -124,7 +112,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     self.URLComponents.host = self.URLTextField.text;
     
-    [self.testModel start];
+    [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
     [self startLoading];
@@ -188,19 +176,19 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return request.URL.isValid && self.testModel.shouldLoad;
+    return [self shouldStartLoadingRequest:request];
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
-    [self.testModel loadStarted];
+    [self loadStarted];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     if (!webView.isLoading)
     {
-        [self.testModel loadFinished];
+        [self loadFinished];
     }
 }
 

@@ -104,6 +104,7 @@
 		5B7804E11C15E241003AD4F5 /* RTNativeMobileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
+		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
 		5BEC8CA01C06FB2B0019BCD1 /* RTStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */; };
 		5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */; };
@@ -266,6 +267,8 @@
 		5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTNativeMobileViewController.xib; sourceTree = "<group>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
+		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
+		5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTTesting.m"; sourceTree = "<group>"; };
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
 		5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTStartViewController.m; sourceTree = "<group>"; };
 		5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTStartViewController.xib; sourceTree = "<group>"; };
@@ -799,6 +802,8 @@
 				5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */,
 				5B0BFEF31C0CA0890057715A /* NSArray+Stats.h */,
 				5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */,
+				5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */,
+				5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1061,6 +1066,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */,
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
+				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 				302D95F114D2391D003F00A1 /* RTPhoneGapViewController.m in Sources */,
 			);

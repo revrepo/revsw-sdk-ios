@@ -8,16 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@class MBProgressHUD;
+#import "UIViewController+RTTesting.h"
 
 @interface UIViewController (RTUtils)
 
-@property (nonatomic, strong) MBProgressHUD* progressHUD;
-
 + (instancetype)viewControllerFromXib;
 - (void)showErrorAlertWithMessage:(NSString *)aMessage;
-
-- (void)showHudWithText:(NSString *)aText;
-- (void)hideHud;
 
 @end

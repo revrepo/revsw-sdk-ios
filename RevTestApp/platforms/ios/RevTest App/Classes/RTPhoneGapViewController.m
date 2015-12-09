@@ -29,7 +29,6 @@
 
 #import "RTPhoneGapViewController.h"
 #import "RTContainerViewController.h"
-#import "RTTestModel.h"
 
 @interface RTPhoneGapViewController ()
 {
@@ -96,36 +95,22 @@
     mIsFirstTest     = YES;
     
     __weak RTPhoneGapViewController* weakSelf = self;
-    self.testModel = [RTTestModel new];
     
-    self.testModel.loadStartedBlock = ^(NSString* aText){
-        [self showHudWithText:aText];
-    };
-    
-    self.testModel.loadFinishedBlock = ^{
-        
+    self.loadFinishedBlock = ^{
         [weakSelf.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         [[NSURLCache sharedURLCache] setDiskCapacity:0];
         [[NSURLCache sharedURLCache] setMemoryCapacity:0];
-        
-        [self hideHud];
     };
     
-    self.testModel.restartBlock = ^{
+    self.restartBlock = ^{
         
         [weakSelf.webView performSelector:@selector(loadRequest:)
                            withObject:weakSelf.webView.request
                            afterDelay:1.0];
     };
     
-    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkResults){
-
-        RTContainerViewController* containerViewController = [RTContainerViewController new];
-        containerViewController.directResults              = aTestResults;
-        containerViewController.sdkResults                 = aSdkResults;
-        [weakSelf.navigationController pushViewController:containerViewController animated:YES];
-    };
+    [self initializeTestModel];
 }
 
 - (void)viewDidUnload
@@ -147,7 +132,7 @@
     
     if (!parent)
     {
-        [self.testModel setWhiteListOption:YES];
+        [self setWhiteListOption:YES];
     }
 }
 
@@ -193,11 +178,11 @@
             mIsFirstTest = NO;
             
             NSString* testCount = [self.webView stringByEvaluatingJavaScriptFromString:@"getTestsCount()"];
-            [self.testModel setNumberOfTests:testCount.integerValue];
-            [self.testModel start];
+            [self setNumberOfTests:testCount.integerValue];
+            [self startTesting];
         }
         
-        [self.testModel loadStarted];
+        [self loadStarted];
     }
     
     [super webViewDidStartLoad:theWebView];
@@ -216,7 +201,7 @@
         {
             if (!theWebView.isLoading)
             {
-                [self.testModel loadFinished];
+                [self loadFinished];
             }
         }
     }

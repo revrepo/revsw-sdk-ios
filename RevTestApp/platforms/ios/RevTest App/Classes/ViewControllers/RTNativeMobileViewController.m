@@ -10,7 +10,6 @@
 
 #import "RTNativeMobileViewController.h"
 #import "RTUtils.h"
-#import "RTTestModel.h"
 #import "RTContainerViewController.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
@@ -38,9 +37,7 @@ static const NSInteger kFormatPickerTag = 3;
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 
-    self.testModel = [RTTestModel new];
-    
-    [self.testModel setWhiteListOption:NO];
+   // self.testModel = [RTTestModel new];
     
     self.schemes = @[@"http", @"https"];
     self.methods = @[@"GET", @"POST", @"PUT"];
@@ -54,33 +51,21 @@ static const NSInteger kFormatPickerTag = 3;
     
     [self.view addSubview:self.fakeTextField];
     
-    [self.testModel setNumberOfTests:kDefaultNumberOfTests];
      [[UIPickerView appearance] setBackgroundColor:[UIColor grayColor]];
     
     __weak RTNativeMobileViewController* weakSelf = self;
     
-    self.testModel.loadStartedBlock = ^(NSString *aText){
+    self.loadStartedBlock = ^(NSString *aText){
         weakSelf.startButton.enabled = NO;
-        [self showHudWithText:aText];
     };
     
-    self.testModel.loadFinishedBlock = ^{
-        
-        [self hideHud];
+    self.completionBlock = ^{
+            weakSelf.startButton.enabled = YES;
     };
     
-    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-        
-            weakSelf.startButton.enabled                       = YES;
-            RTContainerViewController* containerViewController = [RTContainerViewController new];
-            containerViewController.directResults              = aTestResults;
-            containerViewController.sdkResults                 = aSdkTestResults;
-            
-            [weakSelf.navigationController pushViewController:containerViewController animated:YES];
-        });
-    };
+    [self initializeTestModel];
+    [self setWhiteListOption:NO];
+    [self setNumberOfTests:kDefaultNumberOfTests];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent
@@ -89,7 +74,7 @@ static const NSInteger kFormatPickerTag = 3;
     
     if (!parent)
     {
-        [self.testModel setWhiteListOption:YES];
+        [self setWhiteListOption:YES];
     }
 }
 
@@ -105,7 +90,7 @@ static const NSInteger kFormatPickerTag = 3;
     
     if (isTestsCount)
     {
-        [self.testModel setNumberOfTests:value];
+        [self setNumberOfTests:value];
     }
 }
 
@@ -121,12 +106,27 @@ static const NSInteger kFormatPickerTag = 3;
     
     if (![request.HTTPMethod isEqualToString:@"GET"])
     {
-       request.HTTPBody = [RTUtils xmlDataOfSize:payloadSize];
+        NSData* (^jsonBlock)() = ^NSData*{
+        
+            return [RTUtils jsonDataOfSize:payloadSize];
+        };
+        
+        NSData* (^xmlBlock)() = ^NSData*{
+        
+            return [RTUtils xmlDataOfSize:payloadSize];
+        };
+        
+        NSDictionary* formatBlocks = @{
+                                       @"JSON" : jsonBlock,
+                                       @"XML" : xmlBlock
+                                       };
+        
+        request.HTTPBody = formatBlocks[self.format];
     }
     
     __weak id weakSelf = self;
     
-    self.testModel.restartBlock = ^{
+    self.restartBlock = ^{
     
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
            
@@ -134,7 +134,7 @@ static const NSInteger kFormatPickerTag = 3;
         });
     };
     
-    [self.testModel start];
+    [self startTesting];
     [self loadRequest:request];
 }
 
@@ -142,12 +142,12 @@ static const NSInteger kFormatPickerTag = 3;
 {
     NSURLSession* session = [NSURLSession sharedSession];
     
-    [self.testModel loadStarted];
+    [self loadStarted];
     
     NSURLSessionTask* task = [session dataTaskWithRequest:aRequest
                                         completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                             
-                                            [self.testModel loadFinished];
+                                            [self loadFinished];
                                         }];
     [task resume];
 }
