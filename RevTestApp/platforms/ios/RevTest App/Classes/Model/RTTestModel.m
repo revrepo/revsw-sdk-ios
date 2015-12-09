@@ -86,7 +86,7 @@
         
         NSLog(@"Start %ld", mTestsCounter);
         
-         UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
+       /*  UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             self.progressHUD = [MBProgressHUD showHUDAddedTo:window animated:YES];
@@ -94,10 +94,10 @@
             self.progressHUD.labelText = text;
             self.progressHUD.removeFromSuperViewOnHide = YES;
         });
-        
+        */
         if (self.loadStartedBlock)
         {
-            self.loadStartedBlock();
+            self.loadStartedBlock(text);
         }
     }
 }
@@ -106,9 +106,10 @@
 {
     NSLog(@"Finish %ld", mTestsCounter);
     
-    dispatch_async(dispatch_get_main_queue(), ^{
+   /* dispatch_async(dispatch_get_main_queue(), ^{
         [self.progressHUD hide:YES];
     });
+    */
     
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];

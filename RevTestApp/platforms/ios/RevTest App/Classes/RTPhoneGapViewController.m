@@ -25,6 +25,8 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
+#import "UIViewController+RTUtils.h"
+
 #import "RTPhoneGapViewController.h"
 #import "RTContainerViewController.h"
 #import "RTTestModel.h"
@@ -96,8 +98,8 @@
     __weak RTPhoneGapViewController* weakSelf = self;
     self.testModel = [RTTestModel new];
     
-    self.testModel.loadStartedBlock = ^{
-        
+    self.testModel.loadStartedBlock = ^(NSString* aText){
+        [self showHudWithText:aText];
     };
     
     self.testModel.loadFinishedBlock = ^{
@@ -106,6 +108,8 @@
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         [[NSURLCache sharedURLCache] setDiskCapacity:0];
         [[NSURLCache sharedURLCache] setMemoryCapacity:0];
+        
+        [self hideHud];
     };
     
     self.testModel.restartBlock = ^{

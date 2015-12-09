@@ -42,11 +42,14 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     __weak RTMobileWebViewController* weakSelf = self;
     
     self.testModel = [RTTestModel new];
-    self.testModel.loadStartedBlock = ^{
+    self.testModel.loadStartedBlock = ^(NSString* aText){
         weakSelf.startButton.enabled = NO;
+        [self showHudWithText:aText];
     };
     
     self.testModel.loadFinishedBlock = ^{
+        
+        [self hideHud];
     };
     
     self.testModel.restartBlock = ^{

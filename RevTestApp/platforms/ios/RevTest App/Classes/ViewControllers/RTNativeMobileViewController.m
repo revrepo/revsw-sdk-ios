@@ -6,6 +6,8 @@
 //
 //
 
+#import "UIViewController+RTUtils.h"
+
 #import "RTNativeMobileViewController.h"
 #import "RTUtils.h"
 #import "RTTestModel.h"
@@ -57,11 +59,14 @@ static const NSInteger kFormatPickerTag = 3;
     
     __weak RTNativeMobileViewController* weakSelf = self;
     
-    self.testModel.loadStartedBlock = ^{
+    self.testModel.loadStartedBlock = ^(NSString *aText){
         weakSelf.startButton.enabled = NO;
+        [self showHudWithText:aText];
     };
     
     self.testModel.loadFinishedBlock = ^{
+        
+        [self hideHud];
     };
     
     self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
