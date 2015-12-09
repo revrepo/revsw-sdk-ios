@@ -28,9 +28,11 @@
 
 @end
 
-@interface RSURLProtocol ()<RSURLConnectionDelegate>
+@interface RSURLProtocol ()<RSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
+@property (nonatomic, strong) NSURLConnection* nativeConnection;
 @property (nonatomic, strong) RSURLConnection* connection;
+@property (nonatomic, strong) NSMutableData* data;
 
 @end
 
@@ -44,7 +46,6 @@
     BOOL can               = rs::Model::instance()->shouldTransportDomainName(domainName) &&
                              ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
                              !aRequest.isFileRequest;
-    
     return can;
 }
 
@@ -62,33 +63,78 @@
 
 - (void)startLoading
 {
-    self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
-    [self.connection start];
+    self.data = [NSMutableData data];
+    
+    BOOL isTestPassOptionOn = rs::Model::instance()->testPassOption();
+    
+    if (isTestPassOptionOn)
+    {
+        
+        NSMutableURLRequest* mutableRequest = [self.request mutableCopy];
+        [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:mutableRequest];
+        self.nativeConnection = [NSURLConnection connectionWithRequest:mutableRequest delegate:self];
+    }
+    else
+    {
+       self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
+      [self.connection start];
+    }
 }
 
 - (void)stopLoading
 {
-   
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"kRSURLProtocolStoppedLoading"
+                                                        object:nil
+                                                      userInfo:@{
+                                                                 @"kRSDataKey" : @([self.data length])
+                                                                 }];
+}
+
+- (NSCachedURLResponse *)cachedResponse
+{
+    return nil;
 }
 
 #pragma mark - NSURLConnectionDelegate
 
-- (void) connection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
-- (void) connection:(RSURLConnection *)connection didReceiveData:(NSData *)data
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
+    [self.data appendData:data];
     [self.client URLProtocol:self didLoadData:data];
 }
 
-- (void) connectionDidFinishLoading:(RSURLConnection *)connection
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
     [self.client URLProtocolDidFinishLoading:self];
 }
 
-- (void)connection:(RSURLConnection *)connection didFailWithError:(NSError *)error
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [self.client URLProtocol:self didFailWithError:error];
+}
+
+- (void) rs_connection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+}
+
+- (void) rs_connection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
+{
+    [self.data appendData:aData];
+    [self.client URLProtocol:self didLoadData:aData];
+}
+
+- (void) rs_connectionDidFinishLoading:(RSURLConnection *)connection
+{
+    [self.client URLProtocolDidFinishLoading:self];
+}
+
+- (void) rs_connection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [self.client URLProtocol:self didFailWithError:error];
 }

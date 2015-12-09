@@ -6,7 +6,6 @@
 //
 //
 
-#import "MBProgressHUD.h"
 #import <RevSDK/RevSDK.h>
 
 #import "RTTestModel.h"
@@ -16,12 +15,14 @@
     NSUInteger mTestsCounter;
     NSUInteger mNumberOfTestsToPerform;
     BOOL mIsLoading;
-    NSDate* mStartDate;    
+    NSDate* mStartDate;
+    NSUInteger mCurrentDataSize;
 }
 
-@property (nonatomic, strong) MBProgressHUD* progressHUD;
 @property (nonatomic, strong) NSMutableArray* testResults;
 @property (nonatomic, strong) NSMutableArray* sdkTestResults;
+@property (nonatomic, strong) NSMutableArray* dataLengthArray;
+@property (nonatomic, strong) NSMutableArray* sdkDataLengthArray;
 
 @end
 
@@ -33,33 +34,52 @@
     
     if (self)
     {
-         mIsLoading = NO;
-        
-         self.shouldLoad     = NO;
-         self.testResults    = [NSMutableArray array];
-         self.sdkTestResults = [NSMutableArray array];
-         
          mTestsCounter           = 0;
          mNumberOfTestsToPerform = 0;
+         mCurrentDataSize        = 0;
+         mIsLoading              = NO;
+         self.shouldLoad         = NO;
+         self.testResults        = [NSMutableArray array];
+         self.sdkTestResults     = [NSMutableArray array];
+         self.dataLengthArray    = [NSMutableArray array];
+         self.sdkDataLengthArray = [NSMutableArray array];
         
          [RevSDK setWhiteListOption:NO];
+        
+         [[NSNotificationCenter defaultCenter] addObserver:self
+                                                  selector:@selector(didReceiveStopLoadingNotification:)
+                                                      name:@"kRSURLProtocolStoppedLoading"
+                                                    object:nil];
     }
     
     return self;
 }
 
+- (void)didReceiveStopLoadingNotification:(NSNotification *)aNotification
+{
+    NSDictionary* userInfo = aNotification.userInfo;
+    NSNumber* number       = userInfo[@"kRSDataKey"];
+    NSUInteger dataSize    = number.unsignedIntegerValue;
+    
+    mCurrentDataSize += dataSize;
+}
+
 - (void)dealloc
 {
-    [self.progressHUD removeFromSuperview];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)start
 {
-    self.shouldLoad = YES;
-    mTestsCounter = 0;
+    mCurrentDataSize = 0;
+    self.shouldLoad  = YES;
+    mTestsCounter    = 0;
+    
     [RevSDK setOperationMode:kRSOperationModeOff];
+    [RevSDK setTestPassOption:YES];
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
+    [self.dataLengthArray removeAllObjects];
 }
 
 - (void)setWhiteListOption:(BOOL)aOn
@@ -86,15 +106,6 @@
         
         NSLog(@"Start %ld", mTestsCounter);
         
-       /*  UIWindow* window = [[[UIApplication sharedApplication] delegate] window];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.progressHUD = [MBProgressHUD showHUDAddedTo:window animated:YES];
-            self.progressHUD.mode = MBProgressHUDModeIndeterminate;
-            self.progressHUD.labelText = text;
-            self.progressHUD.removeFromSuperViewOnHide = YES;
-        });
-        */
         if (self.loadStartedBlock)
         {
             self.loadStartedBlock(text);
@@ -106,16 +117,17 @@
 {
     NSLog(@"Finish %ld", mTestsCounter);
     
-   /* dispatch_async(dispatch_get_main_queue(), ^{
-        [self.progressHUD hide:YES];
-    });
-    */
-    
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
     NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
     [array addObject:@(interval)];
+    
+    array = [RevSDK operationMode] == kRSOperationModeOff ? self.dataLengthArray : self.sdkDataLengthArray;
+    [array addObject:@(mCurrentDataSize)];
+    mCurrentDataSize = 0;
+    
+    NSLog(@"Data length array %@ sdk data length array %@", self.dataLengthArray, self.sdkDataLengthArray);
     
     if (self.loadFinishedBlock)
     {
@@ -134,6 +146,7 @@
         if (self.sdkTestResults.count == 0)
         {
             [RevSDK setOperationMode:kRSOperationModeTransport];
+            [RevSDK setTestPassOption:NO];
             
             mTestsCounter = 0;
 

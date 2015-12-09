@@ -17,6 +17,7 @@
 #import "Data.hpp"
 #import "Response.hpp"
 #import "Error.hpp"
+#import "Model.hpp"
 
 @interface RSURLConnection ()
 {
@@ -44,29 +45,30 @@
         
         std::function<void()> finishCallback = [self](){
         
-            [self.delegate connectionDidFinishLoading:self];
+            [self.delegate rs_connectionDidFinishLoading:self];
         };
         
         std::function<void(rs::Data)> dataCallback = [self](rs::Data aData){
            
             NSData* data = rs::NSDataFromData(aData);
-            [self.delegate connection:self didReceiveData:data];
+            [self.delegate rs_connection:self didReceiveData:data];
         };
         
         std::function<void(std::shared_ptr<rs::Response>)> responseCallback = [self](std::shared_ptr<rs::Response> aResponse){
             
             NSHTTPURLResponse* response = rs::NSHTTPURLResponseFromResponse(aResponse);
-            [self.delegate connection:self didReceiveResponse:response];
+            [self.delegate rs_connection:self didReceiveResponse:response];
         };
         
         std::function<void(rs::Error)> errorCallback = [self](rs::Error aError){
         
             NSError* error = rs::NSErrorFromError(aError);
-            [self.delegate connection:self didFailWithError:error];
+            [self.delegate rs_connection:self didFailWithError:error];
         };
         
-        NSURLRequest* newRequest = aRequest.URL.host ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
-        connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
+        BOOL testPassOptionOn    = rs::Model::instance()->testPassOption();
+        NSURLRequest* newRequest = (aRequest.URL.host || testPassOptionOn) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
+        connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     

@@ -33,6 +33,7 @@ namespace rs
         mNetwork                   = new Network;
         mDataStorage               = new DataStorage;
         mSpareDomainsWhiteList     = std::vector<std::string>();
+        mTestPassOption            = false;
     }
     
     Model* Model::instance()
@@ -148,6 +149,11 @@ namespace rs
     
     bool Model::shouldTransportDomainName(std::string aDomainName)
     {
+        if (mTestPassOption)
+        {
+            return true;
+        }
+        
         if (!canTransport())
         {
             return false;
