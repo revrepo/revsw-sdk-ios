@@ -79,6 +79,8 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     self.fakeTextField.inputAccessoryView = toolBar;
 
     [[UIPickerView appearance] setBackgroundColor:[UIColor grayColor]];
+    
+    self.startButton.layer.cornerRadius = 8.f;
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent

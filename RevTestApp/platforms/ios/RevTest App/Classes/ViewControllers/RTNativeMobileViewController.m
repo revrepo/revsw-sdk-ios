@@ -66,6 +66,10 @@ static const NSInteger kFormatPickerTag = 3;
     [self initializeTestModel];
     [self setWhiteListOption:NO];
     [self setNumberOfTests:kDefaultNumberOfTests];
+    
+    self.methodButton.layer.cornerRadius = 8.f;
+    self.formatButton.layer.cornerRadius = 8.f;
+    self.startButton.layer.cornerRadius  = 8.f;
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent

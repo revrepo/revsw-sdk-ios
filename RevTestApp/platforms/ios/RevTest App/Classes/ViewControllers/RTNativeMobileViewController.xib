@@ -100,24 +100,39 @@
                         </constraints>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uji-Ep-5N6">
-                        <rect key="frame" x="180" y="180" width="30" height="30"/>
+                        <rect key="frame" x="155" y="180" width="70" height="35"/>
                         <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="qaR-aB-cDm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <state key="normal" title="GET"/>
                         <connections>
                             <action selector="methodButtonPressed" destination="kC6-M5-V1L" eventType="touchUpInside" id="KXI-Fb-mxb"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjk-YU-FB5">
-                        <rect key="frame" x="280" y="180" width="40" height="30"/>
+                        <rect key="frame" x="265" y="180" width="70" height="35"/>
                         <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="crJ-2D-ODb"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <state key="normal" title="JSON"/>
                         <connections>
                             <action selector="formatButtonPressed" destination="kC6-M5-V1L" eventType="touchUpInside" id="qDq-5I-4uV"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fpg-a4-EdW">
-                        <rect key="frame" x="390" y="180" width="34" height="30"/>
+                        <rect key="frame" x="375" y="180" width="70" height="35"/>
                         <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="fXX-rA-FED"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <state key="normal" title="Start"/>
                         <connections>
                             <action selector="start" destination="kC6-M5-V1L" eventType="touchUpInside" id="0Xu-tO-EYK"/>
@@ -137,10 +152,10 @@
                     <constraint firstItem="nfQ-VQ-Vn2" firstAttribute="leading" secondItem="Zlr-FT-G1x" secondAttribute="trailing" constant="8" id="Ogk-0b-XfR"/>
                     <constraint firstItem="MaV-Kg-4ZB" firstAttribute="leading" secondItem="Whs-lB-73d" secondAttribute="leading" id="QAV-Cv-O6d"/>
                     <constraint firstItem="ShG-gh-O1J" firstAttribute="centerY" secondItem="5pC-VQ-WbM" secondAttribute="centerY" id="SZT-Q5-6qJ"/>
-                    <constraint firstItem="fpg-a4-EdW" firstAttribute="leading" secondItem="hjk-YU-FB5" secondAttribute="trailing" constant="70" id="WZE-Ry-OOf"/>
+                    <constraint firstItem="fpg-a4-EdW" firstAttribute="leading" secondItem="hjk-YU-FB5" secondAttribute="trailing" constant="40" id="WZE-Ry-OOf"/>
                     <constraint firstItem="5pC-VQ-WbM" firstAttribute="leading" secondItem="nfQ-VQ-Vn2" secondAttribute="leading" id="Ww3-cP-Kh7"/>
                     <constraint firstItem="hjk-YU-FB5" firstAttribute="centerX" secondItem="ZEc-rY-ya0" secondAttribute="centerX" id="Z0j-RF-tqv"/>
-                    <constraint firstItem="hjk-YU-FB5" firstAttribute="leading" secondItem="Uji-Ep-5N6" secondAttribute="trailing" constant="70" id="aEt-uG-RZz"/>
+                    <constraint firstItem="hjk-YU-FB5" firstAttribute="leading" secondItem="Uji-Ep-5N6" secondAttribute="trailing" constant="40" id="aEt-uG-RZz"/>
                     <constraint firstItem="MaV-Kg-4ZB" firstAttribute="top" secondItem="Whs-lB-73d" secondAttribute="bottom" constant="27" id="bG3-xc-yQE"/>
                     <constraint firstItem="ZjV-AI-BxT" firstAttribute="centerY" secondItem="Whs-lB-73d" secondAttribute="centerY" id="bZr-4J-41u"/>
                     <constraint firstItem="zLp-L1-bO7" firstAttribute="width" secondItem="ShG-gh-O1J" secondAttribute="width" id="biJ-C1-LXV"/>
