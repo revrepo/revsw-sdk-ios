@@ -26,17 +26,21 @@
         <!--<link rel="stylesheet" type="text/css" href="css/index.css"/>-->
         <script type="text/javascript" language="JavaScript">
         
-            function getSelectValue()
+            function stringStartsWith (string, prefix)
             {
-                var select = document.getElementById("select");
-                return select.options[select.selectedIndex].text;
+               return string.slice(0, prefix.length) == prefix;
             }
         
             function startLoading()
             {
                 var textField   = document.getElementById("URLTextField");
-                var text        = textField.value;
-                var URL         = getSelectValue() + "://" + text;
+                var URL         = textField.value;
+                
+                if (! (stringStartsWith(URL, "http://") || stringStartsWith(URL, "https://")))
+                {
+                    URL = "http://" + URL;
+                }
+                
                 window.location = URL;
             }
         
@@ -78,13 +82,7 @@
     <body >
         <div style="margin-left:5px;">
         <form>
-        
-        <select style = "height:25px;" id = "select">
-            <option value = "http">http</option>
-            <option value = "https">https</option>
-        </select>
-        
-            <input type="text" id = "URLTextField" name="URL" style="width:60%; height:20px" value = "mbeans.com">
+           <input type="text" id = "URLTextField" name="URL" style="width:95%; height:20px" value = "https://mbeans.com">
             <br>
         </form>
         <form>

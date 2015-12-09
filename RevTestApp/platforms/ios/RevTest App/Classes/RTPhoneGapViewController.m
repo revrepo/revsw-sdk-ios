@@ -138,13 +138,12 @@
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    mIsFirstTest     = YES;
-    
+    mIsFirstTest = YES;
+    mIndexFileLoaded = NO;
     NSURL* URL = [self performSelector:NSSelectorFromString(@"appUrl")];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:20.0];
     
     [self.webView loadRequest:request];
-    
     [super viewDidDisappear:animated];
 }
 
@@ -190,7 +189,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
-    
     // Black base color for background matches the native apps
     theWebView.backgroundColor = [UIColor blackColor];
     [super webViewDidFinishLoad:theWebView];
