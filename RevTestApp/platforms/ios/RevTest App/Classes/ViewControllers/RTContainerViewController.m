@@ -12,7 +12,7 @@
 #import "RTReportViewController.h"
 #import "RTTestStatsViewController.h"
 
-@interface RTContainerViewController ()<UIPageViewControllerDataSource>
+@interface RTContainerViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController* pageViewController;
 @property (nonatomic, strong) RTReportViewController* reportViewController;
@@ -45,6 +45,7 @@
                                                                             options:nil];
     
     self.pageViewController.dataSource = self;
+    self.pageViewController.delegate = self;
     
     [self.pageViewController setViewControllers:@[self.reportViewController]
                                       direction:UIPageViewControllerNavigationDirectionForward
@@ -73,6 +74,16 @@
     }
     
     return nil;
+}
+
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 2;
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
 }
 
 @end

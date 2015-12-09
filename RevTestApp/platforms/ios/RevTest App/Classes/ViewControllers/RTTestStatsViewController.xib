@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0bh-AK-PLk">
-                        <rect key="frame" x="8" y="28" width="584" height="552"/>
+                        <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
@@ -29,10 +29,10 @@
                 <animations/>
                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
-                    <constraint firstItem="0bh-AK-PLk" firstAttribute="leading" secondItem="YLd-CT-bzt" secondAttribute="leading" constant="8" id="2af-Jw-BR6"/>
-                    <constraint firstItem="0bh-AK-PLk" firstAttribute="top" secondItem="Gin-fZ-qsc" secondAttribute="bottom" constant="8" id="FQ6-bf-gh1"/>
-                    <constraint firstItem="ZWf-nI-84i" firstAttribute="top" secondItem="0bh-AK-PLk" secondAttribute="bottom" constant="20" id="OTc-HV-qlV"/>
-                    <constraint firstAttribute="trailing" secondItem="0bh-AK-PLk" secondAttribute="trailing" constant="8" id="Sly-T3-I7x"/>
+                    <constraint firstItem="0bh-AK-PLk" firstAttribute="leading" secondItem="YLd-CT-bzt" secondAttribute="leading" id="2af-Jw-BR6"/>
+                    <constraint firstItem="0bh-AK-PLk" firstAttribute="top" secondItem="Gin-fZ-qsc" secondAttribute="bottom" id="FQ6-bf-gh1"/>
+                    <constraint firstItem="ZWf-nI-84i" firstAttribute="top" secondItem="0bh-AK-PLk" secondAttribute="bottom" id="OTc-HV-qlV"/>
+                    <constraint firstAttribute="trailing" secondItem="0bh-AK-PLk" secondAttribute="trailing" id="Sly-T3-I7x"/>
                 </constraints>
             </view>
             <point key="canvasLocation" x="447" y="270"/>
