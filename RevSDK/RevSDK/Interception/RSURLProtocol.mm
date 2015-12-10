@@ -58,9 +58,7 @@
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)aRequest
 {
-    BOOL testPassOptionOn    = rs::Model::instance()->testPassOption();
-    NSURLRequest* newRequest = (aRequest.URL.host && !testPassOptionOn) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
-    return newRequest;
+    return aRequest;
 }
 
 - (void)startLoading
@@ -72,10 +70,10 @@
 
 - (void)stopLoading
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"kRSURLProtocolStoppedLoading"
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRSURLProtocolStoppedLoadingNotification
                                                         object:nil
                                                       userInfo:@{
-                                                                 @"kRSDataKey" : @([self.data length])
+                                                                 kRSDataKey : @([self.data length])
                                                                  }];
 }
 

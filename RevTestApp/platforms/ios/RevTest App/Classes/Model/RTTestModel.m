@@ -48,7 +48,7 @@
         
          [[NSNotificationCenter defaultCenter] addObserver:self
                                                   selector:@selector(didReceiveStopLoadingNotification:)
-                                                      name:@"kRSURLProtocolStoppedLoading"
+                                                      name:kRSURLProtocolStoppedLoadingNotification
                                                     object:nil];
     }
     
@@ -58,7 +58,7 @@
 - (void)didReceiveStopLoadingNotification:(NSNotification *)aNotification
 {
     NSDictionary* userInfo = aNotification.userInfo;
-    NSNumber* number       = userInfo[@"kRSDataKey"];
+    NSNumber* number       = userInfo[kRSDataKey];
     NSUInteger dataSize    = number.unsignedIntegerValue;
     
     mCurrentDataSize += dataSize;

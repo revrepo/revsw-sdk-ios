@@ -138,6 +138,7 @@
 		5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NativeTimer.mm; sourceTree = "<group>"; };
 		5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeTimer.h; sourceTree = "<group>"; };
 		5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
+		5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPublicConsts.h; sourceTree = "<group>"; };
 		88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +206,7 @@
 				5B3096B91BFA02770045024C /* RevSDK.h */,
 				5B3096F01BFA11E50045024C /* RevSDK.mm */,
 				5B3096BB1BFA02770045024C /* Info.plist */,
+				5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */,
 			);
 			path = RevSDK;
 			sourceTree = "<group>";
@@ -652,6 +654,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
+					"/Users/andreychernukha/Projects/RevSDK/revsdk-ios/RevSDK/",
+				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -672,6 +681,13 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
+					"/Users/andreychernukha/Projects/RevSDK/revsdk-ios/RevSDK/",
+				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

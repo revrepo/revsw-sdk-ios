@@ -6,12 +6,20 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#import "RSPublicConsts.h"
+
 #import "RSUtils.h"
 #include "Request.hpp"
 #include "Response.hpp"
 #include "Data.hpp"
 #include "Error.hpp"
 #include "Configuration.hpp"
+
+//notifications
+NSString* const kRSURLProtocolStoppedLoadingNotification = @"kRSURLProtocolStoppedLoadingNotification";
+
+//keys
+NSString* const kRSDataKey = @"kRSDataKey";
 
 namespace rs
 {

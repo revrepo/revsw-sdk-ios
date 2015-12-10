@@ -17,6 +17,8 @@
 #include <map>
 #include <vector>
 
+#import "RSPublicConsts.h"
+
 namespace rs
 {
     class Request;
