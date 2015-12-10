@@ -58,23 +58,22 @@
         
             </script>
         <style>
-            input[type=checkbox] {
-                zoom: 1.5;
-                vertical-align: -3px;
-            }
-        
             input[type=range]
             {
-                vertical-align: -14px;
+                /*vertical-align: -14px;*/
+                height: 60px;
+                width:180px;
             }
         
-        #start
+        input[type=button]
         {
-            vertical-align: -9px;
+            vertical-align: -18px;
+            height: 30px;
+            width:70px;
         }
         
         label{
-            vertical-align: -11px;
+            vertical-align: 25px;
         }
         
         </style>
@@ -82,13 +81,14 @@
     <body >
         <div style="margin-left:5px;">
         <form>
-           <input type="text" id = "URLTextField" name="URL" style="width:95%; height:20px" value = "https://mbeans.com">
+           <input type="text" id = "URLTextField" name="URL" style="width:95%; height:30px; font-size: 17px;" value = "https://mbeans.com">
             <br>
         </form>
         <form>
-           <div style="width: 53%; float: left"><input type="range" name="points" min="3" max="20" value = "5" oninput = "sliderValueChanged(this.value)">
-            <label color = "black" id = "tests_label">5</label></div>
-            <input type = "button" value = "Start" onclick = "startLoading()" id = "start" >
+            <div style="width: 70%; float: left"><input type="range" name="points" min="3" max="20" value = "5" oninput = "sliderValueChanged(this.value)">
+            <label color = "black" id = "tests_label">5</label> </div>
+            <input type = "button" value = "Start" onclick = "startLoading()" id = "start">
+           
         </form>
         </div>
         <script type="text/javascript" src="cordova.js"></script>

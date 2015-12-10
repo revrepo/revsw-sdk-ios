@@ -37,6 +37,7 @@
 }
 
 @property (nonatomic, strong) RTTestModel* testModel;
+@property (nonatomic, strong) NSTimer* timer;
 
 @end
 
@@ -66,6 +67,11 @@
     return self;
 }
 
+- (void)dealloc
+{
+    NSLog(@"Phone gap dealloc");
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -84,10 +90,25 @@
     [super viewWillAppear:animated];
 }
 
+- (void)test
+{
+    NSLog(@"Loading %d", self.webView.isLoading);
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
+        self.navigationController.interactivePopGestureRecognizer.enabled = NO;
+    }
+    
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                         target:self
+                                       selector:@selector(test)
+                                       userInfo:nil
+                                        repeats:YES];
     
     self.navigationItem.title = @"Hybrid Mobile";
     
@@ -133,6 +154,7 @@
     if (!parent)
     {
         [self setWhiteListOption:YES];
+        [self.timer invalidate];
     }
 }
 

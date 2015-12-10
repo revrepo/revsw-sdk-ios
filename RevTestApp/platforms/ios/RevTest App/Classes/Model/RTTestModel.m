@@ -102,10 +102,10 @@
         mStartDate = [NSDate date];
         
         NSString* type = [RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
-        NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", mTestsCounter, mNumberOfTestsToPerform];
+        NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
         NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
         
-        NSLog(@"Start %ld", mTestsCounter);
+        NSLog(@"Start %ld", (unsigned long)mTestsCounter);
         
         if (self.loadStartedBlock)
         {
@@ -116,7 +116,7 @@
 
 - (void)loadFinished
 {
-    NSLog(@"Finish %ld", mTestsCounter);
+    NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
     
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
@@ -125,7 +125,7 @@
     [array addObject:@(interval)];
     
     array = [RevSDK operationMode] == kRSOperationModeOff ? self.dataLengthArray : self.sdkDataLengthArray;
-    [array addObject:@(mCurrentDataSize)];
+    [array addObject:@(mCurrentDataSize / 1024.0)];
     mCurrentDataSize = 0;
     
     if (self.loadFinishedBlock)

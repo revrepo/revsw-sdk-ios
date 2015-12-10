@@ -148,7 +148,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
-    NSLog(@"Webview error %@", aError);
+    NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
 }
 
 @end
