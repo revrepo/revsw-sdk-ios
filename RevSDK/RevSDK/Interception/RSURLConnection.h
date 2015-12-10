@@ -12,13 +12,13 @@
 
 @protocol RSURLConnectionDelegate
 
-- (void) rs_connection:(nullable RSURLConnection *)connection didReceiveResponse:(nullable NSURLResponse *)response;
+- (void) connection:(nullable RSURLConnection *)connection didReceiveResponse:(nullable NSURLResponse *)response;
 
-- (void) rs_connection:(nullable RSURLConnection *)connection didReceiveData:(nullable NSData *)data;
+- (void) connection:(nullable RSURLConnection *)connection didReceiveData:(nullable NSData *)data;
     
-- (void) rs_connectionDidFinishLoading:(nullable RSURLConnection *)connection;
+- (void) connectionDidFinishLoading:(nullable RSURLConnection *)connection;
 
-- (void) rs_connection:(nullable RSURLConnection *)connection didFailWithError:(nullable NSError *)error;
+- (void) connection:(nullable RSURLConnection *)connection didFailWithError:(nullable NSError *)error;
 
 @end
 

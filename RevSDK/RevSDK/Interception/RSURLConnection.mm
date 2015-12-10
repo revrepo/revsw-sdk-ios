@@ -45,30 +45,28 @@
         
         std::function<void()> finishCallback = [self](){
         
-            [self.delegate rs_connectionDidFinishLoading:self];
+            [self.delegate connectionDidFinishLoading:self];
         };
         
         std::function<void(rs::Data)> dataCallback = [self](rs::Data aData){
            
             NSData* data = rs::NSDataFromData(aData);
-            [self.delegate rs_connection:self didReceiveData:data];
+            [self.delegate connection:self didReceiveData:data];
         };
         
         std::function<void(std::shared_ptr<rs::Response>)> responseCallback = [self](std::shared_ptr<rs::Response> aResponse){
             
             NSHTTPURLResponse* response = rs::NSHTTPURLResponseFromResponse(aResponse);
-            [self.delegate rs_connection:self didReceiveResponse:response];
+            [self.delegate connection:self didReceiveResponse:response];
         };
         
         std::function<void(rs::Error)> errorCallback = [self](rs::Error aError){
         
             NSError* error = rs::NSErrorFromError(aError);
-            [self.delegate rs_connection:self didFailWithError:error];
+            [self.delegate connection:self didFailWithError:error];
         };
         
-        BOOL testPassOptionOn    = rs::Model::instance()->testPassOption();
-        NSURLRequest* newRequest = (aRequest.URL.host || testPassOptionOn) ? aRequest : [RSURLRequestProcessor proccessRequest:aRequest];
-        connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
+        connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(aRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     
