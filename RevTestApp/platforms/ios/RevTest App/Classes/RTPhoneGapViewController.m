@@ -90,11 +90,6 @@
     [super viewWillAppear:animated];
 }
 
-- (void)test
-{
-    NSLog(@"Loading %d", self.webView.isLoading);
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -103,12 +98,6 @@
     if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
         self.navigationController.interactivePopGestureRecognizer.enabled = NO;
     }
-    
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
-                                         target:self
-                                       selector:@selector(test)
-                                       userInfo:nil
-                                        repeats:YES];
     
     self.navigationItem.title = @"Hybrid Mobile";
     
@@ -205,16 +194,12 @@
         
         [self loadStarted];
     }
-    
+
     [super webViewDidStartLoad:theWebView];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView*)theWebView
 {
-    // Black base color for background matches the native apps
-    theWebView.backgroundColor = [UIColor blackColor];
-    [super webViewDidFinishLoad:theWebView];
-   
     if ([self isVisible])
     {
         if (mIndexFileLoaded)
@@ -230,13 +215,17 @@
     {
         mIndexFileLoaded = YES;
     }
+    
+    [super webViewDidFinishLoad:theWebView];
 }
 
 /* Comment out the block below to over-ride */
 
 - (void) webView:(UIWebView*)theWebView didFailLoadWithError:(NSError*)error
 {
-    NSLog(@"WEB VIEW ERROR %@ loading %d", error, theWebView.isLoading);
+    NSLog(@"WEB VIEW ERROR %@ loading %d request %@", error, theWebView.isLoading, theWebView.request);
+    
+    [super webView:theWebView didFailLoadWithError:error];
 }
 
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
