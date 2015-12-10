@@ -26,6 +26,13 @@
                                        options:nil][0];
 }
 
++ (instancetype)cellWithCenterOffset:(CGFloat)aOffset
+{
+    RTReportCell* cell = [self cell];
+    cell.centerConstraint.constant += aOffset;
+    return cell;
+}
+
 - (void)setNumberText:(NSString *)aNumberText directText:(NSString *)aDirectText sdkText:(NSString *)aSdkText
 {
     self.numberLabel.text = aNumberText;

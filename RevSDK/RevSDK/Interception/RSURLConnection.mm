@@ -67,7 +67,7 @@
         };
         
         BOOL testPassOptionOn    = rs::Model::instance()->testPassOption();
-        NSURLRequest* newRequest = (aRequest.URL.host || testPassOptionOn) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
+        NSURLRequest* newRequest = (aRequest.URL.host || testPassOptionOn) ? aRequest : [RSURLRequestProcessor proccessRequest:aRequest];
         connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }

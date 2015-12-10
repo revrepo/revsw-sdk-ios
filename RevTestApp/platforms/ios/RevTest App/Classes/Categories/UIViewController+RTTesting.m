@@ -105,19 +105,24 @@
         RTPerformBlockOnMainQueue(weakSelf.restartBlock);
     };
     
-    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults){
+    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults, NSArray* aDataLengths, NSArray* aSdkDataLengths){
         RTPerformBlockOnMainQueue(weakSelf.completionBlock);
-        [weakSelf goToStatsWithTestResults:aTestResults sdkResults:aSdkTestResults];
+        [weakSelf goToStatsWithTestResults:aTestResults
+                                sdkResults:aSdkTestResults
+                               dataLengths:aDataLengths
+                            sdkDataLengths:aSdkDataLengths];
     };
 }
 
-- (void)goToStatsWithTestResults:(NSArray *)aTestResults sdkResults:(NSArray *)aSdkTestResults
+- (void)goToStatsWithTestResults:(NSArray *)aTestResults sdkResults:(NSArray *)aSdkTestResults dataLengths:(NSArray *)aDataLengths sdkDataLengths:(NSArray *)aSdkDataLengths
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
         RTContainerViewController* containerViewController = [RTContainerViewController new];
         containerViewController.directResults              = aTestResults;
         containerViewController.sdkResults                 = aSdkTestResults;
+        containerViewController.dataLengths                = aDataLengths;
+        containerViewController.sdkDataLengths             = aSdkDataLengths;
         
         [self.navigationController pushViewController:containerViewController animated:YES];
     });

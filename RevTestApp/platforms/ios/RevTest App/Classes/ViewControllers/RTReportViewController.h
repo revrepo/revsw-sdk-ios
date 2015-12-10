@@ -11,7 +11,9 @@
 @interface RTReportViewController : UIViewController
 
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
-@property (nonatomic, copy) NSArray* directResults;
-@property (nonatomic, copy) NSArray* sdkResults;
+@property (nonatomic, strong) NSArray* directResults;
+@property (nonatomic, strong) NSArray* sdkResults;
+@property (nonatomic, strong) NSArray* dataLengths;
+@property (nonatomic, strong) NSArray* sdkDataLengths;
 
 @end

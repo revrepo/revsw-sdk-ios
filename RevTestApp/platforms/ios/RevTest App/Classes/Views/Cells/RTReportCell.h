@@ -13,8 +13,10 @@
 @property (nonatomic, weak) IBOutlet UILabel* numberLabel;
 @property (nonatomic, weak) IBOutlet UILabel* directLabel;
 @property (nonatomic, weak) IBOutlet UILabel* sdkLabel;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* centerConstraint;
 
 + (instancetype)cell;
++ (instancetype)cellWithCenterOffset:(CGFloat)aOffset;
 - (void)setNumberText:(NSString *)aNumberText directText:(NSString *)aDirectText sdkText:(NSString *)aSdkText;
 
 @end

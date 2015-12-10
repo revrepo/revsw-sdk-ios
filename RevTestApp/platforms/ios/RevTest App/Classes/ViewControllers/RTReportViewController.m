@@ -43,22 +43,24 @@
     
     if (!cell)
     {
-        cell = [RTReportCell cell];
+        cell = [RTReportCell cellWithCenterOffset:-70.f];
     }
     
     if (indexPath.row == 0)
     {
-        cell.directLabel.text = @"Direct";
-        cell.sdkLabel.text    = @"SDK";
+        cell.directLabel.text = @"Direct(Data KB)";
+        cell.sdkLabel.text    = @"SDK(Data KB)";
     }
     else
     {
-        NSNumber* directResult = self.directResults[indexPath.row - 1];
-        NSNumber* sdkResults   = self.sdkResults[indexPath.row - 1];
+        NSNumber* directResult  = self.directResults[indexPath.row - 1];
+        NSNumber* sdkResults    = self.sdkResults[indexPath.row - 1];
+        NSNumber* dataLength    = self.dataLengths[indexPath.row - 1];
+        NSNumber* sdkDataLength = self.sdkDataLengths[indexPath.row - 1];
         
         cell.numberLabel.text = [NSString stringWithFormat:@"%ld.", indexPath.row];
-        cell.directLabel.text = [NSString stringWithFormat:@"%.3f", directResult.doubleValue];
-        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f", sdkResults.doubleValue];
+        cell.directLabel.text = [NSString stringWithFormat:@"%.3f (%ld)", directResult.doubleValue, dataLength.unsignedIntegerValue / 1024];
+        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%ld)", sdkResults.doubleValue, sdkDataLength.unsignedIntegerValue / 1024];
     }
     
     return cell;

@@ -64,21 +64,9 @@
 - (void)startLoading
 {
     self.data = [NSMutableData data];
-    
-    BOOL isTestPassOptionOn = rs::Model::instance()->testPassOption();
-    
-    if (isTestPassOptionOn)
-    {
-        
-        NSMutableURLRequest* mutableRequest = [self.request mutableCopy];
-        [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:mutableRequest];
-        self.nativeConnection = [NSURLConnection connectionWithRequest:mutableRequest delegate:self];
-    }
-    else
-    {
-       self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
-      [self.connection start];
-    }
+
+    self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
+    [self.connection start];
 }
 
 - (void)stopLoading
@@ -138,6 +126,5 @@
 {
     [self.client URLProtocol:self didFailWithError:error];
 }
-
 
 @end

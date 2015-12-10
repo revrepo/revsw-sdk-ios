@@ -12,5 +12,7 @@
 
 @property (nonatomic, strong) NSArray* directResults;
 @property (nonatomic, strong) NSArray* sdkResults;
+@property (nonatomic, strong) NSArray* dataLengths;
+@property (nonatomic, strong) NSArray* sdkDataLengths;
 
 @end

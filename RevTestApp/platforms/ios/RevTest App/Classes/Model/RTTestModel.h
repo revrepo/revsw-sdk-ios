@@ -14,7 +14,7 @@
 @property (nonatomic, copy) void (^loadStartedBlock)(NSString*);
 @property (nonatomic, copy) void (^loadFinishedBlock)(void);
 @property (nonatomic, copy) void (^restartBlock)(void);
-@property (nonatomic, copy) void (^completionBlock)(NSArray*, NSArray*);
+@property (nonatomic, copy) void (^completionBlock)(NSArray*, NSArray*, NSArray*, NSArray*);
 
 - (void)start;
 - (void)setWhiteListOption:(BOOL)aOn;

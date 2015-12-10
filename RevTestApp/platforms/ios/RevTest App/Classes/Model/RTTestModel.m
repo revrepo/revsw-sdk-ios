@@ -80,6 +80,7 @@
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
     [self.dataLengthArray removeAllObjects];
+    [self.sdkDataLengthArray removeAllObjects];
 }
 
 - (void)setWhiteListOption:(BOOL)aOn
@@ -127,8 +128,6 @@
     [array addObject:@(mCurrentDataSize)];
     mCurrentDataSize = 0;
     
-    NSLog(@"Data length array %@ sdk data length array %@", self.dataLengthArray, self.sdkDataLengthArray);
-    
     if (self.loadFinishedBlock)
     {
         self.loadFinishedBlock();
@@ -159,7 +158,7 @@
         {
             if (self.completionBlock)
             {
-                self.completionBlock(self.testResults, self.sdkTestResults);
+                self.completionBlock(self.testResults, self.sdkTestResults, self.dataLengthArray, self.sdkDataLengthArray);
             }
             
             self.shouldLoad = NO;

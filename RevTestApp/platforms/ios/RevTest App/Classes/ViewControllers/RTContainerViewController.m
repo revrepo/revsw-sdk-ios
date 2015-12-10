@@ -31,9 +31,11 @@
     
     self.navigationItem.title = @"Report";
     
-    self.reportViewController  = [RTReportViewController viewControllerFromXib];
-    self.reportViewController.directResults = self.directResults;
-    self.reportViewController.sdkResults = self.sdkResults;
+    self.reportViewController                = [RTReportViewController viewControllerFromXib];
+    self.reportViewController.directResults  = self.directResults;
+    self.reportViewController.sdkResults     = self.sdkResults;
+    self.reportViewController.dataLengths    = self.dataLengths;
+    self.reportViewController.sdkDataLengths = self.sdkDataLengths;
     
     self.testStatsViewController = [RTTestStatsViewController viewControllerFromXib];
     
