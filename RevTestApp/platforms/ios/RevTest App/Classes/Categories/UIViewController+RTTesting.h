@@ -19,7 +19,6 @@
 @property (nonatomic, copy) void (^restartBlock)();
 @property (nonatomic, copy) void (^completionBlock)();
 @property (nonatomic, copy) void (^loadFinishedBlock)();
-@property (nonatomic, weak) UIWebView* theWebView;
 
 - (void)showHudWithText:(NSString *)aText;
 - (void)hideHud;

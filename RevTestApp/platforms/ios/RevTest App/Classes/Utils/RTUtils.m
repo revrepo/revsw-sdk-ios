@@ -8,6 +8,8 @@
 
 #import "RTUtils.h"
 
+NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
+
 @implementation RTUtils
 
 + (NSString*)stringOfSize:(NSUInteger)aSize

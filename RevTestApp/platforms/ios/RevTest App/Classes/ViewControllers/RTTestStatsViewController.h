@@ -12,5 +12,6 @@
 
 @property (nonatomic, copy) NSArray* directResults;
 @property (nonatomic, copy) NSArray* sdkResults;
+@property (nonatomic, strong) NSDictionary* userInfo;
 
 @end

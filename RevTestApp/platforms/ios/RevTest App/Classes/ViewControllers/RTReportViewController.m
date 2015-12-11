@@ -7,8 +7,8 @@
 //
 
 #import "RTReportViewController.h"
-
 #import "RTReportCell.h"
+#import "RTUtils.h"
 
 @interface RTReportViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -48,8 +48,10 @@
     
     if (indexPath.row == 0)
     {
-        cell.directLabel.text = @"Direct(Data KB)";
-        cell.sdkLabel.text    = @"SDK(Data KB)";
+        NSString* sdkLabelText = self.userInfo[kRTSDKLabelTextKey];
+        
+        cell.directLabel.text = @"Current(Data KB)";
+        cell.sdkLabel.text    = [NSString stringWithFormat:@"%@(Data KB)", sdkLabelText];
     }
     else
     {

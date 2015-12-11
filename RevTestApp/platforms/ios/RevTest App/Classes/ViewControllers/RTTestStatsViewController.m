@@ -9,6 +9,7 @@
 #import "RTTestStatsViewController.h"
 #import "RTReportCell.h"
 #import "NSArray+Stats.h"
+#import "RTUtils.h"
 
 @interface RTTestStatsViewController ()<UITableViewDataSource, UITableViewDataSource>
 
@@ -22,12 +23,16 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    __weak RTTestStatsViewController* weakSelf = self;
+    
     self.cellProcessBlocks = @[
                                ^(RTReportCell* cell){
                                    
+                                   NSString* sdkLabelText = weakSelf.userInfo[kRTSDKLabelTextKey];
+                                   
                                    [cell setNumberText:@""
-                                            directText:@"Direct"
-                                               sdkText:@"SDK"];
+                                            directText:@"Current"
+                                               sdkText:sdkLabelText];
                                },
                                 ^(RTReportCell* cell){
                                    
