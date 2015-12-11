@@ -50,8 +50,8 @@
     {
         NSString* sdkLabelText = self.userInfo[kRTSDKLabelTextKey];
         
-        cell.directLabel.text = @"Current(Data KB)";
-        cell.sdkLabel.text    = [NSString stringWithFormat:@"%@(Data KB)", sdkLabelText];
+        cell.directLabel.text = @"Current(KB)";
+        cell.sdkLabel.text    = [NSString stringWithFormat:@"%@(KB)", sdkLabelText];
     }
     else
     {

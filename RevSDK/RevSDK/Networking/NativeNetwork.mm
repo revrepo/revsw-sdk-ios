@@ -28,7 +28,7 @@ namespace rs
             \"configs\" : {\
             \"sdk_release_version\" : 1.0,\
             \"configuration_api_url\" : \"https://rev-200.revdn.net\",\
-            \"configuration_refresh_interval_sec\" : 10,\
+            \"configuration_refresh_interval_sec\" : 1000,\
             \"configuration_stale_timeout_sec\" : 100,\
             \"edge_host\" : \"revdn.net\",\
             \"operation_mode\" : \"transfer_and_report\",\

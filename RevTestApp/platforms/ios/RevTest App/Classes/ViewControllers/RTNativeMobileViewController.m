@@ -82,7 +82,7 @@ static const NSInteger kFormatPickerTag = 2;
 {
     NSUInteger value  = (NSUInteger)aSender.value;
     BOOL isTestsCount = aSender == self.testsCountSlider;
-    NSString* text    = [NSString stringWithFormat:isTestsCount ? @"%ld" : @"%ld KB", value];
+    NSString* text    = [NSString stringWithFormat:isTestsCount ? @"%ld" : @"%ld KB", (unsigned long)value];
     UILabel* label    = isTestsCount ? self.testsCountLabel : self.payloadSizeLabel;
     label.text        = text;
     
@@ -131,7 +131,7 @@ static const NSInteger kFormatPickerTag = 2;
                                        @"XML" : xmlBlock
                                        };
         
-        request.HTTPBody = formatBlocks[self.format];
+        request.HTTPBody = ((NSData* (^)(void))formatBlocks[self.format])();
     }
     
     __weak id weakSelf = self;
