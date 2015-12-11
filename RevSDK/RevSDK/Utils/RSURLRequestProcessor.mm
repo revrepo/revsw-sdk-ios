@@ -47,10 +47,13 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     }
     
     NSURLComponents* URLComponents = [NSURLComponents new];
-    URLComponents.host             = transformedEdgeHost;
+    URLComponents.host             = @"rev-200.revdn.net";
     URLComponents.scheme           = scheme;
+    URLComponents.path             = URL.path;
     
-    [newRequest setURL:[NSURL URLWithString:kRSNonVPNURL]];
+    [newRequest setURL:URLComponents.URL];
+    [newRequest setHTTPBody:aRequest.HTTPBody];
+    [newRequest setHTTPMethod:aRequest.HTTPMethod];
     
     return newRequest;
 }
