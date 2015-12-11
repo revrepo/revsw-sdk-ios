@@ -15,7 +15,7 @@ FOUNDATION_EXPORT const unsigned char RevSDKVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <RevSDK/PublicHeader.h>
 
-#import </Users/andreychernukha/Projects/RevSDK/revsdk-ios/RevSDK/RevSDK/RSPublicConsts.h>
+#import <RevSDK/RSPublicConsts.h>
 
 typedef enum
 {

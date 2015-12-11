@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */; };
+		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */; };
 		5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */; };
 		5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BD11BFDD20B003DCB27 /* Data.cpp */; };
@@ -347,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
+				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
 				5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */,
 				5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */,
@@ -648,6 +650,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -659,7 +662,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
-					"/Users/andreychernukha/Projects/RevSDK/revsdk-ios/RevSDK/",
+					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -668,6 +671,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Debug;
 		};
@@ -675,6 +679,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -686,7 +691,7 @@
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
-					"/Users/andreychernukha/Projects/RevSDK/revsdk-ios/RevSDK/",
+					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -695,6 +700,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				USER_HEADER_SEARCH_PATHS = "";
 			};
 			name = Release;
 		};

@@ -1095,7 +1095,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Brian Parker (2J9BGDCA7N)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
@@ -1105,9 +1105,17 @@
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
+					"../revsdk-ios/RevSDK/",
+				);
 				INFOPLIST_FILE = "RevTest App/RevTest App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "~/revsdk-ios/RevSDK/RevSDK/";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
@@ -1141,9 +1149,17 @@
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
+					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
+					"~/revsdk-ios/RevSDK/RevSDK/",
+				);
 				INFOPLIST_FILE = "RevTest App/RevTest App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "~/revsdk-ios/RevSDK/RevSDK/";
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
