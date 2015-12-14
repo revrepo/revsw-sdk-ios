@@ -9,6 +9,7 @@
 #import <RevSDK/RevSDK.h>
 
 #import "RTTestModel.h"
+#import "RTUtils.h"
 
 @interface RTTestModel ()
 {
@@ -23,6 +24,7 @@
 @property (nonatomic, strong) NSMutableArray* sdkTestResults;
 @property (nonatomic, strong) NSMutableArray* dataLengthArray;
 @property (nonatomic, strong) NSMutableArray* sdkDataLengthArray;
+@property (nonatomic, strong) NSTimer* timer;
 
 @end
 
@@ -93,11 +95,20 @@
     mNumberOfTestsToPerform = aNumberOfTests;
 }
 
+- (void)timerFired
+{
+    [self.timer invalidate];
+    self.timer = nil;
+    
+    RTPerformBlockOnMainQueue(self.cancelBlock);
+}
+
 - (void)loadStarted
 {
     if (!mIsLoading)
     {
         ++mTestsCounter;
+        NSLog(@"Start %ld", (unsigned long)mTestsCounter);
         mIsLoading = YES;
         mStartDate = [NSDate date];
         
@@ -105,18 +116,28 @@
         NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
         NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
         
-        NSLog(@"Start %ld", (unsigned long)mTestsCounter);
-        
         if (self.loadStartedBlock)
         {
             self.loadStartedBlock(text);
         }
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:45.0
+                                                      target:self
+                                                    selector:@selector(timerFired)
+                                                    userInfo:nil
+                                                     repeats:NO];
     }
 }
 
 - (void)loadFinished
 {
     NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
+    
+    if (self.timer)
+    {
+        [self.timer invalidate];
+         self.timer = nil;
+    }
     
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];

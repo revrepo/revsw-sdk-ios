@@ -40,13 +40,19 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     };
     
     self.restartBlock = ^{
-        [weakSelf performSelector:@selector(startLoading)
+        
+            [weakSelf performSelector:@selector(startLoading)
                        withObject:nil
                        afterDelay:1.0];
     };
     
     self.completionBlock = ^{
         weakSelf.startButton.enabled = YES;
+    };
+    
+    self.cancelBlock = ^{
+    
+        [[weakSelf webView] stopLoading];
     };
     
      [self initializeTestModel];
@@ -93,15 +99,15 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)startLoading
 {
-    NSLog(@"START SIZES %lu %lu", (unsigned long)[NSURLCache sharedURLCache].currentMemoryUsage, (unsigned long)[NSURLCache sharedURLCache].currentDiskUsage);
-    
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-    for (NSHTTPCookie *cookie in [storage cookies]) {
+    
+    for (NSHTTPCookie *cookie in [storage cookies])
+    {
         [storage deleteCookie:cookie];
     }
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-    [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
     [[NSURLCache sharedURLCache] setMemoryCapacity:0];
@@ -147,13 +153,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     [self loadStarted];
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webViewDidFinishLoad:(UIWebView *)aWebView
 {
-    if (!webView.isLoading)
+    if (!aWebView.isLoading)
     {
-        
-        NSLog(@"SIZES %lu %lu", (unsigned long)[NSURLCache sharedURLCache].currentMemoryUsage, (unsigned long)[NSURLCache sharedURLCache].currentDiskUsage);
-        
         [self loadFinished];
     }
 }

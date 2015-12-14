@@ -19,6 +19,7 @@
 @property (nonatomic, copy) void (^restartBlock)();
 @property (nonatomic, copy) void (^completionBlock)();
 @property (nonatomic, copy) void (^loadFinishedBlock)();
+@property (nonatomic, copy) void (^cancelBlock)();
 
 - (void)showHudWithText:(NSString *)aText;
 - (void)hideHud;

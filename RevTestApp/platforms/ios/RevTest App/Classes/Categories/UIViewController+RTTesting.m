@@ -20,6 +20,16 @@
 
 @implementation UIViewController (RTTesting)
 
+- (void)setCancelBlock:(void (^)())aCancelBlock
+{
+    objc_setAssociatedObject(self, @selector(cancelBlock), aCancelBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
+}
+
+- (void(^)())cancelBlock
+{
+    return objc_getAssociatedObject(self, @selector(cancelBlock));
+}
+
 - (void)setLoadFinishedBlock:(void (^)())aLoadFinishedBlock
 {
     objc_setAssociatedObject(self, @selector(loadFinishedBlock), aLoadFinishedBlock, OBJC_ASSOCIATION_COPY_NONATOMIC);
@@ -111,6 +121,11 @@
                                 sdkResults:aSdkTestResults
                                dataLengths:aDataLengths
                             sdkDataLengths:aSdkDataLengths];
+    };
+    
+    self.testModel.cancelBlock = ^{
+        RTPerformBlockOnMainQueue(weakSelf.cancelBlock);
+        [weakSelf loadFinished];
     };
 }
 

@@ -107,7 +107,15 @@
     __weak RTPhoneGapViewController* weakSelf = self;
     
     self.loadFinishedBlock = ^{
-        [weakSelf.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
+        
+        NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        
+        for (NSHTTPCookie *cookie in [storage cookies])
+        {
+            [storage deleteCookie:cookie];
+        }
+        
+        [[NSUserDefaults standardUserDefaults] synchronize];
         [[NSURLCache sharedURLCache] removeAllCachedResponses];
         [[NSURLCache sharedURLCache] setDiskCapacity:0];
         [[NSURLCache sharedURLCache] setMemoryCapacity:0];
@@ -118,6 +126,11 @@
         [weakSelf.webView performSelector:@selector(loadRequest:)
                            withObject:weakSelf.webView.request
                            afterDelay:1.0];
+    };
+    
+    self.cancelBlock = ^{
+        
+        [[weakSelf webView] stopLoading];
     };
     
     [self initializeTestModel];
