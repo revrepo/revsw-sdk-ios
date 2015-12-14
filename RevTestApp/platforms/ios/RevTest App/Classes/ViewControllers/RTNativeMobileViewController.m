@@ -201,13 +201,12 @@ static const NSInteger kFormatPickerTag = 2;
     pickerView.tag           = aTag;
     
     UIToolbar *toolBar = [[UIToolbar alloc] initWithFrame:CGRectMake(0,0, [UIScreen mainScreen].bounds.size.width, 44)];
-    [toolBar setBarStyle:UIBarStyleBlackOpaque];
+    [toolBar setBarStyle:UIBarStyleBlackTranslucent];
     UIBarButtonItem *barButtonDone = [[UIBarButtonItem alloc] initWithTitle:@"Done"
                                                                       style:UIBarButtonItemStylePlain
                                                                      target:self
                                                                      action:@selector(pickerDone)];
     toolBar.items = @[barButtonDone];
-    barButtonDone.tintColor = [UIColor blackColor];
     
     self.fakeTextField.inputView = pickerView;
     self.fakeTextField.inputAccessoryView = toolBar;

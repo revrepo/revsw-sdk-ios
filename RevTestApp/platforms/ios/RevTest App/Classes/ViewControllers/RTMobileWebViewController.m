@@ -61,6 +61,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     
     if (!parent)
     {
+        [self.webView stopLoading];
         [self setWhiteListOption:YES];
     }
 }
@@ -79,7 +80,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     NSUInteger numberOfTests = aSender.value;
     
     [self setNumberOfTests:numberOfTests];
-    self.testsNumberLabel.text = [NSString stringWithFormat:@"%ld", numberOfTests];
+    self.testsNumberLabel.text = [NSString stringWithFormat:@"%ld", (unsigned long)numberOfTests];
 }
 
 - (IBAction)start:(id)sender
@@ -92,6 +93,14 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)startLoading
 {
+    NSLog(@"START SIZES %lu %lu", (unsigned long)[NSURLCache sharedURLCache].currentMemoryUsage, (unsigned long)[NSURLCache sharedURLCache].currentDiskUsage);
+    
+    NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    for (NSHTTPCookie *cookie in [storage cookies]) {
+        [storage deleteCookie:cookie];
+    }
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    
     [self.webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML = \"\";"];
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
     [[NSURLCache sharedURLCache] setDiskCapacity:0];
@@ -142,6 +151,9 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 {
     if (!webView.isLoading)
     {
+        
+        NSLog(@"SIZES %lu %lu", (unsigned long)[NSURLCache sharedURLCache].currentMemoryUsage, (unsigned long)[NSURLCache sharedURLCache].currentDiskUsage);
+        
         [self loadFinished];
     }
 }

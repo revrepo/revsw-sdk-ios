@@ -144,6 +144,7 @@
     {
         [self setWhiteListOption:YES];
         [self.timer invalidate];
+        [self.webView stopLoading];
     }
 }
 

@@ -61,8 +61,8 @@
         NSNumber* sdkDataLength = self.sdkDataLengths[indexPath.row - 1];
         
         cell.numberLabel.text = [NSString stringWithFormat:@"%ld.", (long)indexPath.row];
-        cell.directLabel.text = [NSString stringWithFormat:@"%.3f (%.1f)", directResult.doubleValue, dataLength.floatValue];
-        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%.1f)", sdkResults.doubleValue, sdkDataLength.floatValue];
+        cell.directLabel.text = [NSString stringWithFormat:@"%.3f (%.2f)", directResult.doubleValue, dataLength.floatValue];
+        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%.2f)", sdkResults.doubleValue, sdkDataLength.floatValue];
     }
     
     return cell;

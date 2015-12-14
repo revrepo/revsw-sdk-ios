@@ -63,8 +63,7 @@ namespace rs
                                                 }
                                                 
                                                 //NSString* str = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
-                                                
-                                              //  NSLog(@"%@", str);
+                                                NSLog(@"URL %@ Data received %ld", httpResponse.URL, (unsigned long)aData.length);
                                                 
                                                 if (!aError)
                                                 {

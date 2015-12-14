@@ -48,7 +48,6 @@ id setBeingRemoved(id self, SEL selector, ...)
 @implementation AppDelegate
 
 @synthesize window;
-
 - (id)init
 {
     /** If you need to do any extra app-specific initialization, you can do it here
@@ -58,8 +57,8 @@ id setBeingRemoved(id self, SEL selector, ...)
 
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
 
-    int cacheSizeMemory = 8 * 1024 * 1024; // 8MB
-    int cacheSizeDisk = 32 * 1024 * 1024; // 32MB
+    int cacheSizeMemory = 0;//8 * 1024 * 1024; // 8MB
+    int cacheSizeDisk = 0;//32 * 1024 * 1024; // 32MB
 #if __has_feature(objc_arc)
         NSURLCache* sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
 #else
