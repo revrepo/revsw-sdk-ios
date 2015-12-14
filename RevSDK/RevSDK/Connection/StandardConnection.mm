@@ -84,31 +84,3 @@ namespace rs
         [task resume];
     }
 }
-
-//{
-//    "args": {},
-//    "headers": {
-//        "Accept": "*/*",
-//        "Accept-Encoding": "gzip, deflate",
-//        "Accept-Language": "en-us",
-//        "Host": "httpbin.org",
-//        "User-Agent": "RevTest%20App/1.0.0 CFNetwork/758.1.6 Darwin/15.0.0"
-//    },
-//    "origin": "193.107.172.208",
-//    "url": "https://httpbin.org/get"
-//}
-//
-//{
-//    "args": {},
-//    "headers": {
-//        "Accept": "*/*",
-//        "Accept-Encoding": "gzip, deflate",
-//        "Accept-Language": "en-us",
-//        "Cookie": "NOSTO_SESSION=3d7db7ea6a96e55601a8a8af4828886cd3591da3-___AT=caf3769038821b4d723592c49972e4f15e79a23b&___TS=1449861400957; csrftoken=WBavH1XlHEw4qyKiQWuibnNUxE293diO",
-//        "Host": "httpbin.org",
-//        "User-Agent": "RevTest%20App/1.0.0 CFNetwork/758.1.6 Darwin/15.0.0",
-//        "X-Rev-Host": "httpbin.org"
-//    },
-//    "origin": "108.61.199.207",
-//    "url": "https://httpbin.org/get"
-//}
