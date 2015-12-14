@@ -62,7 +62,7 @@ namespace rs
                                                     //NSLog(@"Response %@ current request %p ", httpResponse, request);
                                                 }
                                                 
-                                                NSString* str = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
+                                                //NSString* str = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
                                                 
                                               //  NSLog(@"%@", str);
                                                 

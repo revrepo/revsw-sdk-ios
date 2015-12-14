@@ -82,6 +82,15 @@
     return nil;
 }
 
+- (id)initWithTask:(NSURLSessionTask *)task cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id<NSURLProtocolClient>)client
+{
+    NSURLRequest* request = [task originalRequest];
+    
+    self = [self initWithRequest:request cachedResponse:cachedResponse client:client];
+    
+    return self;
+}
+
 - (void) connection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
