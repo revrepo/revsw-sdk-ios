@@ -20,7 +20,7 @@
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
     [NSURLProtocol registerClass:[RSURLProtocol class]];
-    [NSURLSessionConfiguration rs_swizzleProtocolClasses];
+   // [NSURLSessionConfiguration rs_swizzleProtocolClasses];
     rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
 }
 
