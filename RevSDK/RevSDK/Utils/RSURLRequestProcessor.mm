@@ -13,6 +13,9 @@
 
 #include <string>
 
+static NSString* const kRSNonVPNURL = @"https://rev-200.revdn.net";
+static NSString* const kRSVPNURL = @"http://testsjc20-bp01.revsw.net/";
+
 static NSString* const kRSHostHeader = @"Host";
 static NSString* const kRSRevHostHeader = @"X-Rev-Host";
 
@@ -20,7 +23,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
 
 + (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest
 {
-    NSMutableURLRequest* newRequest = [NSMutableURLRequest new];
+    NSMutableURLRequest* newRequest = [aRequest mutableCopy];
     NSURL* URL                      = aRequest.URL;
     NSString* host                  = URL.host;
     std::string  stdHost            = rs::stdStringFromNSString(host);
@@ -35,24 +38,22 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     }
     else
     {
-        
         scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
         NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
-        
-        [newRequest addValue:hostHeader forHTTPHeaderField:kRSHostHeader];
-        [newRequest addValue:host forHTTPHeaderField:kRSRevHostHeader];
+        [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
+        [newRequest setValue:host forHTTPHeaderField:kRSRevHostHeader];
     }
     
     NSURLComponents* URLComponents = [NSURLComponents new];
-    URLComponents.host             = transformedEdgeHost;
+    URLComponents.host             = rs::kRSRevHost;
     URLComponents.scheme           = scheme;
-    NSURL* newURL                  = URLComponents.URL;
+    URLComponents.path             = URL.path;
     
-    [newRequest setURL:newURL];
-    [newRequest setHTTPMethod:aRequest.HTTPMethod];
+    [newRequest setURL:URLComponents.URL];
     [newRequest setHTTPBody:aRequest.HTTPBody];
+    [newRequest setHTTPMethod:aRequest.HTTPMethod];
     
     return newRequest;
 }

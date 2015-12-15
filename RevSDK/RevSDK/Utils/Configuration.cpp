@@ -37,15 +37,15 @@ namespace rs
     
     Data Configuration::toData()
     {
-        Data data;
-        data.bytes  = this;
-        data.length = sizeof(*this);
-        return data;
+//        Data data;
+//        data.bytes  = this;
+//        data.length = sizeof(*this);
+        return Data(this, sizeof(*this));
     }
     
     Configuration Configuration::configurationFromData(Data aData)
     {
-        Configuration* configuration = (Configuration *)aData.bytes;
+        Configuration* configuration = (Configuration *)aData.bytes();
         return Configuration(*configuration);
     }
     

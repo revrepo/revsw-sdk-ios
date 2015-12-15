@@ -17,6 +17,8 @@
 #include <map>
 #include <vector>
 
+#import "RSPublicConsts.h"
+
 namespace rs
 {
     class Request;
@@ -24,6 +26,10 @@ namespace rs
     class Data;
     class Error;
     class Configuration;
+    
+    // Rev Host
+    
+    extern NSString* const kRSRevHost;
     
     //codes
     extern const long kRSNoErrorCode;

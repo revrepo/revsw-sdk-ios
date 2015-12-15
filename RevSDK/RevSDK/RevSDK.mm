@@ -49,9 +49,27 @@
     rs::Model::instance()->setOperationMode(innerMode);
 }
 
++ (RSOperationMode)operationMode
+{
+    rs::RSOperationModeInner innerMode = rs::Model::instance()->currentOperationMode();
+    
+    switch (innerMode)
+    {
+        case rs::kRSOperationModeInnerOff: return kRSOperationModeOff;
+        case rs::kRSOperationModeInnerReport: return kRSOperationModeReport;
+        case rs::kRSOperationModeInnerTransport: return kRSOperationModeTransport;
+        case rs::kRSOperationModeInnerTransportAndReport: return kRSOperationModeTransportAndReport;
+    }
+}
+
 + (void)setWhiteListOption:(BOOL)aOn
 {
-    rs::Model::instance()->switchWhiteListOption(aOn);
+   rs::Model::instance()->switchWhiteListOption(aOn);
+}
+
++ (void)setTestPassOption:(BOOL)aOn
+{
+    rs::Model::instance()->setTestPassOption(aOn);
 }
 
 @end

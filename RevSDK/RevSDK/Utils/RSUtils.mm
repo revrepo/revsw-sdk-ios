@@ -6,6 +6,8 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#import "RSPublicConsts.h"
+
 #import "RSUtils.h"
 #include "Request.hpp"
 #include "Response.hpp"
@@ -13,8 +15,18 @@
 #include "Error.hpp"
 #include "Configuration.hpp"
 
+//notifications
+NSString* const kRSURLProtocolStoppedLoadingNotification = @"kRSURLProtocolStoppedLoadingNotification";
+
+//keys
+NSString* const kRSDataKey = @"kRSDataKey";
+
 namespace rs
 {
+    //Rev Host
+    
+    NSString* const kRSRevHost = @"rev-200.revdn.net";
+    
     //codes
     const long kRSNoErrorCode = -10000;
     
@@ -154,20 +166,12 @@ namespace rs
     
     Data dataFromNSData(NSData* aData)
     {
-        NSUInteger length = aData.length;
-        Byte *byteData    = (Byte*) malloc(length);
-        memcpy(byteData, [aData bytes], length);
-        
-        Data data;
-        data.bytes  = byteData;
-        data.length = length;
-        
-        return data;
+        return Data(aData.bytes, aData.length);
     }
     
     NSData* NSDataFromData(Data aData)
     {
-        return [NSData dataWithBytes:aData.bytes length:aData.length];
+        return [NSData dataWithBytes:aData.bytes() length:aData.length()];
     }
     
     std::shared_ptr<Request> requestFromURLRequest(NSURLRequest* aURLRequest)

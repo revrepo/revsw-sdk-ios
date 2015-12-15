@@ -17,6 +17,7 @@
 #import "Data.hpp"
 #import "Response.hpp"
 #import "Error.hpp"
+#import "Model.hpp"
 
 @interface RSURLConnection ()
 {
@@ -65,7 +66,8 @@
             [self.delegate connection:self didFailWithError:error];
         };
         
-        NSURLRequest* newRequest = [RSURLRequestProcessor proccessRequest:aRequest];
+        BOOL testPassOptionOn    = rs::Model::instance()->testPassOption();
+        NSURLRequest* newRequest = (aRequest.URL.host && !testPassOptionOn) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
         connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }

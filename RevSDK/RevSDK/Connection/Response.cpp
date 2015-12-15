@@ -10,9 +10,12 @@
 
 namespace rs
 {
-    Response::Response(std::string aURL,
-                       std::map<std::string, std::string> aHeaderFields,
-                       unsigned long aStatusCode):mURL(aURL), mHeaderFields(aHeaderFields), mStatusCode(aStatusCode)
+    Response::Response(const std::string& aURL,
+                       const std::map<std::string, std::string>& aHeaderFields,
+                       unsigned long aStatusCode):
+    mURL(aURL),
+    mHeaderFields(aHeaderFields),
+    mStatusCode(aStatusCode)
     {
         
     }

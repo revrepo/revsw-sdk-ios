@@ -18,7 +18,7 @@
     
 - (void) connectionDidFinishLoading:(nullable RSURLConnection *)connection;
 
-- (void)connection:(nullable RSURLConnection *)connection didFailWithError:(nullable NSError *)error;
+- (void) connection:(nullable RSURLConnection *)connection didFailWithError:(nullable NSError *)error;
 
 @end
 

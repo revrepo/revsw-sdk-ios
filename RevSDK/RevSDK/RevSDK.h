@@ -15,6 +15,8 @@ FOUNDATION_EXPORT const unsigned char RevSDKVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <RevSDK/PublicHeader.h>
 
+#import <RevSDK/RSPublicConsts.h>
+
 typedef enum
 {
     kRSOperationModeOff,
@@ -27,6 +29,8 @@ typedef enum
 
 + (void)startWithSDKKey:(NSString *)aSDKKey;
 + (void)setOperationMode:(RSOperationMode)aOperationMode;
++ (RSOperationMode)operationMode;
 + (void)setWhiteListOption:(BOOL)aOn;
++ (void)setTestPassOption:(BOOL)aOn;
 
 @end

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RTMobileWebViewController"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <viewController id="pwK-4f-bWK" customClass="RTMobileWebViewController">
+            <layoutGuides>
+                <viewControllerLayoutGuide type="top" id="2wO-fF-3mc"/>
+                <viewControllerLayoutGuide type="bottom" id="HLf-cy-Lbe"/>
+            </layoutGuides>
+            <view key="view" contentMode="scaleToFill" id="f4z-fL-jUE">
+                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="edition.cnn.com" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xg6-Ww-Oll">
+                        <rect key="frame" x="15" y="40" width="570" height="30"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                        <connections>
+                            <outlet property="delegate" destination="pwK-4f-bWK" id="mDN-rx-KrR"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Tests:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hTX-Ma-AF1">
+                        <rect key="frame" x="15" y="88" width="39" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vem-SG-yOv">
+                        <rect key="frame" x="519" y="88" width="9" height="17"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgo-Xo-0WF">
+                        <rect key="frame" x="533" y="80" width="52" height="35"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                        <state key="normal" title=" Start "/>
+                        <connections>
+                            <action selector="start:" destination="pwK-4f-bWK" eventType="touchUpInside" id="TSx-g6-RSA"/>
+                        </connections>
+                    </button>
+                    <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Gjf-Ce-513">
+                        <rect key="frame" x="0.0" y="127" width="600" height="473"/>
+                        <animations/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                        <connections>
+                            <outlet property="delegate" destination="pwK-4f-bWK" id="w3u-oj-uP2"/>
+                        </connections>
+                    </webView>
+                    <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="3" maxValue="20" translatesAutoresizingMaskIntoConstraints="NO" id="3Yw-JT-hxH">
+                        <rect key="frame" x="67" y="82" width="444" height="31"/>
+                        <animations/>
+                        <connections>
+                            <action selector="sliderValueChanged:" destination="pwK-4f-bWK" eventType="valueChanged" id="IX1-7J-XDU"/>
+                        </connections>
+                    </slider>
+                </subviews>
+                <animations/>
+                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="3Yw-JT-hxH" firstAttribute="centerY" secondItem="hTX-Ma-AF1" secondAttribute="centerY" id="2fV-KK-9zH"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="trailing" secondItem="xg6-Ww-Oll" secondAttribute="trailing" id="3fJ-6s-Gin"/>
+                    <constraint firstItem="Vem-SG-yOv" firstAttribute="centerY" secondItem="3Yw-JT-hxH" secondAttribute="centerY" id="598-z3-oF3"/>
+                    <constraint firstAttribute="trailing" secondItem="Gjf-Ce-513" secondAttribute="trailing" id="6HP-FE-g5a"/>
+                    <constraint firstAttribute="trailing" secondItem="xg6-Ww-Oll" secondAttribute="trailing" constant="15" id="BOO-FL-f0v"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="leading" secondItem="Vem-SG-yOv" secondAttribute="trailing" constant="5" id="Dry-Xq-w27"/>
+                    <constraint firstItem="xg6-Ww-Oll" firstAttribute="top" secondItem="2wO-fF-3mc" secondAttribute="bottom" constant="20" id="FO5-dl-bhJ"/>
+                    <constraint firstItem="Gjf-Ce-513" firstAttribute="centerX" secondItem="f4z-fL-jUE" secondAttribute="centerX" id="HQz-py-yb1"/>
+                    <constraint firstItem="3Yw-JT-hxH" firstAttribute="top" secondItem="xg6-Ww-Oll" secondAttribute="bottom" constant="12" id="MVE-Oz-7Ce"/>
+                    <constraint firstItem="Gjf-Ce-513" firstAttribute="top" secondItem="fgo-Xo-0WF" secondAttribute="bottom" constant="12" id="ReJ-fg-cOn"/>
+                    <constraint firstItem="xg6-Ww-Oll" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leading" constant="15" id="XVh-vU-hro"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="centerY" secondItem="3Yw-JT-hxH" secondAttribute="centerY" id="XxT-3n-IBJ"/>
+                    <constraint firstItem="hTX-Ma-AF1" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leading" constant="15" id="aLC-Gz-IBQ"/>
+                    <constraint firstItem="3Yw-JT-hxH" firstAttribute="leading" secondItem="hTX-Ma-AF1" secondAttribute="trailing" constant="15" id="d22-YX-KES"/>
+                    <constraint firstItem="Gjf-Ce-513" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leading" id="dQ6-W4-aMB"/>
+                    <constraint firstItem="Vem-SG-yOv" firstAttribute="leading" secondItem="3Yw-JT-hxH" secondAttribute="trailing" constant="146" id="gTC-qp-jaI"/>
+                    <constraint firstItem="Vem-SG-yOv" firstAttribute="leading" secondItem="3Yw-JT-hxH" secondAttribute="trailing" constant="10" id="x4i-zg-Xu7"/>
+                    <constraint firstItem="HLf-cy-Lbe" firstAttribute="top" secondItem="Gjf-Ce-513" secondAttribute="bottom" id="yHC-qx-5t8"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="gTC-qp-jaI"/>
+                    </mask>
+                </variation>
+            </view>
+            <connections>
+                <outlet property="URLTextField" destination="xg6-Ww-Oll" id="8nk-Bp-V4S"/>
+                <outlet property="slider" destination="3Yw-JT-hxH" id="ey6-Ty-Hn4"/>
+                <outlet property="startButton" destination="fgo-Xo-0WF" id="QUR-gx-lqY"/>
+                <outlet property="testsNumberLabel" destination="Vem-SG-yOv" id="iIs-vq-VOk"/>
+                <outlet property="webView" destination="Gjf-Ce-513" id="BOV-Ca-uXe"/>
+            </connections>
+            <point key="canvasLocation" x="581" y="48"/>
+        </viewController>
+    </objects>
+</document>

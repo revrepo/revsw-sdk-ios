@@ -18,17 +18,16 @@ namespace rs
 {
     class Response
     {
+    private:
         std::string mURL;
         std::map<std::string, std::string> mHeaderFields;
         unsigned long mStatusCode;
-        
     public:
-        
-        Response(std::string aURL, std::map<std::string, std::string> aHeaderFields, unsigned long aStatusCode);
-        
-        std::string URL() const{ return mURL;}
-        std::map<std::string, std::string> headerFields() const { return mHeaderFields;}
-        unsigned long statusCode() const { return mStatusCode;}
+
+        Response(const std::string& aURL, const std::map<std::string, std::string>& aHeaderFields, unsigned long aStatusCode);
+        const std::string& URL() const { return mURL; }
+        const std::map<std::string, std::string>& headerFields() const { return mHeaderFields; }
+        unsigned long statusCode() const { return mStatusCode; }
     };
 }
 

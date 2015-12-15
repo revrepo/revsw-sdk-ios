@@ -28,9 +28,9 @@ namespace rs
             \"configs\" : {\
             \"sdk_release_version\" : 1.0,\
             \"configuration_api_url\" : \"https://rev-200.revdn.net\",\
-            \"configuration_refresh_interval_sec\" : 10,\
+            \"configuration_refresh_interval_sec\" : 1000,\
             \"configuration_stale_timeout_sec\" : 100,\
-            \"edge_host\" : \"rev-200.revdn.net\",\
+            \"edge_host\" : \"revdn.net\",\
             \"operation_mode\" : \"transfer_and_report\",\
             \"allowed_transport_protocols\" : [\"standard\"],\
             \"initial_transport_protocol\" : \"standard\",\
@@ -39,8 +39,8 @@ namespace rs
             \"stats_reporting_interval\" : 100,\
             \"stats_reporting_level\" : \"out_of_band\",\
             \"stats_reporting_max_request_per_report\" : 1,\
-            \"domains_provisioned_list\" : [ \"mbeans.com\"],\
-            \"domains_white_list\" : [\"mbeans.com\"],\
+            \"domains_provisioned_list\" : [],\
+            \"domains_white_list\" : [\"mbeans.com\", \"edition.cnn.com\", \"httpbin.org\"],\
             \"domains_black_list\" : [] }}";
             
             NSData* jsonData  = [json dataUsingEncoding:NSUTF8StringEncoding];
