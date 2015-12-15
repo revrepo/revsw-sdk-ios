@@ -50,6 +50,8 @@
 		5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3471BFB7B8700217971 /* QUICConnection.hpp */; };
 		5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */; };
 		5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */; };
+		5B8FEAF41C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */; };
+		5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */; };
 		5BC497B31C03609300FF0922 /* ConfigurationProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC497B11C03609300FF0922 /* ConfigurationProcessor.cpp */; };
 		5BC497B41C03609300FF0922 /* ConfigurationProcessor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BC497B21C03609300FF0922 /* ConfigurationProcessor.hpp */; };
 		5BC497B71C03782B00FF0922 /* Configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BC497B51C03782B00FF0922 /* Configuration.cpp */; };
@@ -123,6 +125,8 @@
 		5B54C3471BFB7B8700217971 /* QUICConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QUICConnection.hpp; sourceTree = "<group>"; };
 		5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLRequestProcessor.h; sourceTree = "<group>"; };
 		5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLRequestProcessor.mm; sourceTree = "<group>"; };
+		5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+RSUtils.h"; sourceTree = "<group>"; };
+		5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+RSUtils.m"; sourceTree = "<group>"; };
 		5BC497B11C03609300FF0922 /* ConfigurationProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationProcessor.cpp; sourceTree = "<group>"; };
 		5BC497B21C03609300FF0922 /* ConfigurationProcessor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ConfigurationProcessor.hpp; sourceTree = "<group>"; };
 		5BC497B51C03782B00FF0922 /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Configuration.cpp; sourceTree = "<group>"; };
@@ -243,6 +247,8 @@
 		5B54C3231BFB5C3300217971 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */,
+				5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */,
 				5B54C3281BFB5EF000217971 /* RSUtils.h */,
 				5B54C3291BFB5EF000217971 /* RSUtils.mm */,
 				5B4FCD371C033EA400C8D320 /* RSUtilsBridge.mm */,
@@ -342,6 +348,7 @@
 			files = (
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
+				5B8FEAF41C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h in Headers */,
 				5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */,
 				5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */,
 				5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */,
@@ -520,6 +527,7 @@
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
 				5B4FCD391C033EA400C8D320 /* RSUtilsBridge.mm in Sources */,
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,
+				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
 				5BE3F86D1C04A0C50087BC28 /* Timer.cpp in Sources */,
 				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,

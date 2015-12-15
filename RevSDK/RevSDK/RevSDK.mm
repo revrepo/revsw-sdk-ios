@@ -13,13 +13,14 @@
 
 #import "Model.hpp"
 #import "RSUtils.h"
+#import "NSURLSessionConfiguration+RSUtils.h"
 
 @implementation RevSDK
 
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
     [NSURLProtocol registerClass:[RSURLProtocol class]];
-
+    [NSURLSessionConfiguration rs_swizzleProtocolClasses];
     rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
 }
 
