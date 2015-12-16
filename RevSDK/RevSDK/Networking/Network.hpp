@@ -22,12 +22,16 @@ namespace rs
     {
         NativeNetwork* nativeNetwork;
         
+        void performRequest(std::string aURL, std::function<void(const Data&, const Error&)> aCompletionBlock);
+        void performRequest(std::string aURL, const Data& aBody, std::function<void(const Data&, const Error&)> aCompletionBlock);
+        
         public:
         
         Network();
         ~Network();
         
-        void performRequest(std::string aURL, std::function<void(const Data&, const Error&)> aCompletionBlock);
+        void loadConfiguration(std::function<void(const Data&, const Error&)> aCompletionBlock);
+        void sendStats(const Data&, std::function<void(const Error&)>);
     };
 }
 

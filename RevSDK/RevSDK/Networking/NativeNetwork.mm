@@ -23,6 +23,7 @@ namespace rs
     {
         void (^completionHandler)(NSData*, NSURLResponse*, NSError*) = ^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
             
+            //stub
             NSString* json = @"{\"app_name\": \"RevClient\",\
             \"os\" : \"ios\",\
             \"configs\" : {\
@@ -53,7 +54,26 @@ namespace rs
         
         RSRequestOperation* requestOperation = [[RSRequestOperation alloc] initWithURLString:NSStringFromStdString(aURL)
                                                                                       method:@"GET"
-                                                                                  parameters:nil
+                                                                                        body:nil
+                                                                           completionHandler:completionHandler];
+        [operationQueue addOperation:requestOperation];
+    }
+    
+    void NativeNetwork::performRequest(std::string aURL, const Data& aBody, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock)
+    {
+        void (^completionHandler)(NSData*, NSURLResponse*, NSError*) = ^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
+            
+            Data data         = dataFromNSData(aData);
+            Error error       = errorFromNSError(aError);
+            Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse).get());
+            
+            aCompletionBlock(data, response, error);
+        };
+        
+        NSData* body = NSDataFromData(aBody);
+        RSRequestOperation* requestOperation = [[RSRequestOperation alloc] initWithURLString:NSStringFromStdString(aURL)
+                                                                                      method:@"POST"
+                                                                                        body:body
                                                                            completionHandler:completionHandler];
         [operationQueue addOperation:requestOperation];
     }

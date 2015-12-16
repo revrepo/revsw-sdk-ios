@@ -24,8 +24,10 @@ NSString* const kRSDataKey = @"kRSDataKey";
 namespace rs
 {
     //Rev Host
-    
-    NSString* const kRSRevHost = @"rev-200.revdn.net";
+    const std::string kRSRevBaseHost   = "revdn.net";
+    NSString* const kRSRevRedirectHost = @"rev-200.revdn.net";
+    const std::string kRSLoadConfigurationEndPoint = "/sdk/config";
+    const std::string kRSReportStatsEndPoint = "/stats";
     
     //codes
     const long kRSNoErrorCode = -10000;
@@ -239,5 +241,46 @@ namespace rs
         return [NSError errorWithDomain:domain
                                    code:aError.code
                                userInfo:userInfo];
+    }
+    
+    std::string URLWithComponents(std::string aScheme, std::string aHost, std::string aPath)
+    {
+        NSString* scheme               = NSStringFromStdString(aScheme);
+        NSString* host                 = NSStringFromStdString(aHost);
+        NSString* path                 = NSStringFromStdString(aPath);
+        NSURLComponents* URLComponents = [NSURLComponents new];
+        URLComponents.scheme           = scheme;
+        URLComponents.host             = host;
+        URLComponents.path             = path;
+        NSURL* URL                     = [URLComponents URL];
+        NSString* URLString            = URL.absoluteString;
+        std::string stdURLString       = stdStringFromNSString(URLString);
+        
+        return stdURLString;
+    }
+    
+    std::string URLWithSchemeAndPath(std::string aScheme, std::string aPath)
+    {
+        return URLWithComponents(aScheme, kRSRevBaseHost, aPath);
+    }
+    
+    std::string HTTPSURLWithPath(std::string aPath)
+    {
+        return URLWithSchemeAndPath(kRSHTTPSProtocolName, aPath);
+    }
+    
+    std::string URLWithPath(std::string aPath)
+    {
+        return HTTPSURLWithPath(aPath);
+    }
+    
+    std::string loadConfigurationURL()
+    {
+        return URLWithPath(kRSLoadConfigurationEndPoint);
+    }
+    
+    std::string reportStatsURL()
+    {
+        return URLWithPath(kRSReportStatsEndPoint);
     }
 }

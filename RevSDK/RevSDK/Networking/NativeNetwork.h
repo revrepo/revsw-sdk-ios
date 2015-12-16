@@ -21,6 +21,7 @@ namespace rs
     {
       public:
           void performRequest(std::string aURL, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock);
+          void performRequest(std::string aURL, const Data& aBody, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock);
     };
 }
 #endif

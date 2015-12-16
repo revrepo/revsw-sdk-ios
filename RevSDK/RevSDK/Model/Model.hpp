@@ -33,12 +33,14 @@ namespace rs
     class Timer;
     class Request;
     class Data;
+    class StatsHandler;
     
     class Model
     {
         
       std::string mSDKKey;
-        
+       
+      StatsHandler* mStatsHandler;
       Timer* mConfigurationRefreshTimer;
       Timer* mStatsReportingTimer;
       Network* mNetwork;

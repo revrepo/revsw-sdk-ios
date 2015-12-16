@@ -48,7 +48,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     }
     
     NSURLComponents* URLComponents = [NSURLComponents new];
-    URLComponents.host             = rs::kRSRevHost;
+    URLComponents.host             = rs::kRSRevRedirectHost;
     URLComponents.scheme           = scheme;
     URLComponents.path             = URL.path;
     URLComponents.queryItems       = originalComponents.queryItems;

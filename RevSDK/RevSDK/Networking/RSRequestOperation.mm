@@ -15,14 +15,14 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
 
 @property (nonatomic, copy) NSString* method;
 @property (nonatomic, copy) NSString* URLString;
-@property (nonatomic, strong) NSDictionary* parameters;
+@property (nonatomic, strong) NSData* body;
 @property (nonatomic, copy) void (^completionHandler)(NSData*, NSURLResponse*, NSError*);
 
 @end
 
 @implementation RSRequestOperation
 
-- (instancetype)initWithURLString:(NSString *)aURLString method:(NSString *)aMethod parameters:(NSDictionary *)aParameters completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))aCompletionHandler
+- (instancetype)initWithURLString:(NSString *)aURLString method:(NSString *)aMethod body:(NSData *)aBody completionHandler:(void (^)(NSData *, NSURLResponse *, NSError *))aCompletionHandler
 {
     self = [super init];
     
@@ -30,8 +30,8 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     {
         self.URLString         = aURLString;
         self.method            = aMethod;
-        self.parameters        = aParameters;
         self.completionHandler = aCompletionHandler;
+        self.body              = aBody;
     }
     
     return self;
@@ -41,6 +41,7 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
 {
     NSURL* URL                   = [NSURL URLWithString:self.URLString];
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+    request.HTTPMethod           = self.method;
     
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     

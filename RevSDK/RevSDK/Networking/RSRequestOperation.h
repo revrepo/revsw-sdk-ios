@@ -12,7 +12,7 @@
 
 - (instancetype)initWithURLString:(NSString *)aURLString
                            method:(NSString *)aMethod
-                       parameters:(NSDictionary *)aParameters
+                             body:(NSData *)aBody
                 completionHandler:(void(^)(NSData*, NSURLResponse*, NSError*))aCompletionHandler;
 
 @end

@@ -24,11 +24,13 @@
 #include "DataStorage.hpp"
 #include "Timer.hpp"
 #include "Request.hpp"
+#include "StatsHandler.hpp"
 
 namespace rs
 {
     Model::Model()
     {
+        mStatsHandler              = new StatsHandler;
         mStatsReportingTimer       = nullptr;
         mConfigurationRefreshTimer = nullptr;
         mNetwork                   = new Network;
@@ -41,6 +43,7 @@ namespace rs
     {
         delete mNetwork;
         delete mDataStorage;
+        delete mStatsHandler;
     }
     
     Model* Model::instance()
@@ -100,9 +103,7 @@ namespace rs
            }
         };
         
-        const std::string kConfigurationEndPoint = "sdk/config";
-        std::string URL                          = "http://" + edgeHost() + "/" + kConfigurationEndPoint;
-        mNetwork->performRequest(URL, completionBlock);
+        mNetwork->loadConfiguration(completionBlock);
     }
     
     void Model::saveConfiguration(const Data& aConfigurationData)
@@ -120,7 +121,13 @@ namespace rs
     
     void Model::reportStats()
     {
+        std::function<void(const Error& )> completion = [=](const Error& aError){
         
+            std::cout << "Stats reported " << aError.description()  << std::endl;
+        };
+        
+        Data statsData = mStatsHandler->getStatsData();
+        mNetwork->sendStats(statsData, completion);
     }
     
     void Model::startTimers()

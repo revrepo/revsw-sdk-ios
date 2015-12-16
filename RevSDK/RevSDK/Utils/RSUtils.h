@@ -28,8 +28,8 @@ namespace rs
     class Configuration;
     
     // Rev Host
-    
-    extern NSString* const kRSRevHost;
+    extern const std::string kRSRevBaseHost;
+    extern NSString* const kRSRevRedirectHost;
     
     //codes
     extern const long kRSNoErrorCode;
@@ -65,5 +65,8 @@ namespace rs
     
     Error errorFromNSError(NSError* aError);
     NSError* NSErrorFromError(Error aError);
+    
+    std::string loadConfigurationURL();
+    std::string reportStatsURL();
 }
 #endif
