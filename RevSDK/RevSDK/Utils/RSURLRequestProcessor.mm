@@ -23,14 +23,15 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
 
 + (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest
 {
-    NSMutableURLRequest* newRequest = [aRequest mutableCopy];
-    NSURL* URL                      = aRequest.URL;
-    NSString* host                  = URL.host;
-    std::string  stdHost            = rs::stdStringFromNSString(host);
-    BOOL isProvisioned              = rs::Model::instance()->isDomainNameProvisioned(stdHost);
-    std::string edgeHost            = rs::Model::instance()->edgeHost();
-    NSString* transformedEdgeHost   = rs::NSStringFromStdString(edgeHost);
-    NSString* scheme                = URL.scheme;
+    NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
+    NSURL* URL                          = aRequest.URL;
+    NSString* host                      = URL.host;
+    std::string  stdHost                = rs::stdStringFromNSString(host);
+    BOOL isProvisioned                  = rs::Model::instance()->isDomainNameProvisioned(stdHost);
+    std::string edgeHost                = rs::Model::instance()->edgeHost();
+    NSString* transformedEdgeHost       = rs::NSStringFromStdString(edgeHost);
+    NSString* scheme                    = URL.scheme;
+    NSURLComponents* originalComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     
     if (isProvisioned)
     {
@@ -50,6 +51,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     URLComponents.host             = rs::kRSRevHost;
     URLComponents.scheme           = scheme;
     URLComponents.path             = URL.path;
+    URLComponents.queryItems       = originalComponents.queryItems;
     
     [newRequest setURL:URLComponents.URL];
     [newRequest setHTTPBody:aRequest.HTTPBody];
