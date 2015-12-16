@@ -32,6 +32,7 @@ namespace rs
     class Configuration;
     class Timer;
     class Request;
+    class Data;
     
     class Model
     {
@@ -50,9 +51,12 @@ namespace rs
       bool mTestPassOption;
         
       void reportStats();
+        
       void loadConfiguration();
+      void saveConfiguration(const Data&);
         
       void scheduleTimer(Timer*&, int, std::function<void()>);
+      void startTimers();
         
       public:
         

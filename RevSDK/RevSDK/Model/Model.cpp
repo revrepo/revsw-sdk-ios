@@ -91,22 +91,8 @@ namespace rs
             
            if (aError.code == noErrorCode())
            {
-              std::cout << "Configuratio loaded\n";
-               
-              Configuration configuration = ConfigurationProcessor::processConfigurationData(aData);
-              mDataStorage->saveConfiguration(configuration);
-              mConfiguration = std::make_shared<Configuration>(configuration);
-               
-              if (!mConfigurationRefreshTimer)
-              {
-                  std::function<void()> scheduledFunction = std::bind(&Model::loadConfiguration, this);
-                  scheduleTimer(mConfigurationRefreshTimer, mConfiguration.get()->refreshInterval, scheduledFunction);
-              }
-               
-              if (!mStatsReportingTimer)
-              {
-                  
-              }
+               saveConfiguration(aData);
+               startTimers();
            }
            else
            {
@@ -119,10 +105,15 @@ namespace rs
         mNetwork->performRequest(URL, completionBlock);
     }
     
+    void Model::saveConfiguration(const Data& aConfigurationData)
+    {
+        Configuration configuration = ConfigurationProcessor::processConfigurationData(aConfigurationData);
+        mDataStorage->saveConfiguration(configuration);
+        mConfiguration = std::make_shared<Configuration>(configuration);
+    }
+    
     void Model::scheduleTimer(Timer*& aTimer, int aInterval, std::function<void()> aFunction)
     {
-        std::cout << "Scheduling timer \n";
-        
         aTimer = new Timer(aInterval, aFunction);
         aTimer->start();
     }
@@ -130,6 +121,21 @@ namespace rs
     void Model::reportStats()
     {
         
+    }
+    
+    void Model::startTimers()
+    {
+        if (!mConfigurationRefreshTimer)
+        {
+            std::function<void()> scheduledFunction = std::bind(&Model::loadConfiguration, this);
+            scheduleTimer(mConfigurationRefreshTimer, mConfiguration.get()->refreshInterval, scheduledFunction);
+        }
+        
+        if (!mStatsReportingTimer)
+        {
+            std::function<void()> scheduledFunction = std::bind(&Model::reportStats, this);
+            scheduleTimer(mStatsReportingTimer, mConfiguration.get()->statsReportingInterval, scheduledFunction);
+        }
     }
     
     void Model::initialize(std::string aSDKKey)
