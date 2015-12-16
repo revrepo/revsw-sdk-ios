@@ -7,3 +7,23 @@
 //
 
 #include "StatsHandler.hpp"
+#include "NativeStatsHandler.h"
+#include "Data.hpp"
+
+namespace rs
+{
+    StatsHandler::StatsHandler()
+    {
+        mStatsHandler = new NativeStatsHandler;
+    }
+    
+    StatsHandler::~StatsHandler()
+    {
+        delete mStatsHandler;
+    }
+    
+    Data StatsHandler::getStatsData()
+    {
+        return mStatsHandler->statsData();
+    }
+}

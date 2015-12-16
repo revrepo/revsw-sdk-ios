@@ -9,4 +9,16 @@
 #ifndef NativeStatsHandler_h
 #define NativeStatsHandler_h
 
+namespace rs
+{
+     class Data;
+    
+     class NativeStatsHandler
+     {
+        public:
+         
+        static Data statsData();
+     };
+}
+
 #endif

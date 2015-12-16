@@ -14,10 +14,18 @@
 namespace rs
 {
     class NativeStatsHandler;
+    class Data;
     
     class StatsHandler
     {
-        NativeStatsHandler* statsHandler;
+        NativeStatsHandler* mStatsHandler;
+        
+        public:
+     
+        StatsHandler();
+        ~StatsHandler();
+        
+        Data getStatsData();
     };
 }
 

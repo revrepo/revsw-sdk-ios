@@ -29,11 +29,18 @@ namespace rs
 {
     Model::Model()
     {
+        mStatsReportingTimer       = nullptr;
         mConfigurationRefreshTimer = nullptr;
         mNetwork                   = new Network;
         mDataStorage               = new DataStorage;
         mSpareDomainsWhiteList     = std::vector<std::string>();
         mTestPassOption            = false;
+    }
+    
+    Model::~Model()
+    {
+        delete mNetwork;
+        delete mDataStorage;
     }
     
     Model* Model::instance()
@@ -84,21 +91,21 @@ namespace rs
             
            if (aError.code == noErrorCode())
            {
+              std::cout << "Configuratio loaded\n";
+               
               Configuration configuration = ConfigurationProcessor::processConfigurationData(aData);
               mDataStorage->saveConfiguration(configuration);
               mConfiguration = std::make_shared<Configuration>(configuration);
                
               if (!mConfigurationRefreshTimer)
               {
-                  std::cout << "Configuration loaded\n";
+                  std::function<void()> scheduledFunction = std::bind(&Model::loadConfiguration, this);
+                  scheduleTimer(mConfigurationRefreshTimer, mConfiguration.get()->refreshInterval, scheduledFunction);
+              }
+               
+              if (!mStatsReportingTimer)
+              {
                   
-                  std::function<void()> scheduledFunction = [this](){
-                  
-                      loadConfiguration();
-                  };
-                  
-                  mConfigurationRefreshTimer = new Timer(mConfiguration.get()->refreshInterval, scheduledFunction);
-                  mConfigurationRefreshTimer->start();
               }
            }
            else
@@ -110,6 +117,19 @@ namespace rs
         const std::string kConfigurationEndPoint = "sdk/config";
         std::string URL                          = "http://" + edgeHost() + "/" + kConfigurationEndPoint;
         mNetwork->performRequest(URL, completionBlock);
+    }
+    
+    void Model::scheduleTimer(Timer*& aTimer, int aInterval, std::function<void()> aFunction)
+    {
+        std::cout << "Scheduling timer \n";
+        
+        aTimer = new Timer(aInterval, aFunction);
+        aTimer->start();
+    }
+    
+    void Model::reportStats()
+    {
+        
     }
     
     void Model::initialize(std::string aSDKKey)

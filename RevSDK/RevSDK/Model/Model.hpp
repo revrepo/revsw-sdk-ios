@@ -13,6 +13,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <functional>
 
 namespace rs
 {
@@ -38,6 +39,7 @@ namespace rs
       std::string mSDKKey;
         
       Timer* mConfigurationRefreshTimer;
+      Timer* mStatsReportingTimer;
       Network* mNetwork;
       DataStorage* mDataStorage;
       std::shared_ptr<Configuration> mConfiguration;
@@ -47,9 +49,15 @@ namespace rs
         
       bool mTestPassOption;
         
+      void reportStats();
+      void loadConfiguration();
+        
+      void scheduleTimer(Timer*&, int, std::function<void()>);
+        
       public:
         
         Model();
+        ~Model();
         
         static Model* instance();
         
@@ -58,7 +66,6 @@ namespace rs
         std::string SDKKey()const { return mSDKKey; };
         std::string edgeHost()const;
         
-        void loadConfiguration();
         void initialize(std::string aSDKKey);
         
         void setOperationMode(const RSOperationModeInner& aOperationMode);
