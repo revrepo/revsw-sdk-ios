@@ -97,6 +97,8 @@
 
 - (void)timerFired
 {
+    NSLog(@"CANCEL TIMER!!!!!");
+    
     [self.timer invalidate];
     self.timer = nil;
     
@@ -148,6 +150,8 @@
     array = [RevSDK operationMode] == kRSOperationModeOff ? self.dataLengthArray : self.sdkDataLengthArray;
     [array addObject:@(mCurrentDataSize / 1024.0)];
     mCurrentDataSize = 0;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LoadFinished" object:nil];
     
     if (self.loadFinishedBlock)
     {

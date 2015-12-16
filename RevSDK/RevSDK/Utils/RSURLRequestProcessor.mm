@@ -31,6 +31,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     std::string edgeHost            = rs::Model::instance()->edgeHost();
     NSString* transformedEdgeHost   = rs::NSStringFromStdString(edgeHost);
     NSString* scheme                = URL.scheme;
+    NSURLComponents* components     = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     
     if (isProvisioned)
     {
@@ -50,6 +51,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     URLComponents.host             = rs::kRSRevHost;
     URLComponents.scheme           = scheme;
     URLComponents.path             = URL.path;
+    URLComponents.queryItems       = components.queryItems;
     
     [newRequest setURL:URLComponents.URL];
     [newRequest setHTTPBody:aRequest.HTTPBody];

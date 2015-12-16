@@ -20,12 +20,15 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
+@property (nonatomic, strong) NSTimer* timer;
 
 @end
 
 @implementation RTMobileWebViewController
 
 #pragma mark - Lifecycle
+
+static int loads = 0;
 
 - (void)viewDidLoad
 {
@@ -47,6 +50,10 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     };
     
     self.completionBlock = ^{
+        
+        [weakSelf.timer invalidate];
+         weakSelf.timer = nil;
+        
         weakSelf.startButton.enabled = YES;
     };
     
@@ -69,6 +76,8 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     {
         [self.webView stopLoading];
         [self setWhiteListOption:YES];
+        [self.timer invalidate];
+        self.timer = nil;
     }
 }
 
@@ -91,6 +100,12 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (IBAction)start:(id)sender
 {
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                  target:self
+                                                selector:@selector(test)
+                                                userInfo:nil
+                                                 repeats:YES];
+    
     [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
@@ -99,6 +114,8 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (void)startLoading
 {
+    loads = 0;
+    
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     
     for (NSHTTPCookie *cookie in [storage cookies])
@@ -143,6 +160,26 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 #pragma mark - UIWebViewDelegate
 
+- (void)test
+{
+    static int loads_null_counter = 0;
+    
+    if (loads == 0)
+    {
+        loads_null_counter++;
+        
+        if (loads_null_counter == 20)
+        {
+            loads_null_counter = 0;
+            [self loadFinished];
+        }
+    }
+    else
+    {
+        loads_null_counter = 0;
+    }
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     return [self shouldStartLoadingRequest:request];
@@ -151,18 +188,23 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
     [self loadStarted];
+    
+    loads++;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView
 {
-    if (!aWebView.isLoading)
+    /*if (!aWebView.isLoading)
     {
         [self loadFinished];
-    }
+    }*/
+    
+    loads--;
 }
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
+    loads--;
     NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
 }
 
