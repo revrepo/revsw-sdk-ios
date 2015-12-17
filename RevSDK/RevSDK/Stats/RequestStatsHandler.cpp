@@ -9,6 +9,7 @@
 #include "RequestStatsHandler.hpp"
 #include "Data.hpp"
 #include "DataStorage.hpp"
+#include "JSONUtils.hpp"
 
 namespace rs
 {
@@ -20,6 +21,12 @@ namespace rs
     
     void RequestStatsHandler::addNewRequestData(const Data& aRequestData)
     {
+        mRequestsDataVector.push_back(aRequestData);
         mDataStorage->saveRequestData(aRequestData);
+    }
+    
+    Data RequestStatsHandler::requestsData()
+    {
+        return jsonDataFromDataVector(mRequestsDataVector);
     }
 }

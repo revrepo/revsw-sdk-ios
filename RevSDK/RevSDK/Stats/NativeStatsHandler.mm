@@ -46,9 +46,4 @@ namespace rs
         
         return rsData;
     }
-    
-    void NativeStatsHandler::setStatsReportingLevel(RSStatsReportingLevel aReportLevel)
-    {
-        mStatsReportingLevel = aReportLevel;
-    }
 }

@@ -24,8 +24,10 @@ typedef enum
 
 typedef enum
 {
-    kRSStatsReportingLevelNormal,
-    kRSStatsReportingLevelLimited
+    kRSStatsReportingLevelFull,
+    kRSStatsReportingLevelDeviceData,
+    kRSStatsReportingLevelRequestsData
+    
 }RSStatsReportingLevel;
     
 }

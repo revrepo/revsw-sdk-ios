@@ -5,7 +5,7 @@
 //  Created by Andrey Chernukha on 11/17/15.
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
-
+#include <json/json.h>
 #include <mutex>
 #include <map>
 #include <algorithm>
@@ -19,7 +19,7 @@
 #include "Network.hpp"
 #include "Data.hpp"
 #include "Error.hpp"
-#include "ConfigurationProcessor.hpp"
+#include "JSONUtils.hpp"
 #include "Configuration.hpp"
 #include "DataStorage.hpp"
 #include "Timer.hpp"
@@ -116,7 +116,7 @@ namespace rs
     
     void Model::saveConfiguration(const Data& aConfigurationData)
     {
-        Configuration configuration = ConfigurationProcessor::processConfigurationData(aConfigurationData);
+        Configuration configuration = processConfigurationData(aConfigurationData);
         setOperationMode(configuration.operationMode);
         mDataStorage->saveConfiguration(configuration);
         mStatsHandler->setReportingLevel(configuration.statsReportingLevel);

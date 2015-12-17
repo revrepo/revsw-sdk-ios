@@ -17,12 +17,7 @@ namespace rs
     
      class NativeStatsHandler
      {
-         RSStatsReportingLevel mStatsReportingLevel;
-         
         public:
-         
-         void setStatsReportingLevel(RSStatsReportingLevel);
-         
         Data statsData();
      };
 }

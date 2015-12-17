@@ -1,19 +1,34 @@
 //
-//  ConfigurationProcessor.cpp
+//  JSONUtils.cpp
 //  RevSDK
 //
-//  Created by Andrey Chernukha on 11/23/15.
+//  Created by Andrey Chernukha on 12/17/15.
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
 #include <json/json.h>
 
-#include "ConfigurationProcessor.hpp"
+#include "JSONUtils.hpp"
 #include "Data.hpp"
 #include "Configuration.hpp"
 
 namespace rs
 {
+    Data jsonDataFromDataVector(std::vector<Data>& aDataVector)
+    {
+        Json::Value value;
+        Json::StyledWriter writer;
+        
+        for (Data& data : aDataVector)
+        {
+            value.append(data.toString());
+        }
+        
+        std::string jsonString = writer.write(value);
+        
+        return Data(jsonString.c_str(), jsonString.length());
+    }
+    
     std::vector<std::string> vectorFromValue(Json::Value& aValue)
     {
         std::vector<std::string> vector;
@@ -28,7 +43,7 @@ namespace rs
         return vector;
     }
     
-    Configuration ConfigurationProcessor::processConfigurationData(const Data& aData)
+    Configuration processConfigurationData(const Data& aData)
     {
         Data data = aData;
         std::string dataString = data.toString();
@@ -66,4 +81,5 @@ namespace rs
         
         return configuration;
     }
+
 }

@@ -28,6 +28,7 @@ namespace rs
         ~RequestStatsHandler(){};
         
         void addNewRequestData(const Data&);
+        Data requestsData();
     };
 }
 
