@@ -9,12 +9,14 @@
 #ifndef NativeDataStorage_h
 #define NativeDataStorage_h
 
-#include <string.h>
+#include <string>
 #include <iostream>
+#include <vector>
 
 namespace rs
 {
     struct Configuration;
+    class Data;
     
     class NativeDataStorage
     {
@@ -22,6 +24,8 @@ namespace rs
         
         void saveConfiguration(Configuration);
         Configuration configuration()const;
+        void saveRequestData(const Data&);
+        std::vector<Data> loadRequestsData();
     };
     
 }

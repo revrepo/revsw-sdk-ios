@@ -33,9 +33,10 @@ namespace rs
     const long kRSNoErrorCode = -10000;
     
     //keys
-    NSString* const kRSURLProtocolHandledKey = @"kRVProtocolHandledKey";
-    const std::string kRSErrorDescriptionKey = "NSLocalizedDescription";
+    NSString* const kRSURLProtocolHandledKey   = @"kRVProtocolHandledKey";
+    const std::string kRSErrorDescriptionKey   = "NSLocalizedDescription";
     NSString* const kRSConfigurationStorageKey = @"kRSConfigurationStorageKey";
+    NSString* const kRSRequestDataStorageKey   = @"kRSRequestDataStorageKey";
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
@@ -282,5 +283,37 @@ namespace rs
     std::string reportStatsURL()
     {
         return URLWithPath(kRSReportStatsEndPoint);
+    }
+    
+    std::vector<Data> dataNSArrayToStdVector(NSArray * aArray)
+    {
+        std::vector<Data> dataVector = std::vector<Data>();
+        
+        for (NSData* data in aArray)
+        {
+            assert([data isKindOfClass:[NSData class]]);
+            Data rsData = dataFromNSData(data);
+            dataVector.push_back(rsData);
+        }
+            
+        return dataVector;
+    }
+    
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse)
+    {
+        NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
+        NSURL* URL                          = aRequest.URL;
+        NSString* URLString                 = URL.absoluteString;
+        NSInteger statusCode                = aResponse.statusCode;
+        
+        dataDictionary[@"url"]         = URLString;
+        dataDictionary[@"status_code"] = @(statusCode);
+        
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:nil];
+        Data data = dataFromNSData(jsonData);
+        
+        return data;
     }
 }

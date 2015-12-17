@@ -45,9 +45,7 @@ namespace rs
         // It turns out that NSURLSession doesn't support synchronous calls
         // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
         // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
-        
-      //  NSLog(@"Request %p headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
-        
+        // NSLog(@"Request %p headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
         //NSLog(@"CONNECTION %@", mutableRequest.URL);
         
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
@@ -56,14 +54,6 @@ namespace rs
                                                 std::shared_ptr<Connection> anchor = oAnchor;
 
                                                 NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
-                                                
-                                                if (httpResponse.statusCode != 200)
-                                                {
-                                                    //NSLog(@"Response %@ current request %p ", httpResponse, request);
-                                                }
-                                                
-                                                //NSString* str = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
-                                                NSLog(@"URL %@ Data received %ld", httpResponse.URL, (unsigned long)aData.length);
                                                 
                                                 if (!aError)
                                                 {

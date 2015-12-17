@@ -17,20 +17,25 @@ namespace rs
 {
     class NativeStatsHandler;
     class Data;
+    class DataStorage;
+    class RequestStatsHandler;
     
     class StatsHandler
     {
+        RequestStatsHandler* mRequestStatsHandler;
         NativeStatsHandler* mStatsHandler;
         RSStatsReportingLevel mStatsReportingLevel;
         
         public:
      
-        StatsHandler();
+        StatsHandler(DataStorage*);
         ~StatsHandler();
         
         void setReportingLevel(RSStatsReportingLevel);
         
         Data getStatsData();
+        
+        void addRequestData(const Data&);
     };
 }
 

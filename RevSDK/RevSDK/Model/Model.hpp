@@ -78,6 +78,8 @@ namespace rs
         
         void setTestPassOption (bool aTestPassOption) {mTestPassOption = aTestPassOption ;}
         bool testPassOption()const {return mTestPassOption;}
+        
+        void addRequestData(const Data &);
     };
 }
 

@@ -9,17 +9,21 @@
 #include "StatsHandler.hpp"
 #include "NativeStatsHandler.h"
 #include "Data.hpp"
+#include "DataStorage.hpp"
+#include "RequestStatsHandler.hpp"
 
 namespace rs
 {
-    StatsHandler::StatsHandler()
+    StatsHandler::StatsHandler(DataStorage* aDataStorage)
     {
-        mStatsHandler = new NativeStatsHandler;
+        mStatsHandler        = new NativeStatsHandler;
+        mRequestStatsHandler = new RequestStatsHandler(aDataStorage);
     }
     
     StatsHandler::~StatsHandler()
     {
         delete mStatsHandler;
+        delete mRequestStatsHandler;
     }
     
     void StatsHandler::setReportingLevel(RSStatsReportingLevel aReportingLevel)
@@ -30,5 +34,10 @@ namespace rs
     Data StatsHandler::getStatsData()
     {
         return mStatsHandler->statsData();
+    }
+    
+    void StatsHandler::addRequestData(const Data& aRequestData)
+    {
+        mRequestStatsHandler->addNewRequestData(aRequestData);
     }
 }

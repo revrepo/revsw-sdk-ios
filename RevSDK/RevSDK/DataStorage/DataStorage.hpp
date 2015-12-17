@@ -11,15 +11,17 @@
 
 #include <stdio.h>
 #include <string>
+#include <vector>
 
 namespace rs
 {
   class Configuration;
   class NativeDataStorage;
+  class Data;
     
   class DataStorage
   {
-     NativeDataStorage* nativeDataStorage;
+     NativeDataStorage* mNativeDataStorage;
       
      public:
       
@@ -28,6 +30,8 @@ namespace rs
       
       void saveConfiguration(const Configuration&);
       Configuration configuration()const;
+      void saveRequestData(const Data&);
+      std::vector<Data> loadRequestsData();
   };
 }
 

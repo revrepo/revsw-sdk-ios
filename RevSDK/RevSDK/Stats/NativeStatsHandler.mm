@@ -18,7 +18,7 @@ static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
 
 namespace rs
-{
+{    
     NSString* deviceName()
     {
         struct utsname systemInfo;

@@ -73,6 +73,8 @@
 		5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F86C1C04A0C50087BC28 /* Timer.hpp */; };
 		5BE3F8711C04A0DE0087BC28 /* NativeTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */; };
 		5BE3F8721C04A0DE0087BC28 /* NativeTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */; };
+		5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */; };
+		5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -155,6 +157,8 @@
 		5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NativeTimer.mm; sourceTree = "<group>"; };
 		5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeTimer.h; sourceTree = "<group>"; };
 		5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
+		5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestStatsHandler.cpp; sourceTree = "<group>"; };
+		5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestStatsHandler.hpp; sourceTree = "<group>"; };
 		5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPublicConsts.h; sourceTree = "<group>"; };
 		88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
@@ -256,6 +260,8 @@
 				5B46D1E41C217BC100A9834C /* StatsHandler.hpp */,
 				5B46D1E71C217C9700A9834C /* NativeStatsHandler.h */,
 				5B46D1E81C217C9700A9834C /* NativeStatsHandler.mm */,
+				5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */,
+				5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */,
 			);
 			path = Stats;
 			sourceTree = "<group>";
@@ -402,6 +408,7 @@
 				5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */,
 				5B54C3351BFB705B00217971 /* Protocol.hpp in Headers */,
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
+				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
 				5BE3F8721C04A0DE0087BC28 /* NativeTimer.h in Headers */,
 				5BC497B41C03609300FF0922 /* ConfigurationProcessor.hpp in Headers */,
@@ -575,6 +582,7 @@
 				5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */,
 				5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */,
 				5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */,
+				5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */,
 				5BC497B31C03609300FF0922 /* ConfigurationProcessor.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

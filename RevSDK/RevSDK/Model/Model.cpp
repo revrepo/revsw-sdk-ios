@@ -39,13 +39,13 @@ namespace rs
 {
     Model::Model()
     {
-        mStatsHandler              = new StatsHandler;
         mStatsReportingTimer       = nullptr;
         mConfigurationRefreshTimer = nullptr;
         mNetwork                   = new Network;
         mDataStorage               = new DataStorage;
         mSpareDomainsWhiteList     = std::vector<std::string>();
         mTestPassOption            = false;
+        mStatsHandler              = new StatsHandler(mDataStorage);
     }
     
     Model::~Model()
@@ -239,5 +239,10 @@ namespace rs
         auto begin = mConfiguration->domainsProvisionedList.begin();
         auto end   = mConfiguration->domainsProvisionedList.end();
         return std::find(begin, end, aDomainName) != end;
+    }
+    
+    void Model::addRequestData(const Data& aRequestData)
+    {
+        mStatsHandler->addRequestData(aRequestData);
     }
 }

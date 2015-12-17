@@ -8,27 +8,39 @@
 
 #include "DataStorage.hpp"
 #include "Configuration.hpp"
+#include "Data.hpp"
 #import "NativeDataStorage.h"
+
 
 namespace rs
 {
     DataStorage::DataStorage()
     {
-        nativeDataStorage = new NativeDataStorage();
+        mNativeDataStorage = new NativeDataStorage();
     }
     
     DataStorage::~DataStorage()
     {
-        delete nativeDataStorage;
+        delete mNativeDataStorage;
     }
 
     void DataStorage::saveConfiguration(const Configuration& aConfiguration)
     {
-        nativeDataStorage->saveConfiguration(aConfiguration);
+        mNativeDataStorage->saveConfiguration(aConfiguration);
     }
     
     Configuration DataStorage::configuration()const
     {
-        return nativeDataStorage->configuration();
+        return mNativeDataStorage->configuration();
+    }
+    
+    void DataStorage::saveRequestData(const Data& aRequestData)
+    {
+        mNativeDataStorage->saveRequestData(aRequestData);
+    }
+    
+    std::vector<Data> DataStorage::loadRequestsData()
+    {
+        return mNativeDataStorage->loadRequestsData();
     }
 }

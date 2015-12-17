@@ -38,4 +38,21 @@ namespace rs
         rs::Configuration configuration = configurationFromNSDictionary(dictionary);
         return configuration;
     }
+    
+    void NativeDataStorage::saveRequestData(const Data& aRequestData)
+    {
+        NSData* data                     = NSDataFromData(aRequestData);
+        NSArray* requestDataArray        = objectForKey(kRSRequestDataStorageKey);
+        NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
+        
+        [mutableDataArray addObject:data];
+        saveObjectForKey(mutableDataArray, kRSRequestDataStorageKey);
+    }
+    
+    std::vector<Data> NativeDataStorage::loadRequestsData()
+    {
+        NSArray* requestDataArray = objectForKey(kRSRequestDataStorageKey);
+        std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
+        return dataVector;
+    }
 }

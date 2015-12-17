@@ -38,6 +38,7 @@ namespace rs
     extern NSString* const kRSURLProtocolHandledKey;
     extern const std::string kRSErrorDescriptionKey;
     extern NSString* const kRSConfigurationStorageKey;
+    extern NSString* const kRSRequestDataStorageKey;
     
     //protocols
     extern const std::string kRSHTTPSProtocolName;
@@ -68,5 +69,9 @@ namespace rs
     
     std::string loadConfigurationURL();
     std::string reportStatsURL();
+    
+    std::vector<Data> dataNSArrayToStdVector(NSArray *);
+    
+    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*);
 }
 #endif
