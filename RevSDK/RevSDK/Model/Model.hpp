@@ -75,6 +75,8 @@ namespace rs
         bool isDomainNameProvisioned(std::string aDomainName);
         
         void addRequestData(const Data &);
+        
+        bool shouldCollectRequestsData()const;
     };
 }
 

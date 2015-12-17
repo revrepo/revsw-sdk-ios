@@ -71,7 +71,7 @@ namespace rs
                                                     aDelegate->connectionDidFailWithError(anchor, error);
                                                 }
                                                 
-                                                if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost])
+                                                if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
                                                 {
                                                     Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse);
                                                     Model::instance()->addRequestData(requestData);

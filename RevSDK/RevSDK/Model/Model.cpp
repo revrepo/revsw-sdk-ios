@@ -245,4 +245,13 @@ namespace rs
     {
         mStatsHandler->addRequestData(aRequestData);
     }
+    
+    bool Model::shouldCollectRequestsData() const
+    {
+        RSStatsReportingLevel statsReportingLevel = mConfiguration->statsReportingLevel;
+        
+        bool shouldCollect = statsReportingLevel == kRSStatsReportingLevelRequestsData || statsReportingLevel == kRSStatsReportingLevelFull;
+        
+        return shouldCollect;
+    }
 }
