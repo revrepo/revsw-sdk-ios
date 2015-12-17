@@ -12,6 +12,12 @@
 
 using namespace rs;
 
+Data::Data()
+{
+    mLength = 0;
+    mBytes  = malloc(0);
+}
+
 Data::Data(const void* aBytes, size_t aLength):
     mBytes(nullptr),
     mLength(0)

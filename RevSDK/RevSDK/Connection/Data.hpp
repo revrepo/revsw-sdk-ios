@@ -18,7 +18,7 @@ namespace rs
     class Data
     {
     public:
-        Data(){};
+        Data();
         Data(const void* aBytes, size_t aLength);
         Data(const Data& aData);
         ~Data();

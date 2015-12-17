@@ -146,7 +146,8 @@ namespace rs
     
     std::vector<Data> NativeDataStorage::loadRequestsData()
     {
-        NSArray* requestDataArray = objectWithName(kRSRequestDataStorageKey);
+        NSData* data                 = objectWithName(kRSRequestDataStorageKey);
+        NSArray* requestDataArray    = data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
         return dataVector;
     }
