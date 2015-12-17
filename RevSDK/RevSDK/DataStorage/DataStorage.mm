@@ -129,7 +129,8 @@ namespace rs
     
     Configuration DataStorage::configuration() const
     {
-        NSDictionary* dictionary        = objectWithName(kRSConfigurationStorageKey);
+        NSData* data                    = objectWithName(kRSConfigurationStorageKey);
+        NSDictionary* dictionary        = data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
         rs::Configuration configuration = configurationFromNSDictionary(dictionary);
         return configuration;
     }
@@ -137,7 +138,8 @@ namespace rs
     void DataStorage::saveRequestData(const Data& aRequestData)
     {
         NSData* data                     = NSDataFromData(aRequestData);
-        NSArray* requestDataArray        = objectWithName(kRSRequestDataStorageKey);
+        NSData* savedData                = objectWithName(kRSRequestDataStorageKey);
+        NSArray* requestDataArray        = savedData ? [NSKeyedUnarchiver unarchiveObjectWithData:savedData] : @[];
         NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
         
         [mutableDataArray addObject:data];
