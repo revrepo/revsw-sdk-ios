@@ -66,9 +66,4 @@
    rs::Model::instance()->switchWhiteListOption(aOn);
 }
 
-+ (void)setTestPassOption:(BOOL)aOn
-{
-    rs::Model::instance()->setTestPassOption(aOn);
-}
-
 @end

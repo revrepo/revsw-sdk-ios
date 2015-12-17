@@ -13,21 +13,6 @@
 #import "RSURLRequestProcessor.h"
 #import "Model.hpp"
 
-@interface NSURLRequest (FileRequest)
-
-@property (nonatomic, readonly) BOOL isFileRequest;
-
-@end
-
-@implementation NSURLRequest(FileRequest)
-
-- (BOOL)isFileRequest
-{
-    return self.URL && self.URL.isFileURL;
-}
-
-@end
-
 @interface RSURLProtocol ()<RSURLConnectionDelegate>
 
 @property (nonatomic, strong) NSURLConnection* nativeConnection;
@@ -40,20 +25,12 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    NSURL* URL             = [aRequest URL];
-    NSString* host         = [URL host];
-    std::string domainName = rs::stdStringFromNSString(host);
-    BOOL can               = rs::Model::instance()->shouldTransportDomainName(domainName) &&
-                             ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
-                             !aRequest.isFileRequest;
-    return can;
+    return YES;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask
 {
-    NSURLRequest* request = [aTask currentRequest];
-
-    return [self canInitWithRequest:request];
+    return YES;
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)aRequest

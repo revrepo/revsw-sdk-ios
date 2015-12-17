@@ -19,6 +19,21 @@
 #import "Error.hpp"
 #import "Model.hpp"
 
+@interface NSURLRequest (FileRequest)
+
+@property (nonatomic, readonly) BOOL isFileRequest;
+
+@end
+
+@implementation NSURLRequest(FileRequest)
+
+- (BOOL)isFileRequest
+{
+    return self.URL && self.URL.isFileURL;
+}
+
+@end
+
 @interface RSURLConnection ()
 {
     std::shared_ptr<rs::ConnectionProxy> connectionProxy;
@@ -66,13 +81,24 @@
             [self.delegate connection:self didFailWithError:error];
         };
         
-        BOOL testPassOptionOn    = rs::Model::instance()->testPassOption();
-        NSURLRequest* newRequest = (aRequest.URL.host && !testPassOptionOn) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
-        connectionProxy = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
+        BOOL shouldRedirect      = [self shouldRedirectRequest:aRequest];
+        NSURLRequest* newRequest = (aRequest.URL.host && !shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
+        connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     
     return self;
+}
+
+- (BOOL)shouldRedirectRequest:(NSURLRequest *)aRequest
+{
+    NSURL* URL             = [aRequest URL];
+    NSString* host         = [URL host];
+    std::string domainName = rs::stdStringFromNSString(host);
+    BOOL should            = rs::Model::instance()->shouldTransportDomainName(domainName) &&
+                             ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
+                             !aRequest.isFileRequest;
+    return should;
 }
 
 - (void)start

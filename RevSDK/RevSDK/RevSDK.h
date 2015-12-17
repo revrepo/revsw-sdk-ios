@@ -31,6 +31,5 @@ typedef enum
 + (void)setOperationMode:(RSOperationMode)aOperationMode;
 + (RSOperationMode)operationMode;
 + (void)setWhiteListOption:(BOOL)aOn;
-+ (void)setTestPassOption:(BOOL)aOn;
 
 @end

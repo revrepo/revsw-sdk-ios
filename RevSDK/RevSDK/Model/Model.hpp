@@ -44,8 +44,6 @@ namespace rs
       RSOperationModeInner mCurrentOperationMode;
       std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
-      bool mTestPassOption;
-        
       void reportStats();
         
       void loadConfiguration();
@@ -75,9 +73,6 @@ namespace rs
         void switchWhiteListOption(bool aOn);
         bool shouldTransportDomainName(std::string aDomainName);
         bool isDomainNameProvisioned(std::string aDomainName);
-        
-        void setTestPassOption (bool aTestPassOption) {mTestPassOption = aTestPassOption ;}
-        bool testPassOption()const {return mTestPassOption;}
         
         void addRequestData(const Data &);
     };
