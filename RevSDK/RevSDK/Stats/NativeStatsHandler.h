@@ -9,15 +9,21 @@
 #ifndef NativeStatsHandler_h
 #define NativeStatsHandler_h
 
+#include "Utils.hpp"
+
 namespace rs
 {
      class Data;
     
      class NativeStatsHandler
      {
+         RSStatsReportingLevel mStatsReportingLevel;
+         
         public:
          
-        static Data statsData();
+         void setStatsReportingLevel(RSStatsReportingLevel);
+         
+        Data statsData();
      };
 }
 

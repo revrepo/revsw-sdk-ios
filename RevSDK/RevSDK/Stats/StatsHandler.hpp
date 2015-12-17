@@ -11,6 +11,8 @@
 
 #include <stdio.h>
 
+#include "Utils.hpp"
+
 namespace rs
 {
     class NativeStatsHandler;
@@ -19,11 +21,14 @@ namespace rs
     class StatsHandler
     {
         NativeStatsHandler* mStatsHandler;
+        RSStatsReportingLevel mStatsReportingLevel;
         
         public:
      
         StatsHandler();
         ~StatsHandler();
+        
+        void setReportingLevel(RSStatsReportingLevel);
         
         Data getStatsData();
     };

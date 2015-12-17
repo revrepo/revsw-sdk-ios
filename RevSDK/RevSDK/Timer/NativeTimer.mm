@@ -35,6 +35,7 @@ namespace rs
     
     NativeTimer::~NativeTimer()
     {
+        invalidate();
         CFBridgingRelease(timer);
     }
     
@@ -45,7 +46,10 @@ namespace rs
     
     void NativeTimer::invalidate()
     {
-        [(__bridge NSTimer *)timer invalidate];
+        if (isValid())
+        {
+           [(__bridge NSTimer *)timer invalidate];
+        }
     }
     
     bool NativeTimer::isValid()const

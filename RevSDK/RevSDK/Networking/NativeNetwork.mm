@@ -32,12 +32,12 @@ namespace rs
             \"configuration_refresh_interval_sec\" : 100,\
             \"configuration_stale_timeout_sec\" : 100,\
             \"edge_host\" : \"revdn.net\",\
-            \"operation_mode\" : \"transfer_and_report\",\
+            \"operation_mode\" : 2,\
             \"allowed_transport_protocols\" : [\"standard\"],\
             \"initial_transport_protocol\" : \"standard\",\
             \"transport_monitoring_url\" : \"https://rev-200.revdn.net\",\
             \"stats_reporting_url\" : \"https://rev-200.revdn.net\",\
-            \"stats_reporting_interval\" : 100,\
+            \"stats_reporting_interval\" : 1,\
             \"stats_reporting_level\" : \"out_of_band\",\
             \"stats_reporting_max_request_per_report\" : 1,\
             \"domains_provisioned_list\" : [],\

@@ -36,9 +36,8 @@ namespace rs
     Data NativeStatsHandler::statsData()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
-        
-        statsDictionary[kRSDeviceNameKey] = deviceName();
-        statsDictionary[kRSOSVersionKey]  = osVersion();
+        statsDictionary[kRSDeviceNameKey]    = deviceName();
+        statsDictionary[kRSOSVersionKey]     = osVersion();
         
         NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
                                                          options:NSJSONWritingPrettyPrinted
@@ -46,5 +45,10 @@ namespace rs
         Data rsData = dataFromNSData(nsData);
         
         return rsData;
+    }
+    
+    void NativeStatsHandler::setStatsReportingLevel(RSStatsReportingLevel aReportLevel)
+    {
+        mStatsReportingLevel = aReportLevel;
     }
 }

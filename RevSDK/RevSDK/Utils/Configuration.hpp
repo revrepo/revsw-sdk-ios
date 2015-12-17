@@ -13,6 +13,8 @@
 #include <vector>
 #include <string>
 
+#import "Utils.hpp"
+
 namespace rs
 {
     class Data;
@@ -27,13 +29,13 @@ namespace rs
         int refreshInterval;
         int staleTimeout;
         std::string edgeHost;
-        std::string operationMode;
+        RSOperationModeInner operationMode;
         std::vector<std::string> allowedProtocols;
         std::string initialTransportProtocol;
         std::string transportMonitoringURL;
         std::string statsReportingURL;
         int statsReportingInterval;
-        std::string statsReportingLevel;
+        RSStatsReportingLevel statsReportingLevel;
         int statsReportingMaxRequests;
         std::vector<std::string> domainsProvisionedList;
         std::vector<std::string> domainsWhiteList;

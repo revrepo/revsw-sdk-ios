@@ -26,6 +26,15 @@
 #include "Request.hpp"
 #include "StatsHandler.hpp"
 
+#define RSStartTimer(aFunc, aTimer, aInterval)\
+        do{\
+             if (!aTimer)\
+             {\
+                std::function<void()> scheduledFunction = std::bind(aFunc, this);\
+                scheduleTimer(mStatsReportingTimer, aInterval, scheduledFunction);\
+             }\
+        }while(0)
+
 namespace rs
 {
     Model::Model()
@@ -95,7 +104,7 @@ namespace rs
            if (aError.code == noErrorCode())
            {
                saveConfiguration(aData);
-               startTimers();
+               RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
            }
            else
            {
@@ -109,7 +118,9 @@ namespace rs
     void Model::saveConfiguration(const Data& aConfigurationData)
     {
         Configuration configuration = ConfigurationProcessor::processConfigurationData(aConfigurationData);
+        setOperationMode(configuration.operationMode);
         mDataStorage->saveConfiguration(configuration);
+        mStatsHandler->setReportingLevel(configuration.statsReportingLevel);
         mConfiguration = std::make_shared<Configuration>(configuration);
     }
     
@@ -117,6 +128,16 @@ namespace rs
     {
         aTimer = new Timer(aInterval, aFunction);
         aTimer->start();
+    }
+    
+    void Model::disableTimer(Timer*& aTimer)
+    {
+        if (aTimer)
+        {
+            aTimer->invalidate();
+            delete aTimer;
+            aTimer = nullptr;
+        }
     }
     
     void Model::reportStats()
@@ -130,31 +151,25 @@ namespace rs
         mNetwork->sendStats(statsData, completion);
     }
     
-    void Model::startTimers()
-    {
-        if (!mConfigurationRefreshTimer)
-        {
-            std::function<void()> scheduledFunction = std::bind(&Model::loadConfiguration, this);
-            scheduleTimer(mConfigurationRefreshTimer, mConfiguration.get()->refreshInterval, scheduledFunction);
-        }
-        
-        if (!mStatsReportingTimer)
-        {
-            std::function<void()> scheduledFunction = std::bind(&Model::reportStats, this);
-            scheduleTimer(mStatsReportingTimer, mConfiguration.get()->statsReportingInterval, scheduledFunction);
-        }
-    }
-    
     void Model::initialize(std::string aSDKKey)
     {
         mSDKKey = aSDKKey;
-        setOperationMode(rs::kRSOperationModeInnerTransportAndReport);
         loadConfiguration();
     }
     
     void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
     {
         mCurrentOperationMode = aOperationMode;
+        
+        if (mCurrentOperationMode == kRSOperationModeInnerReport ||
+            mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
+        {
+            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
+        }
+        else
+        {
+            disableTimer(mStatsReportingTimer);
+        }
     }
     
     RSOperationModeInner Model::currentOperationMode() const

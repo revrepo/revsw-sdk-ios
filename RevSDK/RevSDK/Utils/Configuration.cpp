@@ -37,9 +37,6 @@ namespace rs
     
     Data Configuration::toData()
     {
-//        Data data;
-//        data.bytes  = this;
-//        data.length = sizeof(*this);
         return Data(this, sizeof(*this));
     }
     

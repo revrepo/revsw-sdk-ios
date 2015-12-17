@@ -22,6 +22,11 @@ namespace rs
         delete mStatsHandler;
     }
     
+    void StatsHandler::setReportingLevel(RSStatsReportingLevel aReportingLevel)
+    {
+        mStatsReportingLevel = aReportingLevel;
+    }
+    
     Data StatsHandler::getStatsData()
     {
         return mStatsHandler->statsData();

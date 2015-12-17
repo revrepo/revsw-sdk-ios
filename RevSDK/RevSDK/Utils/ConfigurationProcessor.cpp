@@ -51,13 +51,13 @@ namespace rs
             configuration.refreshInterval           = value["configs"]["configuration_refresh_interval_sec"].asInt();
             configuration.staleTimeout              = value["configs"]["configuration_stale_timeout_sec"].asInt();
             configuration.edgeHost                  = value["configs"]["edge_host"].asString();
-            configuration.operationMode             = value["configs"]["operation_mode"].asString();
+            configuration.operationMode             = (RSOperationModeInner)value["configs"]["operation_mode"].asInt();
             configuration.allowedProtocols          = vectorFromValue(value["configs"]["allowed_transport_protocols"]);
             configuration.initialTransportProtocol  = value["configs"]["initial_transport_protocol"].asString();
             configuration.transportMonitoringURL    = value["configs"]["transport_monitoring_url"].asString();
             configuration.statsReportingURL         = value["configs"]["stats_reporting_url"].asString();
             configuration.statsReportingInterval    = value["configs"]["stats_reporting_interval"].asInt();
-            configuration.statsReportingLevel       = value["configs"]["stats_reporting_levelt"].asString();
+            configuration.statsReportingLevel       = (RSStatsReportingLevel)value["configs"]["stats_reporting_levelt"].asInt();
             configuration.statsReportingMaxRequests = value["configs"]["stats_reporting_max_requests_per_report"].asInt();
             configuration.domainsProvisionedList    = vectorFromValue(value["configs"]["domains_provisioned_list"]);
             configuration.domainsWhiteList          = vectorFromValue(value["configs"]["domains_white_list"]);

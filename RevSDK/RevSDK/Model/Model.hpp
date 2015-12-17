@@ -15,16 +15,10 @@
 #include <vector>
 #include <functional>
 
+#import "Utils.hpp"
+
 namespace rs
 {
-    typedef enum
-    {
-        kRSOperationModeInnerOff,
-        kRSOperationModeInnerTransport,
-        kRSOperationModeInnerReport,
-        kRSOperationModeInnerTransportAndReport
-    }RSOperationModeInner;
-    
     class Protocol;
     class Connection;
     class Network;
@@ -58,7 +52,7 @@ namespace rs
       void saveConfiguration(const Data&);
         
       void scheduleTimer(Timer*&, int, std::function<void()>);
-      void startTimers();
+      void disableTimer(Timer*&);
         
       public:
         
