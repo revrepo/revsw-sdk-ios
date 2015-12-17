@@ -16,6 +16,7 @@
 #include "Request.hpp"
 #include "Error.hpp"
 #include "RSUtilsBridge.hpp"
+#include "Model.hpp"
 
 namespace rs
 {
@@ -68,6 +69,12 @@ namespace rs
                                                 {
                                                     Error error = errorFromNSError(aError);
                                                     aDelegate->connectionDidFailWithError(anchor, error);
+                                                }
+                                                
+                                                if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost])
+                                                {
+                                                    Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse);
+                                                    Model::instance()->addRequestData(requestData);
                                                 }
                                             }];
         [task resume];

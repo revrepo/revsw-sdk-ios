@@ -15,26 +15,105 @@
 
 namespace rs
 {
-    void saveObjectForKey(id aObject, NSString* aKey)
+    NSString* localStorageDirectory();
+    
+    NativeDataStorage::NativeDataStorage()
     {
-        [[NSUserDefaults standardUserDefaults] setObject:aObject forKey:aKey];
-        [[NSUserDefaults standardUserDefaults] synchronize];
+        NSString* storageDirectory = localStorageDirectory();
+        BOOL exists                = [[NSFileManager defaultManager] fileExistsAtPath:storageDirectory];
+        
+        if (!exists)
+        {
+            NSError* error = nil;
+            
+            BOOL success = [[NSFileManager defaultManager] createDirectoryAtPath:storageDirectory
+                                                     withIntermediateDirectories:YES
+                                                                      attributes:nil
+                                                                           error:&error];
+            
+            if (!success)
+            {
+                NSLog(@"Failed to create storage directory %@", error);
+            }
+        }
     }
     
-    id objectForKey(NSString* aKey)
+    NSString* documentsDirectory()
     {
-         return [[NSUserDefaults standardUserDefaults] objectForKey:aKey];
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *basePath = paths.firstObject;
+        return basePath;
+    }
+    
+    NSString* localStorageDirectory()
+    {
+        NSString* docsDirectory    = documentsDirectory();
+        NSString* storageDirectory = [docsDirectory stringByAppendingString:@"/sdk_storage"];
+        
+        return storageDirectory;
+    }
+    
+    NSString* fullPathForFileName(NSString* aFileName)
+    {
+        NSString* storageDirectory = localStorageDirectory();
+        NSString* fullPath         = [storageDirectory stringByAppendingPathComponent:aFileName];
+        
+        return fullPath;
+    }
+    
+    BOOL canWriteToPath(NSString* aPath)
+    {
+        if ([[NSFileManager defaultManager] fileExistsAtPath:aPath])
+        {
+            NSError* error = nil;
+            
+            BOOL success = [[NSFileManager defaultManager] removeItemAtPath:aPath
+                                                                      error:&error];
+            
+            if (!success)
+            {
+                NSLog(@"Failed to remove item %@", error);
+            }
+            
+            return success;
+        }
+
+        return YES;
+    }
+    
+    void saveObject(id object, NSString* aFileName)
+    {
+        NSString* fullPath = fullPathForFileName(aFileName);
+        
+        if (canWriteToPath(fullPath))
+        {
+             if ([object respondsToSelector:@selector(writeToFile:atomically:)])
+             {
+                [object writeToFile:fullPath atomically:YES];
+             }
+             else
+             {
+                 NSLog(@"Object of unknown type %@", [object class]);
+             }
+        }
+    }
+    
+    id objectWithName(NSString* aFileName)
+    {
+         NSString* fullPath = fullPathForFileName(aFileName);
+        
+         return [[NSFileManager defaultManager] contentsAtPath:fullPath];
     }
     
     void NativeDataStorage::saveConfiguration(Configuration aConfiguration)
     {
          NSDictionary* dictionary = NSDictionaryFromConfiguration(aConfiguration);
-         saveObjectForKey(dictionary, kRSConfigurationStorageKey);
+         saveObject(dictionary, kRSConfigurationStorageKey);
     }
     
     Configuration NativeDataStorage::configuration() const
     {
-        NSMutableDictionary* dictionary = objectForKey(kRSConfigurationStorageKey);
+        NSDictionary* dictionary        = objectWithName(kRSConfigurationStorageKey);
         rs::Configuration configuration = configurationFromNSDictionary(dictionary);
         return configuration;
     }
@@ -42,16 +121,16 @@ namespace rs
     void NativeDataStorage::saveRequestData(const Data& aRequestData)
     {
         NSData* data                     = NSDataFromData(aRequestData);
-        NSArray* requestDataArray        = objectForKey(kRSRequestDataStorageKey);
+        NSArray* requestDataArray        = objectWithName(kRSRequestDataStorageKey);
         NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
         
         [mutableDataArray addObject:data];
-        saveObjectForKey(mutableDataArray, kRSRequestDataStorageKey);
+        saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
     
     std::vector<Data> NativeDataStorage::loadRequestsData()
     {
-        NSArray* requestDataArray = objectForKey(kRSRequestDataStorageKey);
+        NSArray* requestDataArray = objectWithName(kRSRequestDataStorageKey);
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
         return dataVector;
     }

@@ -22,6 +22,8 @@ namespace rs
     {
     public:
         
+        NativeDataStorage();
+        
         void saveConfiguration(Configuration);
         Configuration configuration()const;
         void saveRequestData(const Data&);
