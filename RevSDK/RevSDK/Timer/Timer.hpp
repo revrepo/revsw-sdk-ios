@@ -14,11 +14,11 @@
 
 namespace rs
 {
-    class NativeTimer;
-    
     class Timer
     {
-        NativeTimer* timer;
+        void* mTimer;
+        float mInterval;
+        std::function<void()> mFunction;
         
         public:
         
