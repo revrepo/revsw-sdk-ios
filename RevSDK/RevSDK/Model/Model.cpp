@@ -143,7 +143,13 @@ namespace rs
     {
         std::function<void(const Error& )> completion = [=](const Error& aError){
         
-            std::cout << "Stats reported " << aError.description()  << std::endl;
+           if (aError.isNoError())
+           {
+               if (mConfiguration->statsReportingLevel != kRSStatsReportingLevelDeviceData)
+               {
+                   mStatsHandler->deleteRequestsData();
+               }
+           }
         };
         
         Data statsData = mStatsHandler->getStatsData();

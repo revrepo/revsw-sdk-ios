@@ -25,4 +25,9 @@ namespace rs
         error.code = noErrorCode();
         return error;
     }
+    
+    bool Error::isNoError()const
+    {
+        return code == noErrorCode();
+    }
 }

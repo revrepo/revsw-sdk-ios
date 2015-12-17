@@ -26,6 +26,8 @@ namespace rs
         std::string description()const;
         
         static Error notError();
+        
+        bool isNoError() const;
     };
 }
 

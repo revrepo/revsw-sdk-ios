@@ -32,6 +32,7 @@ namespace rs
       Configuration configuration()const;
       void saveRequestData(const Data&);
       std::vector<Data> loadRequestsData();
+      void deleteRequestsData();
   };
 }
 

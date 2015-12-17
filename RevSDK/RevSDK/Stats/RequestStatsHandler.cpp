@@ -29,4 +29,10 @@ namespace rs
     {
         return jsonDataFromDataVector(mRequestsDataVector);
     }
+    
+    void RequestStatsHandler::deleteRequestsData()
+    {
+        mRequestsDataVector.clear();
+        mDataStorage->deleteRequestsData();
+    }
 }

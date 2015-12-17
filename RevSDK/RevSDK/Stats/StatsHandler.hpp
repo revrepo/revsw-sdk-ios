@@ -24,6 +24,7 @@ namespace rs
     {
         RequestStatsHandler* mRequestStatsHandler;
         NativeStatsHandler* mStatsHandler;
+        
         RSStatsReportingLevel mStatsReportingLevel;
         
         public:
@@ -34,8 +35,8 @@ namespace rs
         void setReportingLevel(RSStatsReportingLevel);
         
         Data getStatsData();
-        
         void addRequestData(const Data&);
+        void deleteRequestsData();
     };
 }
 

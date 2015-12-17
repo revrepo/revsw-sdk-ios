@@ -6,11 +6,14 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#include <map>
+
 #include "StatsHandler.hpp"
 #include "NativeStatsHandler.h"
 #include "Data.hpp"
 #include "DataStorage.hpp"
 #include "RequestStatsHandler.hpp"
+#include "JSONUtils.hpp"
 
 namespace rs
 {
@@ -33,11 +36,32 @@ namespace rs
     
     Data StatsHandler::getStatsData()
     {
-        return mStatsHandler->statsData();
+        std::map<std:: string, Data> map;
+        
+        Data statsData    = mStatsHandler->statsData();
+        Data requestsData = mRequestStatsHandler->requestsData();
+        
+        if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
+        {
+            map["stats"] = statsData;
+        }
+        
+        if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
+        {
+           map["requests"] = requestsData;
+        }
+        
+        Data wholeData = jsonDataFromDataMap(map);
+        return wholeData;
     }
     
     void StatsHandler::addRequestData(const Data& aRequestData)
     {
         mRequestStatsHandler->addNewRequestData(aRequestData);
+    }
+    
+    void StatsHandler::deleteRequestsData()
+    {
+        mRequestStatsHandler->deleteRequestsData();
     }
 }

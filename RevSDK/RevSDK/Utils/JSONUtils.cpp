@@ -14,19 +14,38 @@
 
 namespace rs
 {
+    Data jsonDataFromValue(Json::Value& aValue)
+    {
+        Json::StyledWriter writer;
+        
+        std::string jsonString = writer.write(aValue);
+        return Data(jsonString.c_str(), jsonString.length());
+    }
+    
+    Data jsonDataFromDataMap(std::map<std::string, Data> & aDataMap)
+    {
+        Json::Value value;
+        
+        for (std::pair<std::string, Data> pair : aDataMap)
+        {
+            std::string key = pair.first;
+            Data data       = pair.second;
+            value[key]      = data.toString();
+        }
+        
+        return jsonDataFromValue(value);
+    }
+    
     Data jsonDataFromDataVector(std::vector<Data>& aDataVector)
     {
         Json::Value value;
-        Json::StyledWriter writer;
         
         for (Data& data : aDataVector)
         {
             value.append(data.toString());
         }
-        
-        std::string jsonString = writer.write(value);
-        
-        return Data(jsonString.c_str(), jsonString.length());
+
+        return jsonDataFromValue(value);
     }
     
     std::vector<std::string> vectorFromValue(Json::Value& aValue)

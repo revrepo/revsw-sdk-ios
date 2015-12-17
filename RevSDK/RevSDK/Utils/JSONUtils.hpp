@@ -11,12 +11,14 @@
 
 #include <stdio.h>
 #include <vector>
+#include <map>
 
 namespace rs
 {
     class Data;
     class Configuration;
     
+    Data jsonDataFromDataMap(std::map<std::string, Data> &);
     Data jsonDataFromDataVector(std::vector<Data> &);
     Configuration processConfigurationData(const Data& aData);
 }

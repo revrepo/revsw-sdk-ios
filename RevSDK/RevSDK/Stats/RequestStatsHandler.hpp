@@ -29,6 +29,7 @@ namespace rs
         
         void addNewRequestData(const Data&);
         Data requestsData();
+        void deleteRequestsData();
     };
 }
 

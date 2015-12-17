@@ -43,4 +43,9 @@ namespace rs
     {
         return mNativeDataStorage->loadRequestsData();
     }
+    
+    void DataStorage::deleteRequestsData()
+    {
+        mNativeDataStorage->deleteRequestsData();
+    }
 }

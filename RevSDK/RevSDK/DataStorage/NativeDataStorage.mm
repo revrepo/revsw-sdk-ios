@@ -105,6 +105,22 @@ namespace rs
          return [[NSFileManager defaultManager] contentsAtPath:fullPath];
     }
     
+    BOOL deleteFile(NSString * aFileName, NSError** aError)
+    {
+         NSString* fullPath = fullPathForFileName(aFileName);
+         NSError* error     = nil;
+        
+        BOOL success = [[NSFileManager defaultManager] removeItemAtPath:fullPath
+                                                                  error:&error];
+        
+        if (!success)
+        {
+            *aError = error;
+        }
+        
+        return success;
+    }
+    
     void NativeDataStorage::saveConfiguration(Configuration aConfiguration)
     {
          NSDictionary* dictionary = NSDictionaryFromConfiguration(aConfiguration);
@@ -133,5 +149,17 @@ namespace rs
         NSArray* requestDataArray = objectWithName(kRSRequestDataStorageKey);
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
         return dataVector;
+    }
+    
+    void NativeDataStorage::deleteRequestsData()
+    {
+        NSError* error = nil;
+        
+        BOOL success = deleteFile(kRSRequestDataStorageKey, &error);
+        
+        if (!success)
+        {
+            NSLog(@"Failed to remove requests data %@", error);
+        }
     }
 }
