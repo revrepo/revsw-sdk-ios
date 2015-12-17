@@ -16,13 +16,10 @@
 namespace rs
 {
   class Configuration;
-  class NativeDataStorage;
   class Data;
     
   class DataStorage
   {
-     NativeDataStorage* mNativeDataStorage;
-      
      public:
       
       DataStorage();

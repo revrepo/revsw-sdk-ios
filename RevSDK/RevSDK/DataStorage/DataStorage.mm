@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "NativeDataStorage.h"
+#import "DataStorage.hpp"
 #import "Data.hpp"
 #import "RSUtils.h"
 #import "Configuration.hpp"
@@ -17,7 +17,7 @@ namespace rs
 {
     NSString* localStorageDirectory();
     
-    NativeDataStorage::NativeDataStorage()
+    DataStorage::DataStorage()
     {
         NSString* storageDirectory = localStorageDirectory();
         BOOL exists                = [[NSFileManager defaultManager] fileExistsAtPath:storageDirectory];
@@ -121,20 +121,20 @@ namespace rs
         return success;
     }
     
-    void NativeDataStorage::saveConfiguration(Configuration aConfiguration)
+    void DataStorage::saveConfiguration(const Configuration& aConfiguration)
     {
          NSDictionary* dictionary = NSDictionaryFromConfiguration(aConfiguration);
          saveObject(dictionary, kRSConfigurationStorageKey);
     }
     
-    Configuration NativeDataStorage::configuration() const
+    Configuration DataStorage::configuration() const
     {
         NSDictionary* dictionary        = objectWithName(kRSConfigurationStorageKey);
         rs::Configuration configuration = configurationFromNSDictionary(dictionary);
         return configuration;
     }
     
-    void NativeDataStorage::saveRequestData(const Data& aRequestData)
+    void DataStorage::saveRequestData(const Data& aRequestData)
     {
         NSData* data                     = NSDataFromData(aRequestData);
         NSArray* requestDataArray        = objectWithName(kRSRequestDataStorageKey);
@@ -144,14 +144,14 @@ namespace rs
         saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
     
-    std::vector<Data> NativeDataStorage::loadRequestsData()
+    std::vector<Data> DataStorage::loadRequestsData()
     {
         NSArray* requestDataArray = objectWithName(kRSRequestDataStorageKey);
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
         return dataVector;
     }
     
-    void NativeDataStorage::deleteRequestsData()
+    void DataStorage::deleteRequestsData()
     {
         NSError* error = nil;
         
