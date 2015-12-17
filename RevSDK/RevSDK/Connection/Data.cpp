@@ -68,17 +68,7 @@ Data& Data::operator=(const Data& aData)
 
 
 std::string Data::toString()
-{
-//    std::string str = "";
-//    char* cPtr = (char*)mBytes;
-//    
-//    for (int i = 0; i < mLength; i++)
-//    {
-//        str += *(cPtr++);
-//    }
-//    
-//    return str;
-    
+{    
     std::string result((char*)mBytes);
     result += '\0';
     return result;

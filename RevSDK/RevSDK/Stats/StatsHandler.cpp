@@ -38,8 +38,8 @@ namespace rs
     {
         std::map<std:: string, Data> map;
         
-        Data statsData    = mStatsHandler->statsData();
-        Data requestsData = mRequestStatsHandler->requestsData();
+        const Data statsData    = mStatsHandler->statsData();
+        const Data requestsData = mRequestStatsHandler->requestsData();
         
         if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
         {
