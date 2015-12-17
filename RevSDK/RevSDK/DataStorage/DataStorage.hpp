@@ -23,7 +23,7 @@ namespace rs
      public:
       
       DataStorage();
-      ~DataStorage();
+      ~DataStorage(){};
       
       void saveConfiguration(const Configuration&);
       Configuration configuration()const;
