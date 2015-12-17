@@ -65,10 +65,8 @@
 		5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */; };
 		5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F8631C0454890087BC28 /* DataStorage.hpp */; };
 		5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F8671C0455CC0087BC28 /* DataStorage.mm */; };
-		5BE3F86D1C04A0C50087BC28 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F86B1C04A0C50087BC28 /* Timer.cpp */; };
 		5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F86C1C04A0C50087BC28 /* Timer.hpp */; };
-		5BE3F8711C04A0DE0087BC28 /* NativeTimer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */; };
-		5BE3F8721C04A0DE0087BC28 /* NativeTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */; };
+		5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F86F1C04A0DE0087BC28 /* Timer.mm */; };
 		5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */; };
 		5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */; };
 		5BEBD7301C22EB95002EC0CB /* JSONUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */; };
@@ -146,10 +144,8 @@
 		5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ConnectionProxy.h; sourceTree = "<group>"; };
 		5BE3F8631C0454890087BC28 /* DataStorage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStorage.hpp; sourceTree = "<group>"; };
 		5BE3F8671C0455CC0087BC28 /* DataStorage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataStorage.mm; sourceTree = "<group>"; };
-		5BE3F86B1C04A0C50087BC28 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Timer.cpp; sourceTree = "<group>"; };
 		5BE3F86C1C04A0C50087BC28 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
-		5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NativeTimer.mm; sourceTree = "<group>"; };
-		5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeTimer.h; sourceTree = "<group>"; };
+		5BE3F86F1C04A0DE0087BC28 /* Timer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Timer.mm; sourceTree = "<group>"; };
 		5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
 		5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestStatsHandler.cpp; sourceTree = "<group>"; };
 		5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestStatsHandler.hpp; sourceTree = "<group>"; };
@@ -353,10 +349,8 @@
 		5BE3F86A1C049EF60087BC28 /* Timer */ = {
 			isa = PBXGroup;
 			children = (
-				5BE3F86B1C04A0C50087BC28 /* Timer.cpp */,
 				5BE3F86C1C04A0C50087BC28 /* Timer.hpp */,
-				5BE3F86F1C04A0DE0087BC28 /* NativeTimer.mm */,
-				5BE3F8701C04A0DE0087BC28 /* NativeTimer.h */,
+				5BE3F86F1C04A0DE0087BC28 /* Timer.mm */,
 			);
 			path = Timer;
 			sourceTree = "<group>";
@@ -404,7 +398,6 @@
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
 				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
-				5BE3F8721C04A0DE0087BC28 /* NativeTimer.h in Headers */,
 				5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */,
 				5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */,
 				5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */,
@@ -550,7 +543,7 @@
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
 				5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */,
-				5BE3F8711C04A0DE0087BC28 /* NativeTimer.mm in Sources */,
+				5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.mm in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,
 				5B2F4BD71BFE11F6003DCB27 /* Error.cpp in Sources */,
@@ -567,7 +560,6 @@
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,
 				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
-				5BE3F86D1C04A0C50087BC28 /* Timer.cpp in Sources */,
 				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,
 				5B54C3481BFB7B8700217971 /* QUICConnection.cpp in Sources */,
