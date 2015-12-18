@@ -7,7 +7,6 @@
 //
 
 #import "RSUtils.h"
-
 #import "RSURLProtocol.h"
 #import "RSURLConnection.h"
 #import "RSURLRequestProcessor.h"
@@ -25,12 +24,13 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    return YES;
+    return !aRequest.isFileRequest;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask
 {
-    return YES;
+    NSURLRequest* request = [aTask originalRequest];
+    return [self canInitWithRequest:request];
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)aRequest
@@ -57,6 +57,11 @@
 - (NSCachedURLResponse *)cachedResponse
 {
     return nil;
+}
+
+- (id)initWithRequest:(NSURLRequest *)request cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id<NSURLProtocolClient>)client
+{
+    return [super initWithRequest:request cachedResponse:cachedResponse client:client];
 }
 
 - (id)initWithTask:(NSURLSessionTask *)task cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id<NSURLProtocolClient>)client

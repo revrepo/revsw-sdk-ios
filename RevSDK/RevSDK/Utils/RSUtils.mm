@@ -15,6 +15,15 @@
 #include "Error.hpp"
 #include "Configuration.hpp"
 
+@implementation NSURLRequest(FileRequest)
+
+- (BOOL)isFileRequest
+{
+    return self.URL && self.URL.isFileURL;
+}
+
+@end
+
 //notifications
 NSString* const kRSURLProtocolStoppedLoadingNotification = @"kRSURLProtocolStoppedLoadingNotification";
 

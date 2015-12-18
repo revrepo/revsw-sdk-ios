@@ -19,21 +19,6 @@
 #import "Error.hpp"
 #import "Model.hpp"
 
-@interface NSURLRequest (FileRequest)
-
-@property (nonatomic, readonly) BOOL isFileRequest;
-
-@end
-
-@implementation NSURLRequest(FileRequest)
-
-- (BOOL)isFileRequest
-{
-    return self.URL && self.URL.isFileURL;
-}
-
-@end
-
 @interface RSURLConnection ()
 {
     std::shared_ptr<rs::ConnectionProxy> connectionProxy;

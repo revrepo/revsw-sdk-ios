@@ -19,6 +19,12 @@
 
 #import "RSPublicConsts.h"
 
+@interface NSURLRequest (FileRequest)
+
+@property (nonatomic, readonly) BOOL isFileRequest;
+
+@end
+
 namespace rs
 {
     class Request;
