@@ -129,11 +129,11 @@ namespace rs
     
     Configuration DataStorage::configuration() const
     {
-        NSData* data                    = contentsOfFileWithName(kRSConfigurationStorageKey);
-        NSDictionary* dictionary        = [NSPropertyListSerialization propertyListWithData:data
+        NSData* data             = contentsOfFileWithName(kRSConfigurationStorageKey);
+        NSDictionary* dictionary = data ? [NSPropertyListSerialization propertyListWithData:data
                                                                                     options:NSPropertyListImmutable
                                                                                      format:0
-                                                                                      error:nil];
+                                                                                      error:nil] : @{};
         rs::Configuration configuration = configurationFromNSDictionary(dictionary);
         return configuration;
     }
