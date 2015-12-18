@@ -67,7 +67,7 @@
         };
         
         BOOL shouldRedirect      = [self shouldRedirectRequest:aRequest];
-        NSURLRequest* newRequest = (aRequest.URL.host && !shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
+        NSURLRequest* newRequest = (aRequest.URL.host && shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
         connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
