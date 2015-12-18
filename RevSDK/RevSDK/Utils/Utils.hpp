@@ -10,6 +10,7 @@
 #define Utils_hpp
 
 #include <stdio.h>
+#include <string>
 
 namespace rs
 {
@@ -30,6 +31,13 @@ typedef enum
     
 }RSStatsReportingLevel;
     
+    extern const std::string kOSKey;
+    
+    std::string loadConfigurationURL();
+    std::string reportStatsURL();
+    std::string errorDescriptionKey();
+    long noErrorCode();
+    std::string httpsProtocolName();
 }
 
 #endif /* Utils_hpp */

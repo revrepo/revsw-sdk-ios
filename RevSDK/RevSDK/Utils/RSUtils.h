@@ -36,9 +36,26 @@ namespace rs
     
     //keys
     extern NSString* const kRSURLProtocolHandledKey;
-    extern const std::string kRSErrorDescriptionKey;
     extern NSString* const kRSConfigurationStorageKey;
     extern NSString* const kRSRequestDataStorageKey;
+    extern NSString* const kRSOSKey;
+    extern NSString* const kRSAppNameKey;
+    extern NSString* const kRSSDKReleaseVersionKey;
+    extern NSString* const kRSConfigurationApiURLKey;
+    extern NSString* const kRSConfigurationRefreshIntervalKey;
+    extern NSString* const kRSConfigurationStaleTimeoutKey;
+    extern NSString* const kRSEdgeHostKey;
+    extern NSString* const kRSOperationModeKey;
+    extern NSString* const kRSAllowedTransportProtocolsKey;
+    extern NSString* const kRSInitialTransportProtocolsKey;
+    extern NSString* const kRSTransportMonitoringURLKey;
+    extern NSString* const kRSStatsReportingURLKey;
+    extern NSString* const kRSStatsReportingIntervalKey;
+    extern NSString* const kRSStatsReportingLevelKey;
+    extern NSString* const kRSStatsReportingMaxRequestsKey;
+    extern NSString* const kRSDomainsProvisionedListKey;
+    extern NSString* const kRSDomainsWhiteListKey;
+    extern NSString* const kRSDomainsBlackListKey;
     
     //protocols
     extern const std::string kRSHTTPSProtocolName;
@@ -67,8 +84,8 @@ namespace rs
     Error errorFromNSError(NSError* aError);
     NSError* NSErrorFromError(Error aError);
     
-    std::string loadConfigurationURL();
-    std::string reportStatsURL();
+    std::string _loadConfigurationURL();
+    std::string _reportStatsURL();
     
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     

@@ -11,7 +11,7 @@
 #include "Error.hpp"
 #include "Response.hpp"
 #include "NativeNetwork.h"
-#include "RSUtils.h"
+#include "Utils.hpp"
 
 namespace rs
 {

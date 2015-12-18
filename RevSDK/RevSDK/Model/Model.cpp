@@ -5,7 +5,7 @@
 //  Created by Andrey Chernukha on 11/17/15.
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
-#include <json/json.h>
+
 #include <mutex>
 #include <map>
 #include <algorithm>
@@ -15,7 +15,7 @@
 #include "QUICProtocol.hpp"
 #include "StandardConnection.hpp"
 #include "QUICConnection.hpp"
-#include "RSUtilsBridge.hpp"
+#include "Utils.hpp"
 #include "Network.hpp"
 #include "Data.hpp"
 #include "Error.hpp"

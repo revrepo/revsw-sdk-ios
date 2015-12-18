@@ -11,6 +11,7 @@
 #include "JSONUtils.hpp"
 #include "Data.hpp"
 #include "Configuration.hpp"
+#include "Utils.hpp"
 
 namespace rs
 {
@@ -79,7 +80,7 @@ namespace rs
         else
         {
             configuration.appName                   = value["app_name"].asString();
-            configuration.os                        = value["os"].asString();
+            configuration.os                        = value[kOSKey].asString();
             configuration.sdkReleaseVersion         = value["configs"]["sdk_release_version"].asFloat();
             configuration.configurationApiURL       = value["configuration_api_url"].asFloat();
             configuration.refreshInterval           = value["configs"]["configuration_refresh_interval_sec"].asInt();

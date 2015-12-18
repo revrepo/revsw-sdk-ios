@@ -33,10 +33,29 @@ namespace rs
     const long kRSNoErrorCode = -10000;
     
     //keys
-    NSString* const kRSURLProtocolHandledKey   = @"kRVProtocolHandledKey";
-    const std::string kRSErrorDescriptionKey   = "NSLocalizedDescription";
-    NSString* const kRSConfigurationStorageKey = @"kRSConfigurationStorageKey";
-    NSString* const kRSRequestDataStorageKey   = @"kRSRequestDataStorageKey";
+    NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
+    NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
+    NSString* const kRSRequestDataStorageKey           = @"kRSRequestDataStorageKey";
+    NSString* const kRSStatusCodeKey                   = @"status_code";
+    NSString* const kRSURLKey                          = @"url";
+    NSString* const kRSOSKey                           = @"os";
+    NSString* const kRSAppNameKey                      = @"app_name";
+    NSString* const kRSSDKReleaseVersionKey            = @"sdk_release_version";
+    NSString* const kRSConfigurationApiURLKey          = @"configuration_api_url";
+    NSString* const kRSConfigurationRefreshIntervalKey = @"configuration_refresh_interval_sec";
+    NSString* const kRSConfigurationStaleTimeoutKey    = @"configuration_stale_timeout_sec";
+    NSString* const kRSEdgeHostKey                     = @"edge_host";
+    NSString* const kRSOperationModeKey                = @"operation_mode";
+    NSString* const kRSAllowedTransportProtocolsKey    = @"allowed_transport_protocols";
+    NSString* const kRSInitialTransportProtocolsKey    = @"initial_transport_protocol";
+    NSString* const kRSTransportMonitoringURLKey       = @"transport_monitoring_url";
+    NSString* const kRSStatsReportingURLKey            = @"stats_reporting_url";
+    NSString* const kRSStatsReportingIntervalKey       = @"stats_reporting_interval_sec";
+    NSString* const kRSStatsReportingLevelKey          = @"stats_reporting_level";
+    NSString* const kRSStatsReportingMaxRequestsKey    = @"stats_reporting_max_requests_per_report";
+    NSString* const kRSDomainsProvisionedListKey       = @"domains_provisioned_list";
+    NSString* const kRSDomainsWhiteListKey             = @"domains_white_list";
+    NSString* const kRSDomainsBlackListKey             = @"domains_black_list";
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
@@ -71,24 +90,24 @@ namespace rs
     {
         Configuration configuration;
         
-        configuration.os                        = stdStringFromNSString(aDictionary[@"os"]);
-        configuration.appName                   = stdStringFromNSString(aDictionary[@"app_name"]);
-        configuration.sdkReleaseVersion         = [aDictionary[@"sdk_release_version"] floatValue];
-        configuration.configurationApiURL       = stdStringFromNSString(aDictionary[@"configuration_api_url"]);
-        configuration.refreshInterval           = [aDictionary[@"configuration_refresh_interval_sec"] intValue];
-        configuration.staleTimeout              = [aDictionary[@"configuration_stale_timeout_sec"] intValue];
-        configuration.edgeHost                  = stdStringFromNSString(aDictionary[@"edge_host"]);
-        configuration.operationMode             = (RSOperationModeInner)[aDictionary[@"operation_mode"] integerValue];
-        configuration.allowedProtocols          = vectorFromNSArray(aDictionary[@"allowed_transport_protocols"]);
-        configuration.initialTransportProtocol  = stdStringFromNSString(aDictionary[@"initial_transport_protocol"]);
-        configuration.transportMonitoringURL    = stdStringFromNSString(aDictionary[@"transport_monitoring_url"]);
-        configuration.statsReportingURL         = stdStringFromNSString(aDictionary[@"stats_reporting_url"]);
-        configuration.statsReportingInterval    = [aDictionary[@"stats_reporting_interval_sec"] intValue];
-        configuration.statsReportingLevel       = (RSStatsReportingLevel)[aDictionary[@"stats_reporting_level"] intValue];
-        configuration.statsReportingMaxRequests = [aDictionary[@"stats_reporting_max_requests_per_report"] intValue];
-        configuration.domainsProvisionedList    = vectorFromNSArray(aDictionary[@"domains_provisioned_list"]);
-        configuration.domainsWhiteList          = vectorFromNSArray(aDictionary[@"domains_white_list"]);
-        configuration.domainsBlackList          = vectorFromNSArray(aDictionary[@"domains_black_list"]);
+        configuration.os                        = stdStringFromNSString(aDictionary[kRSOSKey]);
+        configuration.appName                   = stdStringFromNSString(aDictionary[kRSAppNameKey]);
+        configuration.sdkReleaseVersion         = [aDictionary[kRSSDKReleaseVersionKey] floatValue];
+        configuration.configurationApiURL       = stdStringFromNSString(aDictionary[kRSConfigurationApiURLKey]);
+        configuration.refreshInterval           = [aDictionary[kRSConfigurationRefreshIntervalKey] intValue];
+        configuration.staleTimeout              = [aDictionary[kRSConfigurationStaleTimeoutKey] intValue];
+        configuration.edgeHost                  = stdStringFromNSString(aDictionary[kRSEdgeHostKey]);
+        configuration.operationMode             = (RSOperationModeInner)[aDictionary[kRSOperationModeKey] integerValue];
+        configuration.allowedProtocols          = vectorFromNSArray(aDictionary[kRSAllowedTransportProtocolsKey]);
+        configuration.initialTransportProtocol  = stdStringFromNSString(aDictionary[kRSInitialTransportProtocolsKey]);
+        configuration.transportMonitoringURL    = stdStringFromNSString(aDictionary[kRSTransportMonitoringURLKey]);
+        configuration.statsReportingURL         = stdStringFromNSString(aDictionary[kRSStatsReportingURLKey]);
+        configuration.statsReportingInterval    = [aDictionary[kRSStatsReportingIntervalKey] intValue];
+        configuration.statsReportingLevel       = (RSStatsReportingLevel)[aDictionary[kRSStatsReportingLevelKey] intValue];
+        configuration.statsReportingMaxRequests = [aDictionary[kRSStatsReportingMaxRequestsKey] intValue];
+        configuration.domainsProvisionedList    = vectorFromNSArray(aDictionary[kRSDomainsProvisionedListKey]);
+        configuration.domainsWhiteList          = vectorFromNSArray(aDictionary[kRSDomainsWhiteListKey]);
+        configuration.domainsBlackList          = vectorFromNSArray(aDictionary[kRSDomainsBlackListKey]);
         
         return configuration;
     }
@@ -97,24 +116,24 @@ namespace rs
     {
         NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];
         
-        dictionary[@"os"]                                      = NSStringFromStdString(aConfiguration.os);
-        dictionary[@"app_name"]                                = NSStringFromStdString(aConfiguration.appName);
-        dictionary[@"sdk_release_version"]                     = @(aConfiguration.sdkReleaseVersion);
-        dictionary[@"configuration_api_url"]                   = NSStringFromStdString(aConfiguration.configurationApiURL);
-        dictionary[@"configuration_refresh_interval_sec"]      = @(aConfiguration.refreshInterval);
-        dictionary[@"configuration_stale_timeout_sec"]         = @(aConfiguration.staleTimeout);
-        dictionary[@"edge_host"]                               = NSStringFromStdString(aConfiguration.edgeHost);
-        dictionary[@"operation_mode"]                          = @(aConfiguration.operationMode);
-        dictionary[@"allowed_transport_protocols"]             = NSArrayFromVector(aConfiguration.allowedProtocols);
-        dictionary[@"initial_transport_protocol"]              = NSStringFromStdString(aConfiguration.initialTransportProtocol);
-        dictionary[@"transport_monitoring_url"]                = NSStringFromStdString(aConfiguration.transportMonitoringURL);
-        dictionary[@"stats_reporting_url"]                     = NSStringFromStdString(aConfiguration.statsReportingURL);
-        dictionary[@"stats_reporting_interval_sec"]            = @(aConfiguration.statsReportingInterval);
-        dictionary[@"stats_reporting_level"]                   = @(aConfiguration.statsReportingLevel);
-        dictionary[@"stats_reporting_max_requests_per_report"] = @(aConfiguration.statsReportingMaxRequests);
-        dictionary[@"domains_provisioned_list"]                = NSArrayFromVector(aConfiguration.domainsProvisionedList);
-        dictionary[@"domains_white_list"]                      = NSArrayFromVector(aConfiguration.domainsWhiteList);
-        dictionary[@"domains_black_list"]                      = NSArrayFromVector(aConfiguration.domainsBlackList);
+        dictionary[kRSOSKey]                           = NSStringFromStdString(aConfiguration.os);
+        dictionary[kRSAppNameKey]                      = NSStringFromStdString(aConfiguration.appName);
+        dictionary[kRSSDKReleaseVersionKey]            = @(aConfiguration.sdkReleaseVersion);
+        dictionary[kRSConfigurationApiURLKey]          = NSStringFromStdString(aConfiguration.configurationApiURL);
+        dictionary[kRSConfigurationRefreshIntervalKey] = @(aConfiguration.refreshInterval);
+        dictionary[kRSConfigurationStaleTimeoutKey]    = @(aConfiguration.staleTimeout);
+        dictionary[kRSEdgeHostKey]                     = NSStringFromStdString(aConfiguration.edgeHost);
+        dictionary[kRSOperationModeKey]                = @(aConfiguration.operationMode);
+        dictionary[kRSAllowedTransportProtocolsKey]    = NSArrayFromVector(aConfiguration.allowedProtocols);
+        dictionary[kRSInitialTransportProtocolsKey]    = NSStringFromStdString(aConfiguration.initialTransportProtocol);
+        dictionary[kRSTransportMonitoringURLKey]       = NSStringFromStdString(aConfiguration.transportMonitoringURL);
+        dictionary[kRSStatsReportingURLKey]            = NSStringFromStdString(aConfiguration.statsReportingURL);
+        dictionary[kRSStatsReportingIntervalKey]       = @(aConfiguration.statsReportingInterval);
+        dictionary[kRSStatsReportingLevelKey]          = @(aConfiguration.statsReportingLevel);
+        dictionary[kRSStatsReportingMaxRequestsKey]    = @(aConfiguration.statsReportingMaxRequests);
+        dictionary[kRSDomainsProvisionedListKey]       = NSArrayFromVector(aConfiguration.domainsProvisionedList);
+        dictionary[kRSDomainsWhiteListKey]             = NSArrayFromVector(aConfiguration.domainsWhiteList);
+        dictionary[kRSDomainsBlackListKey]             = NSArrayFromVector(aConfiguration.domainsBlackList);
         
         return dictionary;
     }
@@ -275,12 +294,12 @@ namespace rs
         return HTTPSURLWithPath(aPath);
     }
     
-    std::string loadConfigurationURL()
+    std::string _loadConfigurationURL()
     {
         return URLWithPath(kRSLoadConfigurationEndPoint);
     }
     
-    std::string reportStatsURL()
+    std::string _reportStatsURL()
     {
         return URLWithPath(kRSReportStatsEndPoint);
     }
@@ -306,8 +325,8 @@ namespace rs
         NSString* URLString                 = URL.absoluteString;
         NSInteger statusCode                = aResponse.statusCode;
         
-        dataDictionary[@"url"]         = URLString;
-        dataDictionary[@"status_code"] = @(statusCode);
+        dataDictionary[kRSURLKey]        = URLString;
+        dataDictionary[kRSStatusCodeKey] = @(statusCode);
         
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
                                                            options:NSJSONWritingPrettyPrinted

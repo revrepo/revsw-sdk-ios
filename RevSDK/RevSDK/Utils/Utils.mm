@@ -1,19 +1,29 @@
 //
-//  RSUtilsBridge.cpp
+//  Utils.cpp
 //  RevSDK
 //
-//  Created by Andrey Chernukha on 11/23/15.
+//  Created by Andrey Chernukha on 12/16/15.
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-#include "RSUtilsBridge.hpp"
+#include "Utils.hpp"
 #include "RSUtils.h"
 
 namespace rs
 {
-   std::string errorDescriptionKey()
+    //const std::string kOSKey = str
+    
+    std::string loadConfigurationURL()
+    {
+        return _loadConfigurationURL();
+    }
+    
+    std::string reportStatsURL()
+    {
+        return _reportStatsURL();
+    }
+    
+    std::string errorDescriptionKey()
     {
         return stdStringFromNSString(NSLocalizedDescriptionKey);
     }
