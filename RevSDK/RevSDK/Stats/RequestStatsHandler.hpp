@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
+#include <memory>
 
 namespace rs
 {
@@ -19,12 +20,12 @@ namespace rs
     
     class RequestStatsHandler
     {
-        DataStorage* mDataStorage;
+        std::weak_ptr<DataStorage> mDataStorage;
         std::vector<Data> mRequestsDataVector;
         
     public:
         
-        RequestStatsHandler(DataStorage*);
+        RequestStatsHandler(std::weak_ptr<DataStorage>);
         ~RequestStatsHandler(){};
         
         void addNewRequestData(const Data&);

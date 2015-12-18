@@ -17,17 +17,17 @@ namespace rs
 
 typedef enum
 {
-    kRSOperationModeInnerOff,
-    kRSOperationModeInnerTransport,
-    kRSOperationModeInnerReport,
-    kRSOperationModeInnerTransportAndReport
+    kRSOperationModeInnerOff = 0,
+    kRSOperationModeInnerTransport = 1,
+    kRSOperationModeInnerReport = 2,
+    kRSOperationModeInnerTransportAndReport = 3
 }RSOperationModeInner;
 
 typedef enum
 {
-    kRSStatsReportingLevelFull,
-    kRSStatsReportingLevelDeviceData,
-    kRSStatsReportingLevelRequestsData
+    kRSStatsReportingLevelFull = 0,
+    kRSStatsReportingLevelDeviceData = 1,
+    kRSStatsReportingLevelRequestsData = 2
     
 }RSStatsReportingLevel;
     

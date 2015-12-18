@@ -27,7 +27,7 @@ namespace rs
        
    public:
        
-       Request(std::string aURL, std::map<std::string, std::string> aHeaders, std::string aMethod, Data aBody);
+       Request(const std::string& aURL, const std::map<std::string, std::string>& aHeaders, const std::string& aMethod, const Data& aBody);
        ~Request(){ printf("Request destructor called\n");}
        
        std::string method() const { return mMethod; }

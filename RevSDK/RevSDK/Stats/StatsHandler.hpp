@@ -10,7 +10,7 @@
 #define StatsHandler_hpp
 
 #include <stdio.h>
-
+#include <memory>
 #include "Utils.hpp"
 
 namespace rs
@@ -22,14 +22,14 @@ namespace rs
     
     class StatsHandler
     {
-        RequestStatsHandler* mRequestStatsHandler;
-        NativeStatsHandler* mStatsHandler;
+        std::unique_ptr<RequestStatsHandler> mRequestStatsHandler;
+        std::unique_ptr<NativeStatsHandler> mStatsHandler;
         
         RSStatsReportingLevel mStatsReportingLevel;
         
         public:
      
-        StatsHandler(DataStorage*);
+        StatsHandler(std::weak_ptr<DataStorage>);
         ~StatsHandler();
         
         void setReportingLevel(RSStatsReportingLevel);

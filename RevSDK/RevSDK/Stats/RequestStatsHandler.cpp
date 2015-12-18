@@ -13,16 +13,16 @@
 
 namespace rs
 {
-    RequestStatsHandler::RequestStatsHandler(DataStorage* aDataStorage)
+    RequestStatsHandler::RequestStatsHandler(std::weak_ptr<DataStorage> aDataStorage)
     {
         mDataStorage        = aDataStorage;
-        mRequestsDataVector = mDataStorage->loadRequestsData();
+        mRequestsDataVector = mDataStorage.lock()->loadRequestsData();
     }
     
     void RequestStatsHandler::addNewRequestData(const Data& aRequestData)
     {
         mRequestsDataVector.push_back(aRequestData);
-        mDataStorage->saveRequestData(aRequestData);
+        mDataStorage.lock()->saveRequestData(aRequestData);
     }
     
     Data RequestStatsHandler::requestsData()
@@ -33,6 +33,6 @@ namespace rs
     void RequestStatsHandler::deleteRequestsData()
     {
         mRequestsDataVector.clear();
-        mDataStorage->deleteRequestsData();
+        mDataStorage.lock()->deleteRequestsData();
     }
 }

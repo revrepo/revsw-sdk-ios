@@ -77,7 +77,7 @@
     self.shouldLoad  = YES;
     mTestsCounter    = 0;
     
-    [RevSDK setOperationMode:kRSOperationModeOff];
+    [RevSDK debug_setOperationMode:kRSOperationModeOff];
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
     [self.dataLengthArray removeAllObjects];
@@ -164,7 +164,7 @@
     {
         if (self.sdkTestResults.count == 0)
         {
-            [RevSDK setOperationMode:kRSOperationModeTransport];
+            [RevSDK debug_setOperationMode:kRSOperationModeTransport];
             
             mTestsCounter = 0;
 

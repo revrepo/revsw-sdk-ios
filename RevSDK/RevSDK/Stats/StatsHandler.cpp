@@ -18,16 +18,16 @@
 
 namespace rs
 {
-    StatsHandler::StatsHandler(DataStorage* aDataStorage)
+    StatsHandler::StatsHandler(std::weak_ptr<DataStorage> aDataStorage)
     {
-        mStatsHandler        = new NativeStatsHandler;
-        mRequestStatsHandler = new RequestStatsHandler(aDataStorage);
+        mStatsHandler        = std::unique_ptr<NativeStatsHandler>(new NativeStatsHandler);
+        mRequestStatsHandler = std::unique_ptr<RequestStatsHandler>(new RequestStatsHandler(aDataStorage));
     }
     
     StatsHandler::~StatsHandler()
     {
-        delete mStatsHandler;
-        delete mRequestStatsHandler;
+        //delete mStatsHandler;
+        //delete mRequestStatsHandler;
     }
     
     void StatsHandler::setReportingLevel(RSStatsReportingLevel aReportingLevel)

@@ -213,8 +213,8 @@ static const NSInteger kFormatPickerTag = 2;
     
     [self.fakeTextField becomeFirstResponder];
     
-    [[pickerView.subviews objectAtIndex:1] setHidden:TRUE];
-    [[pickerView.subviews objectAtIndex:2] setHidden:TRUE];
+    //[[pickerView.subviews objectAtIndex:1] setHidden:TRUE];
+    //[[pickerView.subviews objectAtIndex:2] setHidden:TRUE];
 }
 
 #pragma mark - UITextFieldDelegate

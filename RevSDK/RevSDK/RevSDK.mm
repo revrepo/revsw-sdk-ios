@@ -23,7 +23,7 @@
     rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
 }
 
-+ (void)setOperationMode:(RSOperationMode)aOperationMode
++ (void)debug_setOperationMode:(RSOperationMode)aOperationMode
 {
     rs::RSOperationModeInner innerMode;
     

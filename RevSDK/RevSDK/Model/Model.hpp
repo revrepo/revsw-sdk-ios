@@ -15,6 +15,8 @@
 #include <vector>
 #include <functional>
 
+#include <mutex>
+
 #import "Utils.hpp"
 
 namespace rs
@@ -31,26 +33,30 @@ namespace rs
     
     class Model
     {
+    private:
+        std::mutex mLock;
         
-      std::string mSDKKey;
+        std::string mSDKKey;
        
-      StatsHandler* mStatsHandler;
-      Timer* mConfigurationRefreshTimer;
-      Timer* mStatsReportingTimer;
-      Network* mNetwork;
-      DataStorage* mDataStorage;
-      std::shared_ptr<Configuration> mConfiguration;
+        std::unique_ptr<StatsHandler> mStatsHandler;
         
-      RSOperationModeInner mCurrentOperationMode;
-      std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
+        std::unique_ptr<Timer> mConfigurationRefreshTimer;
+        std::unique_ptr<Timer> mStatsReportingTimer;
+        std::unique_ptr<Network> mNetwork;
         
-      void reportStats();
+        std::shared_ptr<DataStorage> mDataStorage;
+        std::shared_ptr<Configuration> mConfiguration;
         
-      void loadConfiguration();
-      void applyConfiguration(const Configuration&, bool);
+        RSOperationModeInner mCurrentOperationMode;
+        std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
-      void scheduleTimer(Timer*&, int, std::function<void()>);
-      void disableTimer(Timer*&);
+        void reportStats();
+        
+        void loadConfiguration();
+        void applyConfiguration(const Configuration&, bool);
+        
+        void scheduleTimer(std::unique_ptr<Timer>&, int, std::function<void()>);
+        void disableTimer(std::unique_ptr<Timer>&);
         
       public:
         
@@ -62,21 +68,22 @@ namespace rs
         std::shared_ptr<Protocol> currentProtocol();
         std::shared_ptr<Connection> currentConnection();
         std::string SDKKey()const { return mSDKKey; };
-        std::string edgeHost()const;
+        std::string edgeHost();
         
         void initialize(std::string aSDKKey);
         
+        RSOperationModeInner currentOperationMode();
+         
         void setOperationMode(const RSOperationModeInner& aOperationMode);
-        RSOperationModeInner currentOperationMode()const;
         
-        bool canTransport()const;
+        bool canTransport();
         void switchWhiteListOption(bool aOn);
         bool shouldTransportDomainName(std::string aDomainName);
         bool isDomainNameProvisioned(std::string aDomainName);
         
         void addRequestData(const Data &);
         
-        bool shouldCollectRequestsData()const;
+        bool shouldCollectRequestsData();
     };
 }
 

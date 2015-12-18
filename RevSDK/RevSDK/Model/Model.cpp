@@ -42,10 +42,10 @@ namespace rs
         mConfiguration             = nullptr;
         mStatsReportingTimer       = nullptr;
         mConfigurationRefreshTimer = nullptr;
-        mNetwork                   = new Network;
-        mDataStorage               = new DataStorage;
+        mNetwork                   = std::unique_ptr<Network>(new Network);
+        mDataStorage               = std::make_shared<DataStorage>();
         mSpareDomainsWhiteList     = std::vector<std::string>();
-        mStatsHandler              = new StatsHandler(mDataStorage);
+        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler(mDataStorage));
         
         Configuration configuration = mDataStorage->configuration();
         
@@ -54,9 +54,6 @@ namespace rs
     
     Model::~Model()
     {
-        delete mNetwork;
-        delete mDataStorage;
-        delete mStatsHandler;
     }
     
     Model* Model::instance()
@@ -66,16 +63,16 @@ namespace rs
         
         if (!_instance)
         {
-            mtx.lock();
+            std::lock_guard<std::mutex> scopedLock(mtx);
             _instance = new Model;
-            mtx.unlock();
         }
         
         return _instance;
     }
     
-    std::string Model::edgeHost() const
+    std::string Model::edgeHost()
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         return mConfiguration->edgeHost;
     }
     
@@ -109,6 +106,7 @@ namespace rs
                Configuration configuration = processConfigurationData(aData);
                applyConfiguration(configuration, true);
                mDataStorage->saveConfiguration(configuration);
+               
                RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
            }
            else
@@ -122,9 +120,12 @@ namespace rs
     
     void Model::applyConfiguration(const Configuration& aConfiguration, bool aShouldSave)
     {
-        mConfiguration = std::make_shared<Configuration>(aConfiguration);        
+        {
+            std::lock_guard<std::mutex> lockGuard(mLock);
+            mConfiguration = std::make_shared<Configuration>(aConfiguration);
+            mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
+        }
         setOperationMode(aConfiguration.operationMode);
-        mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
         
         if (aShouldSave)
         {
@@ -132,18 +133,18 @@ namespace rs
         }
     }
     
-    void Model::scheduleTimer(Timer*& aTimer, int aInterval, std::function<void()> aFunction)
+    void Model::scheduleTimer(std::unique_ptr<Timer>& aTimer, int aInterval, std::function<void()> aFunction)
     {
-        aTimer = new Timer(aInterval, aFunction);
+        aTimer = std::unique_ptr<Timer>(new Timer(aInterval, aFunction));
         aTimer->start();
     }
     
-    void Model::disableTimer(Timer*& aTimer)
+    void Model::disableTimer(std::unique_ptr<Timer>& aTimer)
     {
         if (aTimer)
         {
             aTimer->invalidate();
-            delete aTimer;
+            //delete aTimer;
             aTimer = nullptr;
         }
     }
@@ -169,12 +170,14 @@ namespace rs
     
     void Model::initialize(std::string aSDKKey)
     {
+        std::lock_guard<std::mutex> lockGuard(mLock);
         mSDKKey = aSDKKey;
         loadConfiguration();
     }
     
     void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         mCurrentOperationMode = aOperationMode;
         
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
@@ -188,14 +191,20 @@ namespace rs
         }
     }
     
-    RSOperationModeInner Model::currentOperationMode() const
+    RSOperationModeInner Model::currentOperationMode()
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         return mCurrentOperationMode;
     }
     
-    bool Model::canTransport()const
+    bool Model::canTransport()
     {
-        return mCurrentOperationMode == kRSOperationModeInnerTransport || mCurrentOperationMode == kRSOperationModeInnerTransportAndReport;
+        bool flag;
+        {
+            std::lock_guard<std::mutex> scopedLock(mLock);
+            flag = mCurrentOperationMode == kRSOperationModeInnerTransport || mCurrentOperationMode == kRSOperationModeInnerTransportAndReport;
+        }
+        return flag;
     }
     
     void Model::switchWhiteListOption(bool aOn)
@@ -218,6 +227,7 @@ namespace rs
             return false;
         }
         
+        std::lock_guard<std::mutex> scopedLock(mLock);
         auto begin = mConfiguration->domainsBlackList.begin();
         auto end   = mConfiguration->domainsBlackList.end();
         
@@ -247,6 +257,7 @@ namespace rs
     
     bool Model::isDomainNameProvisioned(std::string aDomainName)
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         auto begin = mConfiguration->domainsProvisionedList.begin();
         auto end   = mConfiguration->domainsProvisionedList.end();
         return std::find(begin, end, aDomainName) != end;
@@ -254,15 +265,19 @@ namespace rs
     
     void Model::addRequestData(const Data& aRequestData)
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         mStatsHandler->addRequestData(aRequestData);
     }
     
-    bool Model::shouldCollectRequestsData() const
+    bool Model::shouldCollectRequestsData()
     {
         RSStatsReportingLevel statsReportingLevel = mConfiguration->statsReportingLevel;
         
-        bool shouldCollect = statsReportingLevel == kRSStatsReportingLevelRequestsData || statsReportingLevel == kRSStatsReportingLevelFull;
-        
+        bool shouldCollect;
+        {
+            std::lock_guard<std::mutex> scopedLock(mLock);
+            shouldCollect= statsReportingLevel == kRSStatsReportingLevelRequestsData || statsReportingLevel == kRSStatsReportingLevelFull;
+        }
         return shouldCollect;
     }
 }
