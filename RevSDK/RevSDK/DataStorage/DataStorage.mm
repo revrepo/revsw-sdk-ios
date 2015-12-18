@@ -142,10 +142,10 @@ namespace rs
     {
         NSData* data                     = NSDataFromData(aRequestData);
         NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
-        NSArray* requestDataArray        = [NSPropertyListSerialization propertyListWithData:savedData
+        NSArray* requestDataArray        = savedData ? [NSPropertyListSerialization propertyListWithData:savedData
                                                                                      options:NSPropertyListImmutable
                                                                                       format:0
-                                                                                       error:nil];
+                                                                                                   error:nil] : @[];
         NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
         
         [mutableDataArray addObject:data];
@@ -154,7 +154,13 @@ namespace rs
     
     std::vector<Data> DataStorage::loadRequestsData()
     {
-        NSData* data                 = contentsOfFileWithName(kRSRequestDataStorageKey);
+        NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
+        
+        if (!data)
+        {
+            return std::vector<Data>();
+        }
+        
         NSArray* requestDataArray    = [NSPropertyListSerialization propertyListWithData:data
                                                                                  options:NSPropertyListImmutable
                                                                                   format:0

@@ -180,8 +180,6 @@ namespace rs
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
-            std::cout << "REPORT TIMER " << mStatsReportingTimer << "\n";
-            
             RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
         }
         else
