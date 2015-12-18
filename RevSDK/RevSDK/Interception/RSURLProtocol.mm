@@ -24,7 +24,7 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    return !aRequest.isFileRequest;
+    return !aRequest.isFileRequest && ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest];
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask

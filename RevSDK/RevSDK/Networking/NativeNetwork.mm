@@ -38,7 +38,7 @@ namespace rs
             \"transport_monitoring_url\" : \"https://rev-200.revdn.net\",\
             \"stats_reporting_url\" : \"https://rev-200.revdn.net\",\
             \"stats_reporting_interval\" : 100,\
-            \"stats_reporting_level\" : \"out_of_band\",\
+            \"stats_reporting_level\" : 2,\
             \"stats_reporting_max_request_per_report\" : 1,\
             \"domains_provisioned_list\" : [],\
             \"domains_white_list\" : [\"mbeans.com\", \"edition.cnn.com\", \"httpbin.org\"],\
