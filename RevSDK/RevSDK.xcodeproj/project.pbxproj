@@ -27,16 +27,14 @@
 		5B46D1E61C217BC100A9834C /* StatsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B46D1E41C217BC100A9834C /* StatsHandler.hpp */; };
 		5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B46D1E71C217C9700A9834C /* NativeStatsHandler.h */; };
 		5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B46D1E81C217C9700A9834C /* NativeStatsHandler.mm */; };
-		5B46D1ED1C21B61C00A9834C /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B46D1EB1C21B61C00A9834C /* Utils.cpp */; };
+		5B46D1ED1C21B61C00A9834C /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B46D1EB1C21B61C00A9834C /* Utils.mm */; };
 		5B46D1EE1C21B61C00A9834C /* Utils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B46D1EC1C21B61C00A9834C /* Utils.hpp */; };
 		5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD2B1C03216000C8D320 /* RSRequestOperation.h */; };
 		5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD2C1C03216000C8D320 /* RSRequestOperation.mm */; };
 		5B4FCD311C0321B400C8D320 /* NativeNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD2F1C0321B400C8D320 /* NativeNetwork.h */; };
 		5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD301C0321B400C8D320 /* NativeNetwork.mm */; };
-		5B4FCD351C032A6A00C8D320 /* Network.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD331C032A6A00C8D320 /* Network.mm */; };
+		5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD331C032A6A00C8D320 /* Network.cpp */; };
 		5B4FCD361C032A6A00C8D320 /* Network.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD341C032A6A00C8D320 /* Network.hpp */; };
-		5B4FCD391C033EA400C8D320 /* RSUtilsBridge.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD371C033EA400C8D320 /* RSUtilsBridge.mm */; };
-		5B4FCD3A1C033EA400C8D320 /* RSUtilsBridge.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD381C033EA400C8D320 /* RSUtilsBridge.hpp */; };
 		5B54C3211BFB598700217971 /* Request.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C31F1BFB598700217971 /* Request.cpp */; };
 		5B54C3221BFB598700217971 /* Request.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3201BFB598700217971 /* Request.hpp */; };
 		5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3281BFB5EF000217971 /* RSUtils.h */; };
@@ -106,16 +104,14 @@
 		5B46D1E41C217BC100A9834C /* StatsHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StatsHandler.hpp; sourceTree = "<group>"; };
 		5B46D1E71C217C9700A9834C /* NativeStatsHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeStatsHandler.h; sourceTree = "<group>"; };
 		5B46D1E81C217C9700A9834C /* NativeStatsHandler.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = NativeStatsHandler.mm; sourceTree = "<group>"; };
-		5B46D1EB1C21B61C00A9834C /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		5B46D1EB1C21B61C00A9834C /* Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Utils.mm; sourceTree = "<group>"; };
 		5B46D1EC1C21B61C00A9834C /* Utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
 		5B4FCD2B1C03216000C8D320 /* RSRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSRequestOperation.h; sourceTree = "<group>"; };
 		5B4FCD2C1C03216000C8D320 /* RSRequestOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSRequestOperation.mm; sourceTree = "<group>"; };
 		5B4FCD2F1C0321B400C8D320 /* NativeNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeNetwork.h; sourceTree = "<group>"; };
 		5B4FCD301C0321B400C8D320 /* NativeNetwork.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NativeNetwork.mm; sourceTree = "<group>"; };
-		5B4FCD331C032A6A00C8D320 /* Network.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Network.mm; sourceTree = "<group>"; };
+		5B4FCD331C032A6A00C8D320 /* Network.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Network.cpp; sourceTree = "<group>"; };
 		5B4FCD341C032A6A00C8D320 /* Network.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Network.hpp; sourceTree = "<group>"; };
-		5B4FCD371C033EA400C8D320 /* RSUtilsBridge.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSUtilsBridge.mm; sourceTree = "<group>"; };
-		5B4FCD381C033EA400C8D320 /* RSUtilsBridge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RSUtilsBridge.hpp; sourceTree = "<group>"; };
 		5B54C31F1BFB598700217971 /* Request.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Request.cpp; sourceTree = "<group>"; };
 		5B54C3201BFB598700217971 /* Request.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Request.hpp; sourceTree = "<group>"; };
 		5B54C3281BFB5EF000217971 /* RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUtils.h; sourceTree = "<group>"; };
@@ -265,7 +261,7 @@
 				5B4FCD2C1C03216000C8D320 /* RSRequestOperation.mm */,
 				5B4FCD2F1C0321B400C8D320 /* NativeNetwork.h */,
 				5B4FCD301C0321B400C8D320 /* NativeNetwork.mm */,
-				5B4FCD331C032A6A00C8D320 /* Network.mm */,
+				5B4FCD331C032A6A00C8D320 /* Network.cpp */,
 				5B4FCD341C032A6A00C8D320 /* Network.hpp */,
 			);
 			path = Networking;
@@ -278,13 +274,11 @@
 				5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */,
 				5B54C3281BFB5EF000217971 /* RSUtils.h */,
 				5B54C3291BFB5EF000217971 /* RSUtils.mm */,
-				5B4FCD371C033EA400C8D320 /* RSUtilsBridge.mm */,
-				5B4FCD381C033EA400C8D320 /* RSUtilsBridge.hpp */,
 				5BC497B51C03782B00FF0922 /* Configuration.cpp */,
 				5BC497B61C03782B00FF0922 /* Configuration.hpp */,
 				5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */,
 				5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */,
-				5B46D1EB1C21B61C00A9834C /* Utils.cpp */,
+				5B46D1EB1C21B61C00A9834C /* Utils.mm */,
 				5B46D1EC1C21B61C00A9834C /* Utils.hpp */,
 				5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */,
 				5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */,
@@ -402,7 +396,6 @@
 				5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */,
 				5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */,
 				5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */,
-				5B4FCD3A1C033EA400C8D320 /* RSUtilsBridge.hpp in Headers */,
 				5B3096EE1BFA0CD30045024C /* RSURLConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -539,7 +532,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BC497B71C03782B00FF0922 /* Configuration.cpp in Sources */,
-				5B46D1ED1C21B61C00A9834C /* Utils.cpp in Sources */,
+				5B46D1ED1C21B61C00A9834C /* Utils.mm in Sources */,
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
 				5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */,
@@ -551,12 +544,11 @@
 				5B46D1E51C217BC100A9834C /* StatsHandler.cpp in Sources */,
 				5B54C32F1BFB700C00217971 /* Model.cpp in Sources */,
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
-				5B4FCD351C032A6A00C8D320 /* Network.mm in Sources */,
+				5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.mm in Sources */,
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
-				5B4FCD391C033EA400C8D320 /* RSUtilsBridge.mm in Sources */,
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,
 				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,

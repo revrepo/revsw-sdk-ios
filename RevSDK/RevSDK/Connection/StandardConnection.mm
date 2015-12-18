@@ -15,7 +15,7 @@
 #include "Response.hpp"
 #include "Request.hpp"
 #include "Error.hpp"
-#include "RSUtilsBridge.hpp"
+#include "Utils.hpp"
 #include "Model.hpp"
 
 namespace rs

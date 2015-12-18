@@ -7,7 +7,7 @@
 //
 
 #include "Error.hpp"
-#include "RSUtilsBridge.hpp"
+#include "Utils.hpp"
 
 namespace rs
 {

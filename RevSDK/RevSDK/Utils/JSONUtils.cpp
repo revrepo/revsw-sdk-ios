@@ -11,6 +11,7 @@
 #include "JSONUtils.hpp"
 #include "Data.hpp"
 #include "Configuration.hpp"
+#include "Utils.hpp"
 
 namespace rs
 {
@@ -78,24 +79,24 @@ namespace rs
         }
         else
         {
-            configuration.appName                   = value["app_name"].asString();
-            configuration.os                        = value["os"].asString();
-            configuration.sdkReleaseVersion         = value["configs"]["sdk_release_version"].asFloat();
-            configuration.configurationApiURL       = value["configuration_api_url"].asFloat();
-            configuration.refreshInterval           = value["configs"]["configuration_refresh_interval_sec"].asInt();
-            configuration.staleTimeout              = value["configs"]["configuration_stale_timeout_sec"].asInt();
-            configuration.edgeHost                  = value["configs"]["edge_host"].asString();
-            configuration.operationMode             = (RSOperationModeInner)value["configs"]["operation_mode"].asInt();
-            configuration.allowedProtocols          = vectorFromValue(value["configs"]["allowed_transport_protocols"]);
-            configuration.initialTransportProtocol  = value["configs"]["initial_transport_protocol"].asString();
-            configuration.transportMonitoringURL    = value["configs"]["transport_monitoring_url"].asString();
-            configuration.statsReportingURL         = value["configs"]["stats_reporting_url"].asString();
-            configuration.statsReportingInterval    = value["configs"]["stats_reporting_interval"].asInt();
-            configuration.statsReportingLevel       = (RSStatsReportingLevel)value["configs"]["stats_reporting_levelt"].asInt();
-            configuration.statsReportingMaxRequests = value["configs"]["stats_reporting_max_requests_per_report"].asInt();
-            configuration.domainsProvisionedList    = vectorFromValue(value["configs"]["domains_provisioned_list"]);
-            configuration.domainsWhiteList          = vectorFromValue(value["configs"]["domains_white_list"]);
-            configuration.domainsBlackList          = vectorFromValue(value["configs"]["domains_black_list"]);
+            configuration.appName                   = value[kAppNameKey].asString();
+            configuration.os                        = value[kOSKey].asString();
+            configuration.sdkReleaseVersion         = value[kConfigsKey][kSDKReleaseVersionKey].asFloat();
+            configuration.configurationApiURL       = value[kConfigurationApiURLKey].asFloat();
+            configuration.refreshInterval           = value[kConfigsKey][kConfigurationRefreshIntervalKey].asInt();
+            configuration.staleTimeout              = value[kConfigsKey][kConfigurationStaleTimeoutKey].asInt();
+            configuration.edgeHost                  = value[kConfigsKey][kEdgeHostKey].asString();
+            configuration.operationMode             = (RSOperationModeInner)value[kConfigsKey][kOperationModeKey].asInt();
+            configuration.allowedProtocols          = vectorFromValue(value[kConfigsKey][kAllowedTransportProtocolsKey]);
+            configuration.initialTransportProtocol  = value[kConfigsKey][kInitialTransportProtocolsKey].asString();
+            configuration.transportMonitoringURL    = value[kConfigsKey][kTransportMonitoringURLKey].asString();
+            configuration.statsReportingURL         = value[kConfigsKey][kStatsReportingURLKey].asString();
+            configuration.statsReportingInterval    = value[kConfigsKey][kStatsReportingIntervalKey].asInt();
+            configuration.statsReportingLevel       = (RSStatsReportingLevel)value[kConfigsKey][kStatsReportingLevelKey].asInt();
+            configuration.statsReportingMaxRequests = value[kConfigsKey][kStatsReportingMaxRequestsKey].asInt();
+            configuration.domainsProvisionedList    = vectorFromValue(value[kConfigsKey][kDomainsProvisionedListKey]);
+            configuration.domainsWhiteList          = vectorFromValue(value[kConfigsKey][kDomainsWhiteListKey]);
+            configuration.domainsBlackList          = vectorFromValue(value[kConfigsKey][kDomainsBlackListKey]);
         }
         
         return configuration;

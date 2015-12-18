@@ -14,6 +14,7 @@
 #include "DataStorage.hpp"
 #include "RequestStatsHandler.hpp"
 #include "JSONUtils.hpp"
+#include "Utils.hpp"
 
 namespace rs
 {
@@ -43,12 +44,12 @@ namespace rs
         
         if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
         {
-            map["stats"] = statsData;
+            map[kDeviceStatsKey] = statsData;
         }
         
         if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
         {
-           map["requests"] = requestsData;
+           map[kRequestsStatsKey] = requestsData;
         }
         
         Data wholeData = jsonDataFromDataMap(map);
