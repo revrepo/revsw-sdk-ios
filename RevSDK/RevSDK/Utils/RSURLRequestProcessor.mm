@@ -28,8 +28,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     NSString* host                      = URL.host;
     std::string  stdHost                = rs::stdStringFromNSString(host);
     BOOL isProvisioned                  = rs::Model::instance()->isDomainNameProvisioned(stdHost);
-    std::string edgeHost                = rs::Model::instance()->edgeHost();
-    NSString* transformedEdgeHost       = rs::NSStringFromStdString(edgeHost);
+    NSString* transformedBaseHost       = rs::NSStringFromStdString(rs::kRSRevBaseHost);
     NSString* scheme                    = URL.scheme;
     NSURLComponents* originalComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     
@@ -42,7 +41,7 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
         scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedEdgeHost];
+        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
         [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
         [newRequest setValue:host forHTTPHeaderField:kRSRevHostHeader];
     }
