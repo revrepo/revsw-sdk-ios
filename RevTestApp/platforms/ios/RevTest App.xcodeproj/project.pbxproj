@@ -28,7 +28,6 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
-		5B04784B1C247003000AB924 /* Stats.json in Resources */ = {isa = PBXBuildFile; fileRef = 5B04784A1C247003000AB924 /* Stats.json */; };
 		5B04C95B1C0D88A300621B67 /* exec.js in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9061C0D88A300621B67 /* exec.js */; };
 		5B04C95C1C0D88A300621B67 /* platform.js in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9071C0D88A300621B67 /* platform.js */; };
 		5B04C95D1C0D88A300621B67 /* cordova.js in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9081C0D88A300621B67 /* cordova.js */; };
@@ -186,7 +185,6 @@
 		30C1856519D5FC0A00212699 /* icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-60@3x.png"; sourceTree = "<group>"; };
 		30FC414816E50CA1004E6F35 /* icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72@2x.png"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* RevTest App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RevTest App-Prefix.pch"; sourceTree = "<group>"; };
-		5B04784A1C247003000AB924 /* Stats.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Stats.json; sourceTree = "<group>"; };
 		5B04C9061C0D88A300621B67 /* exec.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = exec.js; sourceTree = "<group>"; };
 		5B04C9071C0D88A300621B67 /* platform.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = platform.js; sourceTree = "<group>"; };
 		5B04C9081C0D88A300621B67 /* cordova.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = cordova.js; sourceTree = "<group>"; };
@@ -324,7 +322,6 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5B04784A1C247003000AB924 /* Stats.json */,
 				5B25817C1C17154C00C55959 /* Utils */,
 				5B1039771C1175F6003CA9A1 /* Model */,
 				5B0BFEE31C0C6BFA0057715A /* Views */,
@@ -962,7 +959,6 @@
 				5B04C96B1C0D88A300621B67 /* icon-50-type3.png in Resources */,
 				5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */,
 				5B04C9691C0D88A300621B67 /* icon-128.png in Resources */,
-				5B04784B1C247003000AB924 /* Stats.json in Resources */,
 				5B04C96C1C0D88A300621B67 /* icon-80-type4.png in Resources */,
 				5B04C95B1C0D88A300621B67 /* exec.js in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
