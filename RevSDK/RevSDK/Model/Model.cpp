@@ -28,10 +28,10 @@
 
 #define RSStartTimer(aFunc, aTimer, aInterval)\
         do{\
-             if (!aTimer)\
+             if (!aTimer && aInterval > 0)\
              {\
                 std::function<void()> scheduledFunction = std::bind(aFunc, this);\
-                scheduleTimer(mStatsReportingTimer, aInterval, scheduledFunction);\
+                scheduleTimer(aTimer, aInterval, scheduledFunction);\
              }\
         }while(0)
 
@@ -39,12 +39,17 @@ namespace rs
 {
     Model::Model()
     {
+        mConfiguration             = nullptr;
         mStatsReportingTimer       = nullptr;
         mConfigurationRefreshTimer = nullptr;
         mNetwork                   = new Network;
         mDataStorage               = new DataStorage;
         mSpareDomainsWhiteList     = std::vector<std::string>();
         mStatsHandler              = new StatsHandler(mDataStorage);
+        
+        Configuration configuration = mDataStorage->configuration();
+        
+        applyConfiguration(configuration, false);
     }
     
     Model::~Model()
@@ -95,14 +100,15 @@ namespace rs
     
     void Model::loadConfiguration()
     {
-        Configuration configuration = mDataStorage->configuration();
-        mConfiguration = std::make_shared<Configuration>(configuration);
-        
         std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
+            
+            std::cout << "Configuration loaded\n";
             
            if (aError.code == noErrorCode())
            {
-               saveConfiguration(aData);
+               Configuration configuration = processConfigurationData(aData);
+               applyConfiguration(configuration, true);
+               mDataStorage->saveConfiguration(configuration);
                RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
            }
            else
@@ -114,13 +120,16 @@ namespace rs
         mNetwork->loadConfiguration(completionBlock);
     }
     
-    void Model::saveConfiguration(const Data& aConfigurationData)
+    void Model::applyConfiguration(const Configuration& aConfiguration, bool aShouldSave)
     {
-        Configuration configuration = processConfigurationData(aConfigurationData);
-        setOperationMode(configuration.operationMode);
-        mDataStorage->saveConfiguration(configuration);
-        mStatsHandler->setReportingLevel(configuration.statsReportingLevel);
-        mConfiguration = std::make_shared<Configuration>(configuration);
+        mConfiguration = std::make_shared<Configuration>(aConfiguration);        
+        setOperationMode(aConfiguration.operationMode);
+        mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
+        
+        if (aShouldSave)
+        {
+            mDataStorage->saveConfiguration(aConfiguration);
+        }
     }
     
     void Model::scheduleTimer(Timer*& aTimer, int aInterval, std::function<void()> aFunction)
@@ -143,6 +152,8 @@ namespace rs
     {
         std::function<void(const Error& )> completion = [=](const Error& aError){
         
+           std::cout << "Stats reported" << std::endl;
+            
            if (aError.isNoError())
            {
                if (mConfiguration->statsReportingLevel != kRSStatsReportingLevelDeviceData)
@@ -169,10 +180,9 @@ namespace rs
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
-            if (mConfiguration->statsReportingInterval > 0)
-            {
-                RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
-            }
+            std::cout << "REPORT TIMER " << mStatsReportingTimer << "\n";
+            
+            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
         }
         else
         {

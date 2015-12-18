@@ -47,7 +47,7 @@ namespace rs
       void reportStats();
         
       void loadConfiguration();
-      void saveConfiguration(const Data&);
+      void applyConfiguration(const Configuration&, bool);
         
       void scheduleTimer(Timer*&, int, std::function<void()>);
       void disableTimer(Timer*&);

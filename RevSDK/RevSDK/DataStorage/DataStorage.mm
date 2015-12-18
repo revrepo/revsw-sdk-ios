@@ -89,7 +89,7 @@ namespace rs
         {
              if ([object respondsToSelector:@selector(writeToFile:atomically:)])
              {
-                [object writeToFile:fullPath atomically:YES];
+                  [object writeToFile:fullPath atomically:YES];
              }
              else
              {
@@ -98,7 +98,7 @@ namespace rs
         }
     }
     
-    id objectWithName(NSString* aFileName)
+    NSData* contentsOfFileWithName(NSString* aFileName)
     {
          NSString* fullPath = fullPathForFileName(aFileName);
         
@@ -129,8 +129,11 @@ namespace rs
     
     Configuration DataStorage::configuration() const
     {
-        NSData* data                    = objectWithName(kRSConfigurationStorageKey);
-        NSDictionary* dictionary        = data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
+        NSData* data                    = contentsOfFileWithName(kRSConfigurationStorageKey);
+        NSDictionary* dictionary        = [NSPropertyListSerialization propertyListWithData:data
+                                                                                    options:NSPropertyListImmutable
+                                                                                     format:0
+                                                                                      error:nil];
         rs::Configuration configuration = configurationFromNSDictionary(dictionary);
         return configuration;
     }
@@ -138,8 +141,11 @@ namespace rs
     void DataStorage::saveRequestData(const Data& aRequestData)
     {
         NSData* data                     = NSDataFromData(aRequestData);
-        NSData* savedData                = objectWithName(kRSRequestDataStorageKey);
-        NSArray* requestDataArray        = savedData ? [NSKeyedUnarchiver unarchiveObjectWithData:savedData] : @[];
+        NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
+        NSArray* requestDataArray        = [NSPropertyListSerialization propertyListWithData:savedData
+                                                                                     options:NSPropertyListImmutable
+                                                                                      format:0
+                                                                                       error:nil];
         NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
         
         [mutableDataArray addObject:data];
@@ -148,8 +154,11 @@ namespace rs
     
     std::vector<Data> DataStorage::loadRequestsData()
     {
-        NSData* data                 = objectWithName(kRSRequestDataStorageKey);
-        NSArray* requestDataArray    = data ? [NSKeyedUnarchiver unarchiveObjectWithData:data] : nil;
+        NSData* data                 = contentsOfFileWithName(kRSRequestDataStorageKey);
+        NSArray* requestDataArray    = [NSPropertyListSerialization propertyListWithData:data
+                                                                                 options:NSPropertyListImmutable
+                                                                                  format:0
+                                                                                   error:nil];
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
         return dataVector;
     }
