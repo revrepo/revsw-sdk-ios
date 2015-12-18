@@ -104,12 +104,20 @@ namespace rs
             
             std::cout << "Configuration loaded\n";
             
-           if (aError.code == noErrorCode())
+           if (aError.isNoError())
            {
                Configuration configuration = processConfigurationData(aData);
-               applyConfiguration(configuration, true);
-               mDataStorage->saveConfiguration(configuration);
-               RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
+               
+               if (configuration.isValid())
+               {
+                   applyConfiguration(configuration, true);
+                   mDataStorage->saveConfiguration(configuration);
+                   RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
+               }
+               else
+               {
+                   std::cout << "Configuration is not valid\n";
+               }
            }
            else
            {
@@ -117,7 +125,7 @@ namespace rs
            }
         };
         
-        mNetwork->loadConfiguration(completionBlock);
+        mNetwork->loadConfiguration(mSDKKey, completionBlock);
     }
     
     void Model::applyConfiguration(const Configuration& aConfiguration, bool aShouldSave)
@@ -156,10 +164,7 @@ namespace rs
             
            if (aError.isNoError())
            {
-               if (mConfiguration->statsReportingLevel != kRSStatsReportingLevelDeviceData)
-               {
-                   mStatsHandler->deleteRequestsData();
-               }
+              mStatsHandler->deleteRequestsData();
            }
         };
         
@@ -259,10 +264,6 @@ namespace rs
     
     bool Model::shouldCollectRequestsData() const
     {
-        RSStatsReportingLevel statsReportingLevel = mConfiguration->statsReportingLevel;
-        
-        bool shouldCollect = statsReportingLevel == kRSStatsReportingLevelRequestsData || statsReportingLevel == kRSStatsReportingLevelFull;
-        
-        return shouldCollect;
+        return true;
     }
 }

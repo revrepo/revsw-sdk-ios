@@ -48,6 +48,8 @@ namespace rs
         void print()const;
         
         static Configuration configurationFromData(Data);
+        
+        bool isValid();
     };
 }
 

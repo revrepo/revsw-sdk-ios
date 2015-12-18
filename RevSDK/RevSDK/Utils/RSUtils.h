@@ -33,6 +33,9 @@ namespace rs
     class Error;
     class Configuration;
     
+    //version
+    extern const float kRSSDKVersion;
+    
     // Rev Host
     extern const std::string kRSRevBaseHost;
     extern NSString* const kRSRevRedirectHost;
@@ -90,11 +93,13 @@ namespace rs
     Error errorFromNSError(NSError* aError);
     NSError* NSErrorFromError(Error aError);
     
-    std::string _loadConfigurationURL();
+    std::string _loadConfigurationURL(const std::string&);
     std::string _reportStatsURL();
     
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
     Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*);
+    
+    bool _isValidURL(std::string);
 }
 #endif

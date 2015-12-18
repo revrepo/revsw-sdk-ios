@@ -41,16 +41,8 @@ namespace rs
         
         const Data statsData    = mStatsHandler->statsData();
         const Data requestsData = mRequestStatsHandler->requestsData();
-        
-        if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
-        {
-            map[kDeviceStatsKey] = statsData;
-        }
-        
-        if (mStatsReportingLevel == kRSStatsReportingLevelDeviceData || mStatsReportingLevel == kRSStatsReportingLevelFull)
-        {
-           map[kRequestsStatsKey] = requestsData;
-        }
+        map[kDeviceStatsKey]    = statsData;
+        map[kRequestsStatsKey]  = requestsData;
         
         Data wholeData = jsonDataFromDataMap(map);
         return wholeData;

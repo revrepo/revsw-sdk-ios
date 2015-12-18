@@ -11,6 +11,8 @@
 
 namespace rs
 {
+    const float kSDKVersionNumber = kRSSDKVersion;
+    
     const std::string kOSKey                           = stdStringFromNSString(kRSOSKey);
     const std::string kAppNameKey                      = stdStringFromNSString(kRSAppNameKey);
     const std::string kSDKReleaseVersionKey            = stdStringFromNSString(kRSSDKReleaseVersionKey);
@@ -33,9 +35,9 @@ namespace rs
     const std::string kDeviceStatsKey                  = "stats";
     const std::string kRequestsStatsKey                = "requests";
     
-    std::string loadConfigurationURL()
+    std::string loadConfigurationURL(const std::string& aSDKKey)
     {
-        return _loadConfigurationURL();
+        return _loadConfigurationURL(aSDKKey);
     }
     
     std::string reportStatsURL()
@@ -56,5 +58,10 @@ namespace rs
     std::string httpsProtocolName()
     {
         return kRSHTTPSProtocolName;
+    }
+    
+    bool isValidURL(std::string aURLString)
+    {
+        return _isValidURL(aURLString);
     }
 }

@@ -1,3 +1,4 @@
+
 //
 //  RSNativeNetwork.m
 //  RevSDK
@@ -23,31 +24,9 @@ namespace rs
     {
         void (^completionHandler)(NSData*, NSURLResponse*, NSError*) = ^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
             
-            //stub
-            NSString* json = @"{\"app_name\": \"RevClient\",\
-            \"os\" : \"ios\",\
-            \"configs\" : {\
-            \"sdk_release_version\" : 1.0,\
-            \"configuration_api_url\" : \"https://rev-200.revdn.net\",\
-            \"configuration_refresh_interval_sec\" : 100,\
-            \"configuration_stale_timeout_sec\" : 100,\
-            \"edge_host\" : \"revdn.net\",\
-            \"operation_mode\" : 2,\
-            \"allowed_transport_protocols\" : [\"standard\"],\
-            \"initial_transport_protocol\" : \"standard\",\
-            \"transport_monitoring_url\" : \"https://rev-200.revdn.net\",\
-            \"stats_reporting_url\" : \"https://rev-200.revdn.net\",\
-            \"stats_reporting_interval_sec\" : 100,\
-            \"stats_reporting_level\" : 2,\
-            \"stats_reporting_max_request_per_report\" : 1,\
-            \"domains_provisioned_list\" : [],\
-            \"domains_white_list\" : [\"mbeans.com\", \"edition.cnn.com\", \"httpbin.org\"],\
-            \"domains_black_list\" : [] }}";
-            
-            NSData* jsonData  = [json dataUsingEncoding:NSUTF8StringEncoding];
-            Data data         = dataFromNSData(jsonData);
-            Error error       = Error::notError();
-            Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse).get());
+            Data data         = dataFromNSData(aData);
+            Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse));
+            Error error       = errorFromNSError(aError);
             
             aCompletionBlock(data, response, error);
         };
