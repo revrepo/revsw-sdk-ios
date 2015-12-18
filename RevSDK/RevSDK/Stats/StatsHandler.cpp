@@ -41,10 +41,29 @@ namespace rs
         
         const Data statsData    = mStatsHandler->statsData();
         const Data requestsData = mRequestStatsHandler->requestsData();
-        map[kDeviceStatsKey]    = statsData;
-        map[kRequestsStatsKey]  = requestsData;
+        const Data networkData  = mStatsHandler->networkData();
+        const Data wifiData     = mStatsHandler->wifiData();
+        const Data carrierData  = mStatsHandler->carrierData();
+        const Data deviceData   = mStatsHandler->deviceData();
+        const Data locationData = mStatsHandler->locationData();
+        const Data logData      = mStatsHandler->logData();
         
-        Data wholeData = jsonDataFromDataMap(map);
+        map[kRequestsStatsKey]  = requestsData;
+        map["network"] = networkData;
+        map["device"] = deviceData;
+        map["carrier"] = carrierData;
+        map["wifi"] = wifiData;
+        map["location"] = locationData;
+        map["log_events"] = logData;
+        
+        std::map<std::string, std::string> stringMap;
+        
+        stringMap["version"] = "1.0";
+        stringMap["sdk_version"] = "1.0";
+        stringMap["sdk_key"] = "0efbbd35-a131-4419-b330-00de5eb3696b";
+        stringMap["app_name"] = mStatsHandler->appName();
+        
+        Data wholeData = jsonDataFromDataMap(map, stringMap);
         return wholeData;
     }
     

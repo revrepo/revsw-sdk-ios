@@ -23,7 +23,7 @@ namespace rs
         return Data(jsonString.c_str(), jsonString.length());
     }
     
-    Data jsonDataFromDataMap(std::map<std::string, Data> & aDataMap)
+    Data jsonDataFromDataMap(std::map<std::string, Data> & aDataMap, std::map<std::string, std::string>& aStringMap)
     {
         Json::Value value;
         
@@ -32,6 +32,13 @@ namespace rs
             std::string key = pair.first;
             Data data       = pair.second;
             value[key]      = data.toString();
+        }
+
+        for (std::pair<std::string, std::string> pair : aStringMap)
+        {
+            std::string key = pair.first;
+            std::string str = pair.second;
+            value[key] = str;
         }
         
         return jsonDataFromValue(value);

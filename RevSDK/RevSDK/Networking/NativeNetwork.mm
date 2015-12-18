@@ -51,7 +51,7 @@ namespace rs
         
         NSData* body = NSDataFromData(aBody);
         RSRequestOperation* requestOperation = [[RSRequestOperation alloc] initWithURLString:NSStringFromStdString(aURL)
-                                                                                      method:@"POST"
+                                                                                      method:@"PUT"
                                                                                         body:body
                                                                            completionHandler:completionHandler];
         [operationQueue addOperation:requestOperation];

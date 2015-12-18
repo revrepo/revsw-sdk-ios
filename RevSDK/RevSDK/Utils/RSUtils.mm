@@ -320,7 +320,7 @@ namespace rs
     
     std::string _reportStatsURL()
     {
-        return URLWithPath(kRSReportStatsEndPoint);
+        return "https://stats-api.revsw.net/v1/stats/apps";//URLWithPath(kRSReportStatsEndPoint);
     }
     
     std::vector<Data> dataNSArrayToStdVector(NSArray * aArray)

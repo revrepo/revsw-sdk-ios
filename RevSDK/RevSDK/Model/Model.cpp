@@ -112,7 +112,7 @@ namespace rs
                {
                    applyConfiguration(configuration, true);
                    mDataStorage->saveConfiguration(configuration);
-                   RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
+                  // RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
                }
                else
                {
@@ -160,8 +160,6 @@ namespace rs
     {
         std::function<void(const Error& )> completion = [=](const Error& aError){
         
-           std::cout << "Stats reported" << std::endl;
-            
            if (aError.isNoError())
            {
               mStatsHandler->deleteRequestsData();
@@ -169,6 +167,7 @@ namespace rs
         };
         
         Data statsData = mStatsHandler->getStatsData();
+        
         mNetwork->sendStats(statsData, completion);
     }
     

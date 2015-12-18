@@ -154,7 +154,7 @@ namespace rs
     
     std::vector<Data> DataStorage::loadRequestsData()
     {
-        NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
+       /* NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
         
         if (!data)
         {
@@ -166,7 +166,39 @@ namespace rs
                                                                                   format:0
                                                                                    error:nil];
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
-        return dataVector;
+        return dataVector;*/
+        
+        NSMutableDictionary* dict = [NSMutableDictionary dictionary];
+        
+        dict[@"conn_id"] = @"0";
+        dict[@"cont_encoding"] = @"_";
+        dict[@"con_type"] = @"_";
+        dict[@"end_ts"] = @"0";
+        dict[@"first_byte_ts"] = @"0";
+        dict[@"keepalive_status"] = @"0";
+        dict[@"local_cache_status"] = @"_";
+        dict[@"method"] = @"_";
+        dict[@"network"] = @"_";
+        dict[@"protocol"] = @"_";
+        dict[@"received_bytes"] = @"0";
+        dict[@"sent_bytes"] = @"0";
+        dict[@"start_ts"] = @"0";
+        dict[@"success_status"] = @"0";
+        dict[@"status_code"] = @"0";
+        dict[@"transport_protocol"] = @"_";
+        dict[@"url:"] = @"request";
+        
+        NSArray* array = @[dict];
+        
+        NSData* data = [NSJSONSerialization dataWithJSONObject:array
+                                                       options:NSJSONWritingPrettyPrinted
+                                                         error:nil];
+        
+        Data _data = dataFromNSData(data);
+        
+        std::vector<Data> vd = {_data};
+        
+        return vd;
     }
     
     void DataStorage::deleteRequestsData()
