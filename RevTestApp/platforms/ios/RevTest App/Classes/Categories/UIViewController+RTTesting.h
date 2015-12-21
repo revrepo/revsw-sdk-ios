@@ -32,4 +32,7 @@
 - (void)loadStarted;
 - (void)loadFinished;
 
+- (void)stepStarted;
+- (void)stepFinished:(bool)result;
+
 @end

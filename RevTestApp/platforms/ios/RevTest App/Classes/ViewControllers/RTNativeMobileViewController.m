@@ -8,14 +8,18 @@
 
 #import "UIViewController+RTUtils.h"
 #import "NSURL+RTUtils.h"
+#import "NSString+MD5.h"
 
 #import "RTNativeMobileViewController.h"
+
+#import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
 #import "RTContainerViewController.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kMethodPickerTag = 1;
 static const NSInteger kFormatPickerTag = 2;
+static const NSInteger kTestsPerStep = 2;
 
 @interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -25,6 +29,10 @@ static const NSInteger kFormatPickerTag = 2;
 @property (nonatomic, copy) NSString* method;
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
+
+@property (nonatomic, strong) RTTestCycleInfo* currentResult;
+
+@property (nonatomic, assign) int testLeftOnThisStep;
 
 @end
 
@@ -131,10 +139,14 @@ static const NSInteger kFormatPickerTag = 2;
                                        @"XML" : xmlBlock
                                        };
         
-        request.HTTPBody = ((NSData* (^)(void))formatBlocks[self.format])();
+        NSData* (^properBlock)() = formatBlocks[self.format];
+        
+        request.HTTPBody = properBlock();
     }
     
     __weak id weakSelf = self;
+    self.testLeftOnThisStep = kTestsPerStep;
+    self.currentResult = [[RTTestCycleInfo alloc] init];
     
     self.restartBlock = ^{
     
@@ -143,21 +155,86 @@ static const NSInteger kFormatPickerTag = 2;
             [weakSelf loadRequest:request];
         });
     };
-    
     [self startTesting];
+    [self stepStarted];
     [self loadRequest:request];
+}
+
+- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
+{
+    NSString* sum = [aRequestData MD5String];
+    
+    if (aMode == kRSOperationModeOff)
+    {
+        if (aSent)
+        {
+           self.currentResult.asisSentChecksum = sum;
+        }
+        else
+        {
+            self.currentResult.asisRcvdChecksum = sum;
+        }
+    }
+    else
+    {
+        if (aSent)
+        {
+            self.currentResult.edgeSentChecksum = sum;
+        }
+        else
+        {
+            self.currentResult.edgeRcvdChecksum = sum;
+        }
+    }
 }
 
 - (void)loadRequest:(NSURLRequest *)aRequest
 {
+    if (0 == self.testLeftOnThisStep)
+    {
+        [self stepStarted];
+        self.testLeftOnThisStep = kTestsPerStep;
+        self.currentResult = [[RTTestCycleInfo alloc] init];
+    }
     NSURLSession* session = [NSURLSession sharedSession];
+    
+    NSData* body = aRequest.HTTPBody;
+    NSString* requestData = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+    self.currentResult.method = aRequest.HTTPMethod;
+    
+    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
     
     [self loadStarted];
     
     NSURLSessionTask* task = [session dataTaskWithRequest:aRequest
                                         completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                             
+                                            NSString* rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
+                                            
+                                            NSError* error;
+                                            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:aData options:kNilOptions error:&error];
+                                            NSString* data = [dictionary objectForKey:@"data"];
+                                            
+                                            [self calculateMD5AndSave:rcvdData sent:false mode:[RevSDK operationMode]];
+                                            
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse;
+                                            if ([RevSDK operationMode] == kRSOperationModeOff)
+                                            {
+                                                self.currentResult.errorAsIs = [httpResponse statusCode];
+                                            }
+                                            else
+                                            {
+                                                self.currentResult.errorAsIs = [httpResponse statusCode];
+                                            }
+                                            
                                             [self loadFinished];
+                                            
+                                            self.testLeftOnThisStep--;
+                                            if (0 >= self.testLeftOnThisStep)
+                                            {
+                                                bool valid = self.currentResult.valid;
+                                                [self stepFinished:valid];
+                                            }
                                         }];
     [task resume];
 }

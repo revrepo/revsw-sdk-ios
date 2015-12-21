@@ -114,6 +114,8 @@
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
+		6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */; };
+		6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE0A1C2833280095EA9C /* RTTestCycleInfo.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -283,6 +285,10 @@
 		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
+		6D73CE061C27F1BA0095EA9C /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5.h"; path = "RevTest App/Classes/Categories/NSString+MD5.h"; sourceTree = SOURCE_ROOT; };
+		6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5.m"; path = "RevTest App/Classes/Categories/NSString+MD5.m"; sourceTree = SOURCE_ROOT; };
+		6D73CE091C2833280095EA9C /* RTTestCycleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTestCycleInfo.h; sourceTree = "<group>"; };
+		6D73CE0A1C2833280095EA9C /* RTTestCycleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestCycleInfo.m; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -771,6 +777,8 @@
 			children = (
 				5B25817D1C17155F00C55959 /* RTUtils.h */,
 				5B25817E1C17155F00C55959 /* RTUtils.m */,
+				6D73CE091C2833280095EA9C /* RTTestCycleInfo.h */,
+				6D73CE0A1C2833280095EA9C /* RTTestCycleInfo.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -802,6 +810,8 @@
 		5BEC8CA71C0707D60019BCD1 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				6D73CE061C27F1BA0095EA9C /* NSString+MD5.h */,
+				6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */,
 				5BEC8CA81C0707F80019BCD1 /* UIViewController+RTUtils.h */,
 				5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */,
 				5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */,
@@ -1062,6 +1072,7 @@
 				5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
+				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5B04C98D1C0D88A300621B67 /* README.md in Sources */,
@@ -1074,6 +1085,7 @@
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
+				6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */,
 				302D95F114D2391D003F00A1 /* RTPhoneGapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

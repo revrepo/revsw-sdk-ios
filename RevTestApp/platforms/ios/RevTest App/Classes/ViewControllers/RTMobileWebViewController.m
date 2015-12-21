@@ -14,12 +14,15 @@
 #import "RTReportViewController.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
+static const NSInteger kTestsPerStep = 2;
 
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
+
+@property (nonatomic, assign) int testLeftOnThisStep;
 
 @end
 
@@ -91,6 +94,7 @@ static const NSUInteger kDefaultNumberOfTests = 5;
 
 - (IBAction)start:(id)sender
 {
+    self.testLeftOnThisStep = kTestsPerStep;
     [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
@@ -124,6 +128,11 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     if ([URL isValid])
     {
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+        if (0 == self.testLeftOnThisStep)
+        {
+            [self stepStarted];
+            self.testLeftOnThisStep = kTestsPerStep;
+        }
         [self.webView loadRequest:request];
     }
     else
@@ -158,6 +167,11 @@ static const NSUInteger kDefaultNumberOfTests = 5;
     if (!aWebView.isLoading)
     {
         [self loadFinished];
+        self.testLeftOnThisStep--;
+        if (0 < self.testLeftOnThisStep)
+        {
+            [self stepFinished:true];
+        }
     }
 }
 

@@ -115,12 +115,13 @@
         RTPerformBlockOnMainQueue(weakSelf.restartBlock);
     };
     
-    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults, NSArray* aDataLengths, NSArray* aSdkDataLengths){
+    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults, NSArray* aDataLengths, NSArray* aSdkDataLengths, NSArray* aResultFlags){
         RTPerformBlockOnMainQueue(weakSelf.completionBlock);
         [weakSelf goToStatsWithTestResults:aTestResults
                                 sdkResults:aSdkTestResults
                                dataLengths:aDataLengths
-                            sdkDataLengths:aSdkDataLengths];
+                            sdkDataLengths:aSdkDataLengths
+                               resultFlags:aResultFlags];
     };
     
     self.testModel.cancelBlock = ^{
@@ -129,7 +130,7 @@
     };
 }
 
-- (void)goToStatsWithTestResults:(NSArray *)aTestResults sdkResults:(NSArray *)aSdkTestResults dataLengths:(NSArray *)aDataLengths sdkDataLengths:(NSArray *)aSdkDataLengths
+- (void)goToStatsWithTestResults:(NSArray *)aTestResults sdkResults:(NSArray *)aSdkTestResults dataLengths:(NSArray *)aDataLengths sdkDataLengths:(NSArray *)aSdkDataLengths resultFlags:(NSArray *)aResultFlags
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -187,6 +188,16 @@
 - (void)loadFinished
 {
     [self.testModel loadFinished];
+}
+
+- (void)stepStarted
+{
+    [self.testModel stepStarted];
+}
+
+- (void)stepFinished:(bool)result
+{
+    [self.testModel stepFinished:result];
 }
 
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest

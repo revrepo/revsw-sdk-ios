@@ -48,6 +48,16 @@
     rs::Model::instance()->setOperationMode(innerMode);
 }
 
++ (void)debug_stopConfigurationUpdate
+{
+    rs::Model::instance()->stopConfigurationUpdate();
+}
+
++ (void)debug_resumeConfigurationUpdate
+{
+    rs::Model::instance()->resumeConfigurationUpdate();
+}
+
 + (RSOperationMode)operationMode
 {
     rs::RSOperationModeInner innerMode = rs::Model::instance()->currentOperationMode();

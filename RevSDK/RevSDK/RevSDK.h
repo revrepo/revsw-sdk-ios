@@ -29,6 +29,8 @@ typedef enum
 
 + (void)startWithSDKKey:(NSString *)aSDKKey;
 + (void)debug_setOperationMode:(RSOperationMode)aOperationMode;
++ (void)debug_stopConfigurationUpdate;
++ (void)debug_resumeConfigurationUpdate;
 + (RSOperationMode)operationMode;
 + (void)setWhiteListOption:(BOOL)aOn;
 

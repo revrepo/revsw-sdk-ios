@@ -16,8 +16,13 @@
 #include <functional>
 
 #include <mutex>
+#include <atomic>
 
 #import "Utils.hpp"
+
+#ifdef DEBUG
+#define RS_ENABLE_DEBUG_LOGGING
+#endif
 
 namespace rs
 {
@@ -35,6 +40,7 @@ namespace rs
     {
     private:
         std::mutex mLock;
+        std::atomic<bool> mUpdateEnabledFlag;
         
         std::string mSDKKey;
        
@@ -45,6 +51,8 @@ namespace rs
         std::unique_ptr<Network> mNetwork;
         
         std::shared_ptr<DataStorage> mDataStorage;
+        
+        std::unique_ptr<Configuration> mCachedConfiguration;
         std::shared_ptr<Configuration> mConfiguration;
         
         RSOperationModeInner mCurrentOperationMode;
@@ -82,6 +90,9 @@ namespace rs
         bool isDomainNameProvisioned(std::string aDomainName);
         
         void addRequestData(const Data &);
+        
+        void stopConfigurationUpdate();
+        void resumeConfigurationUpdate();
         
         bool shouldCollectRequestsData();
     };

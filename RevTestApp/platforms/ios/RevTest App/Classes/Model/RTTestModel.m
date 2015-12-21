@@ -6,10 +6,11 @@
 //
 //
 
-#import <RevSDK/RevSDK.h>
-
 #import "RTTestModel.h"
+
+#import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
+
 
 @interface RTTestModel ()
 {
@@ -18,12 +19,17 @@
     BOOL mIsLoading;
     NSDate* mStartDate;
     NSUInteger mCurrentDataSize;
+    
+    RSOperationMode mMode;
 }
 
 @property (nonatomic, strong) NSMutableArray* testResults;
 @property (nonatomic, strong) NSMutableArray* sdkTestResults;
 @property (nonatomic, strong) NSMutableArray* dataLengthArray;
 @property (nonatomic, strong) NSMutableArray* sdkDataLengthArray;
+
+@property (nonatomic, strong) NSMutableArray* resultFlags;
+
 @property (nonatomic, strong) NSTimer* timer;
 
 @end
@@ -45,6 +51,7 @@
          self.sdkTestResults     = [NSMutableArray array];
          self.dataLengthArray    = [NSMutableArray array];
          self.sdkDataLengthArray = [NSMutableArray array];
+         self.resultFlags = [NSMutableArray array];
         
          [RevSDK setWhiteListOption:NO];
         
@@ -73,15 +80,21 @@
 
 - (void)start
 {
+    [RevSDK debug_stopConfigurationUpdate];
+    
     mCurrentDataSize = 0;
     self.shouldLoad  = YES;
     mTestsCounter    = 0;
     
-    [RevSDK debug_setOperationMode:kRSOperationModeOff];
     [self.testResults removeAllObjects];
     [self.sdkTestResults removeAllObjects];
     [self.dataLengthArray removeAllObjects];
     [self.sdkDataLengthArray removeAllObjects];
+    [self.resultFlags removeAllObjects];
+    
+    mMode = kRSOperationModeOff;
+    
+    [RevSDK debug_setOperationMode:mMode];
 }
 
 - (void)setWhiteListOption:(BOOL)aOn
@@ -106,19 +119,12 @@
 {
     if (!mIsLoading)
     {
-        ++mTestsCounter;
-        NSLog(@"Start %ld", (unsigned long)mTestsCounter);
         mIsLoading = YES;
         mStartDate = [NSDate date];
         
         NSString* type = [RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
-        NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
-        NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
         
-        if (self.loadStartedBlock)
-        {
-            self.loadStartedBlock(text);
-        }
+        NSLog(@"-test: %ld mode: %@", (unsigned long)mTestsCounter, type);
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:45.0
                                                       target:self
@@ -128,10 +134,30 @@
     }
 }
 
+- (void)didFinishedTests
+{
+    [RevSDK debug_resumeConfigurationUpdate];
+}
+
+- (void)stepStarted
+{
+    ++mTestsCounter;
+    NSLog(@"Start %ld", (unsigned long)mTestsCounter);
+    
+    mMode = kRSOperationModeOff;
+    
+    NSString* type = @" ";//[RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
+    NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
+    NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
+    
+    if (self.loadStartedBlock)
+    {
+        self.loadStartedBlock(text);
+    }
+}
+
 - (void)loadFinished
 {
-    NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
-    
     if (self.timer)
     {
         [self.timer invalidate];
@@ -148,40 +174,49 @@
     [array addObject:@(mCurrentDataSize / 1024.0)];
     mCurrentDataSize = 0;
     
+    
+    if (kRSOperationModeOff == mMode)
+    {
+        mMode = kRSOperationModeTransport; 
+    }
+    else
+    {
+        mMode = kRSOperationModeOff;
+    } 
+    
     if (self.loadFinishedBlock)
     {
         self.loadFinishedBlock();
     }
     
-    if (mTestsCounter < mNumberOfTestsToPerform)
+    [RevSDK debug_setOperationMode:mMode];
+    if (mTestsCounter <= mNumberOfTestsToPerform)
     {
         if (self.restartBlock)
         {
             self.restartBlock();
+            NSLog(@"RESTART::: %ld", (unsigned long)mTestsCounter);
+            
         }
+    }
+}
+
+- (void)stepFinished:(bool)withSuccess
+{
+    [self.resultFlags addObject:[NSNumber numberWithBool:withSuccess]];
+    
+    if (mTestsCounter >= mNumberOfTestsToPerform)
+    {
+        self.shouldLoad = NO;
+        if (self.completionBlock)
+        {
+            self.completionBlock(self.testResults, self.sdkTestResults, self.dataLengthArray, self.sdkDataLengthArray, self.resultFlags);
+        }
+        [self didFinishedTests];
     }
     else
     {
-        if (self.sdkTestResults.count == 0)
-        {
-            [RevSDK debug_setOperationMode:kRSOperationModeTransport];
-            
-            mTestsCounter = 0;
-
-            if (self.restartBlock)
-            {
-                self.restartBlock();
-            }
-        }
-        else
-        {
-            if (self.completionBlock)
-            {
-                self.completionBlock(self.testResults, self.sdkTestResults, self.dataLengthArray, self.sdkDataLengthArray);
-            }
-            
-            self.shouldLoad = NO;
-        }
+        NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
     }
 }
 

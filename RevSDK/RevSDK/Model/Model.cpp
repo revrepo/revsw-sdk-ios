@@ -37,7 +37,7 @@
 
 namespace rs
 {
-    Model::Model()
+    Model::Model() : mUpdateEnabledFlag(true)
     {
         mConfiguration             = nullptr;
         mStatsReportingTimer       = nullptr;
@@ -99,13 +99,16 @@ namespace rs
     {
         std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
             
+#ifdef RS_ENABLE_DEBUG_LOGGING
             std::cout << "Configuration loaded\n";
+#endif
             
            if (aError.code == noErrorCode())
            {
                Configuration configuration = processConfigurationData(aData);
                applyConfiguration(configuration, true);
-               mDataStorage->saveConfiguration(configuration);
+               // VJ:double save, error
+               //mDataStorage->saveConfiguration(configuration);
                
                RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
            }
@@ -120,13 +123,22 @@ namespace rs
     
     void Model::applyConfiguration(const Configuration& aConfiguration, bool aShouldSave)
     {
+        bool isUpdateEnabled = mUpdateEnabledFlag.load();
+        if (isUpdateEnabled)
         {
-            std::lock_guard<std::mutex> lockGuard(mLock);
-            mConfiguration = std::make_shared<Configuration>(aConfiguration);
-            mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
+            {
+                std::lock_guard<std::mutex> lockGuard(mLock);
+#ifdef RS_ENABLE_DEBUG_LOGGING
+                std::cout<<"Model:: applying new configuretion"<<std::endl;
+#endif
+                
+                mConfiguration = std::make_shared<Configuration>(aConfiguration);
+                mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
+            }
+            setOperationMode(aConfiguration.operationMode);
         }
-        setOperationMode(aConfiguration.operationMode);
         
+        aShouldSave = aShouldSave || !isUpdateEnabled;
         if (aShouldSave)
         {
             mDataStorage->saveConfiguration(aConfiguration);
@@ -178,6 +190,12 @@ namespace rs
     void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
+        
+#ifdef RS_ENABLE_DEBUG_LOGGING
+        std::cout<<"Model::setOperationMode __peviousID::"<<mCurrentOperationMode<<" "
+        <<"__newID:"<<aOperationMode<<std::endl;
+#endif
+        
         mCurrentOperationMode = aOperationMode;
         
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
@@ -267,6 +285,28 @@ namespace rs
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
         mStatsHandler->addRequestData(aRequestData);
+    }
+    
+    void Model::stopConfigurationUpdate()
+    {
+#ifdef RS_ENABLE_DEBUG_LOGGING
+        std::cout<<"Model:: stopped configuration update"<<std::endl;
+#endif
+        mUpdateEnabledFlag.store(false);
+    }
+    
+    void Model::resumeConfigurationUpdate()
+    {
+#ifdef RS_ENABLE_DEBUG_LOGGING
+        std::cout<<"Model:: resumed configuration update"<<std::endl;
+#endif
+        mUpdateEnabledFlag.store(true);
+        {
+//            mConfiguration.reset(mCachedConfiguration.release());
+//            applyConfiguration(*mCachedConfiguration.get(), false);
+            Configuration configuration = mDataStorage->configuration();
+            applyConfiguration(configuration, false);
+        }
     }
     
     bool Model::shouldCollectRequestsData()
