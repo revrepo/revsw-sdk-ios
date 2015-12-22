@@ -147,6 +147,12 @@ namespace rs
             }
             setOperationMode(aConfiguration.operationMode);
         }
+        else
+        {
+#ifdef RS_ENABLE_DEBUG_LOGGING
+            std::cout<<"RevSDK.Model:: saving new configuretion while update disabled"<<std::endl;
+#endif
+        }
         
         aShouldSave = aShouldSave || !isUpdateEnabled;
         if (aShouldSave)

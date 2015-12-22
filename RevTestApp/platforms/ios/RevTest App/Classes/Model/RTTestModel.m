@@ -81,7 +81,6 @@
 - (void)start
 {
     [RevSDK debug_stopConfigurationUpdate];
-    
     mCurrentDataSize = 0;
     self.shouldLoad  = YES;
     mTestsCounter    = 0;

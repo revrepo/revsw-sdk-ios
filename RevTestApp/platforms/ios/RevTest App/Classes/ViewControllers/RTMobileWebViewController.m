@@ -137,10 +137,10 @@ static const NSInteger kSuccessCode = 200;
     if ([URL isValid])
     {
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
-        if (0 == self.testLeftOnThisStep)
+        if (0 >= self.testLeftOnThisStep)
         {
-            [self stepStarted];
             self.testLeftOnThisStep = kTestsPerStep;
+            [self stepStarted];
         }
         [self.webView loadRequest:request];
     }
@@ -173,24 +173,27 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)didFinishLoadWithCode:(NSInteger)aCode
 {
-    RSOperationMode mode = [RevSDK operationMode];
-    
-    if (mode == kRSOperationModeOff)
+    if (self.testLeftOnThisStep > 0)
     {
-        self.currentResult.errorAsIs = aCode;
-    }
-    else
-    {
-        self.currentResult.errorEdge = aCode;
-    }
-    
-    [self loadFinished];
-    self.testLeftOnThisStep--;
-    if (0 >= self.testLeftOnThisStep)
-    {
-        [self stepFinished:self.currentResult.valid];
+        RSOperationMode mode = [RevSDK operationMode];
         
-        self.currentResult = [[RTTestCycleInfo alloc] init];
+        if (mode == kRSOperationModeOff)
+        {
+            self.currentResult.errorAsIs = aCode;
+        }
+        else
+        {
+            self.currentResult.errorEdge = aCode;
+        }
+        
+        [self loadFinished];
+        self.testLeftOnThisStep--;
+        if (0 == self.testLeftOnThisStep)
+        {
+            [self stepFinished:self.currentResult.valid];
+            
+            self.currentResult = [[RTTestCycleInfo alloc] init];
+        }
     }
 }
 
