@@ -49,10 +49,14 @@ namespace rs
         // NSLog(@"Request %p headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
         //NSLog(@"CONNECTION %@", mutableRequest.URL);
         
+        NSString* originalURL = request.URL.absoluteString;
+        
         NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
                                             completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                                 
                                                 std::shared_ptr<Connection> anchor = oAnchor;
+                                                
+                                                NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
 
                                                 NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                                 

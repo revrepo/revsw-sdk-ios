@@ -128,7 +128,7 @@ namespace rs
         statsDictionary[@"phone_number"] = @"1.0";
         statsDictionary[@"radio_serial"] = @"_";
         statsDictionary[@"serial_number"] = @"_";
-        statsDictionary[@"uuid"] = @"_";
+        statsDictionary[@"uuid"] = [[UIDevice currentDevice] identifierForVendor];
         statsDictionary[@"width"] = [NSString stringWithFormat:@"%f", screenWidth];
         
         return statsDictionary;

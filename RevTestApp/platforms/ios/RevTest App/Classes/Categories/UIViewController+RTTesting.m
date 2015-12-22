@@ -103,12 +103,12 @@
     
     self.testModel.loadStartedBlock = ^(NSString* aText){
         RTPerformBlockOnMainQueue(weakSelf.loadStartedBlock);
+        [weakSelf hideHud];
         [weakSelf showHudWithText:aText];
     };
     
     self.testModel.loadFinishedBlock = ^{
         RTPerformBlockOnMainQueue(weakSelf.loadFinishedBlock);
-        [weakSelf hideHud];
     };
     
     self.testModel.restartBlock = ^{
@@ -122,6 +122,7 @@
                                dataLengths:aDataLengths
                             sdkDataLengths:aSdkDataLengths
                                resultFlags:aResultFlags];
+        [weakSelf hideHud];
     };
     
     self.testModel.cancelBlock = ^{
