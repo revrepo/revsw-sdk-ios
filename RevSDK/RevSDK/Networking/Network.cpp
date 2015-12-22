@@ -45,9 +45,9 @@ namespace rs
         nativeNetwork->performRequest(aURL, aBody, completion);
     }
     
-    void Network::loadConfiguration(std::function<void(const Data&, const Error&)> aCompletionBlock)
+    void Network::loadConfiguration(const std::string& aSDKKey, std::function<void(const Data&, const Error&)> aCompletionBlock)
     {
-        std::string URL = loadConfigurationURL();
+        std::string URL = loadConfigurationURL(aSDKKey);
         performRequest(URL, aCompletionBlock);
     }
     

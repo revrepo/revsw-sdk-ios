@@ -18,7 +18,7 @@ namespace rs
     class Data;
     class Configuration;
     
-    Data jsonDataFromDataMap(std::map<std::string, Data> &);
+    Data jsonDataFromDataMap(std::map<std::string, Data> &, std::map<std::string, std::string>&);
     Data jsonDataFromDataVector(std::vector<Data> &);
     Configuration processConfigurationData(const Data& aData);
 }

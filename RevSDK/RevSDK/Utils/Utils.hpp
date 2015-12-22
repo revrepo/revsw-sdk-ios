@@ -25,11 +25,12 @@ typedef enum
 
 typedef enum
 {
-    kRSStatsReportingLevelFull = 0,
-    kRSStatsReportingLevelDeviceData = 1,
-    kRSStatsReportingLevelRequestsData = 2
+    kRSStatsReportingLevelDebug,
+    kRSStatsReportingLevelRelease
     
 }RSStatsReportingLevel;
+    
+    extern const float kSDKVersionNumber;
     
     extern const std::string kOSKey;
     extern const std::string kAppNameKey;
@@ -53,11 +54,13 @@ typedef enum
     extern const std::string kDeviceStatsKey;
     extern const std::string kRequestsStatsKey;
     
-    std::string loadConfigurationURL();
+    std::string loadConfigurationURL(const std::string&);
     std::string reportStatsURL();
     std::string errorDescriptionKey();
     long noErrorCode();
     std::string httpsProtocolName();
+    
+    bool isValidURL(std::string);
 }
 
 #endif /* Utils_hpp */

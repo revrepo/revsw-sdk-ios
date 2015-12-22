@@ -7,8 +7,8 @@
 //
 
 #import "RSPublicConsts.h"
-
 #import "RSUtils.h"
+
 #include "Request.hpp"
 #include "Response.hpp"
 #include "Data.hpp"
@@ -32,11 +32,15 @@ NSString* const kRSDataKey = @"kRSDataKey";
 
 namespace rs
 {
+    //version
+    const float kRSSDKVersion = 1.0;
+    
     //Rev Host
     const std::string kRSRevBaseHost   = "revdn.net";
     NSString* const kRSRevRedirectHost = @"rev-200.revdn.net";
-    const std::string kRSLoadConfigurationEndPoint = "/sdk/config";
+    const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
+    const std::string kRSRevLoadConfigurationHost = "iad02-api03.revsw.net";
     
     //codes
     const long kRSNoErrorCode = -10000;
@@ -255,6 +259,11 @@ namespace rs
     
     Error errorFromNSError(NSError* aError)
     {
+        if (!aError)
+        {
+           return Error::notError();
+        }
+        
         Error error;
         error.code     = aError.code;
         error.domain   = stdStringFromNSString(aError.domain);
@@ -303,14 +312,15 @@ namespace rs
         return HTTPSURLWithPath(aPath);
     }
     
-    std::string _loadConfigurationURL()
+    std::string _loadConfigurationURL(const std::string& aSDKKey)
     {
-        return URLWithPath(kRSLoadConfigurationEndPoint);
+        const std::string path = "/v" + std::to_string((int)kRSSDKVersion) + kRSLoadConfigurationEndPoint + aSDKKey;
+        return URLWithComponents(kRSHTTPSProtocolName, kRSRevLoadConfigurationHost, path);
     }
     
     std::string _reportStatsURL()
     {
-        return URLWithPath(kRSReportStatsEndPoint);
+        return "https://stats-api.revsw.net/v1/stats/apps";//URLWithPath(kRSReportStatsEndPoint);
     }
     
     std::vector<Data> dataNSArrayToStdVector(NSArray * aArray)
@@ -343,5 +353,14 @@ namespace rs
         Data data = dataFromNSData(jsonData);
         
         return data;
+    }
+    
+    bool _isValidURL(std::string aURLString)
+    {
+        NSString* URLString = NSStringFromStdString(aURLString);
+        NSURL* URL          = [NSURL URLWithString:URLString];
+        BOOL isValid        = URL.scheme && URL.host;
+        
+        return isValid;
     }
 }

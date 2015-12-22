@@ -10,6 +10,7 @@
 
 #include "Configuration.hpp"
 #include "Data.hpp"
+#include "Utils.hpp"
 
 namespace rs
 {
@@ -49,5 +50,35 @@ namespace rs
     void Configuration::print()const
     {
         std::cout << "protocols    " << allowedProtocols.size() << std::endl;
+    }
+    
+    bool Configuration::isValid()
+    {
+        if (sdkReleaseVersion != kSDKVersionNumber)
+        {
+            return false;
+        }
+        
+        if (!edgeHost.length())
+        {
+            return false;
+        }
+        
+        if (!configurationApiURL.length())
+        {
+            return false;
+        }
+        
+        if (!isValidURL(statsReportingURL))
+        {
+            return false;
+        }
+        
+        if (!isValidURL(transportMonitoringURL))
+        {
+            return false;
+        }
+        
+        return true;
     }
 }

@@ -7,20 +7,26 @@
 //
 
 #import "NSURL+RTUTils.h"
+#import <RevSDK/RevSDK.h>
 
 #import "RTMobileWebViewController.h"
 #import "UIViewController+RTUtils.h"
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
 
+#import "RTTestCycleInfo.h"
+
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kTestsPerStep = 2;
+static const NSInteger kSuccessCode = 200;
 
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
+
+@property (nonatomic, strong) RTTestCycleInfo* currentResult;
 
 @property (nonatomic, assign) int testLeftOnThisStep;
 
@@ -95,6 +101,9 @@ static const NSInteger kTestsPerStep = 2;
 - (IBAction)start:(id)sender
 {
     self.testLeftOnThisStep = kTestsPerStep;
+    
+    self.currentResult = [[RTTestCycleInfo alloc] init];
+    
     [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
@@ -162,22 +171,44 @@ static const NSInteger kTestsPerStep = 2;
     [self loadStarted];
 }
 
+- (void)didFinishLoadWithCode:(NSInteger)aCode
+{
+    RSOperationMode mode = [RevSDK operationMode];
+    
+    if (mode == kRSOperationModeOff)
+    {
+        self.currentResult.errorAsIs = aCode;
+    }
+    else
+    {
+        self.currentResult.errorEdge = aCode;
+    }
+    
+    [self loadFinished];
+    self.testLeftOnThisStep--;
+    if (0 >= self.testLeftOnThisStep)
+    {
+        [self stepFinished:self.currentResult.valid];
+        
+        self.currentResult = [[RTTestCycleInfo alloc] init];
+    }
+}
+
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView
 {
     if (!aWebView.isLoading)
     {
-        [self loadFinished];
-        self.testLeftOnThisStep--;
-        if (0 >= self.testLeftOnThisStep)
-        {
-            [self stepFinished:true];
-        }
+        [self didFinishLoadWithCode:kSuccessCode];
     }
 }
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
     NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
+    if (!aWebView.isLoading)
+    {
+        [self didFinishLoadWithCode:aError.code];
+    }
 }
 
 @end

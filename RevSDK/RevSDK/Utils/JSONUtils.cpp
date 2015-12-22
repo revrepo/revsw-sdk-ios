@@ -23,7 +23,7 @@ namespace rs
         return Data(jsonString.c_str(), jsonString.length());
     }
     
-    Data jsonDataFromDataMap(std::map<std::string, Data> & aDataMap)
+    Data jsonDataFromDataMap(std::map<std::string, Data> & aDataMap, std::map<std::string, std::string>& aStringMap)
     {
         Json::Value value;
         
@@ -32,6 +32,13 @@ namespace rs
             std::string key = pair.first;
             Data data       = pair.second;
             value[key]      = data.toString();
+        }
+
+        for (std::pair<std::string, std::string> pair : aStringMap)
+        {
+            std::string key = pair.first;
+            std::string str = pair.second;
+            value[key] = str;
         }
         
         return jsonDataFromValue(value);
@@ -79,24 +86,31 @@ namespace rs
         }
         else
         {
+            Json::Value configs                     = value[kConfigsKey][0];
+            std::vector<std::string> operationModes = {"off", "transfer", "report", "transfer_and_report"};
+            std::vector<std::string> statsLevels    = {"debug", "release"};
+            auto operation_mode_iterator            = std::find(operationModes.begin(), operationModes.end(), configs[kOperationModeKey].asString());
+            auto operation_mode_index               = std::distance(operationModes.begin(), operation_mode_iterator);
+            auto stats_level_iterator               = std::find(statsLevels.begin(), statsLevels.end(), configs[kStatsReportingLevelKey].asString());
+            auto stats_level_index                  = std::distance(statsLevels.begin(), stats_level_iterator);
             configuration.appName                   = value[kAppNameKey].asString();
             configuration.os                        = value[kOSKey].asString();
-            configuration.sdkReleaseVersion         = value[kConfigsKey][kSDKReleaseVersionKey].asFloat();
+            configuration.sdkReleaseVersion         = configs[kSDKReleaseVersionKey].asFloat();
             configuration.configurationApiURL       = value[kConfigurationApiURLKey].asFloat();
-            configuration.refreshInterval           = value[kConfigsKey][kConfigurationRefreshIntervalKey].asInt();
-            configuration.staleTimeout              = value[kConfigsKey][kConfigurationStaleTimeoutKey].asInt();
-            configuration.edgeHost                  = value[kConfigsKey][kEdgeHostKey].asString();
-            configuration.operationMode             = (RSOperationModeInner)value[kConfigsKey][kOperationModeKey].asInt();
-            configuration.allowedProtocols          = vectorFromValue(value[kConfigsKey][kAllowedTransportProtocolsKey]);
-            configuration.initialTransportProtocol  = value[kConfigsKey][kInitialTransportProtocolsKey].asString();
-            configuration.transportMonitoringURL    = value[kConfigsKey][kTransportMonitoringURLKey].asString();
-            configuration.statsReportingURL         = value[kConfigsKey][kStatsReportingURLKey].asString();
-            configuration.statsReportingInterval    = value[kConfigsKey][kStatsReportingIntervalKey].asInt();
-            configuration.statsReportingLevel       = (RSStatsReportingLevel)value[kConfigsKey][kStatsReportingLevelKey].asInt();
-            configuration.statsReportingMaxRequests = value[kConfigsKey][kStatsReportingMaxRequestsKey].asInt();
-            configuration.domainsProvisionedList    = vectorFromValue(value[kConfigsKey][kDomainsProvisionedListKey]);
-            configuration.domainsWhiteList          = vectorFromValue(value[kConfigsKey][kDomainsWhiteListKey]);
-            configuration.domainsBlackList          = vectorFromValue(value[kConfigsKey][kDomainsBlackListKey]);
+            configuration.refreshInterval           = configs[kConfigurationRefreshIntervalKey].asInt();
+            configuration.staleTimeout              = configs[kConfigurationStaleTimeoutKey].asInt();
+            configuration.edgeHost                  = configs[kEdgeHostKey].asString();
+            configuration.operationMode             = (RSOperationModeInner) operation_mode_index;
+            configuration.allowedProtocols          = vectorFromValue(configs[kAllowedTransportProtocolsKey]);
+            configuration.initialTransportProtocol  = configs[kInitialTransportProtocolsKey].asString();
+            configuration.transportMonitoringURL    = configs[kTransportMonitoringURLKey].asString();
+            configuration.statsReportingURL         = configs[kStatsReportingURLKey].asString();
+            configuration.statsReportingInterval    = configs[kStatsReportingIntervalKey].asInt();
+            configuration.statsReportingLevel       = (RSStatsReportingLevel)stats_level_index;
+            configuration.statsReportingMaxRequests = configs[kStatsReportingMaxRequestsKey].asInt();
+            configuration.domainsProvisionedList    = vectorFromValue(configs[kDomainsProvisionedListKey]);
+            configuration.domainsWhiteList          = vectorFromValue(configs[kDomainsWhiteListKey]);
+            configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);
         }
         
         return configuration;
