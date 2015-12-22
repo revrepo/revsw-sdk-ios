@@ -41,7 +41,6 @@ namespace rs
     private:
         std::mutex mLock;
         std::atomic<bool> mUpdateEnabledFlag;
-        
         std::string mSDKKey;
        
         std::unique_ptr<StatsHandler> mStatsHandler;

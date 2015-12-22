@@ -10,6 +10,7 @@
 #define NativeStatsHandler_h
 
 #include <string>
+#include <map>
 
 #include "Utils.hpp"
 
@@ -27,6 +28,7 @@ namespace rs
         Data networkData();
         Data wifiData();
         Data logData();
+         Data allData(const Data& aRequestsData, const std::map<std::string, std::string>& aParams);
          
          std::string appName();
      };

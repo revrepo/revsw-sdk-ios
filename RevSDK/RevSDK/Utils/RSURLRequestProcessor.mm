@@ -18,8 +18,17 @@ static NSString* const kRSVPNURL = @"http://testsjc20-bp01.revsw.net/";
 
 static NSString* const kRSHostHeader = @"Host";
 static NSString* const kRSRevHostHeader = @"X-Rev-Host";
+static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 
 @implementation RSURLRequestProcessor
+
++ (BOOL)isValidScheme:(NSString*)aScheme
+{
+    if (aScheme == nil)
+        return NO;
+    
+    return [@[@"http", @"https"] indexOfObject:aScheme] != NSNotFound;
+}
 
 + (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest
 {
@@ -38,6 +47,8 @@ static NSString* const kRSRevHostHeader = @"X-Rev-Host";
     }
     else
     {
+        if ([RSURLRequestProcessor isValidScheme:scheme])
+            [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
         scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
         std::string SDKKey          = rs::Model::instance()->SDKKey();
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);

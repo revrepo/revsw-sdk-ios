@@ -18,6 +18,7 @@
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kTestsPerStep = 2;
+static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
 static const NSInteger kSuccessCode = 200;
 
 @interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate>
@@ -68,6 +69,33 @@ static const NSInteger kSuccessCode = 200;
      [self setNumberOfTests:kDefaultNumberOfTests];
     
      self.startButton.layer.cornerRadius = 8.f;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    NSString* lastSearch = [ud objectForKey:kTextFieldMobileWebKey];
+    
+    if (lastSearch == nil)
+        lastSearch = @"http://edition.cnn.com";
+    
+    self.URLTextField.text = lastSearch;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    NSString* lastSearch = self.URLTextField.text;
+    
+    if (lastSearch == nil)
+        lastSearch = @"http://edition.cnn.com";
+    
+    [ud setObject:lastSearch forKey:kTextFieldMobileWebKey];
+    [ud synchronize];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent

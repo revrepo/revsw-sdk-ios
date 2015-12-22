@@ -211,6 +211,7 @@ namespace rs
         
         mCurrentOperationMode = aOperationMode;
         
+        
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {

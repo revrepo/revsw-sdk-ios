@@ -8,6 +8,7 @@
 
 #import "RSRequestOperation.h"
 #import "RSUtils.h"
+#import <UIKit/UIKit.h>
 
 static const NSUInteger kRSResponseStatusCodeOk = 200;
 
@@ -43,12 +44,31 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
     request.HTTPMethod           = self.method;
     
-    if ([request.HTTPMethod isEqualToString:@"POST"])
+    if ([request.HTTPMethod isEqualToString:@"POST"] || [request.HTTPMethod isEqualToString:@"PUT"])
     {
         [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
         [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[self.body length]] forHTTPHeaderField:@"Content-Length"];
         request.HTTPBody = self.body;
+    }
+    
+    NSString* bodyString = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", bodyString);
+    
+    if ([URL.absoluteString rangeOfString:@"stats-api.revsw.net"].location != NSNotFound)
+    {
+        static BOOL sentOnce = NO;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (!sentOnce)
+            {
+                sentOnce = YES;
+                [[[UIAlertView alloc] initWithTitle:@"Stats"
+                                           message:@"sent..."
+                                          delegate:nil
+                                 cancelButtonTitle:@"ok"
+                                 otherButtonTitles:nil] show];
+            }
+        });
     }
     
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
