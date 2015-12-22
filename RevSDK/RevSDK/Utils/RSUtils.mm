@@ -36,7 +36,7 @@ namespace rs
     const float kRSSDKVersion = 1.0;
     
     //Rev Host
-    const std::string kRSRevBaseHost   = "revdn.net";
+    const std::string kRSRevBaseHost   = "revsdk.net";
     NSString* const kRSRevRedirectHost = @"rev-200.revdn.net";
     const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";

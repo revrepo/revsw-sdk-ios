@@ -16,6 +16,7 @@
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kMethodPickerTag = 1;
 static const NSInteger kFormatPickerTag = 2;
+static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 
 @interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -64,6 +65,33 @@ static const NSInteger kFormatPickerTag = 2;
     self.methodButton.layer.cornerRadius = 8.f;
     self.formatButton.layer.cornerRadius = 8.f;
     self.startButton.layer.cornerRadius  = 8.f;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    NSString* lastSearch = [ud objectForKey:kTextFieldNativeAppKey];
+    
+    if (lastSearch == nil)
+        lastSearch = @"http://httpbin.org/get";
+    
+    self.URLTextField.text = lastSearch;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
+    NSString* lastSearch = self.URLTextField.text;
+
+    if (lastSearch == nil)
+        lastSearch = @"http://httpbin.org/get";
+
+    [ud setObject:lastSearch forKey:kTextFieldNativeAppKey];
+    [ud synchronize];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent

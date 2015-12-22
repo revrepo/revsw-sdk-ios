@@ -31,7 +31,7 @@ namespace rs
     
     class Model
     {
-        
+    private:
       std::string mSDKKey;
        
       StatsHandler* mStatsHandler;

@@ -42,7 +42,7 @@ namespace rs
         return [UIDevice currentDevice].systemVersion;
     }
     
-    Data NativeStatsHandler::logData()
+    NSDictionary* logDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
@@ -51,15 +51,10 @@ namespace rs
         statsDictionary[@"log_message"] = @"_";
         statsDictionary[@"log_interval"] = @"1.0";
         
-        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
-                                                         options:NSJSONWritingPrettyPrinted
-                                                           error:nil];
-        Data rsData = dataFromNSData(nsData);
-        
-        return rsData;
+        return statsDictionary;
     }
     
-    Data NativeStatsHandler::wifiData()
+    NSDictionary* wifiDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
@@ -71,16 +66,11 @@ namespace rs
         statsDictionary[@"wifi_rssibest"] = @"_";
         statsDictionary[@"wifi_sig"] = @"_";
         statsDictionary[@"wifi_speed"] = @"_";
-        
-        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
-                                                         options:NSJSONWritingPrettyPrinted
-                                                           error:nil];
-        Data rsData = dataFromNSData(nsData);
-        
-        return rsData;
+
+        return statsDictionary;
     }
     
-    Data NativeStatsHandler::networkData()
+    NSDictionary* networkDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
@@ -106,15 +96,10 @@ namespace rs
         statsDictionary[@"wifi_ip"] = @"1.0";
         statsDictionary[@"wifi_mask"] = @"_";
         
-        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
-                                                         options:NSJSONWritingPrettyPrinted
-                                                           error:nil];
-        Data rsData = dataFromNSData(nsData);
-        
-        return rsData;
+        return statsDictionary;
     }
     
-    Data NativeStatsHandler::deviceData()
+    NSDictionary* deviceDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
@@ -146,15 +131,10 @@ namespace rs
         statsDictionary[@"uuid"] = @"_";
         statsDictionary[@"width"] = [NSString stringWithFormat:@"%f", screenWidth];
         
-        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
-                                                         options:NSJSONWritingPrettyPrinted
-                                                           error:nil];
-        Data rsData = dataFromNSData(nsData);
-        
-        return rsData;
+        return statsDictionary;
     }
     
-    Data NativeStatsHandler::carrierData()
+    NSDictionary* carrierDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
@@ -173,6 +153,82 @@ namespace rs
         statsDictionary[@"tower_cell_id_l"] = @"_";
         statsDictionary[@"tower_cell_id_s"] = @"_";
         
+        return statsDictionary;
+    }
+    
+    NSDictionary* statsDataDict()
+    {
+        NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
+        statsDictionary[kRSDeviceNameKey]    = deviceName();
+        statsDictionary[kRSOSVersionKey]     = osVersion();
+        
+        return statsDictionary;
+    }
+    
+    NSDictionary* locationDataDict()
+    {
+        NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
+        
+        statsDictionary[@"direction"] = @"1.0";
+        statsDictionary[@"latitude"] = @"1.0";
+        statsDictionary[@"longitude"] = @"1.0";
+        statsDictionary[@"speed"] = @"1.0";
+        
+        return statsDictionary;
+    }
+    
+    Data NativeStatsHandler::logData()
+    {
+        NSDictionary* statsDictionary = logDataDict();
+        
+        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil];
+        Data rsData = dataFromNSData(nsData);
+        
+        return rsData;
+    }
+    
+    Data NativeStatsHandler::wifiData()
+    {
+        NSDictionary* statsDictionary = wifiDataDict();
+        
+        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil];
+        Data rsData = dataFromNSData(nsData);
+        
+        return rsData;
+    }
+    
+    Data NativeStatsHandler::networkData()
+    {
+        NSDictionary* statsDictionary = networkDataDict();
+        
+        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil];
+        Data rsData = dataFromNSData(nsData);
+        
+        return rsData;
+    }
+    
+    Data NativeStatsHandler::deviceData()
+    {
+        NSDictionary* statsDictionary = deviceDataDict();
+        
+        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil];
+        Data rsData = dataFromNSData(nsData);
+        
+        return rsData;
+    }
+    
+    Data NativeStatsHandler::carrierData()
+    {
+        NSDictionary* statsDictionary = carrierDataDict();
+        
         NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:nil];
@@ -183,9 +239,7 @@ namespace rs
     
     Data NativeStatsHandler::statsData()
     {
-        NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
-        statsDictionary[kRSDeviceNameKey]    = deviceName();
-        statsDictionary[kRSOSVersionKey]     = osVersion();
+        NSDictionary* statsDictionary = statsDataDict();
         
         NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
                                                          options:NSJSONWritingPrettyPrinted
@@ -197,12 +251,7 @@ namespace rs
     
     Data NativeStatsHandler::locationData()
     {
-        NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
-        
-        statsDictionary[@"direction"] = @"1.0";
-        statsDictionary[@"latitude"] = @"1.0";
-        statsDictionary[@"longitude"] = @"1.0";
-        statsDictionary[@"speed"] = @"1.0";
+        NSDictionary* statsDictionary = locationDataDict();
         
         NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
                                                          options:NSJSONWritingPrettyPrinted
@@ -210,5 +259,56 @@ namespace rs
         Data rsData = dataFromNSData(nsData);
         
         return rsData;
+    }
+    
+    Data NativeStatsHandler::allData(const Data& aRequestsData, const std::map<std::string, std::string>& aParams)
+    {
+        NSData* rd = [NSData dataWithBytes:aRequestsData.bytes() length:aRequestsData.length()];
+        id requestsDataSrc = [NSJSONSerialization JSONObjectWithData:rd
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:nil];
+        
+        NSMutableArray* requestsData = [NSMutableArray array];
+        
+        if ([requestsDataSrc isKindOfClass:[NSArray class]])
+        {
+            for (NSString* str in requestsDataSrc)
+            {
+                if ([str isKindOfClass:[NSString class]])
+                {
+                    NSData* objData = [str dataUsingEncoding:NSUTF8StringEncoding];
+                    id obj = [NSJSONSerialization JSONObjectWithData:objData
+                                                             options:NSJSONReadingMutableContainers
+                                                               error:nil];
+                    if (obj != nil)
+                        [requestsData addObject:obj];
+                }
+            }
+        }
+        
+        NSMutableDictionary* sd = [NSMutableDictionary dictionary];
+        
+        if (requestsData != nil)
+            sd[@"requests"]  = requestsData;
+        sd[@"network"] = networkDataDict();
+        sd[@"device"] = deviceDataDict();
+        sd[@"carrier"] = carrierDataDict();
+        sd[@"wifi"] = wifiDataDict();
+        sd[@"location"] = locationDataDict();
+        sd[@"log_events"] = logDataDict();
+        
+        for (auto& i : aParams)
+        {
+            NSString* key = [NSString stringWithUTF8String:i.first.c_str()];
+            NSString* value = [NSString stringWithUTF8String:i.second.c_str()];
+            if (key != nil && value != nil)
+                sd[key] = value;
+        }
+
+        NSData* nsData = [NSJSONSerialization dataWithJSONObject:sd
+                                                         options:NSJSONWritingPrettyPrinted
+                                                           error:nil];
+
+        return dataFromNSData(nsData);
     }
 }

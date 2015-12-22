@@ -37,7 +37,7 @@
 
 namespace rs
 {
-    Model::Model()
+    Model::Model(): mCurrentOperationMode(kRSOperationModeInnerOff)
     {
         mConfiguration             = nullptr;
         mStatsReportingTimer       = nullptr;
@@ -46,7 +46,6 @@ namespace rs
         mDataStorage               = new DataStorage;
         mSpareDomainsWhiteList     = std::vector<std::string>();
         mStatsHandler              = new StatsHandler(mDataStorage);
-        
         Configuration configuration = mDataStorage->configuration();
         
         applyConfiguration(configuration, false);
@@ -130,7 +129,7 @@ namespace rs
     
     void Model::applyConfiguration(const Configuration& aConfiguration, bool aShouldSave)
     {
-        mConfiguration = std::make_shared<Configuration>(aConfiguration);        
+        mConfiguration = std::make_shared<Configuration>(aConfiguration);
         setOperationMode(aConfiguration.operationMode);
         mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
         
@@ -179,7 +178,11 @@ namespace rs
     
     void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
     {
+        if (mCurrentOperationMode == aOperationMode)
+            return;
+
         mCurrentOperationMode = aOperationMode;
+        
         
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
