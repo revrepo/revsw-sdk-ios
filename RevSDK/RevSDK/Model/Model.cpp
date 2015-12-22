@@ -100,7 +100,7 @@ namespace rs
         std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
             
 #ifdef RS_ENABLE_DEBUG_LOGGING
-            std::cout << "Configuration loaded\n";
+            std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
 #endif
             
            if (aError.isNoError())
@@ -115,12 +115,16 @@ namespace rs
                }
                else
                {
-                   std::cout << "Configuration is not valid\n";
+#ifdef RS_ENABLE_DEBUG_LOGGING
+                   std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
+#endif
                }
            }
            else
            {
-               std::cout << "\n" << "RevSDK failed to load configuration " << aError.description();
+#ifdef RS_ENABLE_DEBUG_LOGGING
+               std::cout << "\n" << "RevSDK.Model::loadConfiguration Failed to load configuration " << aError.description();
+#endif
            }
         };
         
@@ -135,7 +139,7 @@ namespace rs
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifdef RS_ENABLE_DEBUG_LOGGING
-                std::cout<<"Model:: applying new configuretion"<<std::endl;
+                std::cout<<"RevSDK.Model:: applying new configuretion"<<std::endl;
 #endif
                 
                 mConfiguration = std::make_shared<Configuration>(aConfiguration);
@@ -195,8 +199,8 @@ namespace rs
         std::lock_guard<std::mutex> scopedLock(mLock);
         
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"Model::setOperationMode __peviousID::"<<mCurrentOperationMode<<" "
-        <<"__newID:"<<aOperationMode<<std::endl;
+        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"<<mCurrentOperationMode<<" -> "
+        <<" newModeID:"<<aOperationMode<<std::endl;
 #endif
         
         mCurrentOperationMode = aOperationMode;
@@ -293,7 +297,7 @@ namespace rs
     void Model::stopConfigurationUpdate()
     {
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"Model:: stopped configuration update"<<std::endl;
+        std::cout<<"RevSDK.Model:: stopped configuration update"<<std::endl;
 #endif
         mUpdateEnabledFlag.store(false);
     }
@@ -301,7 +305,7 @@ namespace rs
     void rs::Model::resumeConfigurationUpdate()
     {
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"Model:: resumed configuration update"<<std::endl;
+        std::cout<<"RevSDK.Model:: resumed configuration update"<<std::endl;
 #endif
         mUpdateEnabledFlag.store(true);
         {
