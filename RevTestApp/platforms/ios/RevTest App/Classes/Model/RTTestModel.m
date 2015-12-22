@@ -95,6 +95,7 @@
     mMode = kRSOperationModeOff;
     
     [RevSDK debug_setOperationMode:mMode];
+    [self stepStarted];
 }
 
 - (void)setWhiteListOption:(BOOL)aOn
@@ -142,17 +143,20 @@
 - (void)stepStarted
 {
     ++mTestsCounter;
-    NSLog(@"Start %ld", (unsigned long)mTestsCounter);
-    
-    mMode = kRSOperationModeOff;
-    
-    NSString* type = @" ";//[RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
-    NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
-    NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
-    
-    if (self.loadStartedBlock)
+    if (mTestsCounter <= mNumberOfTestsToPerform)
     {
-        self.loadStartedBlock(text);
+        NSLog(@"Start %ld", (unsigned long)mTestsCounter);
+        
+        mMode = kRSOperationModeOff;
+        
+        NSString* type = @" ";//[RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
+        NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
+        NSString* text = [NSString stringWithFormat:@"%@ %@", type, pass];
+        
+        if (self.loadStartedBlock)
+        {
+            self.loadStartedBlock(text);
+        }
     }
 }
 
@@ -190,13 +194,13 @@
     }
     
     [RevSDK debug_setOperationMode:mMode];
-    if (mTestsCounter <= mNumberOfTestsToPerform)
+    
+    bool isLastTest = (kRSOperationModeOff == mMode) && (mTestsCounter == mNumberOfTestsToPerform);
+    if (mTestsCounter <= mNumberOfTestsToPerform && !isLastTest)
     {
         if (self.restartBlock)
         {
-            self.restartBlock();
-            NSLog(@"RESTART::: %ld", (unsigned long)mTestsCounter);
-            
+            self.restartBlock(); 
         }
     }
 }
@@ -214,10 +218,7 @@
         }
         [self didFinishedTests];
     }
-    else
-    {
-        NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
-    }
+    NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
 }
 
 @end

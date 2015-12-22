@@ -12,18 +12,18 @@
 
 - (BOOL)valid
 {
-    BOOL result = NO;
+    BOOL result = YES;
     if ([self.method isEqualToString:@"GET"])
     {
-        result = [self.edgeRcvdChecksum isEqualToString:self.asisRcvdChecksum];
-        result = result && [self.errorAsIs isEqual:self.errorEdge];
+        //result = [self.edgeRcvdChecksum isEqualToString:self.asisRcvdChecksum];
+        result = result && self.errorAsIs == self.errorEdge;
     }
     else
     {
-        result = [self.asisSentChecksum isEqualToString:self.asisRcvdChecksum];
-        result = result && [self.asisRcvdChecksum isEqualToString:self.edgeSentChecksum];
-        result = result && [self.asisRcvdChecksum isEqualToString:self.edgeRcvdChecksum];
-        result = result && [self.errorAsIs isEqual:self.errorEdge];
+        //result = [self.asisSentChecksum isEqualToString:self.asisRcvdChecksum];
+        //result = result && [self.asisRcvdChecksum isEqualToString:self.edgeSentChecksum];
+        //result = result && [self.asisRcvdChecksum isEqualToString:self.edgeRcvdChecksum];
+        result = result && self.errorAsIs == self.errorEdge;
     }
     
     return result;

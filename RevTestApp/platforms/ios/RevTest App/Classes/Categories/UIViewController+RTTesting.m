@@ -149,6 +149,8 @@
         containerViewController.sdkDataLengths             = aSdkDataLengths;
         containerViewController.userInfo                   = userInfo;
         
+        containerViewController.resultSuccessFlags = aResultFlags;
+        
         [self.navigationController pushViewController:containerViewController animated:YES];
     });
 }

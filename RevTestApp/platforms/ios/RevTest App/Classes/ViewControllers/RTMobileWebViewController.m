@@ -168,7 +168,7 @@ static const NSInteger kTestsPerStep = 2;
     {
         [self loadFinished];
         self.testLeftOnThisStep--;
-        if (0 < self.testLeftOnThisStep)
+        if (0 >= self.testLeftOnThisStep)
         {
             [self stepFinished:true];
         }

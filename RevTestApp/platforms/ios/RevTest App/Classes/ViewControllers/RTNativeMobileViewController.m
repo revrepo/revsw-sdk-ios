@@ -156,7 +156,6 @@ static const NSInteger kTestsPerStep = 2;
         });
     };
     [self startTesting];
-    [self stepStarted];
     [self loadRequest:request];
 }
 
@@ -214,8 +213,9 @@ static const NSInteger kTestsPerStep = 2;
                                             NSError* error;
                                             NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:aData options:kNilOptions error:&error];
                                             NSString* data = [dictionary objectForKey:@"data"];
+                                            data = data ? data : rcvdData;
                                             
-                                            [self calculateMD5AndSave:rcvdData sent:false mode:[RevSDK operationMode]];
+                                            [self calculateMD5AndSave:data sent:false mode:[RevSDK operationMode]];
                                             
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse;
                                             if ([RevSDK operationMode] == kRSOperationModeOff)
@@ -224,7 +224,7 @@ static const NSInteger kTestsPerStep = 2;
                                             }
                                             else
                                             {
-                                                self.currentResult.errorAsIs = [httpResponse statusCode];
+                                                self.currentResult.errorEdge = [httpResponse statusCode];
                                             }
                                             
                                             [self loadFinished];

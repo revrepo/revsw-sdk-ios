@@ -14,6 +14,7 @@
 @property (nonatomic, strong) NSArray* sdkResults;
 @property (nonatomic, strong) NSArray* dataLengths;
 @property (nonatomic, strong) NSArray* sdkDataLengths;
+@property (nonatomic, strong) NSArray* resultSuccessFlags;
 @property (nonatomic, strong) NSDictionary* userInfo;
 
 @end

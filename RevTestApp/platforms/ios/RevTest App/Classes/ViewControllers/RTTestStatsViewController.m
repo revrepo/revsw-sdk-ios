@@ -30,6 +30,8 @@
                                    
                                    NSString* sdkLabelText = weakSelf.userInfo[kRTSDKLabelTextKey];
                                    
+                                   
+                                   
                                    [cell setNumberText:@""
                                             directText:@"Current"
                                                sdkText:sdkLabelText];
@@ -115,6 +117,14 @@
     
     void (^block)(RTReportCell *) = self.cellProcessBlocks[indexPath.row];
     block(cell);
+    
+    //
+//    if ([self.resultSuccessFlags count] > indexPath.row - 1)
+//    {
+//        NSNumber* numb = (NSNumber*)self.resultSuccessFlags[indexPath.row - 1];
+//        bool flag = ![numb boolValue];
+//        cell.contentView.backgroundColor = flag ? ([UIColor redColor]) : ([UIColor whiteColor]);
+//    }
     
     return cell;
 }

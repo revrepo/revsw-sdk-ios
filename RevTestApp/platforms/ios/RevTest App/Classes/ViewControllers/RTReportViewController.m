@@ -65,6 +65,13 @@
         cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%.1f)", sdkResults.doubleValue, sdkDataLength.floatValue];
     }
     
+    if ([self.resultSuccessFlags count] > indexPath.row - 1)
+    {
+        NSNumber* numb = (NSNumber*)self.resultSuccessFlags[indexPath.row - 1];
+        bool flag = ![numb boolValue];
+        cell.contentView.backgroundColor = flag ? ([UIColor redColor]) : ([UIColor whiteColor]);
+    }
+    
     return cell;
 }
 

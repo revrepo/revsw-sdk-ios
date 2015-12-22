@@ -37,12 +37,14 @@
     self.reportViewController.dataLengths    = self.dataLengths;
     self.reportViewController.sdkDataLengths = self.sdkDataLengths;
     self.reportViewController.userInfo       = self.userInfo;
+    self.reportViewController.resultSuccessFlags = self.resultSuccessFlags;
     
     self.testStatsViewController = [RTTestStatsViewController viewControllerFromXib];
     
     self.testStatsViewController.directResults = self.directResults;
     self.testStatsViewController.sdkResults    = self.sdkResults;
     self.testStatsViewController.userInfo      = self.userInfo;
+    self.testStatsViewController.resultSuccessFlags = self.resultSuccessFlags;
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                               navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
