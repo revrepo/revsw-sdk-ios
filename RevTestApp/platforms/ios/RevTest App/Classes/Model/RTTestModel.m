@@ -187,11 +187,6 @@
         mMode = kRSOperationModeOff;
     } 
     
-    if (self.loadFinishedBlock)
-    {
-        self.loadFinishedBlock();
-    }
-    
     [RevSDK debug_setOperationMode:mMode];
     
     bool isLastTest = (kRSOperationModeOff == mMode) && (mTestsCounter == mNumberOfTestsToPerform);
@@ -207,6 +202,10 @@
 - (void)stepFinished:(bool)withSuccess
 {
     [self.resultFlags addObject:[NSNumber numberWithBool:withSuccess]];
+    if (self.loadFinishedBlock)
+    {
+        self.loadFinishedBlock();
+    }
     
     if (mTestsCounter >= mNumberOfTestsToPerform)
     {

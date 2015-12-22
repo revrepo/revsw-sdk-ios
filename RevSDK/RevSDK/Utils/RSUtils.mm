@@ -206,6 +206,8 @@ namespace rs
     
     NSData* NSDataFromData(Data aData)
     {
+        if (aData.length() == 0)
+            return nil;
         return [NSData dataWithBytes:aData.bytes() length:aData.length()];
     }
     

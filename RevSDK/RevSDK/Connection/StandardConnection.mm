@@ -18,6 +18,19 @@
 #include "Utils.hpp"
 #include "Model.hpp"
 
+NSURLSession* appropriateSession()
+{
+    static __strong NSURLSession* sSession = nil;
+    if (sSession == nil)
+    {
+        NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+        sSession                           = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+    }
+    
+    return sSession;
+}
+
+
 namespace rs
 {
     void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
@@ -40,43 +53,49 @@ namespace rs
         
         [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
 
-        NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration];
-
-        // It turns out that NSURLSession doesn't support synchronous calls
-        // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
-        // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
-        // NSLog(@"Request %p headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
-        //NSLog(@"CONNECTION %@", mutableRequest.URL);
-        
-        NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
-                                            completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                                
-                                                std::shared_ptr<Connection> anchor = oAnchor;
-
-                                                NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
-                                                
-                                                if (!aError)
-                                                {
-                                                    Data data                          = dataFromNSData(aData);
-                                                    std::shared_ptr<Response> response = responseFromHTTPURLResponse(httpResponse);
+        //dispatch_async(dispatch_get_main_queue(), ^{
+//            NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+            NSURLSession* session = appropriateSession();
+            
+            // It turns out that NSURLSession doesn't support synchronous calls
+            // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
+            // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
+            // NSLog(@"Request %p headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
+            //NSLog(@"CONNECTION %@", mutableRequest.URL);
+            
+            NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
+                                                completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
+                                                    //dispatch_async(dispatch_get_main_queue(), ^{
                                                     
-                                                    aDelegate->connectionDidReceiveResponse(anchor, response);
-                                                    aDelegate->connectionDidReceiveData(anchor, data);
-                                                    aDelegate->connectionDidFinish(anchor);
-                                                }
-                                                else
-                                                {
-                                                    Error error = errorFromNSError(aError);
-                                                    aDelegate->connectionDidFailWithError(anchor, error);
-                                                }
-                                                
-                                                if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
-                                                {
-                                                    Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse);
-                                                    Model::instance()->addRequestData(requestData);
-                                                }
-                                            }];
-        [task resume];
+                                                    std::shared_ptr<Connection> anchor = oAnchor;
+                                                    
+                                                    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
+                                                    
+                                                    if (!aError)
+                                                    {
+                                                        Data data                          = dataFromNSData(aData);
+                                                        std::shared_ptr<Response> response = responseFromHTTPURLResponse(httpResponse);
+                                                        
+                                                        aDelegate->connectionDidReceiveResponse(anchor, response);
+                                                        aDelegate->connectionDidReceiveData(anchor, data);
+                                                        aDelegate->connectionDidFinish(anchor);
+                                                    }
+                                                    else
+                                                    {
+                                                        Error error = errorFromNSError(aError);
+                                                        aDelegate->connectionDidFailWithError(anchor, error);
+                                                    }
+                                                    
+                                                    if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
+                                                    {
+                                                        Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse);
+                                                        Model::instance()->addRequestData(requestData);
+                                                    }
+                                                    //});
+                                                }];
+            
+            [task resume];
+            
+        //});
     }
 }

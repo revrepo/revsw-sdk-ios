@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11E31C8E1C29D298000CE884 /* RTSearchControlView.m in Sources */ = {isa = PBXBuildFile; fileRef = 11E31C8D1C29D298000CE884 /* RTSearchControlView.m */; };
+		11E31C901C29D2AD000CE884 /* RTSearchControlView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 11E31C8F1C29D2AD000CE884 /* RTSearchControlView.xib */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -161,6 +163,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		11E31C8C1C29D298000CE884 /* RTSearchControlView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTSearchControlView.h; sourceTree = "<group>"; };
+		11E31C8D1C29D298000CE884 /* RTSearchControlView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTSearchControlView.m; sourceTree = "<group>"; };
+		11E31C8F1C29D2AD000CE884 /* RTSearchControlView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTSearchControlView.xib; sourceTree = "<group>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* RevTest App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevTest App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -803,6 +808,9 @@
 				5B7804DD1C15E241003AD4F5 /* RTNativeMobileViewController.h */,
 				5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */,
 				5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */,
+				11E31C8C1C29D298000CE884 /* RTSearchControlView.h */,
+				11E31C8D1C29D298000CE884 /* RTSearchControlView.m */,
+				11E31C8F1C29D2AD000CE884 /* RTSearchControlView.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -943,6 +951,7 @@
 				5B04C9671C0D88A300621B67 /* icon-72-hdpi.png in Resources */,
 				5B04C9841C0D88A300621B67 /* screen-ipad-landscape-2x.png in Resources */,
 				5B04C9801C0D88A300621B67 /* screen-type3.png in Resources */,
+				11E31C901C29D2AD000CE884 /* RTSearchControlView.xib in Resources */,
 				5B04C96F1C0D88A300621B67 /* icon-57.png in Resources */,
 				5B04C96E1C0D88A300621B67 /* icon-57-2x.png in Resources */,
 				5B04C98C1C0D88A300621B67 /* screen-iphone-portrait.png in Resources */,
@@ -1084,6 +1093,7 @@
 				5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */,
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
+				11E31C8E1C29D298000CE884 /* RTSearchControlView.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 				6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */,
 				302D95F114D2391D003F00A1 /* RTPhoneGapViewController.m in Sources */,

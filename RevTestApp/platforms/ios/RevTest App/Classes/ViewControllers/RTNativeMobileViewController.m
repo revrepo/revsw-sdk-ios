@@ -239,8 +239,15 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                             
                                             NSString* rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
                                             
-                                            NSError* error;
-                                            NSDictionary *dictionary = [NSJSONSerialization JSONObjectWithData:aData options:kNilOptions error:&error];
+                                            NSError* error = nil;
+                                            
+                                            NSDictionary *dictionary = nil;
+                                            if (aData != nil)
+                                            {
+                                                dictionary = [NSJSONSerialization JSONObjectWithData:aData
+                                                                                             options:NSJSONReadingMutableContainers
+                                                                                               error:&error];
+                                            }
                                             NSString* data = [dictionary objectForKey:@"data"];
                                             data = data ? data : rcvdData;
                                             

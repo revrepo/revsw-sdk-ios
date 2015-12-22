@@ -50,10 +50,9 @@ static const NSInteger kSuccessCode = 200;
     };
     
     self.restartBlock = ^{
-        
             [weakSelf performSelector:@selector(startLoading)
                        withObject:nil
-                       afterDelay:1.0];
+                       afterDelay:2.0f];
     };
     
     self.completionBlock = ^{

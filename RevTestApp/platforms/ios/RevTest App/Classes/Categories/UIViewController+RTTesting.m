@@ -103,12 +103,12 @@
     
     self.testModel.loadStartedBlock = ^(NSString* aText){
         RTPerformBlockOnMainQueue(weakSelf.loadStartedBlock);
+        [weakSelf hideHud];
         [weakSelf showHudWithText:aText];
     };
     
     self.testModel.loadFinishedBlock = ^{
         RTPerformBlockOnMainQueue(weakSelf.loadFinishedBlock);
-        [weakSelf hideHud];
     };
     
     self.testModel.restartBlock = ^{
@@ -122,6 +122,7 @@
                                dataLengths:aDataLengths
                             sdkDataLengths:aSdkDataLengths
                                resultFlags:aResultFlags];
+        [weakSelf hideHud];
     };
     
     self.testModel.cancelBlock = ^{
@@ -162,6 +163,7 @@
 
 - (void)showHudWithText:(NSString *)aText
 {
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         self.progressHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         self.progressHUD.mode = MBProgressHUDModeIndeterminate;
@@ -172,6 +174,7 @@
 
 - (void)hideHud
 {
+    
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.progressHUD hide:YES];
     });
