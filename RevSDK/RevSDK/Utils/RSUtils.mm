@@ -344,7 +344,7 @@ namespace rs
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
         NSURL* URL                          = aRequest.URL;
         NSString* URLString                 = URL.absoluteString;
-        NSInteger statusCode                = aResponse.statusCode;
+        NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
         
         dataDictionary[kRSURLKey]        = URLString;
         dataDictionary[kRSStatusCodeKey] = @(statusCode);

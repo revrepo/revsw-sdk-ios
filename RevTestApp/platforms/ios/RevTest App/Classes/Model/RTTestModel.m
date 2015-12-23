@@ -192,6 +192,7 @@
         self.loadFinishedBlock();
     }
     
+    //mMode = kRSOperationModeTransport;
     [RevSDK debug_setOperationMode:mMode];
     
     bool isLastTest = (kRSOperationModeOff == mMode) && (mTestsCounter == mNumberOfTestsToPerform);

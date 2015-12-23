@@ -91,19 +91,6 @@
                             <constraint firstItem="kHG-TZ-ECP" firstAttribute="centerX" secondItem="ShG-gh-O1J" secondAttribute="centerX" id="rvo-8t-Awo"/>
                         </constraints>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uji-Ep-5N6">
-                        <rect key="frame" x="155" y="180" width="70" height="35"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="70" id="qaR-aB-cDm"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                        <state key="normal" title="GET"/>
-                        <connections>
-                            <action selector="methodButtonPressed" destination="kC6-M5-V1L" eventType="touchUpInside" id="KXI-Fb-mxb"/>
-                        </connections>
-                    </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjk-YU-FB5">
                         <rect key="frame" x="265" y="180" width="70" height="35"/>
                         <animations/>
@@ -128,6 +115,19 @@
                         <state key="normal" title="Start"/>
                         <connections>
                             <action selector="start" destination="kC6-M5-V1L" eventType="touchUpInside" id="0Xu-tO-EYK"/>
+                        </connections>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uji-Ep-5N6">
+                        <rect key="frame" x="155" y="180" width="70" height="35"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="70" id="qaR-aB-cDm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                        <state key="normal" title="GET"/>
+                        <connections>
+                            <action selector="methodButtonPressed" destination="kC6-M5-V1L" eventType="touchUpInside" id="KXI-Fb-mxb"/>
                         </connections>
                     </button>
                 </subviews>

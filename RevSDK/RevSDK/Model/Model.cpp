@@ -241,6 +241,7 @@ namespace rs
     
     void Model::switchWhiteListOption(bool aOn)
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
        if (aOn)
        {
            mConfiguration->domainsWhiteList = mSpareDomainsWhiteList;

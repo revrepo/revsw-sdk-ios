@@ -99,4 +99,13 @@
     
 }
 
+- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+{
+    if (response != nil)
+    {
+        [[self client] URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
+    }
+    return request;
+}
+
 @end

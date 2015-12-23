@@ -17,8 +17,9 @@ namespace rs
 {
     class StandardConnection : public Connection
     {
+        void* mSessionDelegate;
        public:
-        StandardConnection(){}
+        StandardConnection() : mSessionDelegate(nullptr){}
         StandardConnection(const StandardConnection &aConnection){}
         void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
     };

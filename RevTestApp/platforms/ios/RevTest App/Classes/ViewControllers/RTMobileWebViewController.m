@@ -235,9 +235,10 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)webView:(UIWebView *)aWebView didFailLoadWithError:(NSError *)aError
 {
-    NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
+    if (aError.code == NSURLErrorCancelled) return;
     if (!aWebView.isLoading)
     {
+        NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
         [self didFinishLoadWithCode:aError.code];
     }
 }

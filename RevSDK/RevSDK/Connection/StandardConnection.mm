@@ -18,6 +18,8 @@
 #include "Utils.hpp"
 #include "Model.hpp"
 
+#import "RSURLSessionDelegate.h"
+
 namespace rs
 {
     void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
@@ -40,8 +42,14 @@ namespace rs
         
         [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
 
+        RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
+        //mSessionDelegate = (__bridge_retained void*)customDelegate;
         NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration];
+        
+        NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
+                                                                                        delegate:customDelegate
+                                                                                   delegateQueue:nullptr
+                                                           ];
 
         // It turns out that NSURLSession doesn't support synchronous calls
         // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
