@@ -17,10 +17,10 @@ namespace rs
 {
     class StandardConnection : public Connection
     {
-        void* mSessionDelegate;
        public:
-        StandardConnection() : mSessionDelegate(nullptr){}
-        StandardConnection(const StandardConnection &aConnection){}
+        StandardConnection() = default;
+        StandardConnection(const StandardConnection &aConnection) = default;
+        
         void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
     };
 }

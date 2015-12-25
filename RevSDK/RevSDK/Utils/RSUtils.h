@@ -32,6 +32,7 @@ namespace rs
     class Data;
     class Error;
     class Configuration;
+    class Connection;
     
     //version
     extern const float kRSSDKVersion;
@@ -98,7 +99,7 @@ namespace rs
     
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
-    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*);
+    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*);
     
     bool _isValidURL(std::string);
 }

@@ -69,8 +69,12 @@
 		5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */; };
 		5BEBD7301C22EB95002EC0CB /* JSONUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */; };
 		5BEBD7311C22EB95002EC0CB /* JSONUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */; };
-		6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.m */; };
+		6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */; };
 		6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */; };
+		6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DEAB1CA1C2D803C0078CE65 /* RSLocationService.h */; };
+		6DEAB1CD1C2D803C0078CE65 /* RSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAB1CB1C2D803C0078CE65 /* RSLocationService.m */; };
+		6DEAB1CF1C2D8D2B0078CE65 /* RSStaticStatsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DEAB1CE1C2D8D2B0078CE65 /* RSStaticStatsProvider.h */; };
+		6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAB1D01C2D8D5E0078CE65 /* RSStaticStatsProvider.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -150,8 +154,12 @@
 		5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONUtils.cpp; sourceTree = "<group>"; };
 		5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONUtils.hpp; sourceTree = "<group>"; };
 		5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPublicConsts.h; sourceTree = "<group>"; };
-		6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSURLSessionDelegate.m; sourceTree = "<group>"; };
+		6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLSessionDelegate.mm; sourceTree = "<group>"; };
 		6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLSessionDelegate.h; sourceTree = "<group>"; };
+		6DEAB1CA1C2D803C0078CE65 /* RSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLocationService.h; sourceTree = "<group>"; };
+		6DEAB1CB1C2D803C0078CE65 /* RSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLocationService.m; sourceTree = "<group>"; };
+		6DEAB1CE1C2D8D2B0078CE65 /* RSStaticStatsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSStaticStatsProvider.h; sourceTree = "<group>"; };
+		6DEAB1D01C2D8D5E0078CE65 /* RSStaticStatsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSStaticStatsProvider.m; sourceTree = "<group>"; };
 		88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -248,12 +256,16 @@
 		5B46D1E21C217B7200A9834C /* Stats */ = {
 			isa = PBXGroup;
 			children = (
+				6DEAB1CA1C2D803C0078CE65 /* RSLocationService.h */,
+				6DEAB1CB1C2D803C0078CE65 /* RSLocationService.m */,
 				5B46D1E31C217BC100A9834C /* StatsHandler.cpp */,
 				5B46D1E41C217BC100A9834C /* StatsHandler.hpp */,
 				5B46D1E71C217C9700A9834C /* NativeStatsHandler.h */,
 				5B46D1E81C217C9700A9834C /* NativeStatsHandler.mm */,
 				5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */,
 				5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */,
+				6DEAB1CE1C2D8D2B0078CE65 /* RSStaticStatsProvider.h */,
+				6DEAB1D01C2D8D5E0078CE65 /* RSStaticStatsProvider.m */,
 			);
 			path = Stats;
 			sourceTree = "<group>";
@@ -331,7 +343,7 @@
 				5B2F4BD21BFDD20B003DCB27 /* Data.hpp */,
 				5B2F4BD51BFE11F6003DCB27 /* Error.cpp */,
 				5B2F4BD61BFE11F6003DCB27 /* Error.hpp */,
-				6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.m */,
+				6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */,
 				6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */,
 			);
 			path = Connection;
@@ -373,6 +385,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6DEAB1CF1C2D8D2B0078CE65 /* RSStaticStatsProvider.h in Headers */,
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
 				5B46D1E61C217BC100A9834C /* StatsHandler.hpp in Headers */,
 				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
@@ -397,6 +410,7 @@
 				5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */,
 				5B54C3351BFB705B00217971 /* Protocol.hpp in Headers */,
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
+				6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */,
 				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
 				5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */,
@@ -548,13 +562,15 @@
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,
 				5B2F4BD71BFE11F6003DCB27 /* Error.cpp in Sources */,
 				5B54C32B1BFB5EF000217971 /* RSUtils.mm in Sources */,
+				6DEAB1CD1C2D803C0078CE65 /* RSLocationService.m in Sources */,
 				5B46D1E51C217BC100A9834C /* StatsHandler.cpp in Sources */,
 				5B54C32F1BFB700C00217971 /* Model.cpp in Sources */,
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
 				5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */,
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
-				6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.m in Sources */,
+				6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */,
+				6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,

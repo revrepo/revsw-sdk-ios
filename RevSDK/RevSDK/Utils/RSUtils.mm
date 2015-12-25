@@ -14,6 +14,9 @@
 #include "Data.hpp"
 #include "Error.hpp"
 #include "Configuration.hpp"
+#include "Connection.hpp"
+
+#define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
 @implementation NSURLRequest(FileRequest)
 
@@ -49,7 +52,7 @@ namespace rs
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
     NSString* const kRSRequestDataStorageKey           = @"kRSRequestDataStorageKey";
-    NSString* const kRSStatusCodeKey                   = @"status_code";
+//    NSString* const kRSStatusCodeKey                   = @"status_code";
     NSString* const kRSURLKey                          = @"url";
     NSString* const kRSOSKey                           = @"os";
     NSString* const kRSAppNameKey                      = @"app_name";
@@ -69,6 +72,24 @@ namespace rs
     NSString* const kRSDomainsProvisionedListKey       = @"domains_provisioned_list";
     NSString* const kRSDomainsWhiteListKey             = @"domains_white_list";
     NSString* const kRSDomainsBlackListKey             = @"domains_black_list";
+    
+    //request keys
+    NSString* const kRS_JKey_ConnID    = @"conn_id";
+    NSString* const kRS_JKey_Encoding    = @"cont_encoding";
+    NSString* const kRS_JKey_ContType   = @"cont_type";
+    NSString* const kRS_JKey_EndTs    = @"end_ts";
+    NSString* const kRS_JKey_FirstByteTs    = @"first_byte_ts";
+    NSString* const kRS_JKey_KeepAliveStatus    = @"keepalive_status";
+    NSString* const kRS_JKey_LocCacheStatus    = @"local_cache_status";
+    NSString* const kRS_JKey_Method    = @"method";
+    NSString* const kRS_JKey_Network    = @"network";
+    NSString* const kRS_JKey_Protocol    = @"protocol";
+    NSString* const kRS_JKey_RecDytes    = @"received_bytes";
+    NSString* const kRS_JKey_SentBytes    = @"sent_bytes";
+    NSString* const kRS_JKey_StartTs    = @"start_ts";
+    NSString* const kRS_JKey_StatusCode    = @"status_code";
+    NSString* const kRS_JKey_SuccessStatus    = @"success_status";
+    NSString* const kRS_JKey_TransportProt    = @"transport_protocol";
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
@@ -339,15 +360,63 @@ namespace rs
         return dataVector;
     }
     
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse)
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection)
     {
+        assert(aConnection);
+        
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
         NSURL* URL                          = aRequest.URL;
         NSString* URLString                 = URL.absoluteString;
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
         
-        dataDictionary[kRSURLKey]        = URLString;
-        dataDictionary[kRSStatusCodeKey] = @(statusCode);
+        dataDictionary[kRSURLKey]           = URLString;
+        dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
+        dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
+      
+        //fill with defaults
+        {
+            NSNumber *defaultVal = [NSNumber numberWithInt:0];
+            dataDictionary[kRS_JKey_Encoding] 		= @"-";
+            dataDictionary[kRS_JKey_ContType] 		= @"-";
+            dataDictionary[kRS_JKey_EndTs] 			= defaultVal;
+            dataDictionary[kRS_JKey_FirstByteTs] 	= defaultVal;
+            dataDictionary[kRS_JKey_KeepAliveStatus]= defaultVal;
+            dataDictionary[kRS_JKey_LocCacheStatus] = @"-";
+            dataDictionary[kRS_JKey_Method] 		= @"-";
+            dataDictionary[kRS_JKey_Network] 		= @"-";
+            dataDictionary[kRS_JKey_Protocol] 		= @"-";
+            dataDictionary[kRS_JKey_RecDytes] 		= defaultVal;
+            dataDictionary[kRS_JKey_SentBytes] 		= defaultVal;
+            dataDictionary[kRS_JKey_StartTs] 		= defaultVal;  
+            dataDictionary[kRS_JKey_TransportProt] 	= @"-";
+        }
+        // fetching data
+        {
+            dataDictionary[kRS_JKey_ConnID] 		= [NSNumber numberWithInt:aConnection->getID()];
+            dataDictionary[kRS_JKey_Method]         = [aRequest HTTPMethod];
+            
+            if (aResponse)
+            {
+                NSDictionary* headers = [aResponse allHeaderFields];
+//                [headers enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL* stop) {
+//                    NSLog(@"%@ => %@", key, value);
+//                }];
+                
+                dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
+                dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
+                dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
+                dataDictionary[kRS_JKey_TransportProt] = [URL scheme];
+                
+                dataDictionary[kRS_JKey_StartTs] 		= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
+                dataDictionary[kRS_JKey_RecDytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalReceived()];
+                dataDictionary[kRS_JKey_SentBytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalSent()];
+                dataDictionary[kRS_JKey_EndTs] 			= [NSNumber numberWithLongLong:aConnection->getEndTimestamp()];
+                dataDictionary[kRS_JKey_FirstByteTs] 	= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
+                
+                dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
+            }
+ 
+        }
         
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
                                                            options:NSJSONWritingPrettyPrinted

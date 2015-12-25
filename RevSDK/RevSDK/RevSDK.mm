@@ -17,10 +17,30 @@
 
 @implementation RevSDK
 
+static bool gIsInitialized = false;
+
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
-    [NSURLProtocol registerClass:[RSURLProtocol class]];
-    rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
+    if(![[NSThread currentThread] isMainThread])
+    {
+        NSException *e = [NSException
+                          exceptionWithName:@"RSInitializationException"
+                          reason:@"*** This function can only be invoked from the main thread."
+                          userInfo:nil];
+        @throw e;
+    }
+    
+    if  (!gIsInitialized)
+    {
+        [NSURLProtocol registerClass:[RSURLProtocol class]];
+        rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
+        
+        gIsInitialized = true;
+    }
+    else
+    {
+        NSLog(@"SDK is already initialized.");
+    }
 }
 
 + (void)debug_setOperationMode:(RSOperationMode)aOperationMode

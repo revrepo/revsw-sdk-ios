@@ -43,6 +43,7 @@ namespace rs
         [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
 
         RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
+        [customDelegate setConnection:oAnchor];
         //mSessionDelegate = (__bridge_retained void*)customDelegate;
         NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         
@@ -64,9 +65,16 @@ namespace rs
                                                 
                                                 std::shared_ptr<Connection> anchor = oAnchor;
                                                 
+                                                anchor->onEnd();
+                                                
                                                 NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
 
                                                 NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
+                                                
+                                                if (aData)
+                                                {
+                                                    anchor->addReceivedBytesCount([aData length]);
+                                                }
                                                 
                                                 if (!aError)
                                                 {
@@ -85,10 +93,12 @@ namespace rs
                                                 
                                                 if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
                                                 {
-                                                    Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse);
+                                                    Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get());
                                                     Model::instance()->addRequestData(requestData);
                                                 }
                                             }];
+        
+        oAnchor->onStart();
         [task resume];
     }
 }
