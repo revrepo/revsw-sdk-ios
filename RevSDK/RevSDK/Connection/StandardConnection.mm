@@ -64,7 +64,7 @@ namespace rs
                                                 
                                                 std::shared_ptr<Connection> anchor = oAnchor;
                                                 
-                                                NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
+//                                                NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
 
                                                 NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                                 

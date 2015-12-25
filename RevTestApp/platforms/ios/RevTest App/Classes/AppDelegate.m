@@ -120,7 +120,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     class_addMethod(class, @selector(setNode:), setBeingRemoved, NULL);
     class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), setBeingRemoved, NULL);
 #pragma clang diagnostic pop
-    
+
     /*NSString* path = [[NSBundle mainBundle] pathForResource:@"Stats" ofType:@"json"];
     NSString* str = [NSString stringWithContentsOfFile:path
                                               encoding:NSUTF8StringEncoding

@@ -1112,8 +1112,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1148,7 +1147,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevTest App";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a72c76fc-5c0f-4e87-9954-e40b905984f1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -1159,8 +1158,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1193,7 +1191,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevTest App";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8c70591b-c320-42f1-958a-a40b81b3c859";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
