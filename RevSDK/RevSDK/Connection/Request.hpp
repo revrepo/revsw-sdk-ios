@@ -24,6 +24,9 @@ namespace rs
        std::string mURL;
        std::map<std::string, std::string> mHeaders;
        Data mBody;
+       std::string mHost;
+       std::string mPath;
+       std::string mRest;
        
    public:
        
@@ -34,6 +37,14 @@ namespace rs
        std::string URL() const { return mURL; }
        std::map<std::string, std::string> headers() const { return mHeaders; }
        Data body() const { return mBody; }
+       
+       std::string host() const { return mHost; }
+       std::string path() const { return mPath; }
+       std::string rest() const { return mRest; }
+       
+       void setHost(const std::string& aHost) { mHost = aHost; }
+       void setPath(const std::string& aPath) { mPath = aPath; }
+       void setRest(const std::string& aRest) { mRest = aRest; }
    };
 }
 

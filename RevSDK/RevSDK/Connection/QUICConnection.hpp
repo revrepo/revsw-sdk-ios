@@ -6,21 +6,39 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-#ifndef QUICConnection_hpp
-#define QUICConnection_hpp
+#pragma once
+
+#include "QUICSessionDelegates.h"
 
 #include <stdio.h>
 
 #include "Connection.hpp"
 
-namespace rs {
-
-class QUICConnection : public Connection
+namespace rs
 {
-   public:
-    void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
-};
-    
+    class QUICConnection : public Connection, public QUICStreamDelegate
+    {
+    private:
+        QUICConnection(const QUICConnection&) {assert(false);}
+    public:
+        static void initialize();
+        QUICConnection();
+        ~QUICConnection();
+        
+        void startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate);
+        
+    private:
+        void quicSessionDidCloseStream(QUICSession* aSession,
+                                       net::QuicDataStream* aStream,
+                                       const net::SpdyHeaderBlock& aHedaers,
+                                       const std::string& aData,
+                                       int aCode);
+        void quicSessionDidChangeState(QUICSession* aSession, bool aConnected);
+    private:
+        int mId;
+        std::string mURL;
+        ConnectionDelegate* mDelegate;
+        std::shared_ptr<Connection> mAnchor;
+    };
 }
 
-#endif /* QUICConnection_hpp */

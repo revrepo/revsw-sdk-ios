@@ -9,6 +9,8 @@
 #ifndef Response_hpp
 #define Response_hpp
 
+#include "Data.hpp"
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -22,12 +24,17 @@ namespace rs
         std::string mURL;
         std::map<std::string, std::string> mHeaderFields;
         unsigned long mStatusCode;
+        Data mBody;
     public:
 
         Response(const std::string& aURL, const std::map<std::string, std::string>& aHeaderFields, unsigned long aStatusCode);
         const std::string& URL() const { return mURL; }
         const std::map<std::string, std::string>& headerFields() const { return mHeaderFields; }
         unsigned long statusCode() const { return mStatusCode; }
+        
+        void setBody(const Data& aBody) { mBody = aBody; }
+        
+        const Data& body() const { return mBody; }
     };
 }
 

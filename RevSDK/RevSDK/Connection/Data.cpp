@@ -73,8 +73,10 @@ Data& Data::operator=(const Data& aData)
 }
 
 
-std::string Data::toString()
-{    
+std::string Data::toString() const
+{
+    if (mBytes == nullptr)
+        return std::string();
     std::string result((char*)mBytes);
     result += '\0';
     return result;

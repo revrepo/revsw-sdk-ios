@@ -60,6 +60,11 @@ namespace rs
         return kRSHTTPSProtocolName;
     }
     
+    std::string quicProtocolName()
+    {
+        return kRSQUICProtocolName;
+    }
+    
     bool isValidURL(std::string aURLString)
     {
         return _isValidURL(aURLString);
