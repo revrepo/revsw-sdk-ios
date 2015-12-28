@@ -10,8 +10,10 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
-#import "RSLocationService.h"
+#import <CoreTelephony/CTCarrier.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
+#import "RSLocationService.h"
 #import "NativeStatsHandler.h"
 #import "RSStaticStatsProvider.h"
 #include "Data.hpp"
@@ -97,6 +99,29 @@ namespace rs
         return retString;
     }
     
+    CTCarrier* currentCarrier()
+    {
+        CTTelephonyNetworkInfo* network_Info = [CTTelephonyNetworkInfo new];
+        CTCarrier* carrier                   = network_Info.subscriberCellularProvider;
+        
+        return carrier;
+    }
+    
+    NSString* carrierCountryCode()
+    {
+        CTCarrier* carrier    = currentCarrier();
+        NSString* countryCode = carrier.isoCountryCode;
+
+        return countryCode;
+    }
+    
+    NSString* mcc()
+    {
+        CTCarrier* carrier = currentCarrier();
+        NSString* mcc      = carrier.mobileCountryCode;
+        
+        return mcc;
+    }
     
     NSDictionary* logDataDict()
     {
@@ -197,9 +222,9 @@ namespace rs
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
-        statsDictionary[@"country_code"] = @"_";
+        statsDictionary[@"country_code"] = carrierCountryCode();
         statsDictionary[@"device_id"] = @"_";
-        statsDictionary[@"mcc"] = @"_";
+        statsDictionary[@"mcc"] = mcc();
         statsDictionary[@"mnc"] = @"_";
         statsDictionary[@"net_operator"] = @"_";
         statsDictionary[@"network_type"] = @"_";

@@ -7,6 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
 
 #import "RevSDK.h"
 #import "RSURLProtocol.h"
@@ -41,6 +43,7 @@ static bool gIsInitialized = false;
     {
         NSLog(@"SDK is already initialized.");
     }
+    
 }
 
 + (void)debug_setOperationMode:(RSOperationMode)aOperationMode
