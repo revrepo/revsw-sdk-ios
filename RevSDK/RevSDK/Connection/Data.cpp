@@ -15,7 +15,7 @@ using namespace rs;
 Data::Data()
 {
     mLength = 0;
-    mBytes  = malloc(0);
+    mBytes  = nullptr;
 }
 
 Data::Data(const void* aBytes, size_t aLength):
@@ -25,8 +25,12 @@ Data::Data(const void* aBytes, size_t aLength):
     if (aBytes != nullptr && aLength > 0)
     {
         mLength = aLength;
-        mBytes = ::malloc(mLength);
-        ::memcpy(mBytes, aBytes, mLength);
+        void* ptr = ::malloc(mLength);
+        ::memcpy(ptr, aBytes, mLength);
+        
+        mBytes = std::shared_ptr<void>(ptr, []( void* mem ) {
+            free(mem); // custom deleter
+        });
     }
 }
 
@@ -37,8 +41,7 @@ Data::Data(const Data& aData):
     if (aData.mBytes != nullptr && aData.mLength > 0)
     {
         mLength = aData.mLength;
-        mBytes = ::malloc(mLength);
-        ::memcpy(mBytes, aData.mBytes, mLength);
+        mBytes = aData.mBytes;
     }
 }
 
@@ -46,28 +49,14 @@ Data::~Data()
 {
     if (mBytes != nullptr)
     {
-        free(mBytes);
         mBytes = nullptr;
     }
 }
 
 Data& Data::operator=(const Data& aData)
 {
-    if (this == &aData)
-        return *this;
-    
-    if (mBytes != nullptr)
-    {
-        free(mBytes);
-        mBytes = nullptr;
-    }
-    
-    if (aData.mBytes != nullptr && aData.mLength > 0)
-    {
-        mLength = aData.mLength;
-        mBytes = ::malloc(mLength);
-        ::memcpy(mBytes, aData.mBytes, mLength);
-    }
+    mLength = aData.mLength;
+    mBytes = aData.mBytes;
 
     return *this;
 }
@@ -77,7 +66,7 @@ std::string Data::toString() const
 {
     if (mBytes == nullptr)
         return std::string();
-    std::string result((char*)mBytes, length()); 
-    return result;
+    
+    return std::string((char*)mBytes.get(), length());
 }
 
