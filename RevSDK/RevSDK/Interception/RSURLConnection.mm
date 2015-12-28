@@ -66,6 +66,15 @@
             [self.delegate connection:self didFailWithError:error];
         };
         
+        
+//        std::function<void(void* aRequest, void* aResponce)> willSendRequest = [self](void* aRequest, void* aResponce){
+//            
+//            NSURLRequest* request = (__bridge NSURLRequest*)aRequest;
+//            NSURLResponse* responce = (__bridge NSURLResponse*)aResponce;
+//            
+//            [self.delegate connection:self willSendRequest:request redirectResponse:responce];
+//        };
+        
         BOOL shouldRedirect      = [self shouldRedirectRequest:aRequest];
         NSURLRequest* newRequest = (aRequest.URL.host && shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
         connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
@@ -92,5 +101,23 @@
 }
 
 
-
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

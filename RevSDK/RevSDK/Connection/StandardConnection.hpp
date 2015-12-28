@@ -18,14 +18,12 @@ namespace rs
     class StandardConnection : public Connection
     {
     public:
-        StandardConnection(const StandardConnection &aConnection);
-        void* mSessionDelegate;
-       public:
+        StandardConnection(const StandardConnection &aConnection) = delete;
         StandardConnection();
         ~StandardConnection();
+        
         void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
-    private:
-        int mId;
+    private: 
     };
 }
 

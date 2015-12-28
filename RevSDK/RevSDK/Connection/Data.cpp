@@ -77,8 +77,7 @@ std::string Data::toString() const
 {
     if (mBytes == nullptr)
         return std::string();
-    std::string result((char*)mBytes);
-    result += '\0';
+    std::string result((char*)mBytes, length()); 
     return result;
 }
 

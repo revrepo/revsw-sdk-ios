@@ -102,7 +102,7 @@
     self.testModel = [RTTestModel new];
     
     self.testModel.loadStartedBlock = ^(NSString* aText){
-        RTPerformBlockOnMainQueue(weakSelf.loadStartedBlock);
+        //RTPerformBlockOnMainQueue(weakSelf.loadStartedBlock);
         [weakSelf hideHud];
         [weakSelf showHudWithText:aText];
     };

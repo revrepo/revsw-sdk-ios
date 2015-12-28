@@ -32,8 +32,27 @@ namespace rs
     
     class Connection
     {
+    private:
+        // excuse https://en.wikipedia.org/wiki/Fetch-and-add#x86_implementation , should be much faster than locks
+        static std::atomic<int> gLastConnectionID;
+        int mConnectionID;
+        
+        int64_t mBytesSent;
+        int64_t mBytesReceived;
+        
+        int64_t mFirstByteReceivedTimestamp;
+        
+        int64_t mStartTimestamp;
+        int64_t mEndTimestamp;
+        
+        
     public:
+        Connection();
+        
         virtual void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*) = 0;
+        int          getID() { return mConnectionID;}
+        
+        
         template <class T>
         static std::shared_ptr<Connection> create()
         {
@@ -41,6 +60,20 @@ namespace rs
             result->mWeakThis = std::weak_ptr<Connection>(result);
             return result;
         }
+        
+        void addSentBytesCount(long long aCount);
+        void addReceivedBytesCount(long long aCount);
+        
+        int64_t getTotalSent() const            { return mBytesSent; }
+        int64_t getTotalReceived() const        { return mBytesReceived; }
+        
+        int64_t getStartTimestamp() const       { return mStartTimestamp; }
+        int64_t getEndTimestamp() const         { return mEndTimestamp; }
+        int64_t getFirstByteTimestamp() const   { return mFirstByteReceivedTimestamp; }
+        
+        void onEnd();
+        void onStart();
+        
     protected:
         std::weak_ptr<Connection> mWeakThis;
     };

@@ -7,7 +7,11 @@
 //
 #import <Foundation/Foundation.h>
 
-@interface RSURLSessionDelegate : NSObject <NSURLSessionTaskDelegate>
+#include <memory>
+#include "Connection.hpp"
 
+@interface RSURLSessionDelegate : NSObject <NSURLSessionDataDelegate>
+
+- (void)setConnection:(std::shared_ptr<rs::Connection>)aConnection;
 
 @end

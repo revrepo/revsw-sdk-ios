@@ -10,10 +10,13 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
+#import "RSLocationService.h"
 
 #import "NativeStatsHandler.h"
+#import "RSStaticStatsProvider.h"
 #include "Data.hpp"
 #include "RSUtils.h"
+
 
 static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
@@ -131,9 +134,12 @@ namespace rs
         CGFloat screenHeight = [UIScreen mainScreen].bounds.size.height;
         CGFloat screenWidth  = [UIScreen mainScreen].bounds.size.width;
         
-        statsDictionary[@"batt_cap"] = @"1.0";
-        statsDictionary[@"batt_status"] = @"_";
-        statsDictionary[@"batt_tech"] = @"_";
+        [[UIDevice currentDevice] setBatteryMonitoringEnabled:YES];
+        float batteryLevel = [[UIDevice currentDevice] batteryLevel];
+        
+        statsDictionary[@"batt_cap"] = [NSNumber numberWithFloat:batteryLevel*100];
+        statsDictionary[@"batt_status"] = batteryStateAsString();
+        statsDictionary[@"batt_tech"] = @"Li-Ion";
         statsDictionary[@"batt_temp"] = @"_";
         statsDictionary[@"batt_volt"] = @"_";
         statsDictionary[@"brand"] = @"_";
@@ -147,7 +153,7 @@ namespace rs
         statsDictionary[@"iccid"] = @"_";
         statsDictionary[@"imei"] = @"_";
         statsDictionary[@"imsi"] = @"_";
-        statsDictionary[@"manufacture"] = @"_";
+        statsDictionary[@"manufacture"] = @"Apple";
         statsDictionary[@"meis"] = @"_";
         statsDictionary[@"os"] = osVersion();
         statsDictionary[@"phone_number"] = @"1.0";
@@ -193,11 +199,15 @@ namespace rs
     NSDictionary* locationDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
+        RSLocationService* service = [RSLocationService sharedService];
         
-        statsDictionary[@"direction"] = @"1.0";
-        statsDictionary[@"latitude"] = @"1.0";
-        statsDictionary[@"longitude"] = @"1.0";
-        statsDictionary[@"speed"] = @"1.0";
+        float speed = service.lastLocation.location.speed;
+        float direction = service.lastLocation.direction;
+        
+        statsDictionary[@"direction"] = [NSNumber numberWithFloat:direction];
+        statsDictionary[@"latitude"]  = [NSNumber numberWithDouble:service.lastLocation.latitude];
+        statsDictionary[@"longitude"] = [NSNumber numberWithDouble:service.lastLocation.longitude];
+        statsDictionary[@"speed"]     = [NSNumber numberWithFloat:speed];
         
         return statsDictionary;
     }
@@ -329,10 +339,7 @@ namespace rs
             if (key != nil && value != nil)
                 sd[key] = value;
         }
-        // TODO::FIX CRASH
-        /*
-        Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: 'Invalid type in JSON write (__NSConcreteUUID)' 
-         */
+        
         NSData* nsData = [NSJSONSerialization dataWithJSONObject:sd
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:nil];

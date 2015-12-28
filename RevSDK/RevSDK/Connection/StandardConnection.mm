@@ -23,28 +23,12 @@
 
 using namespace rs;
 
-static int sInstanceCounter = 0;
-static std::mutex sInstanceCounterLock;
-
-StandardConnection::StandardConnection():
-    mSessionDelegate(nullptr),
-    mId(0)
+StandardConnection::StandardConnection()
 {
-    sInstanceCounterLock.lock();
-    mId = sInstanceCounter++;
-    sInstanceCounterLock.unlock();
-    NSLog(@"StandardConnection created: %d", mId);
-}
-
-StandardConnection::StandardConnection(const StandardConnection &aConnection):
-    mSessionDelegate(aConnection.mSessionDelegate)
-{
-    assert(false);
-}
+} 
 
 StandardConnection::~StandardConnection()
-{
-    NSLog(@"StandardConnection destroyed: %d", mId);
+{ 
 }
 
 void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
@@ -65,17 +49,18 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
         return;
     }
     
-    
+    oAnchor->addSentBytesCount(request.HTTPBody.length);
     [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
 
     RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
-    //mSessionDelegate = (__bridge_retained void*)customDelegate;
+        [customDelegate setConnection:oAnchor];
+        
     NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
                                                                                     delegate:customDelegate
                                                                                delegateQueue:nullptr
-                                                       ];
+                                                          ];
 
     // It turns out that NSURLSession doesn't support synchronous calls
     // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
@@ -90,10 +75,17 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                             
                                             std::shared_ptr<Connection> anchor = oAnchor;
                                             
-//                                                NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
+                                            anchor->onEnd();
+                                            
+                                            NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
 
                                             NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
-                                            
+                                        
+                                            if (aData)
+                                            {
+                                                anchor->addReceivedBytesCount([aData length]);
+                                            }
+                                                
                                             if (!aError)
                                             {
                                                 Data data                          = dataFromNSData(aData);
@@ -111,9 +103,11 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                             
                                             if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
                                             {
-                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse);
+                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get()); 
                                                 Model::instance()->addRequestData(requestData);
                                             }
                                         }];
+        
+    oAnchor->onStart();
     [task resume];
 }
