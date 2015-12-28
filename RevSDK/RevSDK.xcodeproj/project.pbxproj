@@ -79,6 +79,7 @@
 		5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BC497B61C03782B00FF0922 /* Configuration.hpp */; };
 		5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */; };
 		5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */; };
+		5BE0F8601C316E3A0012C2C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */; };
 		5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F8631C0454890087BC28 /* DataStorage.hpp */; };
 		5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F8671C0455CC0087BC28 /* DataStorage.mm */; };
 		5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F86C1C04A0C50087BC28 /* Timer.hpp */; };
@@ -178,6 +179,7 @@
 		5BC497B61C03782B00FF0922 /* Configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Configuration.hpp; sourceTree = "<group>"; };
 		5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionProxy.cpp; sourceTree = "<group>"; };
 		5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ConnectionProxy.h; sourceTree = "<group>"; };
+		5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5BE3F8631C0454890087BC28 /* DataStorage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStorage.hpp; sourceTree = "<group>"; };
 		5BE3F8671C0455CC0087BC28 /* DataStorage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataStorage.mm; sourceTree = "<group>"; };
 		5BE3F86C1C04A0C50087BC28 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BE0F8601C316E3A0012C2C1 /* SystemConfiguration.framework in Frameworks */,
 				11C961161C2D469300CDE34D /* libcrypto.a in Frameworks */,
 				45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */,
 				11C9619E1C2D469300CDE34D /* libquic.a in Frameworks */,
@@ -220,6 +223,7 @@
 		0C970DE8623DE2851A075105 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */,
 				DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */,
 			);
 			name = Frameworks;

@@ -6,6 +6,7 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#import <SystemConfiguration/CaptiveNetwork.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
@@ -42,6 +43,30 @@ namespace rs
         return [UIDevice currentDevice].systemVersion;
     }
     
+    NSString* ssid()
+    {
+        NSArray *interfaceNames = CFBridgingRelease(CNCopySupportedInterfaces());
+        
+        NSDictionary *SSIDInfo;
+       
+        
+        for (NSString *interfaceName in interfaceNames)
+        {
+            SSIDInfo = CFBridgingRelease(
+                                         CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName));
+            
+            BOOL isNotEmpty = (SSIDInfo.count > 0);
+            
+            if (isNotEmpty) {
+                break;
+            }
+        }
+        
+        NSString* retString = [NSString stringWithFormat:@"%@ (%@)", SSIDInfo[@"SSID"], SSIDInfo[@"BSSID"]];
+        
+        return retString;
+    }
+    
     NSDictionary* logDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
@@ -59,7 +84,7 @@ namespace rs
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
         statsDictionary[@"mac"] = @"_";
-        statsDictionary[@"ssid"] = @"_";
+        statsDictionary[@"ssid"] = ssid();
         statsDictionary[@"wifi_enc"] = @"_";
         statsDictionary[@"wifi_freq"] = @"_";
         statsDictionary[@"wifi_rssi"] = @"_";
