@@ -44,13 +44,13 @@ namespace rs
 
         RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
         [customDelegate setConnection:oAnchor];
-        //mSessionDelegate = (__bridge_retained void*)customDelegate;
+        
         NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
         
         NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
                                                                                         delegate:customDelegate
                                                                                    delegateQueue:nullptr
-                                                           ];
+                                                          ];
 
         // It turns out that NSURLSession doesn't support synchronous calls
         // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem

@@ -154,7 +154,7 @@ namespace rs
     
     std::vector<Data> DataStorage::loadRequestsData()
     {
-       /* NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
+        NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
         
         if (!data)
         {
@@ -166,8 +166,8 @@ namespace rs
                                                                                   format:0
                                                                                    error:nil];
         std::vector<Data> dataVector = dataNSArrayToStdVector(requestDataArray);
-        return dataVector;*/
-        
+        return dataVector;
+        /*
         NSMutableDictionary* dict = [NSMutableDictionary dictionary];
         
         dict[@"conn_id"] = @"0";
@@ -198,7 +198,7 @@ namespace rs
         
         std::vector<Data> vd = {_data};
         
-        return vd;
+        return vd;*/
     }
     
     void DataStorage::deleteRequestsData()

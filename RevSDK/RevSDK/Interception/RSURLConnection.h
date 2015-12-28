@@ -20,6 +20,8 @@
 
 - (void) connection:(nullable RSURLConnection *)connection didFailWithError:(nullable NSError *)error;
 
+//- (NSURLRequest *)connection:(nullable RSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response;
+
 @end
 
 @interface RSURLConnection : NSObject

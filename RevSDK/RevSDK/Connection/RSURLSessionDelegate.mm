@@ -53,13 +53,7 @@
 {
     auto owner = connection.lock();
     owner->addSentBytesCount(bytesSent);
-}
-
-//- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-//{
-//    auto owner = connection.lock();
-//    owner->addReceivedBytesCount([data length]);
-//}
+} 
 
 @end
 

@@ -398,9 +398,6 @@ namespace rs
             if (aResponse)
             {
                 NSDictionary* headers = [aResponse allHeaderFields];
-//                [headers enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL* stop) {
-//                    NSLog(@"%@ => %@", key, value);
-//                }];
                 
                 dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
                 dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);

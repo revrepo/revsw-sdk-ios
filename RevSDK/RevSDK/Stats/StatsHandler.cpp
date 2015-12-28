@@ -37,24 +37,7 @@ namespace rs
     
     Data StatsHandler::getStatsData()
     {
-//        std::map<std:: string, Data> map;
-//        
-//        const Data statsData    = mStatsHandler->statsData();
         const Data requestsData = mRequestStatsHandler->requestsData();
-//        const Data networkData  = mStatsHandler->networkData();
-//        const Data wifiData     = mStatsHandler->wifiData();
-//        const Data carrierData  = mStatsHandler->carrierData();
-//        const Data deviceData   = mStatsHandler->deviceData();
-//        const Data locationData = mStatsHandler->locationData();
-//        const Data logData      = mStatsHandler->logData();
-//        
-//        map[kRequestsStatsKey]  = requestsData;
-//        map["network"] = networkData;
-//        map["device"] = deviceData;
-//        map["carrier"] = carrierData;
-//        map["wifi"] = wifiData;
-//        map["location"] = locationData;
-//        map["log_events"] = logData;
         
         std::map<std::string, std::string> stringMap;
         

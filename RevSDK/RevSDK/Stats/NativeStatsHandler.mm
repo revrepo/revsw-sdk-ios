@@ -344,10 +344,7 @@ namespace rs
             if (key != nil && value != nil)
                 sd[key] = value;
         }
-        // TODO::FIX CRASH
-        /*
-        Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: 'Invalid type in JSON write (__NSConcreteUUID)' 
-         */
+        
         NSData* nsData = [NSJSONSerialization dataWithJSONObject:sd
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:nil];

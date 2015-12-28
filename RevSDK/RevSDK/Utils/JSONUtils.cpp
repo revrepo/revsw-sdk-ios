@@ -46,7 +46,7 @@ namespace rs
     
     Data jsonDataFromDataVector(std::vector<Data>& aDataVector)
     {
-        Json::Value value;
+        Json::Value value(Json::ValueType::arrayValue);
         
         for (Data& data : aDataVector)
         {

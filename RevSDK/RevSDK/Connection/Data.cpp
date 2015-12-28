@@ -75,8 +75,8 @@ Data& Data::operator=(const Data& aData)
 
 std::string Data::toString()
 {    
-    std::string result((char*)mBytes);
-    result += '\0';
+    std::string result((char*)mBytes, length());
+    //result += '\0';
     return result;
 }
 

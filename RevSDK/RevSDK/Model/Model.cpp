@@ -179,9 +179,9 @@ namespace rs
     
     void Model::reportStats()
     {
-        std::function<void(const Error& )> completion = [=](const Error& aError){
-        
-           std::cout << "Stats reported" << std::endl;
+        std::function<void(const Error& )> completion = [=](const Error& aError){ 
+            std::lock_guard<std::mutex> lockGuard(mLock);
+            std::cout << "Stats reported" << std::endl;
             if (aError.isNoError())
             {
                 mStatsHandler->deleteRequestsData();
@@ -215,7 +215,9 @@ namespace rs
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
-            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
+            
+            RSStartTimer(&Model::reportStats, mStatsReportingTimer, 18);
+            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
         }
         else
         {
