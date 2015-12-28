@@ -46,18 +46,44 @@ namespace rs
         return [UIDevice currentDevice].systemVersion;
     }
     
+    NSString* batteryStateAsString()
+    {
+        NSString* state = @"full";
+        
+        switch ([[UIDevice currentDevice] batteryState])
+        {
+                
+            case UIDeviceBatteryStateUnknown:
+                state = @"unknown";
+            case UIDeviceBatteryStateFull:
+                state = @"full";
+                break;
+                
+            case UIDeviceBatteryStateCharging:
+                state = @"charging";
+                break;
+                
+            case UIDeviceBatteryStateUnplugged:
+                state = @"unplugged";
+                break;
+                
+            default:
+                break;
+        }
+        
+        return state;
+    }
+    
     NSString* ssid()
     {
         NSArray *interfaceNames = CFBridgingRelease(CNCopySupportedInterfaces());
         
         NSDictionary *SSIDInfo;
        
-        
         for (NSString *interfaceName in interfaceNames)
         {
             SSIDInfo = CFBridgingRelease(
                                          CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName));
-            
             BOOL isNotEmpty = (SSIDInfo.count > 0);
             
             if (isNotEmpty) {
@@ -65,10 +91,12 @@ namespace rs
             }
         }
         
+       
         NSString* retString = [NSString stringWithFormat:@"%@ (%@)", SSIDInfo[@"SSID"], SSIDInfo[@"BSSID"]];
         
         return retString;
     }
+    
     
     NSDictionary* logDataDict()
     {
