@@ -11,7 +11,7 @@
 #include <ctime>
 #include "Connection.hpp"
 
-int rs::Connection::gLastConnectionID = 0;
+std::atomic<int> rs::Connection::gLastConnectionID(0);
 
 rs::Connection::Connection() : mConnectionID(gLastConnectionID),
 mBytesSent(0),
@@ -27,7 +27,7 @@ void rs::Connection::addSentBytesCount(long long aCount)
 {
     if (0 == mBytesSent)
     {
-        mFirstByteReceivedTimestamp = std::chrono::seconds(std::time(NULL)).count();
+        mFirstByteReceivedTimestamp = std::chrono::milliseconds(std::time(NULL)).count();
     }
     mBytesSent += aCount;
 }
@@ -40,14 +40,14 @@ void rs::Connection::onStart()
 {
     assert(!mStartTimestamp);
     
-    mStartTimestamp = std::chrono::seconds(std::time(NULL)).count();
+    mStartTimestamp = std::chrono::milliseconds(std::time(NULL)).count();
 }
 
 void rs::Connection::onEnd()
 {
     assert(!mEndTimestamp);
     
-    mEndTimestamp = std::chrono::seconds(std::time(NULL)).count();
+    mEndTimestamp = std::chrono::milliseconds(std::time(NULL)).count();
 }
 
 

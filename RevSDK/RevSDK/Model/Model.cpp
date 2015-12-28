@@ -50,6 +50,8 @@ namespace rs
         Configuration configuration = mDataStorage->configuration();
         
         applyConfiguration(configuration, false);
+        
+        QUICConnection::initialize();
     }
     
     Model::~Model()
@@ -79,20 +81,29 @@ namespace rs
     std::shared_ptr<Protocol>  Model::currentProtocol()
     {
         return std::make_shared<StandardProtocol>();
+        //return std::make_shared<QUICProtocol>();
     }
     
     std::shared_ptr<Connection> Model::currentConnection()
     {
-        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
-        
-            {httpsProtocolName(), Connection::create<StandardConnection>() }
-        };
+//        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
+//        
+//            {httpsProtocolName(), Connection::create<StandardConnection>() },
+//            {quicProtocolName(), Connection::create<QUICConnection>() }
+//        };
 
         std::shared_ptr<Protocol> protocol     = currentProtocol();
         std::string protocolName               = protocol.get()->protocolName();
-        std::shared_ptr<Connection> connection = connectionDictionary[protocolName];
         
-        return connection;
+        if (protocolName == httpsProtocolName())
+            return Connection::create<StandardConnection>();
+        else if (protocolName == quicProtocolName())
+            return Connection::create<QUICConnection>();
+        else
+        {
+            assert(false);
+            return nullptr;
+        }
     }
     
     void Model::loadConfiguration()
@@ -215,9 +226,7 @@ namespace rs
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
-            
-            RSStartTimer(&Model::reportStats, mStatsReportingTimer, 18);
-            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
+            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
         }
         else
         {

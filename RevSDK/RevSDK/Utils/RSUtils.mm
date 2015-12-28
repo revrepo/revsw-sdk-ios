@@ -93,6 +93,7 @@ namespace rs
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
+    const std::string kRSQUICProtocolName = "quic";
     
     std::vector<std::string> vectorFromNSArray(NSArray<NSString *>* aArray)
     {
@@ -239,6 +240,27 @@ namespace rs
         std::map<std::string, std::string> headers = stdMapFromNSDictionary(aURLRequest.allHTTPHeaderFields);
         Data body                                  = dataFromNSData(aURLRequest.HTTPBody);
         std::shared_ptr<Request> request           = std::make_shared<Request>(URLString, headers, method, body);
+        request->setHost(stdStringFromNSString(aURLRequest.URL.host));
+        request->setPath(stdStringFromNSString(aURLRequest.URL.path));
+        
+        
+//        if ([[aURLRequest.HTTPMethod lowercaseString] isEqualToString:@"get"])
+//        {
+            NSString* urlStr = aURLRequest.URL.absoluteString;
+            NSRange r = [urlStr rangeOfString:aURLRequest.URL.host];
+            r.length += r.location;
+            r.location = 0;
+        
+        std::string rString = stdStringFromNSString([urlStr stringByReplacingCharactersInRange:r withString:@""]);
+        if (rString[rString.size() - 1] != '/')
+            rString += '/';
+            request->setRest(rString);
+        
+//        }
+//        else
+//        {
+//            request->setRest(request->path());
+//        }
         
         return request;
     }

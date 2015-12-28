@@ -33,7 +33,8 @@ namespace rs
     class Connection
     {
     private:
-        static int gLastConnectionID;
+        // excuse https://en.wikipedia.org/wiki/Fetch-and-add#x86_implementation , should be much faster than locks
+        static std::atomic<int> gLastConnectionID;
         int mConnectionID;
         
         int64_t mBytesSent;

@@ -46,14 +46,14 @@
     }
 }
 // only for put and post
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-             didSendBodyData:(int64_t)bytesSent
-              totalBytesSent:(int64_t)totalBytesSent
-    totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
-{
-    auto owner = connection.lock();
-    owner->addSentBytesCount(bytesSent);
-} 
+//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
+//             didSendBodyData:(int64_t)bytesSent
+//              totalBytesSent:(int64_t)totalBytesSent
+//    totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
+//{
+//    auto owner = connection.lock();
+//    owner->addSentBytesCount(bytesSent);
+//} 
 
 @end
 

@@ -17,11 +17,13 @@ namespace rs
 {
     class StandardConnection : public Connection
     {
-       public:
-        StandardConnection() = default;
-        StandardConnection(const StandardConnection &aConnection) = default;
+    public:
+        StandardConnection(const StandardConnection &aConnection) = delete;
+        StandardConnection();
+        ~StandardConnection();
         
         void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
+    private: 
     };
 }
 

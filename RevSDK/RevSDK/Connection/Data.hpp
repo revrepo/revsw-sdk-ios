@@ -23,10 +23,11 @@ namespace rs
         Data(const Data& aData);
         ~Data();
         Data& operator=(const Data& aData);
-        std::string toString();
+        std::string toString() const;
         void* bytes() { return mBytes; }
         const void* bytes() const { return mBytes; }
         size_t length() const { return mLength; }
+        
     private:
         void* mBytes;
         size_t mLength;
