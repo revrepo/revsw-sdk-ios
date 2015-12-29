@@ -18,6 +18,7 @@
 #import "Response.hpp"
 #import "Error.hpp"
 #import "Model.hpp"
+#import "Request.hpp"
 
 @interface RSURLConnection ()
 {
@@ -75,9 +76,11 @@
 //            [self.delegate connection:self willSendRequest:request redirectResponse:responce];
 //        };
         
-        BOOL shouldRedirect      = [self shouldRedirectRequest:aRequest];
-        NSURLRequest* newRequest = (aRequest.URL.host && shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
-        connectionProxy          = std::make_shared<rs::ConnectionProxy>(rs::requestFromURLRequest(newRequest));
+        BOOL shouldRedirect                  = [self shouldRedirectRequest:aRequest];
+        NSURLRequest* newRequest             = (aRequest.URL.host && shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
+        std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
+        request->setOriginalScheme(rs::stdStringFromNSString(aRequest.URL.scheme));
+        connectionProxy = std::make_shared<rs::ConnectionProxy>(request);
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     

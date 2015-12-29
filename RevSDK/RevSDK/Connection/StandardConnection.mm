@@ -101,9 +101,10 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                                 aDelegate->connectionDidFailWithError(anchor, error);
                                             }
                                             
-                                            if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
+                                            if (Model::instance()->shouldCollectRequestsData())
                                             {
-                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get()); 
+                                                NSString* originalScheme = NSStringFromStdString(aRequest->originalScheme());
+                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get(), originalScheme);
                                                 Model::instance()->addRequestData(requestData);
                                             }
                                         }];

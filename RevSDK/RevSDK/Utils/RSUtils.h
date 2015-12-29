@@ -101,7 +101,7 @@ namespace rs
     
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
-    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*);
+    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*, NSString*);
     
     bool _isValidURL(std::string);
 }
