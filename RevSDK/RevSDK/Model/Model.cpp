@@ -190,9 +190,11 @@ namespace rs
     
     void Model::reportStats()
     {
-        std::function<void(const Error& )> completion = [=](const Error& aError){ 
-            std::lock_guard<std::mutex> lockGuard(mLock);
-            if (aError.isNoError())
+        bool hasDataToSend = true;
+        do
+        {
+            ReportTransactionHanle statsData;
+            
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
                 statsData = mStatsHandler->createSendTransaction(this->mConfiguration->statsReportingMaxRequests);
