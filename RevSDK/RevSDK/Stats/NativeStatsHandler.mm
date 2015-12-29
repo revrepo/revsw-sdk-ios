@@ -141,6 +141,15 @@ namespace rs
                                     @"i386":     @"iPhone Simulator",
                                     @"x86_64":   @"iPad Simulator",
                                     
+                                    
+                                    @"AppleTV2,1" : @"A1378",
+                                    @"AppleTV3,1" : @"A1427",
+                                    @"AppleTV3,2" : @"A1469",
+                                    @"AppleTV5,3" : @"A1625",
+                                    
+                                    @"Watch1,1" : @"A1553",
+                                    @"Watch1,2" : @"A1554/A1638",
+                                    
                                     @"iPhone1,1":    @"A1203",
                                     @"iPhone1,2":    @"A1241/A1324",
                                     @"iPhone2,1":    @"A1303/A1325",
@@ -180,6 +189,8 @@ namespace rs
                                     @"iPad4,2":  @"A1475",
                                     @"iPad4,3":  @"A1476",
                                     
+                                    @"iPad5,1":  @"A1538",
+                                    @"iPad5,2":  @"A1550",
                                     @"iPad5,3":  @"A1566",
                                     @"iPad5,4":  @"A1567",
                                     
@@ -190,6 +201,9 @@ namespace rs
                                     @"iPad4,7":  @"A1599",
                                     @"iPad4,8":  @"A1600",
                                     @"iPad4,9":  @"A1601",
+                                    
+                                    @"iPad6,7" : @"A1584",
+                                    @"iPad6,8" : @"A1652",
                                     
                                     @"iPod1,1":  @"A1213",
                                     @"iPod2,1":  @"A1288/A1319",
