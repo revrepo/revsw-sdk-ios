@@ -74,6 +74,8 @@ namespace rs
         void onEnd();
         void onStart();
         
+        virtual std::string edgeTransport()const = 0;
+        
     protected:
         std::weak_ptr<Connection> mWeakThis;
     };

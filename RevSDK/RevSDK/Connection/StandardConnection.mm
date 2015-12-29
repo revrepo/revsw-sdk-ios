@@ -112,3 +112,8 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     oAnchor->onStart();
     [task resume];
 }
+
+std::string StandardConnection::edgeTransport()const
+{
+    return kRSHTTPSProtocolName;
+}

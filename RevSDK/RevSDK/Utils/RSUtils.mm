@@ -92,6 +92,7 @@ namespace rs
     NSString* const kRS_JKey_SuccessStatus    = @"success_status";
     NSString* const kRS_JKey_TransportProt    = @"transport_protocol";
     NSString* const kRS_JKey_Destination = @"destination";
+    NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
@@ -407,7 +408,8 @@ namespace rs
             dataDictionary[kRS_JKey_SentBytes] 		= defaultVal;
             dataDictionary[kRS_JKey_StartTs] 		= defaultVal;  
             dataDictionary[kRS_JKey_TransportProt] 	= @"-";
-            dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
+            dataDictionary[kRS_JKey_Destination]    = @"_";
+            dataDictionary[kRS_JKey_EdgeTransport]  = @"_";
         }
         // fetching data
         {
@@ -430,6 +432,8 @@ namespace rs
                 dataDictionary[kRS_JKey_FirstByteTs] 	= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
+                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
+                dataDictionary[kRS_JKey_EdgeTransport]  = NSStringFromStdString(aConnection->edgeTransport());
             }
         }
         
