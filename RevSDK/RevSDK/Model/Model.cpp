@@ -190,18 +190,41 @@ namespace rs
     
     void Model::reportStats()
     {
-        std::function<void(const Error& )> completion = [=](const Error& aError){ 
-            std::lock_guard<std::mutex> lockGuard(mLock);
-            std::cout << "Stats reported" << std::endl;
-            if (aError.isNoError())
+        bool hasDataToSend = true;
+        do
+        {
+            ReportTransactionHanle statsData;
             {
-                mStatsHandler->deleteRequestsData();
+                std::lock_guard<std::mutex> lockGuard(mLock);
+                statsData = mStatsHandler->createSendTransaction(this->mConfiguration->statsReportingMaxRequests);
+                hasDataToSend = mStatsHandler->hasRequestsData();
             }
-        };
-        
-        Data statsData = mStatsHandler->getStatsData();
-        
-        mNetwork->sendStats(statsData, completion);
+            
+            std::function<void(const Error& )> completion = [=](const Error& aError){
+                std::lock_guard<std::mutex> lockGuard(mLock);
+    #ifdef RS_ENABLE_DEBUG_LOGGING
+                std::cout << "Stats reported" << std::endl;
+    #endif
+                if (aError.isNoError())
+                {
+                    if (statsData.cbOnSuccess)
+                    {
+                        statsData.cbOnSuccess();
+                    }
+                }
+                else
+                {
+                    if (statsData.cbOnFail)
+                    {
+                        statsData.cbOnFail();
+                    } 
+                }
+            };
+            assert(statsData.Buffer.length());
+            
+            mNetwork->sendStats(statsData.Buffer, completion);
+        }
+        while (hasDataToSend);
     }
     
     void Model::initialize(std::string aSDKKey)
@@ -226,7 +249,8 @@ namespace rs
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
-            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
+            RSStartTimer(&Model::reportStats, mStatsReportingTimer, 22);
+            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
         }
         else
         {
@@ -309,7 +333,7 @@ namespace rs
     
     void rs::Model::addRequestData(const Data& aRequestData)
     {
-        std::lock_guard<std::mutex> scopedLock(mLock);
+        std::lock_guard<std::mutex> lockGuard(mLock);
         mStatsHandler->addRequestData(aRequestData);
     }
     

@@ -35,9 +35,9 @@ namespace rs
         mStatsReportingLevel = aReportingLevel;
     }
     
-    Data StatsHandler::getStatsData()
+    ReportTransactionHanle StatsHandler::createSendTransaction(int aRequestCount)
     {
-        const Data requestsData = mRequestStatsHandler->requestsData();
+        ReportTransactionHanle requestsData = mRequestStatsHandler->requestsData(aRequestCount);
         
         std::map<std::string, std::string> stringMap;
         
@@ -48,16 +48,20 @@ namespace rs
         
 //        Data wholeData = jsonDataFromDataMap(map, stringMap);
 //        return wholeData;
-        return mStatsHandler->allData(requestsData, stringMap);
+        auto data = mStatsHandler->allData(requestsData.Buffer, stringMap);
+        
+        requestsData.Buffer = data;
+        
+        return requestsData;
+    }
+    
+    bool StatsHandler::hasRequestsData() const
+    {
+        return mRequestStatsHandler->hasData();
     }
     
     void StatsHandler::addRequestData(const Data& aRequestData)
     {
         mRequestStatsHandler->addNewRequestData(aRequestData);
-    }
-    
-    void StatsHandler::deleteRequestsData()
-    {
-        mRequestStatsHandler->deleteRequestsData();
     }
 }

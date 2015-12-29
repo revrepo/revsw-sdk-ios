@@ -152,6 +152,24 @@ namespace rs
         saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
     
+    void DataStorage::saveRequestDataVec(const std::vector<Data>& aRequestDataVec)
+    {
+        NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
+        NSArray* requestDataArray        = savedData ? [NSPropertyListSerialization propertyListWithData:savedData
+                                                                                                 options:NSPropertyListImmutable
+                                                                                                  format:0
+                                                                                                   error:nil] : @[];
+        NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
+        
+        for (auto it: aRequestDataVec)
+        {
+            NSData* data  = NSDataFromData(it);
+            [mutableDataArray addObject:data];
+        }
+        
+        saveObject(mutableDataArray, kRSRequestDataStorageKey);
+    }
+    
     std::vector<Data> DataStorage::loadRequestsData()
     {
         NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
