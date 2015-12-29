@@ -358,11 +358,6 @@ namespace rs
         return URLWithComponents(kRSHTTPSProtocolName, kRSRevLoadConfigurationHost, path);
     }
     
-    std::string _reportStatsURL()
-    {
-        return "https://stats-api.revsw.net/v1/stats/apps";//URLWithPath(kRSReportStatsEndPoint);
-    }
-    
     std::vector<Data> dataNSArrayToStdVector(NSArray * aArray)
     {
         std::vector<Data> dataVector = std::vector<Data>();

@@ -155,6 +155,7 @@ namespace rs
                 
                 mConfiguration = std::make_shared<Configuration>(aConfiguration);
                 mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
+                mNetwork->setStatsReportingURL(aConfiguration.statsReportingURL);
             }
             setOperationMode(aConfiguration.operationMode);
         }
@@ -192,7 +193,6 @@ namespace rs
     {
         std::function<void(const Error& )> completion = [=](const Error& aError){ 
             std::lock_guard<std::mutex> lockGuard(mLock);
-            std::cout << "Stats reported" << std::endl;
             if (aError.isNoError())
             {
                 mStatsHandler->deleteRequestsData();
@@ -222,7 +222,7 @@ namespace rs
         
         mCurrentOperationMode = aOperationMode;
         
-        
+        std::cout << mConfiguration->statsReportingInterval;
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {

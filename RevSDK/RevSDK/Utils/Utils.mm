@@ -40,11 +40,6 @@ namespace rs
         return _loadConfigurationURL(aSDKKey);
     }
     
-    std::string reportStatsURL()
-    {
-        return _reportStatsURL();
-    }
-    
     std::string errorDescriptionKey()
     {
         return stdStringFromNSString(NSLocalizedDescriptionKey);

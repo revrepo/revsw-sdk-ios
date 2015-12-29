@@ -7,6 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import <CoreTelephony/CTCarrier.h>
 
 #import "RevSDK.h"
 #import "RSURLProtocol.h"
@@ -14,6 +16,17 @@
 #import "Model.hpp"
 #import "RSUtils.h"
 #import "NSURLSessionConfiguration+RSUtils.h"
+
+#import <sys/utsname.h>
+
+NSString* deviceName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
 
 @implementation RevSDK
 

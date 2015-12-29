@@ -10,8 +10,10 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
-#import "RSLocationService.h"
+#import <CoreTelephony/CTCarrier.h>
+#import <CoreTelephony/CTTelephonyNetworkInfo.h>
 
+#import "RSLocationService.h"
 #import "NativeStatsHandler.h"
 #import "RSStaticStatsProvider.h"
 #include "Data.hpp"
@@ -39,6 +41,199 @@ namespace rs
         
         return [NSString stringWithCString:systemInfo.machine
                                   encoding:NSUTF8StringEncoding];
+    }
+    
+    NSString* fullDeviceName()
+    {
+        NSString* device = deviceName();
+        
+        NSDictionary *commonNamesDictionary =
+        @{
+          @"i386":     @"iPhone Simulator",
+          @"x86_64":   @"iPad Simulator",
+          
+          @"AppleTV2,1" : @"Apple TV 2G",
+          @"AppleTV3,1" : @"Apple TV 3G",
+          @"AppleTV3,2" : @"Apple TV 3G",
+          @"AppleTV5,3" : @"Apple TV 4G",
+          
+          @"Watch1,1" : @"Apple Watch",
+          @"Watch1,2" : @"Apple Watch",
+          
+          @"iPhone1,1":    @"iPhone",
+          @"iPhone1,2":    @"iPhone 3G",
+          @"iPhone2,1":    @"iPhone 3GS",
+          @"iPhone3,1":    @"iPhone 4",
+          @"iPhone3,2":    @"iPhone 4(Rev A)",
+          @"iPhone3,3":    @"iPhone 4(CDMA)",
+          @"iPhone4,1":    @"iPhone 4S",
+          @"iPhone5,1":    @"iPhone 5(GSM)",
+          @"iPhone5,2":    @"iPhone 5(GSM+CDMA)",
+          @"iPhone5,3":    @"iPhone 5c(GSM)",
+          @"iPhone5,4":    @"iPhone 5c(GSM+CDMA)",
+          @"iPhone6,1":    @"iPhone 5s(GSM)",
+          @"iPhone6,2":    @"iPhone 5s(GSM+CDMA)",
+          
+          @"iPhone7,1":    @"iPhone 6+ (GSM+CDMA)",
+          @"iPhone7,2":    @"iPhone 6 (GSM+CDMA)",
+          
+          @"iPhone8,1":    @"iPhone 6S (GSM+CDMA)",
+          @"iPhone8,2":    @"iPhone 6S+ (GSM+CDMA)",
+          
+          @"iPad1,1":  @"iPad",
+          @"iPad2,1":  @"iPad 2(WiFi)",
+          @"iPad2,2":  @"iPad 2(GSM)",
+          @"iPad2,3":  @"iPad 2(CDMA)",
+          @"iPad2,4":  @"iPad 2(WiFi Rev A)",
+          @"iPad2,5":  @"iPad Mini 1G (WiFi)",
+          @"iPad2,6":  @"iPad Mini 1G (GSM)",
+          @"iPad2,7":  @"iPad Mini 1G (GSM+CDMA)",
+          @"iPad3,1":  @"iPad 3(WiFi)",
+          @"iPad3,2":  @"iPad 3(GSM+CDMA)",
+          @"iPad3,3":  @"iPad 3(GSM)",
+          @"iPad3,4":  @"iPad 4(WiFi)",
+          @"iPad3,5":  @"iPad 4(GSM)",
+          @"iPad3,6":  @"iPad 4(GSM+CDMA)",
+          
+          @"iPad4,1":  @"iPad Air(WiFi)",
+          @"iPad4,2":  @"iPad Air(GSM)",
+          @"iPad4,3":  @"iPad Air(GSM+CDMA)",
+          
+          @"iPad5,3":  @"iPad Air 2 (WiFi)",
+          @"iPad5,4":  @"iPad Air 2 (GSM+CDMA)",
+          
+          @"iPad4,4":  @"iPad Mini 2G (WiFi)",
+          @"iPad4,5":  @"iPad Mini 2G (GSM)",
+          @"iPad4,6":  @"iPad Mini 2G (GSM+CDMA)",
+          
+          @"iPad4,7":  @"iPad Mini 3G (WiFi)",
+          @"iPad4,8":  @"iPad Mini 3G (GSM)",
+          @"iPad4,9":  @"iPad Mini 3G (GSM+CDMA)",
+          
+          @"iPad5,1" : @"iPad Mini 4 (WiFi)",
+          @"iPad5,2" : @"iPad Mini 4 (GSM)",
+          
+          @"iPad6,7" : @"iPad Pro",
+          @"iPad6,8" : @"iPad Pro",
+          
+          @"iPod1,1":  @"iPod 1st Gen",
+          @"iPod2,1":  @"iPod 2nd Gen",
+          @"iPod3,1":  @"iPod 3rd Gen",
+          @"iPod4,1":  @"iPod 4th Gen",
+          @"iPod5,1":  @"iPod 5th Gen",
+          @"iPod7,1":  @"iPod 6th Gen",
+          };
+        
+        NSString *deviceName = commonNamesDictionary[device];
+        
+        if (deviceName == nil) {
+            deviceName = device;
+        }
+        
+        return deviceName;
+    }
+    
+    NSString* modelName()
+    {
+         NSString* device = deviceName();
+        
+        NSDictionary* modelDict = @{
+                                    @"i386":     @"iPhone Simulator",
+                                    @"x86_64":   @"iPad Simulator",
+                                    
+                                    @"iPhone1,1":    @"A1203",
+                                    @"iPhone1,2":    @"A1241/A1324",
+                                    @"iPhone2,1":    @"A1303/A1325",
+                                    @"iPhone3,1":    @"A1332",
+                                    @"iPhone3,2":    @"A1332",
+                                    @"iPhone3,3":    @"A1349",
+                                    @"iPhone4,1":    @"A1387/A1431",
+                                    @"iPhone5,1":    @"A1428",
+                                    @"iPhone5,2":    @"A1429/A1442",
+                                    @"iPhone5,3":    @"A1456/A1532",
+                                    @"iPhone5,4":    @"A1507/A1516/A1526/A1529",
+                                    @"iPhone6,1":    @"A1453/A1533",
+                                    @"iPhone6,2":    @"A1457/A1518/A1528/A1530",
+                                    
+                                    @"iPhone7,1":    @"A1522/A1524",
+                                    @"iPhone7,2":    @"A1549/A1586",
+                                    
+                                    @"iPhone8,1":    @"A1633/A1688/A1691/A1700",
+                                    @"iPhone8,2":    @"A1634/A1687/A1690/A1699",
+                                    
+                                    @"iPad1,1":  @"A1219/A1337",
+                                    @"iPad2,1":  @"A1395",
+                                    @"iPad2,2":  @"A1396",
+                                    @"iPad2,3":  @"A1397",
+                                    @"iPad2,4":  @"A1395",
+                                    @"iPad2,5":  @"A1432",
+                                    @"iPad2,6":  @"A1454",
+                                    @"iPad2,7":  @"A1455",
+                                    @"iPad3,1":  @"A1416",
+                                    @"iPad3,2":  @"A1403",
+                                    @"iPad3,3":  @"A1430",
+                                    @"iPad3,4":  @"A1458",
+                                    @"iPad3,5":  @"A1459",
+                                    @"iPad3,6":  @"A1460",
+                                    
+                                    @"iPad4,1":  @"A1474",
+                                    @"iPad4,2":  @"A1475",
+                                    @"iPad4,3":  @"A1476",
+                                    
+                                    @"iPad5,3":  @"A1566",
+                                    @"iPad5,4":  @"A1567",
+                                    
+                                    @"iPad4,4":  @"A1489",
+                                    @"iPad4,5":  @"A1490",
+                                    @"iPad4,6":  @"A1491",
+                                    
+                                    @"iPad4,7":  @"A1599",
+                                    @"iPad4,8":  @"A1600",
+                                    @"iPad4,9":  @"A1601",
+                                    
+                                    @"iPod1,1":  @"A1213",
+                                    @"iPod2,1":  @"A1288/A1319",
+                                    @"iPod3,1":  @"A1318",
+                                    @"iPod4,1":  @"A1367",
+                                    @"iPod5,1":  @"A1421",
+                                    @"iPod7,1":  @"A1574",
+                               };
+        
+        NSString* model = modelDict[device];
+        
+        if (!model)
+        {
+            model = device;
+        }
+        
+        return model;
+    }
+    
+    NSString* deviceModel()
+    {
+        NSString* device = deviceName();
+        NSString* model  = modelName();
+        
+        return [NSString stringWithFormat:@"%@ %@", device, model];
+    }
+    
+    NSString* phoneType()
+    {
+        NSString* fullName    = fullDeviceName();
+        NSString* GSMPlusCDMA = @"GSM+CDMA";
+        NSString* GSM         = @"GSM";
+        NSString* CDMA        = @"CDMA";
+        NSString* wifi        = @"WiFi";
+        
+        for (NSString* string in @[GSMPlusCDMA, GSM, CDMA, wifi])
+        {
+            if ([fullName rangeOfString:string].location != NSNotFound)
+            {
+                return string;
+            }
+        }
+        
+        return @"_";
     }
     
     NSString* osVersion()
@@ -97,6 +292,28 @@ namespace rs
         return retString;
     }
     
+    NSString* processCarrierName(NSString* aCarrierName)
+    {
+        if (!aCarrierName || [aCarrierName isEqualToString:@"Carrier"])
+        {
+            return @"_";
+        }
+        
+        return aCarrierName;
+    }
+    
+    NSString* radioAccessTechnology()
+    {
+        CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
+        NSString* networkType                 = telephonyInfo.currentRadioAccessTechnology;
+        
+        if (!networkType)
+        {
+            return @"_";
+        }
+        
+        return [networkType stringByReplacingOccurrencesOfString:@"CTRadioAccessTechnology" withString:@""];
+    }
     
     NSDictionary* logDataDict()
     {
@@ -176,7 +393,7 @@ namespace rs
         statsDictionary[@"cpu_freq"] = @"_";
         statsDictionary[@"cpu_number"] = @"1.0";
         statsDictionary[@"cpu_sub"] = @"0";
-        statsDictionary[@"device"] = deviceName();
+        statsDictionary[@"device"] = deviceModel();
         statsDictionary[@"hight"] = [NSString stringWithFormat:@"%f", screenHeight];
         statsDictionary[@"iccid"] = @"_";
         statsDictionary[@"imei"] = @"_";
@@ -197,13 +414,16 @@ namespace rs
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
-        statsDictionary[@"country_code"] = @"_";
+        CTTelephonyNetworkInfo* network_Info = [CTTelephonyNetworkInfo new];
+        CTCarrier* carrier                   = network_Info.subscriberCellularProvider;
+        
+        statsDictionary[@"country_code"] = carrier.isoCountryCode;
         statsDictionary[@"device_id"] = @"_";
-        statsDictionary[@"mcc"] = @"_";
-        statsDictionary[@"mnc"] = @"_";
-        statsDictionary[@"net_operator"] = @"_";
-        statsDictionary[@"network_type"] = @"_";
-        statsDictionary[@"phone_type"] = @"_";
+        statsDictionary[@"mcc"] = carrier.mobileCountryCode;
+        statsDictionary[@"mnc"] = carrier.mobileNetworkCode;
+        statsDictionary[@"net_operator"] = processCarrierName(carrier.carrierName);
+        statsDictionary[@"network_type"] = radioAccessTechnology();
+        statsDictionary[@"phone_type"] = phoneType();
         statsDictionary[@"rssi"] = @"1.0";
         statsDictionary[@"rssi_avg"] = @"1.0";
         statsDictionary[@"rssi_best"] = @"1.0";

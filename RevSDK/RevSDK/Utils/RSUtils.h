@@ -97,7 +97,6 @@ namespace rs
     NSError* NSErrorFromError(Error aError);
     
     std::string _loadConfigurationURL(const std::string&);
-    std::string _reportStatsURL();
     
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
