@@ -53,7 +53,6 @@ namespace rs
     
     void Network::sendStats(const Data& aStatsData, std::function<void(const Error&)> aCompletionBlock)
     {
-        std::string URL = reportStatsURL();
         std::function<void(const Data&, const Error&)> c = [=](const Data& aData, const Error& aError){
             
             if (aCompletionBlock)
@@ -62,7 +61,7 @@ namespace rs
             }
         };
         
-        performRequest(URL, aStatsData, c);
+        performRequest(mStatsReportingURL, aStatsData, c);
     }
 }
 

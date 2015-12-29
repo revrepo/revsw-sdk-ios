@@ -17,6 +17,17 @@
 #import "RSUtils.h"
 #import "NSURLSessionConfiguration+RSUtils.h"
 
+#import <sys/utsname.h>
+
+NSString* deviceName()
+{
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
+
 @implementation RevSDK
 
 static bool gIsInitialized = false;
@@ -43,7 +54,6 @@ static bool gIsInitialized = false;
     {
         NSLog(@"SDK is already initialized.");
     }
-    
 }
 
 + (void)debug_setOperationMode:(RSOperationMode)aOperationMode
