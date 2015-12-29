@@ -71,6 +71,7 @@
 		5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3431BFB7AE200217971 /* StandardConnection.hpp */; };
 		5B54C3481BFB7B8700217971 /* QUICConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3461BFB7B8700217971 /* QUICConnection.mm */; };
 		5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3471BFB7B8700217971 /* QUICConnection.hpp */; };
+		5B664F751C318B3E00B04C6B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B664F741C318B3E00B04C6B /* CoreTelephony.framework */; };
 		5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */; };
 		5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */; };
 		5B8FEAF41C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */; };
@@ -176,6 +177,7 @@
 		5B54C3431BFB7AE200217971 /* StandardConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StandardConnection.hpp; sourceTree = "<group>"; };
 		5B54C3461BFB7B8700217971 /* QUICConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICConnection.mm; sourceTree = "<group>"; };
 		5B54C3471BFB7B8700217971 /* QUICConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QUICConnection.hpp; sourceTree = "<group>"; };
+		5B664F741C318B3E00B04C6B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLRequestProcessor.h; sourceTree = "<group>"; };
 		5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLRequestProcessor.mm; sourceTree = "<group>"; };
 		5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+RSUtils.h"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B664F751C318B3E00B04C6B /* CoreTelephony.framework in Frameworks */,
 				5BE0F8601C316E3A0012C2C1 /* SystemConfiguration.framework in Frameworks */,
 				11C961161C2D469300CDE34D /* libcrypto.a in Frameworks */,
 				45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */,
@@ -234,6 +237,7 @@
 		0C970DE8623DE2851A075105 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B664F741C318B3E00B04C6B /* CoreTelephony.framework */,
 				5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */,
 				DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */,
 			);

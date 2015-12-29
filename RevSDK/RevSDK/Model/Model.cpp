@@ -154,6 +154,7 @@ namespace rs
                 
                 mConfiguration = std::make_shared<Configuration>(aConfiguration);
                 mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
+                mNetwork->setStatsReportingURL(aConfiguration.statsReportingURL);
             }
             setOperationMode(aConfiguration.operationMode);
         }
@@ -193,6 +194,7 @@ namespace rs
         do
         {
             ReportTransactionHanle statsData;
+            
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
@@ -248,7 +250,7 @@ namespace rs
         
         mCurrentOperationMode = aOperationMode;
         
-        
+        std::cout << mConfiguration->statsReportingInterval;
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
