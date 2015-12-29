@@ -13,6 +13,11 @@
 #include <vector>
 #include <memory>
 
+#include <mutex>
+#include <atomic>
+
+#include "ReportTransaction.h"
+
 namespace rs
 {
     class Data;
@@ -20,8 +25,19 @@ namespace rs
     
     class RequestStatsHandler
     {
+        void deleteRequestsData();
+        
+        //std::mutex mLock;
+        
         std::weak_ptr<DataStorage> mDataStorage;
         std::vector<Data> mRequestsDataVector;
+        
+        std::vector<Transaction> mSentData;
+        
+        void restoreTransaction(const int64_t key);
+        void deleteTransaction (const int64_t key);
+        
+        Transaction createTransaction(int32_t aReqestsCountPerTransact);
         
     public:
         
@@ -29,8 +45,13 @@ namespace rs
         ~RequestStatsHandler(){};
         
         void addNewRequestData(const Data&);
-        Data requestsData();
-        void deleteRequestsData();
+        
+        ReportTransactionHanle requestsData(int32_t aRequestCount);
+        
+        bool hasData() const
+        {
+            return !mRequestsDataVector.empty();
+        }
     };
 }
 

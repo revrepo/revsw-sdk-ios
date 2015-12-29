@@ -12,31 +12,33 @@
 #include <stdio.h>
 #include <memory>
 #include "Utils.hpp"
+#include "Data.hpp"
+#include "ReportTransaction.h"
 
 namespace rs
 {
     class NativeStatsHandler;
-    class Data;
     class DataStorage;
     class RequestStatsHandler;
     
     class StatsHandler
-    {
+    {        
         std::unique_ptr<RequestStatsHandler> mRequestStatsHandler;
         std::unique_ptr<NativeStatsHandler> mStatsHandler;
         
         RSStatsReportingLevel mStatsReportingLevel;
         
-        public:
+    public:
      
         StatsHandler(std::weak_ptr<DataStorage>);
         ~StatsHandler();
         
         void setReportingLevel(RSStatsReportingLevel);
-        
-        Data getStatsData();
         void addRequestData(const Data&);
-        void deleteRequestsData();
+        
+        bool hasRequestsData() const;
+        
+        ReportTransactionHanle createSendTransaction(int aRequestCount);
     };
 }
 

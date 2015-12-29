@@ -28,6 +28,8 @@ namespace rs
       void saveConfiguration(const Configuration&);
       Configuration configuration()const;
       void saveRequestData(const Data&);
+      void saveRequestDataVec(const std::vector<Data>&);
+      
       std::vector<Data> loadRequestsData();
       void deleteRequestsData();
   };

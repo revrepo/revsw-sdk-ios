@@ -121,7 +121,6 @@ namespace rs
                if (configuration.isValid())
                {
                    applyConfiguration(configuration, true);
-               // VJ:double save, error
                    RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
                }
                else
@@ -195,13 +194,36 @@ namespace rs
             std::lock_guard<std::mutex> lockGuard(mLock);
             if (aError.isNoError())
             {
-                mStatsHandler->deleteRequestsData();
+                std::lock_guard<std::mutex> lockGuard(mLock);
+                statsData = mStatsHandler->createSendTransaction(this->mConfiguration->statsReportingMaxRequests);
+                hasDataToSend = mStatsHandler->hasRequestsData();
             }
-        };
-        
-        Data statsData = mStatsHandler->getStatsData();
-        
-        mNetwork->sendStats(statsData, completion);
+            
+            std::function<void(const Error& )> completion = [=](const Error& aError){
+                std::lock_guard<std::mutex> lockGuard(mLock);
+    #ifdef RS_ENABLE_DEBUG_LOGGING
+                std::cout << "Stats reported" << std::endl;
+    #endif
+                if (aError.isNoError())
+                {
+                    if (statsData.cbOnSuccess)
+                    {
+                        statsData.cbOnSuccess();
+                    }
+                }
+                else
+                {
+                    if (statsData.cbOnFail)
+                    {
+                        statsData.cbOnFail();
+                    } 
+                }
+            };
+            assert(statsData.Buffer.length());
+            
+            mNetwork->sendStats(statsData.Buffer, completion);
+        }
+        while (hasDataToSend);
     }
     
     void Model::initialize(std::string aSDKKey)
@@ -309,7 +331,7 @@ namespace rs
     
     void rs::Model::addRequestData(const Data& aRequestData)
     {
-        std::lock_guard<std::mutex> scopedLock(mLock);
+        std::lock_guard<std::mutex> lockGuard(mLock);
         mStatsHandler->addRequestData(aRequestData);
     }
     
