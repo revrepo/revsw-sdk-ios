@@ -24,6 +24,11 @@
 #define RS_ENABLE_DEBUG_LOGGING
 #endif
 
+
+//#ifdef DEBUG
+#define RS_DBG_MAXREQESTS 3
+//#endif
+
 namespace rs
 {
     class Protocol;

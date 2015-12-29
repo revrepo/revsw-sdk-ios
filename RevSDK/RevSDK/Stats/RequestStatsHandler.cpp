@@ -71,7 +71,7 @@ namespace rs
         }
         
         mSentData.push_back(createTransaction(aRequestCount));
-        
+        handle.Buffer = jsonDataFromDataVector(mSentData.back().PendingData);
         
         int64_t id = mSentData.back().ID;
         
@@ -118,6 +118,9 @@ namespace rs
     void RequestStatsHandler::deleteRequestsData()
     { 
         mDataStorage.lock()->deleteRequestsData();
-        mDataStorage.lock()->saveRequestDataVec(mRequestsDataVector);
+        if (mRequestsDataVector.size() > 0)
+        {
+            mDataStorage.lock()->saveRequestDataVec(mRequestsDataVector);
+        }
     }
 }

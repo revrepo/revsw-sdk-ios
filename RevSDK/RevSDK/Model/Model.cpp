@@ -195,7 +195,11 @@ namespace rs
             ReportTransactionHanle statsData;
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
+#ifndef RS_DBG_MAXREQESTS
                 statsData = mStatsHandler->createSendTransaction(this->mConfiguration->statsReportingMaxRequests);
+#else
+                statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
+#endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
             
