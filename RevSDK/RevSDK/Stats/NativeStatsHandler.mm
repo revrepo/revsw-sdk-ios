@@ -19,6 +19,7 @@
 #include "Data.hpp"
 #include "RSUtils.h"
 
+#define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
 static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
@@ -417,10 +418,10 @@ namespace rs
         CTTelephonyNetworkInfo* network_Info = [CTTelephonyNetworkInfo new];
         CTCarrier* carrier                   = network_Info.subscriberCellularProvider;
         
-        statsDictionary[@"country_code"] = carrier.isoCountryCode;
+        statsDictionary[@"country_code"] = STRVALUE_OR_DEFAULT(carrier.isoCountryCode);
         statsDictionary[@"device_id"] = @"_";
-        statsDictionary[@"mcc"] = carrier.mobileCountryCode;
-        statsDictionary[@"mnc"] = carrier.mobileNetworkCode;
+        statsDictionary[@"mcc"] = STRVALUE_OR_DEFAULT(carrier.mobileCountryCode);
+        statsDictionary[@"mnc"] = STRVALUE_OR_DEFAULT(carrier.mobileNetworkCode);
         statsDictionary[@"net_operator"] = processCarrierName(carrier.carrierName);
         statsDictionary[@"network_type"] = radioAccessTechnology();
         statsDictionary[@"phone_type"] = phoneType();
