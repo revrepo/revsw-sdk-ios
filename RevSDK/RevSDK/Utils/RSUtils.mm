@@ -44,6 +44,7 @@ namespace rs
     const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
     const std::string kRSRevLoadConfigurationHost = "iad02-api03.revsw.net";
+    NSString* const kRSRevHostHeader = @"X-Rev-Host";
     
     //codes
     const long kRSNoErrorCode = -10000;
@@ -387,8 +388,9 @@ namespace rs
         assert(aConnection);
         
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
+        NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
-        NSString* URLString                 = URL.absoluteString;
+        NSString* URLString                 = [URL.host isEqualToString:kRSRevRedirectHost] ? headers[kRSRevHostHeader] : URL.host;
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
         
         dataDictionary[kRSURLKey]           = URLString;
@@ -434,7 +436,6 @@ namespace rs
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
             }
- 
         }
         
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
