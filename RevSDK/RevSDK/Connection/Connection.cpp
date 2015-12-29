@@ -26,8 +26,9 @@ mFirstByteReceivedTimestamp(0)
 void rs::Connection::addSentBytesCount(long long aCount)
 {
     if (0 == mBytesSent)
-    {
-        mFirstByteReceivedTimestamp = std::chrono::milliseconds(std::time(NULL)).count();
+    { 
+        int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1); 
+        mFirstByteReceivedTimestamp = milliseconds_since_epoch;
     }
     mBytesSent += aCount;
 }
@@ -40,14 +41,17 @@ void rs::Connection::onStart()
 {
     assert(!mStartTimestamp);
     
-    mStartTimestamp = std::chrono::milliseconds(std::time(NULL)).count();
+    int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+    
+    mStartTimestamp = milliseconds_since_epoch;
 }
 
 void rs::Connection::onEnd()
 {
     assert(!mEndTimestamp);
     
-    mEndTimestamp = std::chrono::milliseconds(std::time(NULL)).count();
+    int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+    mEndTimestamp = milliseconds_since_epoch;
 }
 
 
