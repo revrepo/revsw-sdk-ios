@@ -121,7 +121,6 @@ namespace rs
                if (configuration.isValid())
                {
                    applyConfiguration(configuration, true);
-               // VJ:double save, error
                    RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
                }
                else
@@ -249,8 +248,7 @@ namespace rs
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {
-            RSStartTimer(&Model::reportStats, mStatsReportingTimer, 22);
-            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
+            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
         }
         else
         {
