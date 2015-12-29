@@ -27,6 +27,7 @@ namespace rs
        std::string mHost;
        std::string mPath;
        std::string mRest;
+       std::string mOriginalScheme;
        
    public:
        
@@ -41,10 +42,12 @@ namespace rs
        std::string host() const { return mHost; }
        std::string path() const { return mPath; }
        std::string rest() const { return mRest; }
+       std::string originalScheme() const { return mOriginalScheme; }
        
        void setHost(const std::string& aHost) { mHost = aHost; }
        void setPath(const std::string& aPath) { mPath = aPath; }
        void setRest(const std::string& aRest) { mRest = aRest; }
+       void setOriginalScheme(const std::string& aOriginalScheme) { mOriginalScheme = aOriginalScheme; }
    };
 }
 

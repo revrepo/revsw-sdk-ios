@@ -65,7 +65,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     // It turns out that NSURLSession doesn't support synchronous calls
     // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
     // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
-    // NSLog(@"Request %p headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
+    // NSLog(@"Request %@ headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
     //NSLog(@"CONNECTION %@", mutableRequest.URL);
     
     NSString* originalURL = request.URL.absoluteString;
@@ -101,13 +101,19 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                                 aDelegate->connectionDidFailWithError(anchor, error);
                                             }
                                             
-                                            if ([mutableRequest.URL.host isEqualToString:kRSRevRedirectHost] && Model::instance()->shouldCollectRequestsData())
+                                            if (Model::instance()->shouldCollectRequestsData())
                                             {
-                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get()); 
+                                                NSString* originalScheme = NSStringFromStdString(aRequest->originalScheme());
+                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get(), originalScheme);
                                                 Model::instance()->addRequestData(requestData);
                                             }
                                         }];
         
     oAnchor->onStart();
     [task resume];
+}
+
+std::string StandardConnection::edgeTransport()const
+{
+    return kRSHTTPSProtocolName;
 }

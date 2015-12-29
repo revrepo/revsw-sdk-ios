@@ -14,6 +14,7 @@
 
 #include "QUICSession.h"
 #include "Error.hpp"
+#include "RSUTils.h"
 
 using namespace rs;
 using namespace net;
@@ -107,4 +108,9 @@ void QUICConnection::quicSessionDidCloseStream(QUICSession* aSession,
 void QUICConnection::quicSessionDidChangeState(QUICSession* aSession, bool aConnected)
 {
     
+}
+
+std::string QUICConnection::edgeTransport()const
+{
+    return kRSQUICProtocolName;
 }

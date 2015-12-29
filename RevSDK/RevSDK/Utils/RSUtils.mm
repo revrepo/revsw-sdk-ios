@@ -44,6 +44,7 @@ namespace rs
     const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
     const std::string kRSRevLoadConfigurationHost = "iad02-api03.revsw.net";
+    NSString* const kRSRevHostHeader = @"X-Rev-Host";
     
     //codes
     const long kRSNoErrorCode = -10000;
@@ -90,6 +91,8 @@ namespace rs
     NSString* const kRS_JKey_StatusCode    = @"status_code";
     NSString* const kRS_JKey_SuccessStatus    = @"success_status";
     NSString* const kRS_JKey_TransportProt    = @"transport_protocol";
+    NSString* const kRS_JKey_Destination = @"destination";
+    NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
     
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
@@ -243,24 +246,16 @@ namespace rs
         request->setHost(stdStringFromNSString(aURLRequest.URL.host));
         request->setPath(stdStringFromNSString(aURLRequest.URL.path));
         
-        
-//        if ([[aURLRequest.HTTPMethod lowercaseString] isEqualToString:@"get"])
-//        {
+        if (aURLRequest.URL.host)
+        {
             NSString* urlStr = aURLRequest.URL.absoluteString;
-            NSRange r = [urlStr rangeOfString:aURLRequest.URL.host];
-            r.length += r.location;
-            r.location = 0;
-        
-        std::string rString = stdStringFromNSString([urlStr stringByReplacingCharactersInRange:r withString:@""]);
-        if (rString[rString.size() - 1] != '/')
-            rString += '/';
+            NSRange r        = [urlStr rangeOfString:aURLRequest.URL.host];
+            r.length        += r.location;
+            r.location       = 0;
+            
+            std::string rString = stdStringFromNSString([urlStr stringByReplacingCharactersInRange:r withString:@""]);
             request->setRest(rString);
-        
-//        }
-//        else
-//        {
-//            request->setRest(request->path());
-//        }
+        }
         
         return request;
     }
@@ -382,19 +377,21 @@ namespace rs
         return dataVector;
     }
     
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection)
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection, NSString* aOriginalScheme)
     {
         assert(aConnection);
         
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
+        NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
-        NSString* URLString                 = URL.absoluteString;
+        BOOL isRedirecting                  = [URL.host isEqualToString:kRSRevRedirectHost];
+        NSString* URLString                 = isRedirecting ? headers[kRSRevHostHeader] : URL.host;
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
         
         dataDictionary[kRSURLKey]           = URLString;
         dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
         dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
-      
+        
         //fill with defaults
         {
             NSNumber *defaultVal = [NSNumber numberWithInt:0];
@@ -411,6 +408,8 @@ namespace rs
             dataDictionary[kRS_JKey_SentBytes] 		= defaultVal;
             dataDictionary[kRS_JKey_StartTs] 		= defaultVal;  
             dataDictionary[kRS_JKey_TransportProt] 	= @"-";
+            dataDictionary[kRS_JKey_Destination]    = @"_";
+            dataDictionary[kRS_JKey_EdgeTransport]  = @"_";
         }
         // fetching data
         {
@@ -424,7 +423,7 @@ namespace rs
                 dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
                 dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
                 dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
-                dataDictionary[kRS_JKey_TransportProt] = [URL scheme];
+                dataDictionary[kRS_JKey_TransportProt] = aOriginalScheme;
                 
                 dataDictionary[kRS_JKey_StartTs] 		= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
                 dataDictionary[kRS_JKey_RecDytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalReceived()];
@@ -433,9 +432,12 @@ namespace rs
                 dataDictionary[kRS_JKey_FirstByteTs] 	= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
+                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
+                dataDictionary[kRS_JKey_EdgeTransport]  = NSStringFromStdString(aConnection->edgeTransport());
             }
- 
         }
+        
+        //NSLog(@"DATA DICTIONARY %@", dataDictionary);
         
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
                                                            options:NSJSONWritingPrettyPrinted

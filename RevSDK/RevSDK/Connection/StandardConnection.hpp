@@ -23,6 +23,8 @@ namespace rs
         ~StandardConnection();
         
         void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
+        
+        std::string edgeTransport()const;
     private: 
     };
 }

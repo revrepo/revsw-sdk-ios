@@ -26,7 +26,7 @@ namespace rs
         ~QUICConnection();
         
         void startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate);
-        
+         std::string edgeTransport()const;
     private:
         void quicSessionDidCloseStream(QUICSession* aSession,
                                        net::QuicDataStream* aStream,

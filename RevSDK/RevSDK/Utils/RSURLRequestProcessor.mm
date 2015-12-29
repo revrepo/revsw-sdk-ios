@@ -17,7 +17,6 @@ static NSString* const kRSNonVPNURL = @"https://rev-200.revdn.net";
 static NSString* const kRSVPNURL = @"http://testsjc20-bp01.revsw.net/";
 
 static NSString* const kRSHostHeader = @"Host";
-static NSString* const kRSRevHostHeader = @"X-Rev-Host";
 static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 
 @implementation RSURLRequestProcessor
@@ -55,7 +54,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
         NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
         NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
         [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
-        [newRequest setValue:host forHTTPHeaderField:kRSRevHostHeader];
+        [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
     }
     
     
