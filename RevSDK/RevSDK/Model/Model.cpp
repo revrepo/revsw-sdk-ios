@@ -80,8 +80,8 @@ namespace rs
     
     std::shared_ptr<Protocol>  Model::currentProtocol()
     {
-        return std::make_shared<StandardProtocol>();
-        //return std::make_shared<QUICProtocol>();
+        //return std::make_shared<StandardProtocol>();
+        return std::make_shared<QUICProtocol>();
     }
     
     std::shared_ptr<Connection> Model::currentConnection()
@@ -250,7 +250,7 @@ namespace rs
         
         mCurrentOperationMode = aOperationMode;
         
-        std::cout << mConfiguration->statsReportingInterval;
+        std::cout << mConfiguration->statsReportingInterval << std::endl;
         if (mCurrentOperationMode == kRSOperationModeInnerReport ||
             mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
         {

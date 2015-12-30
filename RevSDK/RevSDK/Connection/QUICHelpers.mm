@@ -37,7 +37,7 @@ net::WriteResult CocoaQuicPacketWriter::WritePacket(const char* buffer, size_t b
     
     if (sendResult)
     {
-        NSLog(@">> outgoing %zu", buf_len);
+        //NSLog(@">> outgoing %zu", buf_len);
     }
     else
     {

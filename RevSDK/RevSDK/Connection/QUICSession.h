@@ -12,8 +12,11 @@
 #include "NativeUDPSocketCPPDelegate.h"
 #include "RevProofVerifier.h"
 #include "QUICSessionDelegates.h"
+#include "QUICThread.h"
 
 #include <map>
+#include <thread>
+#include <mutex>
 
 namespace rs
 {
@@ -27,12 +30,17 @@ namespace rs
         void setSessionDelegate(QUICSessionDelegate* aSessionDelegate);
         void connect(net::QuicServerId aTargetServerId);
         void disconnect();
-        bool connected() const;
-        bool sendRequest(const net::SpdyHeaderBlock &headers,
+        void sendRequest(const net::SpdyHeaderBlock &headers,
                          base::StringPiece body,
                          QUICStreamDelegate* aStreamDelegate);
         
     private:
+        void p_connect(net::QuicServerId aTargetServerId);
+        void p_disconnect();
+        bool p_connected() const;
+        bool p_sendRequest(const net::SpdyHeaderBlock &headers,
+                           base::StringPiece body,
+                           QUICStreamDelegate* aStreamDelegate);
         void OnClose(net::QuicDataStream* stream);
         net::QuicConnectionId generateConnectionId();
         QuicConnectionHelper *createQuicConnectionHelper();
@@ -46,6 +54,10 @@ namespace rs
         void onQUICError();
     private:
         static QUICSession* mInstance;
+        static QUICThread mInstanceThread;
+        static std::mutex mInstanceLock;
+        
+        static void executeOnQUICThread(std::function<void(void)> aFunction);
         
         class ObjCImpl;
         

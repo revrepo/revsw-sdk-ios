@@ -25,6 +25,7 @@ using namespace rs;
 
 StandardConnection::StandardConnection()
 {
+    
 } 
 
 StandardConnection::~StandardConnection()

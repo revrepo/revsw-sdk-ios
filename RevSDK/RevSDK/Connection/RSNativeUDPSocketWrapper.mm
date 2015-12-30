@@ -45,7 +45,7 @@
  didSendDataWithTag:(long)tag
 {
     self->blocked = false;
-    NSLog(@">>> outgoing ok");
+    //NSLog(@">>> outgoing ok");
 }
 
 - (void)onUdpSocket:(RevAsyncUdpSocket *)sock

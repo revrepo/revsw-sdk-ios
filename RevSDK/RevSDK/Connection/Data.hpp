@@ -18,22 +18,47 @@ namespace rs
     class Data
     {
     public:
+        class Content
+        {
+        public:
+            typedef std::shared_ptr<Content> Ref;
+        public:
+            Content(const Content&) = delete;
+            Content& operator=(const Content&) = delete;
+            
+            Content(size_t aLength);
+            ~Content();
+            
+            size_t length() const { return mLength; }
+            const void* bytes() const { return mBytes; }
+            void* bytes() { return mBytes; }
+            
+        private:
+            size_t mLength;
+            void* mBytes;
+        };
+    public:
         Data();
         Data(const void* aBytes, size_t aLength);
-        Data(const Data& aData);
         ~Data();
-        Data& operator=(const Data& aData);
         
         std::string toString() const;
         
-        void* bytes() { return mBytes.get(); }
-        const void* bytes() const { return mBytes.get(); }
-        size_t length() const { return mLength; }
+        void* bytes()
+        {
+            return (mContent.get() != nullptr) ? (mContent->bytes()) : (nullptr);
+        }
+        const void* bytes() const
+        {
+            return (mContent.get() != nullptr) ? (mContent->bytes()) : (nullptr);
+        }
+        size_t length() const
+        {
+            return (mContent.get() != nullptr) ? (mContent->length()) : (0);
+        }
         
     private:
-        
-        std::shared_ptr<void> mBytes;
-        size_t mLength;
+        Content::Ref mContent;
     };
 }
 
