@@ -35,4 +35,9 @@ typedef enum
 + (RSOperationMode)operationMode;
 //+ (void)setWhiteListOption:(BOOL)aOn;
 
++ (NSDictionary *)debug_getUsageStatistics;
++ (void)debug_resetUsageStatistics;
++ (NSString *)debug_getLatestConfiguration;
++ (void)debug_forceConfigurationUpdate;
+
 @end

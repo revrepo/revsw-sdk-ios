@@ -41,12 +41,15 @@ namespace rs
     class Request;
     class Data;
     class StatsHandler;
+    class DebugUsageTracker;
     
     class Model : IConfvigServDelegate
     {
     private:
         std::mutex mLock;
         std::string mSDKKey;
+        
+        std::shared_ptr<DebugUsageTracker> mUsageTracker;
        
         std::unique_ptr<StatsHandler> mStatsHandler;
         
@@ -69,6 +72,9 @@ namespace rs
         void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
         
         static Model* instance();
+        
+        std::shared_ptr<DebugUsageTracker> debug_usageTracker() const;
+        void debug_forceReloadConfiguration();
         
         std::shared_ptr<Protocol> currentProtocol();
         std::shared_ptr<Connection> currentConnection();

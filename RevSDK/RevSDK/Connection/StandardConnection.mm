@@ -18,6 +18,7 @@
 #include "Utils.hpp"
 #include "Model.hpp"
 #include <mutex>
+#include "DebugUsageTracker.hpp"
 
 #import "RSURLSessionDelegate.h"
 
@@ -80,6 +81,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                             
                                             NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
 
+                                            const BOOL usingRevHost = [mutableRequest.URL.host isEqualToString:kRSRevRedirectHost];
                                             NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                         
                                             if (aData)
@@ -95,11 +97,15 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                                 aDelegate->connectionDidReceiveResponse(anchor, response);
                                                 aDelegate->connectionDidReceiveData(anchor, data);
                                                 aDelegate->connectionDidFinish(anchor);
+                                                Model::instance()->debug_usageTracker()->trackRequestFinished(usingRevHost, data, *response.get());
                                             }
                                             else
                                             {
+                                                Data data   = dataFromNSData(aData);
                                                 Error error = errorFromNSError(aError);
                                                 aDelegate->connectionDidFailWithError(anchor, error);
+                                                Model::instance()->debug_usageTracker()->
+                                                trackRequestFailed(usingRevHost, data, error);
                                             }
                                             
                                             if (Model::instance()->shouldCollectRequestsData())

@@ -8,6 +8,7 @@
 #include "ConfigurationService.h"
 #include "Network.hpp"
 #include "Model.hpp"
+#include "DebugUsageTracker.hpp"
 
 using namespace rs;
 
@@ -74,6 +75,8 @@ void ConfigurationService::loadConfiguration()
         if (aError.isNoError())
         {
             Configuration configuration = processConfigurationData(aData);
+            
+            Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
             
             if (configuration.isValid())
             {

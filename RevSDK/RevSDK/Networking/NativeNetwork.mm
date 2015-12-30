@@ -15,6 +15,8 @@
 #include "Response.hpp"
 #include "Error.hpp"
 #include "RSUtils.h"
+#include "Model.hpp"
+#include "DebugUsageTracker.hpp"
 
 namespace rs
 {
@@ -27,6 +29,12 @@ namespace rs
             Data data         = dataFromNSData(aData);
             Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse));
             Error error       = errorFromNSError(aError);
+            
+            // Debug:
+            const BOOL usingRevHost =
+            [aResponse.URL.host isEqualToString:kRSRevRedirectHost] ||
+            [aResponse.URL.host isEqualToString:kRSRevLoadConfigurationHost];
+            Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data, response, error);
             
             aCompletionBlock(data, response, error);
         };
@@ -45,6 +53,12 @@ namespace rs
             Data data         = dataFromNSData(aData);
             Error error       = errorFromNSError(aError);
             Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse).get());
+            
+            // Debug:
+            const BOOL usingRevHost =
+            [aResponse.URL.host isEqualToString:kRSRevRedirectHost] ||
+            [aResponse.URL.host isEqualToString:kRSRevLoadConfigurationHost];
+            Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data, response, error);
             
             aCompletionBlock(data, response, error);
         };

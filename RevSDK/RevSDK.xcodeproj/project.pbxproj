@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		114D65871C34502C00C2D176 /* DebugUsageTracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */; };
+		114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 114D65861C34502C00C2D176 /* DebugUsageTracker.mm */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
 		11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FD81C2D469300CDE34D /* quic_client_session.cc */; };
@@ -115,6 +117,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DebugUsageTracker.hpp; sourceTree = "<group>"; };
+		114D65861C34502C00C2D176 /* DebugUsageTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebugUsageTracker.mm; sourceTree = "<group>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
@@ -252,6 +256,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		114D65841C34502C00C2D176 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */,
+				114D65861C34502C00C2D176 /* DebugUsageTracker.mm */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
 		11C95FD61C2D462200CDE34D /* quic */ = {
 			isa = PBXGroup;
 			children = (
@@ -324,6 +337,7 @@
 		5B3096B81BFA02770045024C /* RevSDK */ = {
 			isa = PBXGroup;
 			children = (
+				114D65841C34502C00C2D176 /* Debug */,
 				11C95FD61C2D462200CDE34D /* quic */,
 				5B46D1E21C217B7200A9834C /* Stats */,
 				5BE3F86A1C049EF60087BC28 /* Timer */,
@@ -521,6 +535,7 @@
 				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
 				11C961101C2D469300CDE34D /* quic_spdy_client_stream.h in Headers */,
+				114D65871C34502C00C2D176 /* DebugUsageTracker.hpp in Headers */,
 				5BEBD7311C22EB95002EC0CB /* JSONUtils.hpp in Headers */,
 				11C9622D1C2D7AE400CDE34D /* RevProofVerifier.h in Headers */,
 				5B8FEAF41C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h in Headers */,
@@ -698,6 +713,7 @@
 				5B46D1ED1C21B61C00A9834C /* Utils.mm in Sources */,
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
+				114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */,
 				5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */,
 				6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */,
 				5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */,
