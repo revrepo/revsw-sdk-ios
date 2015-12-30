@@ -33,6 +33,26 @@ namespace rs
                                                                   repeats:YES]);
     }
     
+    //static
+    void Timer::scheduleTimer(std::unique_ptr<Timer>& aTimer, int aInterval, std::function<void()> aFunction)
+    {
+        if (aInterval > 0)
+        {
+            aTimer = std::unique_ptr<Timer>(new Timer(aInterval, aFunction));
+            aTimer->start();
+        }
+    }
+    //static
+    void Timer::disableTimer(std::unique_ptr<Timer>& aTimer)
+    {
+        if (aTimer)
+        {
+            aTimer->invalidate();
+            //delete aTimer;
+            aTimer = nullptr;
+        }
+    }
+    
     Timer::~Timer()
     {
         invalidate();

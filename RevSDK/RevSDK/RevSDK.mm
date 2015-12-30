@@ -104,9 +104,9 @@ static bool gIsInitialized = false;
     }
 }
 
-+ (void)setWhiteListOption:(BOOL)aOn
-{
-   rs::Model::instance()->switchWhiteListOption(aOn);
-}
+//+ (void)setWhiteListOption:(BOOL)aOn
+//{
+//   rs::Model::instance()->switchWhiteListOption(aOn);
+//}
 
 @end

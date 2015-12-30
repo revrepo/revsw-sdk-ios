@@ -18,15 +18,12 @@ namespace rs
   class Configuration;
   class Data;
     
-  class DataStorage
+  namespace data_storage
   {
-     public:
-      
-      DataStorage();
-      ~DataStorage(){};
+      void initDataStorage();
       
       void saveConfiguration(const Configuration&);
-      Configuration configuration()const;
+      Configuration configuration();
       void saveRequestData(const Data&);
       void saveRequestDataVec(const std::vector<Data>&);
       

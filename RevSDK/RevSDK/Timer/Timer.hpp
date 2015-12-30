@@ -20,10 +20,13 @@ namespace rs
         float mInterval;
         std::function<void()> mFunction;
         
-        public:
+    public:
         
         Timer(float, std::function<void()>);
         ~Timer();
+        
+        static void scheduleTimer(std::unique_ptr<Timer>&, int, std::function<void()>);
+        static void disableTimer(std::unique_ptr<Timer>&);
         
         void start();
         void invalidate();

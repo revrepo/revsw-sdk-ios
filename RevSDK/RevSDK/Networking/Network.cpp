@@ -15,14 +15,19 @@
 
 namespace rs
 {
+    NativeNetwork* Network::mNativeNetwork = nullptr;
+    
     Network::Network()
     {
-        nativeNetwork = new NativeNetwork;
+        static std::atomic<bool> guard(false);
+        if (guard.exchange(true))
+        {
+            mNativeNetwork = new NativeNetwork;
+        }
     }
     
     Network::~Network()
     {
-        delete nativeNetwork;
     }
     
     void Network::performRequest(std::string aURL, std::function<void(const Data&, const Error&)> aCompletionBlock)
@@ -32,7 +37,7 @@ namespace rs
             aCompletionBlock(aData, aError);
         };
         
-        nativeNetwork->performRequest(aURL, completion);
+        mNativeNetwork->performRequest(aURL, completion);
     }
     
     void Network::performRequest(std::string aURL, const Data& aBody, std::function<void(const Data&, const Error&)> aCompletionBlock)
@@ -42,7 +47,7 @@ namespace rs
             aCompletionBlock(aData, aError);
         };
         
-        nativeNetwork->performRequest(aURL, aBody, completion);
+        mNativeNetwork->performRequest(aURL, aBody, completion);
     }
     
     void Network::loadConfiguration(const std::string& aSDKKey, std::function<void(const Data&, const Error&)> aCompletionBlock)
@@ -51,7 +56,7 @@ namespace rs
         performRequest(URL, aCompletionBlock);
     }
     
-    void Network::sendStats(const Data& aStatsData, std::function<void(const Error&)> aCompletionBlock)
+    void Network::sendStats(std::string aURL,const Data& aStatsData, std::function<void(const Error&)> aCompletionBlock)
     {
         std::function<void(const Data&, const Error&)> c = [=](const Data& aData, const Error& aError){
             
@@ -61,7 +66,7 @@ namespace rs
             }
         };
         
-        performRequest(mStatsReportingURL, aStatsData, c);
+        performRequest(aURL, aStatsData, c);
     }
 }
 

@@ -16,12 +16,13 @@
 #include "JSONUtils.hpp"
 #include "Utils.hpp"
 
+
 namespace rs
 {
-    StatsHandler::StatsHandler(std::weak_ptr<DataStorage> aDataStorage)
+    StatsHandler::StatsHandler()
     {
         mStatsHandler        = std::unique_ptr<NativeStatsHandler>(new NativeStatsHandler);
-        mRequestStatsHandler = std::unique_ptr<RequestStatsHandler>(new RequestStatsHandler(aDataStorage));
+        mRequestStatsHandler = std::unique_ptr<RequestStatsHandler>(new RequestStatsHandler());
     }
     
     StatsHandler::~StatsHandler()
