@@ -6,7 +6,6 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-//#import <SystemConfiguration/CaptiveNetwork.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
@@ -18,14 +17,22 @@
 #include "Data.hpp"
 #include "RSUtils.h"
 #include "RSSystemInfo.h"
+#include "RSIPUtils.h"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
 static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
 
+static RSIPUtils* ipUtils = [RSIPUtils new];
+
 namespace rs
 {
+    NativeStatsHandler::NativeStatsHandler()
+    {
+        [ipUtils start];
+    }
+    
     std::string NativeStatsHandler::appName()
     {
         NSBundle *bundle = [NSBundle mainBundle];
@@ -322,8 +329,8 @@ namespace rs
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
-        statsDictionary[@"cellular_ip_external"] = @"8.8.8.8";
-        statsDictionary[@"cellular_ip_internal"] = @"_";
+        statsDictionary[@"cellular_ip_external"] = STRVALUE_OR_DEFAULT(ipUtils.publicCellularIP);
+        statsDictionary[@"cellular_ip_internal"] = STRVALUE_OR_DEFAULT(ipUtils.privateCellularIP);
         statsDictionary[@"dns1"] = @"_";
         statsDictionary[@"dns2"] = @"_";
         statsDictionary[@"ip_reassemblies"] = @"0";
@@ -339,9 +346,9 @@ namespace rs
         statsDictionary[@"udp_bytes_in"] = @"0";
         statsDictionary[@"udp_bytes_out"] = @"0";
         statsDictionary[@"wifi_dhcp"] = @"_";
-        statsDictionary[@"wifi_extip"] = @"_";
+        statsDictionary[@"wifi_extip"] = STRVALUE_OR_DEFAULT(ipUtils.publicWifiIP);
         statsDictionary[@"wifi_qw"] = @"_";
-        statsDictionary[@"wifi_ip"] = @"1.0";
+        statsDictionary[@"wifi_ip"] = STRVALUE_OR_DEFAULT(ipUtils.privateWiFiIP);
         statsDictionary[@"wifi_mask"] = @"_";
         
         return statsDictionary;

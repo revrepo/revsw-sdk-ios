@@ -31,6 +31,12 @@
 		5B2035851C33DBB400A28C01 /* RReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RReachability.m */; };
 		5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035921C33E85E00A28C01 /* RSSystemInfo.h */; };
 		5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035931C33E85E00A28C01 /* RSSystemInfo.m */; };
+		5B20359A1C33FF7000A28C01 /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035961C33FF7000A28C01 /* GCDAsyncUdpSocket.h */; };
+		5B20359B1C33FF7000A28C01 /* GCDAsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035971C33FF7000A28C01 /* GCDAsyncUdpSocket.m */; };
+		5B20359C1C33FF7000A28C01 /* STUNClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035981C33FF7000A28C01 /* STUNClient.h */; };
+		5B20359D1C33FF7000A28C01 /* STUNClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035991C33FF7000A28C01 /* STUNClient.m */; };
+		5B2035A01C3404DC00A28C01 /* RSIPUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B20359E1C3404DC00A28C01 /* RSIPUtils.h */; };
+		5B2035A11C3404DC00A28C01 /* RSIPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20359F1C3404DC00A28C01 /* RSIPUtils.m */; };
 		5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */; };
 		5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */; };
 		5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BD11BFDD20B003DCB27 /* Data.cpp */; };
@@ -136,6 +142,12 @@
 		5B2035831C33DBB400A28C01 /* RReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RReachability.m; sourceTree = "<group>"; };
 		5B2035921C33E85E00A28C01 /* RSSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSystemInfo.h; sourceTree = "<group>"; };
 		5B2035931C33E85E00A28C01 /* RSSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSystemInfo.m; sourceTree = "<group>"; };
+		5B2035961C33FF7000A28C01 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
+		5B2035971C33FF7000A28C01 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
+		5B2035981C33FF7000A28C01 /* STUNClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STUNClient.h; sourceTree = "<group>"; };
+		5B2035991C33FF7000A28C01 /* STUNClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUNClient.m; sourceTree = "<group>"; };
+		5B20359E1C3404DC00A28C01 /* RSIPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIPUtils.h; sourceTree = "<group>"; };
+		5B20359F1C3404DC00A28C01 /* RSIPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSIPUtils.m; sourceTree = "<group>"; };
 		5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
 		5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Response.hpp; sourceTree = "<group>"; };
 		5B2F4BD11BFDD20B003DCB27 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
@@ -389,6 +401,10 @@
 		5B54C3231BFB5C3300217971 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B2035961C33FF7000A28C01 /* GCDAsyncUdpSocket.h */,
+				5B2035971C33FF7000A28C01 /* GCDAsyncUdpSocket.m */,
+				5B2035981C33FF7000A28C01 /* STUNClient.h */,
+				5B2035991C33FF7000A28C01 /* STUNClient.m */,
 				5B2035821C33DBB400A28C01 /* RSReachability.h */,
 				5B2035831C33DBB400A28C01 /* RReachability.m */,
 				5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */,
@@ -405,6 +421,8 @@
 				5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */,
 				5B2035921C33E85E00A28C01 /* RSSystemInfo.h */,
 				5B2035931C33E85E00A28C01 /* RSSystemInfo.m */,
+				5B20359E1C3404DC00A28C01 /* RSIPUtils.h */,
+				5B20359F1C3404DC00A28C01 /* RSIPUtils.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -521,6 +539,7 @@
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
 				6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */,
+				5B2035A01C3404DC00A28C01 /* RSIPUtils.h in Headers */,
 				5B54C3301BFB700C00217971 /* Model.hpp in Headers */,
 				5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */,
 				5B54C3411BFB7A9200217971 /* Connection.hpp in Headers */,
@@ -533,11 +552,13 @@
 				5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */,
 				5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */,
 				5B54C3351BFB705B00217971 /* Protocol.hpp in Headers */,
+				5B20359A1C33FF7000A28C01 /* GCDAsyncUdpSocket.h in Headers */,
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
 				6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */,
 				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
 				11C9621E1C2D54C000CDE34D /* QUICSession.h in Headers */,
+				5B20359C1C33FF7000A28C01 /* STUNClient.h in Headers */,
 				5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */,
 				11C962251C2D779100CDE34D /* RSNativeUDPSocketWrapper.h in Headers */,
 				5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */,
@@ -680,6 +701,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B20359D1C33FF7000A28C01 /* STUNClient.m in Sources */,
 				5BC497B71C03782B00FF0922 /* Configuration.cpp in Sources */,
 				5B46D1ED1C21B61C00A9834C /* Utils.mm in Sources */,
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
@@ -703,9 +725,11 @@
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */,
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
 				6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */,
+				5B20359B1C33FF7000A28C01 /* GCDAsyncUdpSocket.m in Sources */,
 				6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */,
 				5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
+				5B2035A11C3404DC00A28C01 /* RSIPUtils.m in Sources */,
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,

@@ -251,7 +251,6 @@ static void RSReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
     return NO;
 }
 
-
 - (RSNetworkStatus)rs_currentReachabilityStatus
 {
 	NSAssert(_reachabilityRef != NULL, @"currentNetworkStatus called with NULL SCNetworkReachabilityRef");

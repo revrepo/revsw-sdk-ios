@@ -17,10 +17,14 @@
 namespace rs
 {
      class Data;
+     class RSIPUtils;
     
      class NativeStatsHandler
      {
         public:
+        
+        NativeStatsHandler();
+         
         Data statsData();
         Data locationData();
         Data carrierData();
