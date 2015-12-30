@@ -27,6 +27,10 @@
 		11C9622D1C2D7AE400CDE34D /* RevProofVerifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */; };
 		45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
+		5B2035851C33DBB400A28C01 /* RReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RReachability.m */; };
+		5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035921C33E85E00A28C01 /* RSSystemInfo.h */; };
+		5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035931C33E85E00A28C01 /* RSSystemInfo.m */; };
 		5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */; };
 		5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */; };
 		5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BD11BFDD20B003DCB27 /* Data.cpp */; };
@@ -71,7 +75,6 @@
 		5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3431BFB7AE200217971 /* StandardConnection.hpp */; };
 		5B54C3481BFB7B8700217971 /* QUICConnection.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3461BFB7B8700217971 /* QUICConnection.mm */; };
 		5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3471BFB7B8700217971 /* QUICConnection.hpp */; };
-		5B664F751C318B3E00B04C6B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B664F741C318B3E00B04C6B /* CoreTelephony.framework */; };
 		5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */; };
 		5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */; };
 		5B8FEAF41C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */; };
@@ -80,7 +83,6 @@
 		5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BC497B61C03782B00FF0922 /* Configuration.hpp */; };
 		5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */; };
 		5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */; };
-		5BE0F8601C316E3A0012C2C1 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */; };
 		5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F8631C0454890087BC28 /* DataStorage.hpp */; };
 		5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F8671C0455CC0087BC28 /* DataStorage.mm */; };
 		5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F86C1C04A0C50087BC28 /* Timer.hpp */; };
@@ -129,6 +131,10 @@
 		11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevProofVerifier.h; sourceTree = "<group>"; };
 		11C9622E1C2D820300CDE34D /* QUICSessionDelegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QUICSessionDelegates.h; sourceTree = "<group>"; };
 		31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
+		5B2035821C33DBB400A28C01 /* RSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReachability.h; sourceTree = "<group>"; };
+		5B2035831C33DBB400A28C01 /* RReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RReachability.m; sourceTree = "<group>"; };
+		5B2035921C33E85E00A28C01 /* RSSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSystemInfo.h; sourceTree = "<group>"; };
+		5B2035931C33E85E00A28C01 /* RSSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSystemInfo.m; sourceTree = "<group>"; };
 		5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
 		5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Response.hpp; sourceTree = "<group>"; };
 		5B2F4BD11BFDD20B003DCB27 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
@@ -176,7 +182,6 @@
 		5B54C3431BFB7AE200217971 /* StandardConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StandardConnection.hpp; sourceTree = "<group>"; };
 		5B54C3461BFB7B8700217971 /* QUICConnection.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICConnection.mm; sourceTree = "<group>"; };
 		5B54C3471BFB7B8700217971 /* QUICConnection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = QUICConnection.hpp; sourceTree = "<group>"; };
-		5B664F741C318B3E00B04C6B /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLRequestProcessor.h; sourceTree = "<group>"; };
 		5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLRequestProcessor.mm; sourceTree = "<group>"; };
 		5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+RSUtils.h"; sourceTree = "<group>"; };
@@ -185,7 +190,6 @@
 		5BC497B61C03782B00FF0922 /* Configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Configuration.hpp; sourceTree = "<group>"; };
 		5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionProxy.cpp; sourceTree = "<group>"; };
 		5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ConnectionProxy.h; sourceTree = "<group>"; };
-		5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		5BE3F8631C0454890087BC28 /* DataStorage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStorage.hpp; sourceTree = "<group>"; };
 		5BE3F8671C0455CC0087BC28 /* DataStorage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataStorage.mm; sourceTree = "<group>"; };
 		5BE3F86C1C04A0C50087BC28 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
@@ -212,8 +216,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B664F751C318B3E00B04C6B /* CoreTelephony.framework in Frameworks */,
-				5BE0F8601C316E3A0012C2C1 /* SystemConfiguration.framework in Frameworks */,
 				11C961161C2D469300CDE34D /* libcrypto.a in Frameworks */,
 				45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */,
 				11C9619E1C2D469300CDE34D /* libquic.a in Frameworks */,
@@ -234,8 +236,6 @@
 		0C970DE8623DE2851A075105 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5B664F741C318B3E00B04C6B /* CoreTelephony.framework */,
-				5BE0F85F1C316E3A0012C2C1 /* SystemConfiguration.framework */,
 				DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */,
 			);
 			name = Frameworks;
@@ -384,6 +384,8 @@
 		5B54C3231BFB5C3300217971 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				5B2035821C33DBB400A28C01 /* RSReachability.h */,
+				5B2035831C33DBB400A28C01 /* RReachability.m */,
 				5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */,
 				5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */,
 				5B54C3281BFB5EF000217971 /* RSUtils.h */,
@@ -396,6 +398,8 @@
 				5B46D1EC1C21B61C00A9834C /* Utils.hpp */,
 				5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */,
 				5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */,
+				5B2035921C33E85E00A28C01 /* RSSystemInfo.h */,
+				5B2035931C33E85E00A28C01 /* RSSystemInfo.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -506,12 +510,14 @@
 				5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */,
 				5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */,
 				5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */,
+				5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */,
 				11C962221C2D54CE00CDE34D /* QUICHelpers.h in Headers */,
 				5B2F4BD41BFDD20B003DCB27 /* Data.hpp in Headers */,
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
 				6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */,
 				5B54C3301BFB700C00217971 /* Model.hpp in Headers */,
+				5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */,
 				5B54C3411BFB7A9200217971 /* Connection.hpp in Headers */,
 				5B4FCD361C032A6A00C8D320 /* Network.hpp in Headers */,
 				11C961141C2D469300CDE34D /* RevQuicClient.h in Headers */,
@@ -692,6 +698,7 @@
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
 				6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */,
 				6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */,
+				5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,
@@ -703,6 +710,7 @@
 				5B54C3481BFB7B8700217971 /* QUICConnection.mm in Sources */,
 				11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */,
 				5BEBD7301C22EB95002EC0CB /* JSONUtils.cpp in Sources */,
+				5B2035851C33DBB400A28C01 /* RReachability.m in Sources */,
 				5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */,
 				5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */,
 				11C962261C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm in Sources */,

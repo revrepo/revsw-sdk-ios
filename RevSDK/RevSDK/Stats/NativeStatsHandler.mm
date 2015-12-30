@@ -6,19 +6,18 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-#import <SystemConfiguration/CaptiveNetwork.h>
+//#import <SystemConfiguration/CaptiveNetwork.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
-#import <CoreTelephony/CTCarrier.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import "RSReachability.h"
 
 #import "RSLocationService.h"
 #import "NativeStatsHandler.h"
 #import "RSStaticStatsProvider.h"
 #include "Data.hpp"
 #include "RSUtils.h"
-
+#include "RSSystemInfo.h"
 
 static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
@@ -41,6 +40,12 @@ namespace rs
         
         return [NSString stringWithCString:systemInfo.machine
                                   encoding:NSUTF8StringEncoding];
+    }
+    
+    NSString* signalType()
+    {
+        RSReachability* reachability = [RSReachability rs_reachabilityForInternetConnection];
+        return [reachability networkStatusString];
     }
     
     NSString* fullDeviceName()
@@ -283,52 +288,6 @@ namespace rs
         return state;
     }
     
-    NSString* ssid()
-    {
-        NSArray *interfaceNames = CFBridgingRelease(CNCopySupportedInterfaces());
-        
-        NSDictionary *SSIDInfo;
-       
-        for (NSString *interfaceName in interfaceNames)
-        {
-            SSIDInfo = CFBridgingRelease(
-                                         CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName));
-            BOOL isNotEmpty = (SSIDInfo.count > 0);
-            
-            if (isNotEmpty) {
-                break;
-            }
-        }
-        
-       
-        NSString* retString = [NSString stringWithFormat:@"%@ (%@)", SSIDInfo[@"SSID"], SSIDInfo[@"BSSID"]];
-        
-        return retString;
-    }
-    
-    NSString* processCarrierName(NSString* aCarrierName)
-    {
-        if (!aCarrierName || [aCarrierName isEqualToString:@"Carrier"])
-        {
-            return @"_";
-        }
-        
-        return aCarrierName;
-    }
-    
-    NSString* radioAccessTechnology()
-    {
-        CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
-        NSString* networkType                 = telephonyInfo.currentRadioAccessTechnology;
-        
-        if (!networkType)
-        {
-            return @"_";
-        }
-        
-        return [networkType stringByReplacingOccurrencesOfString:@"CTRadioAccessTechnology" withString:@""];
-    }
-    
     NSDictionary* logDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
@@ -346,7 +305,7 @@ namespace rs
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
         statsDictionary[@"mac"] = @"_";
-        statsDictionary[@"ssid"] = ssid();
+        statsDictionary[@"ssid"] = [RSSystemInfo ssid];
         statsDictionary[@"wifi_enc"] = @"_";
         statsDictionary[@"wifi_freq"] = @"_";
         statsDictionary[@"wifi_rssi"] = @"_";
@@ -428,21 +387,18 @@ namespace rs
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
-        CTTelephonyNetworkInfo* network_Info = [CTTelephonyNetworkInfo new];
-        CTCarrier* carrier                   = network_Info.subscriberCellularProvider;
-        
-        statsDictionary[@"country_code"] = carrier.isoCountryCode;
+        statsDictionary[@"country_code"] = [RSSystemInfo countryCode];
         statsDictionary[@"device_id"] = @"_";
-        statsDictionary[@"mcc"] = carrier.mobileCountryCode;
-        statsDictionary[@"mnc"] = carrier.mobileNetworkCode;
-        statsDictionary[@"net_operator"] = processCarrierName(carrier.carrierName);
-        statsDictionary[@"network_type"] = radioAccessTechnology();
+        statsDictionary[@"mcc"] = [RSSystemInfo mobileCountryCode];
+        statsDictionary[@"mnc"] = [RSSystemInfo mobileNetworkCode ];
+        statsDictionary[@"net_operator"] = [RSSystemInfo carrierName ];
+        statsDictionary[@"network_type"] = [RSSystemInfo radioAccessTechnology ];
         statsDictionary[@"phone_type"] = phoneType();
-        statsDictionary[@"rssi"] = @"1.0";
-        statsDictionary[@"rssi_avg"] = @"1.0";
-        statsDictionary[@"rssi_best"] = @"1.0";
-        statsDictionary[@"signal_type"] = @"_";
-        statsDictionary[@"sim_operator"] = @"_";
+        statsDictionary[@"rssi"] = @"_";
+        statsDictionary[@"rssi_avg"] = @"_";
+        statsDictionary[@"rssi_best"] = @"_";
+        statsDictionary[@"signal_type"] = signalType();
+        statsDictionary[@"sim_operator"] = [RSSystemInfo carrierName];
         statsDictionary[@"tower_cell_id_l"] = @"_";
         statsDictionary[@"tower_cell_id_s"] = @"_";
         

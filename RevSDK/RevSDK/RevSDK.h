@@ -17,6 +17,7 @@ FOUNDATION_EXPORT const unsigned char RevSDKVersionString[];
 
 #import <RevSDK/RSPublicConsts.h>
 
+
 typedef enum
 {
     kRSOperationModeOff,
