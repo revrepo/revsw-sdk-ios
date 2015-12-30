@@ -6,12 +6,11 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
-#import <SystemConfiguration/CaptiveNetwork.h>
+//#import <SystemConfiguration/CaptiveNetwork.h>
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import <sys/utsname.h>
-#import <CoreTelephony/CTCarrier.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+#import "RSReachability.h"
 
 #import "RSLocationService.h"
 #import "NativeStatsHandler.h"
@@ -42,6 +41,12 @@ namespace rs
         
         return [NSString stringWithCString:systemInfo.machine
                                   encoding:NSUTF8StringEncoding];
+    }
+    
+    NSString* signalType()
+    {
+        RSReachability* reachability = [RSReachability rs_reachabilityForInternetConnection];
+        return [reachability networkStatusString];
     }
     
     NSString* fullDeviceName()
@@ -142,6 +147,15 @@ namespace rs
                                     @"i386":     @"iPhone Simulator",
                                     @"x86_64":   @"iPad Simulator",
                                     
+                                    
+                                    @"AppleTV2,1" : @"A1378",
+                                    @"AppleTV3,1" : @"A1427",
+                                    @"AppleTV3,2" : @"A1469",
+                                    @"AppleTV5,3" : @"A1625",
+                                    
+                                    @"Watch1,1" : @"A1553",
+                                    @"Watch1,2" : @"A1554/A1638",
+                                    
                                     @"iPhone1,1":    @"A1203",
                                     @"iPhone1,2":    @"A1241/A1324",
                                     @"iPhone2,1":    @"A1303/A1325",
@@ -181,6 +195,8 @@ namespace rs
                                     @"iPad4,2":  @"A1475",
                                     @"iPad4,3":  @"A1476",
                                     
+                                    @"iPad5,1":  @"A1538",
+                                    @"iPad5,2":  @"A1550",
                                     @"iPad5,3":  @"A1566",
                                     @"iPad5,4":  @"A1567",
                                     
@@ -191,6 +207,9 @@ namespace rs
                                     @"iPad4,7":  @"A1599",
                                     @"iPad4,8":  @"A1600",
                                     @"iPad4,9":  @"A1601",
+                                    
+                                    @"iPad6,7" : @"A1584",
+                                    @"iPad6,8" : @"A1652",
                                     
                                     @"iPod1,1":  @"A1213",
                                     @"iPod2,1":  @"A1288/A1319",
@@ -270,52 +289,6 @@ namespace rs
         return state;
     }
     
-    NSString* ssid()
-    {
-        NSArray *interfaceNames = CFBridgingRelease(CNCopySupportedInterfaces());
-        
-        NSDictionary *SSIDInfo;
-       
-        for (NSString *interfaceName in interfaceNames)
-        {
-            SSIDInfo = CFBridgingRelease(
-                                         CNCopyCurrentNetworkInfo((__bridge CFStringRef)interfaceName));
-            BOOL isNotEmpty = (SSIDInfo.count > 0);
-            
-            if (isNotEmpty) {
-                break;
-            }
-        }
-        
-       
-        NSString* retString = [NSString stringWithFormat:@"%@ (%@)", SSIDInfo[@"SSID"], SSIDInfo[@"BSSID"]];
-        
-        return retString;
-    }
-    
-    NSString* processCarrierName(NSString* aCarrierName)
-    {
-        if (!aCarrierName || [aCarrierName isEqualToString:@"Carrier"])
-        {
-            return @"_";
-        }
-        
-        return aCarrierName;
-    }
-    
-    NSString* radioAccessTechnology()
-    {
-        CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
-        NSString* networkType                 = telephonyInfo.currentRadioAccessTechnology;
-        
-        if (!networkType)
-        {
-            return @"_";
-        }
-        
-        return [networkType stringByReplacingOccurrencesOfString:@"CTRadioAccessTechnology" withString:@""];
-    }
-    
     NSDictionary* logDataDict()
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
@@ -333,7 +306,7 @@ namespace rs
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
         statsDictionary[@"mac"] = @"_";
-        statsDictionary[@"ssid"] = ssid();
+        statsDictionary[@"ssid"] = [RSSystemInfo ssid];
         statsDictionary[@"wifi_enc"] = @"_";
         statsDictionary[@"wifi_freq"] = @"_";
         statsDictionary[@"wifi_rssi"] = @"_";
@@ -425,11 +398,11 @@ namespace rs
         statsDictionary[@"net_operator"] = processCarrierName(carrier.carrierName);
         statsDictionary[@"network_type"] = radioAccessTechnology();
         statsDictionary[@"phone_type"] = phoneType();
-        statsDictionary[@"rssi"] = @"1.0";
-        statsDictionary[@"rssi_avg"] = @"1.0";
-        statsDictionary[@"rssi_best"] = @"1.0";
-        statsDictionary[@"signal_type"] = @"_";
-        statsDictionary[@"sim_operator"] = @"_";
+        statsDictionary[@"rssi"] = @"_";
+        statsDictionary[@"rssi_avg"] = @"_";
+        statsDictionary[@"rssi_best"] = @"_";
+        statsDictionary[@"signal_type"] = signalType();
+        statsDictionary[@"sim_operator"] = [RSSystemInfo carrierName];
         statsDictionary[@"tower_cell_id_l"] = @"_";
         statsDictionary[@"tower_cell_id_s"] = @"_";
         
