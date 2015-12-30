@@ -53,7 +53,7 @@
          self.sdkDataLengthArray = [NSMutableArray array];
          self.resultFlags = [NSMutableArray array];
         
-         [RevSDK setWhiteListOption:NO];
+         //[RevSDK setWhiteListOption:NO];
         
          [[NSNotificationCenter defaultCenter] addObserver:self
                                                   selector:@selector(didReceiveStopLoadingNotification:)
@@ -99,7 +99,7 @@
 
 - (void)setWhiteListOption:(BOOL)aOn
 {
-    [RevSDK setWhiteListOption:aOn];
+    //[RevSDK setWhiteListOption:aOn];
 }
 
 - (void)setNumberOfTests:(NSUInteger)aNumberOfTests

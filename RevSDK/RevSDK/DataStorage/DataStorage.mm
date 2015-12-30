@@ -15,9 +15,10 @@
 
 namespace rs
 {
+    
     NSString* localStorageDirectory();
     
-    DataStorage::DataStorage()
+    void data_storage::initDataStorage()
     {
         NSString* storageDirectory = localStorageDirectory();
         BOOL exists                = [[NSFileManager defaultManager] fileExistsAtPath:storageDirectory];
@@ -121,13 +122,13 @@ namespace rs
         return success;
     }
     
-    void DataStorage::saveConfiguration(const Configuration& aConfiguration)
+    void data_storage::saveConfiguration(const Configuration& aConfiguration)
     {
          NSDictionary* dictionary = NSDictionaryFromConfiguration(aConfiguration);
          saveObject(dictionary, kRSConfigurationStorageKey);
     }
     
-    Configuration DataStorage::configuration() const
+    Configuration data_storage::configuration()
     {
         NSData* data             = contentsOfFileWithName(kRSConfigurationStorageKey);
         NSDictionary* dictionary = data ? [NSPropertyListSerialization propertyListWithData:data
@@ -138,7 +139,7 @@ namespace rs
         return configuration;
     }
     
-    void DataStorage::saveRequestData(const Data& aRequestData)
+    void data_storage::saveRequestData(const Data& aRequestData)
     {
         NSData* data                     = NSDataFromData(aRequestData);
         NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
@@ -152,7 +153,7 @@ namespace rs
         saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
     
-    void DataStorage::saveRequestDataVec(const std::vector<Data>& aRequestDataVec)
+    void data_storage::saveRequestDataVec(const std::vector<Data>& aRequestDataVec)
     {
         NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
         NSArray* requestDataArray        = savedData ? [NSPropertyListSerialization propertyListWithData:savedData
@@ -170,7 +171,7 @@ namespace rs
         saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
     
-    std::vector<Data> DataStorage::loadRequestsData()
+    std::vector<Data> data_storage::loadRequestsData()
     {
         NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);
         
@@ -219,15 +220,15 @@ namespace rs
         return vd;*/
     }
     
-    void DataStorage::deleteRequestsData()
+    void data_storage::deleteRequestsData()
     {
         NSError* error = nil;
         
         BOOL success = deleteFile(kRSRequestDataStorageKey, &error);
         
-        if (!success)
-        {
-            NSLog(@"Failed to remove requests data %@", error);
-        }
+//        if (!success)
+//        {
+//            NSLog(@"Failed to remove requests data %@", error);
+//        }
     }
 }

@@ -19,6 +19,9 @@
 #include <atomic>
 
 #import "Utils.hpp"
+#include "ConfigurationService.h"
+#include "Network.hpp"
+#include "JSONUtils.hpp"
 
 #ifdef DEBUG
 #define RS_ENABLE_DEBUG_LOGGING
@@ -33,47 +36,37 @@ namespace rs
 {
     class Protocol;
     class Connection;
-    class Network;
-    class DataStorage;
     class Configuration;
     class Timer;
     class Request;
     class Data;
     class StatsHandler;
     
-    class Model
+    class Model : IConfvigServDelegate
     {
     private:
         std::mutex mLock;
-        std::atomic<bool> mUpdateEnabledFlag;
         std::string mSDKKey;
        
         std::unique_ptr<StatsHandler> mStatsHandler;
         
-        std::unique_ptr<Timer> mConfigurationRefreshTimer;
         std::unique_ptr<Timer> mStatsReportingTimer;
-        std::unique_ptr<Network> mNetwork;
         
-        std::shared_ptr<DataStorage> mDataStorage;
+        Network mNetwork;
         
-        std::unique_ptr<Configuration> mCachedConfiguration;
-        std::shared_ptr<Configuration> mConfiguration;
+        //std::shared_ptr<Configuration> mConfiguration;
+        std::unique_ptr<ConfigurationService> mConfService;
         
-        RSOperationModeInner mCurrentOperationMode;
         std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
         void reportStats();
-        
-        void loadConfiguration();
-        void applyConfiguration(const Configuration&, bool);
-        
-        void scheduleTimer(std::unique_ptr<Timer>&, int, std::function<void()>);
-        void disableTimer(std::unique_ptr<Timer>&);
         
       public:
         
         Model();
         ~Model();
+        
+        void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
         
         static Model* instance();
         
@@ -89,7 +82,7 @@ namespace rs
         void setOperationMode(const RSOperationModeInner& aOperationMode);
         
         bool canTransport();
-        void switchWhiteListOption(bool aOn);
+        //void switchWhiteListOption(bool aOn);
         bool shouldTransportDomainName(std::string aDomainName);
         bool isDomainNameProvisioned(std::string aDomainName);
         

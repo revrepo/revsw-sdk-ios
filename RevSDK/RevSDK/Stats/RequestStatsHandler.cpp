@@ -13,17 +13,16 @@
 
 namespace rs
 {
-    RequestStatsHandler::RequestStatsHandler(std::weak_ptr<DataStorage> aDataStorage)
+    RequestStatsHandler::RequestStatsHandler()
     {
-        mDataStorage        = aDataStorage;
-        mRequestsDataVector = mDataStorage.lock()->loadRequestsData();
+        mRequestsDataVector = data_storage::loadRequestsData();
     }
     
     void RequestStatsHandler::addNewRequestData(const Data& aRequestData)
     {
         //std::lock_guard<std::mutex> lockGuard(mLock);
         mRequestsDataVector.push_back(aRequestData);
-        mDataStorage.lock()->saveRequestData(aRequestData);
+        data_storage::saveRequestData(aRequestData);
     }
     
     Transaction RequestStatsHandler::createTransaction(int32_t aReqestsCountPerTransact)
@@ -117,10 +116,10 @@ namespace rs
     
     void RequestStatsHandler::deleteRequestsData()
     { 
-        mDataStorage.lock()->deleteRequestsData();
+        data_storage::deleteRequestsData();
         if (mRequestsDataVector.size() > 0)
         {
-            mDataStorage.lock()->saveRequestDataVec(mRequestsDataVector);
+            data_storage::saveRequestDataVec(mRequestsDataVector);
         }
     }
 }

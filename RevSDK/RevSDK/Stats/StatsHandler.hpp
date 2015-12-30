@@ -17,8 +17,7 @@
 
 namespace rs
 {
-    class NativeStatsHandler;
-    class DataStorage;
+    class NativeStatsHandler; 
     class RequestStatsHandler;
     
     class StatsHandler
@@ -30,7 +29,7 @@ namespace rs
         
     public:
      
-        StatsHandler(std::weak_ptr<DataStorage>);
+        StatsHandler();
         ~StatsHandler();
         
         void setReportingLevel(RSStatsReportingLevel);

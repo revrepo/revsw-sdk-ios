@@ -20,12 +20,10 @@ namespace rs
     
     class Network
     {
-        NativeNetwork* nativeNetwork;
+        static NativeNetwork* mNativeNetwork;
         
         void performRequest(std::string aURL, std::function<void(const Data&, const Error&)> aCompletionBlock);
         void performRequest(std::string aURL, const Data& aBody, std::function<void(const Data&, const Error&)> aCompletionBlock);
-        
-        std::string mStatsReportingURL;
         
         public:
         
@@ -33,9 +31,7 @@ namespace rs
         ~Network();
         
         void loadConfiguration(const std::string &, std::function<void(const Data&, const Error&)> aCompletionBlock);
-        void sendStats(const Data&, std::function<void(const Error&)>);
-        
-        void setStatsReportingURL(const std::string& aStatsReportingURL) { mStatsReportingURL = aStatsReportingURL; };
+        void sendStats(std::string aURL, const Data&, std::function<void(const Error&)>); 
     };
 }
 
