@@ -15,6 +15,9 @@
 @property (nonatomic, copy, readonly) NSString* privateWiFiIP;
 @property (nonatomic, copy, readonly) NSString* privateCellularIP;
 @property (nonatomic, copy, readonly) NSString* netmask;
+@property (nonatomic, copy, readonly) NSString* dns1;
+@property (nonatomic, copy, readonly) NSString* dns2;
+@property (nonatomic, readonly)       NSString* gateway;
 
 - (void)start;
 

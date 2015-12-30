@@ -331,8 +331,8 @@ namespace rs
         
         statsDictionary[@"cellular_ip_external"] = STRVALUE_OR_DEFAULT(ipUtils.publicCellularIP);
         statsDictionary[@"cellular_ip_internal"] = STRVALUE_OR_DEFAULT(ipUtils.privateCellularIP);
-        statsDictionary[@"dns1"] = @"_";
-        statsDictionary[@"dns2"] = @"_";
+        statsDictionary[@"dns1"] = STRVALUE_OR_DEFAULT(ipUtils.dns1);
+        statsDictionary[@"dns2"] = STRVALUE_OR_DEFAULT(ipUtils.dns2);
         statsDictionary[@"ip_reassemblies"] = @"0";
         statsDictionary[@"ip_total_bytes_in"] = @"0";
         statsDictionary[@"ip_total_bytes_out"] = @"0";
@@ -347,7 +347,7 @@ namespace rs
         statsDictionary[@"udp_bytes_out"] = @"0";
         statsDictionary[@"wifi_dhcp"] = @"_";
         statsDictionary[@"wifi_extip"] = STRVALUE_OR_DEFAULT(ipUtils.publicWifiIP);
-        statsDictionary[@"wifi_qw"] = @"_";
+        statsDictionary[@"wifi_gw"] = STRVALUE_OR_DEFAULT(ipUtils.gateway);
         statsDictionary[@"wifi_ip"] = STRVALUE_OR_DEFAULT(ipUtils.privateWiFiIP);
         statsDictionary[@"wifi_mask"] = STRVALUE_OR_DEFAULT(ipUtils.netmask);
         

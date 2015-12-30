@@ -148,6 +148,7 @@
 		5B2035991C33FF7000A28C01 /* STUNClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUNClient.m; sourceTree = "<group>"; };
 		5B20359E1C3404DC00A28C01 /* RSIPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIPUtils.h; sourceTree = "<group>"; };
 		5B20359F1C3404DC00A28C01 /* RSIPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSIPUtils.m; sourceTree = "<group>"; };
+		5B2035A21C34227A00A28C01 /* route.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = route.h; sourceTree = "<group>"; };
 		5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
 		5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Response.hpp; sourceTree = "<group>"; };
 		5B2F4BD11BFDD20B003DCB27 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
@@ -423,6 +424,7 @@
 				5B2035931C33E85E00A28C01 /* RSSystemInfo.m */,
 				5B20359E1C3404DC00A28C01 /* RSIPUtils.h */,
 				5B20359F1C3404DC00A28C01 /* RSIPUtils.m */,
+				5B2035A21C34227A00A28C01 /* route.h */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -884,6 +886,12 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libCrypto",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libQUIC",
 				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"jsoncpp\"",
+					"-lresolv",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -918,6 +926,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libCrypto",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libQUIC",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"jsoncpp\"",
+					"-lresolv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
