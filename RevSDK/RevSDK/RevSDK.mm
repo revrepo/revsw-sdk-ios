@@ -16,6 +16,7 @@
 #import "Model.hpp"
 #import "RSUtils.h"
 #import "NSURLSessionConfiguration+RSUtils.h"
+#import "DebugUsageTracker.hpp"
 
 @implementation RevSDK
 
@@ -97,5 +98,36 @@ static bool gIsInitialized = false;
 //{
 //   rs::Model::instance()->switchWhiteListOption(aOn);
 //}
+
++ (NSDictionary *)debug_getUsageStatistics
+{
+    const rs::DebugUsageTracker::Statistics &map =
+    rs::Model::instance()->debug_usageTracker()->getUsageStatistics();
+    
+    NSMutableDictionary *dictionary = [NSMutableDictionary dictionary];
+    
+    for (const auto &it : map) {
+        NSString *key = (0 == it.first.length()) ? (@"") : (@(it.first.c_str()));
+        NSString *value = (0 == it.second.length()) ? (@"") : (@(it.second.c_str()));
+        [dictionary setObject:value forKey:key];
+    }
+    
+    return dictionary;
+}
+
++ (void)debug_resetUsageStatistics
+{
+    rs::Model::instance()->debug_usageTracker()->reset();
+}
+
++ (NSString *)debug_getLatestConfiguration
+{
+    return @(rs::Model::instance()->debug_usageTracker()->getLatestConfiguration().c_str());
+}
+
++ (void)debug_forceConfigurationUpdate
+{
+    rs::Model::instance()->debug_forceReloadConfiguration();
+}
 
 @end

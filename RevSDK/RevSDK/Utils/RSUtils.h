@@ -41,6 +41,7 @@ namespace rs
     extern const std::string kRSRevBaseHost;
     extern NSString* const kRSRevRedirectHost;
     extern NSString* const kRSRevHostHeader;
+    extern NSString* const kRSRevLoadConfigurationHost;
     
     //codes
     extern const long kRSNoErrorCode;

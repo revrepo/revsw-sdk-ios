@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:RevDemo/RevSDK Demo.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:RevTestApp/platforms/ios/RevTest App.xcodeproj">
    </FileRef>
    <FileRef

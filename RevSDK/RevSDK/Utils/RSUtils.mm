@@ -43,7 +43,8 @@ namespace rs
     NSString* const kRSRevRedirectHost = @"rev-200.revdn.net";
     const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
-    const std::string kRSRevLoadConfigurationHost = "iad02-api03.revsw.net";
+//    const std::string kRSRevLoadConfigurationHost = "iad02-api03.revsw.net";
+    NSString* const kRSRevLoadConfigurationHost = @"iad02-api03.revsw.net";
     NSString* const kRSRevHostHeader = @"X-Rev-Host";
     
     //codes
@@ -362,7 +363,7 @@ namespace rs
     std::string _loadConfigurationURL(const std::string& aSDKKey)
     {
         const std::string path = "/v" + std::to_string((int)kRSSDKVersion) + kRSLoadConfigurationEndPoint + aSDKKey;
-        return URLWithComponents(kRSHTTPSProtocolName, kRSRevLoadConfigurationHost, path);
+        return URLWithComponents(kRSHTTPSProtocolName, stdStringFromNSString(kRSRevLoadConfigurationHost), path);
     }
     
     std::vector<Data> dataNSArrayToStdVector(NSArray * aArray)
