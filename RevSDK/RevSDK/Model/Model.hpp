@@ -29,7 +29,7 @@
 
 
 //#ifdef DEBUG
-#define RS_DBG_MAXREQESTS 3
+//#define RS_DBG_MAXREQESTS 3
 //#endif
 
 namespace rs

@@ -116,7 +116,7 @@ namespace rs
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
-                statsData = mStatsHandler->createSendTransaction(this->mConfiguration->statsReportingMaxRequests);
+                statsData = mStatsHandler->createSendTransaction(this->mConfService->getActive()->statsReportingMaxRequests);
 #else
                 statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
 #endif
