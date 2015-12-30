@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <memory>
+
 #include "Utils.hpp"
 #include "Data.hpp"
 #include "ReportTransaction.h"
@@ -19,6 +20,7 @@ namespace rs
 {
     class NativeStatsHandler; 
     class RequestStatsHandler;
+    class Event;
     
     class StatsHandler
     {        
@@ -38,6 +40,8 @@ namespace rs
         bool hasRequestsData() const;
         
         ReportTransactionHanle createSendTransaction(int aRequestCount);
+        
+        void addEvent(const Event&);
     };
 }
 

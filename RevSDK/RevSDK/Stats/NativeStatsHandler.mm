@@ -18,6 +18,8 @@
 #include "RSUtils.h"
 #include "RSSystemInfo.h"
 #include "RSIPUtils.h"
+#include "Event.hpp"
+#include "DataStorage.hpp"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
@@ -297,16 +299,11 @@ namespace rs
         return state;
     }
     
-    NSDictionary* logDataDict()
+    NSArray* logDataArray()
     {
-        NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
-        
-        statsDictionary[@"log_severity"] = @"_";
-        statsDictionary[@"log_event_code"] = @"0";
-        statsDictionary[@"log_message"] = @"_";
-        statsDictionary[@"log_interval"] = @"1.0";
-        
-        return statsDictionary;
+        NSArray* events = (__bridge NSArray *)data_storage::loadEvents();
+        data_storage::deleteEvents();
+        return events;
     }
     
     NSDictionary* wifiDataDict()
@@ -441,9 +438,9 @@ namespace rs
     
     Data NativeStatsHandler::logData()
     {
-        NSDictionary* statsDictionary = logDataDict();
+        NSArray* logArray = logDataArray();
         
-        NSData* nsData = [NSJSONSerialization dataWithJSONObject:statsDictionary
+        NSData* nsData = [NSJSONSerialization dataWithJSONObject:logArray
                                                          options:NSJSONWritingPrettyPrinted
                                                            error:nil];
         Data rsData = dataFromNSData(nsData);
@@ -557,7 +554,7 @@ namespace rs
         sd[@"carrier"] = carrierDataDict();
         sd[@"wifi"] = wifiDataDict();
         sd[@"location"] = locationDataDict();
-        sd[@"log_events"] = logDataDict();
+        sd[@"log_events"] = logDataArray();
         
         for (auto& i : aParams)
         {
@@ -572,5 +569,10 @@ namespace rs
                                                            error:nil];
 
         return dataFromNSData(nsData);
+    }
+    
+    void NativeStatsHandler::addEvent(const Event& aEvent)
+    {
+        data_storage::addEvent(aEvent);
     }
 }

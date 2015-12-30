@@ -37,6 +37,8 @@
 		5B20359D1C33FF7000A28C01 /* STUNClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035991C33FF7000A28C01 /* STUNClient.m */; };
 		5B2035A01C3404DC00A28C01 /* RSIPUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B20359E1C3404DC00A28C01 /* RSIPUtils.h */; };
 		5B2035A11C3404DC00A28C01 /* RSIPUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B20359F1C3404DC00A28C01 /* RSIPUtils.m */; };
+		5B2035A91C3453FC00A28C01 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035A71C3453FC00A28C01 /* Event.cpp */; };
+		5B2035AA1C3453FC00A28C01 /* Event.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035A81C3453FC00A28C01 /* Event.hpp */; };
 		5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */; };
 		5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */; };
 		5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B2F4BD11BFDD20B003DCB27 /* Data.cpp */; };
@@ -151,6 +153,8 @@
 		5B20359E1C3404DC00A28C01 /* RSIPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIPUtils.h; sourceTree = "<group>"; };
 		5B20359F1C3404DC00A28C01 /* RSIPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSIPUtils.m; sourceTree = "<group>"; };
 		5B2035A21C34227A00A28C01 /* route.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = route.h; sourceTree = "<group>"; };
+		5B2035A71C3453FC00A28C01 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
+		5B2035A81C3453FC00A28C01 /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
 		5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
 		5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Response.hpp; sourceTree = "<group>"; };
 		5B2F4BD11BFDD20B003DCB27 /* Data.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Data.cpp; sourceTree = "<group>"; };
@@ -386,6 +390,8 @@
 				6DEAB1D01C2D8D5E0078CE65 /* RSStaticStatsProvider.m */,
 				6D45447B1C32A2070020224C /* ReportTransaction.h */,
 				6D45447C1C32B1CA0020224C /* ReportTransaction.cpp */,
+				5B2035A71C3453FC00A28C01 /* Event.cpp */,
+				5B2035A81C3453FC00A28C01 /* Event.hpp */,
 			);
 			path = Stats;
 			sourceTree = "<group>";
@@ -534,6 +540,7 @@
 				11C961111C2D469300CDE34D /* RevAsyncUdpSocket.h in Headers */,
 				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
+				5B2035AA1C3453FC00A28C01 /* Event.hpp in Headers */,
 				11C961101C2D469300CDE34D /* quic_spdy_client_stream.h in Headers */,
 				5BEBD7311C22EB95002EC0CB /* JSONUtils.hpp in Headers */,
 				11C9622D1C2D7AE400CDE34D /* RevProofVerifier.h in Headers */,
@@ -722,6 +729,7 @@
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,
 				11C9610F1C2D469300CDE34D /* quic_spdy_client_stream.cc in Sources */,
 				11C9621D1C2D54C000CDE34D /* QUICSession.mm in Sources */,
+				5B2035A91C3453FC00A28C01 /* Event.cpp in Sources */,
 				5B2F4BD71BFE11F6003DCB27 /* Error.cpp in Sources */,
 				11C961151C2D469300CDE34D /* RevQuicClient.mm in Sources */,
 				6D45447D1C32B1CA0020224C /* ReportTransaction.cpp in Sources */,

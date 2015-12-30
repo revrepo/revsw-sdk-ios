@@ -45,6 +45,9 @@ namespace rs
     class Model : IConfvigServDelegate
     {
     private:
+        
+        RSLogginLevel mCurrentLoggingLevel;
+        
         std::mutex mLock;
         std::string mSDKKey;
        

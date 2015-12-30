@@ -12,6 +12,7 @@
 #import "Data.hpp"
 #import "RSUtils.h"
 #import "Configuration.hpp"
+#import "Event.hpp"
 
 namespace rs
 {
@@ -230,5 +231,45 @@ namespace rs
 //        {
 //            NSLog(@"Failed to remove requests data %@", error);
 //        }
+    }
+    
+    void data_storage::addEvent(const Event& aEvent)
+    {
+        NSString* path                     = fullPathForFileName(kRSEventsDataStorageKey);
+        NSArray* savedEvents               = [NSArray arrayWithContentsOfFile:path];
+        NSMutableArray* mutableSavedEvents = savedEvents ? [NSMutableArray arrayWithArray:savedEvents] : [NSMutableArray array];
+        
+        NSString* severity  = NSStringFromStdString(aEvent.severity);
+        NSString* code      = [NSString stringWithFormat:@"%d", aEvent.code];
+        NSString* message   = NSStringFromStdString(aEvent.message);
+        NSString* interval  = [NSString stringWithFormat:@"%.f", aEvent.interval];
+        NSString* timestamp = [NSString stringWithFormat:@"%.Lf", aEvent.timestamp];
+        
+        NSMutableDictionary* eventDictionary = [NSMutableDictionary dictionaryWithObjects:@[severity, code, message, interval, timestamp]
+                                                                                  forKeys:@[@"log_severity", @"log_event_code", @"log_message", @"log_interval", @"timestamp"]];
+        
+        [mutableSavedEvents addObject:eventDictionary];
+        
+        saveObject(mutableSavedEvents, kRSEventsDataStorageKey);
+    }
+    
+    void* data_storage::loadEvents()
+    {
+        NSString* path       = fullPathForFileName(kRSEventsDataStorageKey);
+        NSArray* savedEvents = [NSArray arrayWithContentsOfFile:path];
+        
+        if (!savedEvents)
+        {
+            savedEvents = @[];
+        }
+        
+        return (__bridge void *)savedEvents;
+    }
+    
+    void data_storage::deleteEvents()
+    {
+        NSError* error = nil;
+        
+        deleteFile(kRSEventsDataStorageKey, &error);
     }
 }

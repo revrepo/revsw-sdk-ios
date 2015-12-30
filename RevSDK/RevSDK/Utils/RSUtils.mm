@@ -53,6 +53,7 @@ namespace rs
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
     NSString* const kRSRequestDataStorageKey           = @"kRSRequestDataStorageKey";
+    NSString* const kRSEventsDataStorageKey            = @"kRSEventsDataStorageKey";
 //    NSString* const kRSStatusCodeKey                   = @"status_code";
     NSString* const kRSURLKey                          = @"url";
     NSString* const kRSOSKey                           = @"os";
@@ -73,6 +74,7 @@ namespace rs
     NSString* const kRSDomainsProvisionedListKey       = @"domains_provisioned_list";
     NSString* const kRSDomainsWhiteListKey             = @"domains_white_list";
     NSString* const kRSDomainsBlackListKey             = @"domains_black_list";
+    NSString* const kRSLoggingLevelKey                 = @"logging_level";
     
     //request keys
     NSString* const kRS_JKey_ConnID    = @"conn_id";
@@ -146,6 +148,7 @@ namespace rs
         configuration.domainsProvisionedList    = vectorFromNSArray(aDictionary[kRSDomainsProvisionedListKey]);
         configuration.domainsWhiteList          = vectorFromNSArray(aDictionary[kRSDomainsWhiteListKey]);
         configuration.domainsBlackList          = vectorFromNSArray(aDictionary[kRSDomainsBlackListKey]);
+        configuration.loggingLevel              = stdStringFromNSString(aDictionary[kRSLoggingLevelKey]);
         
         return configuration;
     }
@@ -172,6 +175,7 @@ namespace rs
         dictionary[kRSDomainsProvisionedListKey]       = NSArrayFromVector(aConfiguration.domainsProvisionedList);
         dictionary[kRSDomainsWhiteListKey]             = NSArrayFromVector(aConfiguration.domainsWhiteList);
         dictionary[kRSDomainsBlackListKey]             = NSArrayFromVector(aConfiguration.domainsBlackList);
+        dictionary[kRSLoggingLevelKey]                 = NSStringFromStdString(aConfiguration.loggingLevel);
         
         return dictionary;
     }

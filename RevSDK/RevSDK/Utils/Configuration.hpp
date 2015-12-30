@@ -45,6 +45,7 @@ namespace rs
         
         std::string appName;
         std::string os;
+        std::string loggingLevel;
         
         Data toData();
         void print()const;

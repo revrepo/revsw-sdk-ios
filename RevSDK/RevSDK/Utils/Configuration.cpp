@@ -34,6 +34,7 @@ namespace rs
         domainsProvisionedList    = aConfiguration.domainsProvisionedList;
         domainsWhiteList          = aConfiguration.domainsWhiteList;
         domainsBlackList          = aConfiguration.domainsBlackList;
+        loggingLevel              = aConfiguration.loggingLevel;
     }
     
     Data Configuration::toData()

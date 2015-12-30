@@ -18,6 +18,7 @@ namespace rs
 {
      class Data;
      class RSIPUtils;
+     class Event;
     
      class NativeStatsHandler
      {
@@ -35,6 +36,8 @@ namespace rs
         Data allData(const Data& aRequestsData, const std::map<std::string, std::string>& aParams);
          
          std::string appName();
+         
+        void addEvent(const Event&);
      };
 }
 

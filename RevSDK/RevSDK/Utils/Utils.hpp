@@ -14,6 +14,15 @@
 
 namespace rs
 {
+    
+typedef enum
+{
+   kRSLogginLevelNone = 0,
+   kRSLoggingLevelError = 1,
+   kRSLoggingLevelDebug = 2,
+   kRSLogginLevelInfo  = 3
+    
+}RSLogginLevel;
 
 typedef enum
 {
@@ -53,6 +62,7 @@ typedef enum
     extern const std::string kConfigsKey;
     extern const std::string kDeviceStatsKey;
     extern const std::string kRequestsStatsKey;
+    extern const std::string kLoggingLevelKey;
     
     std::string loadConfigurationURL(const std::string&);
     std::string reportStatsURL();

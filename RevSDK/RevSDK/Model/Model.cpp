@@ -25,6 +25,7 @@
 #include "Timer.hpp"
 #include "Request.hpp"
 #include "StatsHandler.hpp"
+#include "Event.hpp"
 
 namespace rs
 {
@@ -104,6 +105,12 @@ namespace rs
             mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
         }
         setOperationMode(aConfiguration->operationMode);
+        
+        std::vector<std::string> logLevels = {"none", "error", "debug", "info"};
+        auto logLevelIterator = std::find(logLevels.begin(), logLevels.end(), aConfiguration->loggingLevel);
+        auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
+        
+        mCurrentLoggingLevel = (RSLogginLevel)logLevelIndex;
     }
     
     void Model::reportStats()
@@ -155,6 +162,12 @@ namespace rs
         std::lock_guard<std::mutex> lockGuard(mLock);
         mSDKKey = aSDKKey;
         mConfService->init();
+       
+        if (mCurrentLoggingLevel >= kRSLogginLevelInfo)
+        {
+            Event initializeEvent("info", 3, "SDK Initialized", 0.0f);
+            mStatsHandler->addEvent(initializeEvent);
+        }
     }
     
     void Model::setOperationMode(const RSOperationModeInner& aOperationMode)

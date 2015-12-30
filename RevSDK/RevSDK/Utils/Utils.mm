@@ -34,6 +34,7 @@ namespace rs
     const std::string kConfigsKey                      = "configs";
     const std::string kDeviceStatsKey                  = "stats";
     const std::string kRequestsStatsKey                = "requests";
+    const std::string kLoggingLevelKey                 = stdStringFromNSString(kRSLoggingLevelKey);
     
     std::string loadConfigurationURL(const std::string& aSDKKey)
     {

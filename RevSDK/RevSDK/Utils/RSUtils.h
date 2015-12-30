@@ -49,6 +49,7 @@ namespace rs
     extern NSString* const kRSURLProtocolHandledKey;
     extern NSString* const kRSConfigurationStorageKey;
     extern NSString* const kRSRequestDataStorageKey;
+    extern NSString* const kRSEventsDataStorageKey;
     extern NSString* const kRSOSKey;
     extern NSString* const kRSAppNameKey;
     extern NSString* const kRSSDKReleaseVersionKey;
@@ -67,6 +68,7 @@ namespace rs
     extern NSString* const kRSDomainsProvisionedListKey;
     extern NSString* const kRSDomainsWhiteListKey;
     extern NSString* const kRSDomainsBlackListKey;
+    extern NSString* const kRSLoggingLevelKey;
     
     //protocols
     extern const std::string kRSHTTPSProtocolName;

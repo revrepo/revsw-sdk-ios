@@ -17,6 +17,7 @@ namespace rs
 {
   class Configuration;
   class Data;
+  class Event;
     
   namespace data_storage
   {
@@ -29,6 +30,10 @@ namespace rs
       
       std::vector<Data> loadRequestsData();
       void deleteRequestsData();
+      
+      void addEvent(const Event&);
+      void* loadEvents();
+      void deleteEvents();
   };
 }
 

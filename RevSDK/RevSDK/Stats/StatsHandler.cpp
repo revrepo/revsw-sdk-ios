@@ -65,4 +65,9 @@ namespace rs
     {
         mRequestStatsHandler->addNewRequestData(aRequestData);
     }
+    
+    void StatsHandler::addEvent(const Event& aEvent)
+    {
+        mStatsHandler->addEvent(aEvent);
+    }
 }

@@ -96,7 +96,7 @@ namespace rs
             configuration.appName                   = value[kAppNameKey].asString();
             configuration.os                        = value[kOSKey].asString();
             configuration.sdkReleaseVersion         = configs[kSDKReleaseVersionKey].asFloat();
-            configuration.configurationApiURL       = value[kConfigurationApiURLKey].asFloat();
+            configuration.configurationApiURL       = configs[kConfigurationApiURLKey].asString();
             configuration.refreshInterval           = configs[kConfigurationRefreshIntervalKey].asInt();
             configuration.staleTimeout              = configs[kConfigurationStaleTimeoutKey].asInt();
             configuration.edgeHost                  = configs[kEdgeHostKey].asString();
@@ -111,6 +111,7 @@ namespace rs
             configuration.domainsProvisionedList    = vectorFromValue(configs[kDomainsProvisionedListKey]);
             configuration.domainsWhiteList          = vectorFromValue(configs[kDomainsWhiteListKey]);
             configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);
+            configuration.loggingLevel              = configs[kLoggingLevelKey].asString();
         }
         
         return configuration;
