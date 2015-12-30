@@ -1372,6 +1372,14 @@ static void MyCFSocketCallback(CFSocketRef, CFSocketCallBackType, CFDataRef, con
 **/
 - (void)doSend:(CFSocketRef)theSocket
 {
+//    NSThread* thread = [NSThread currentThread];
+//    if (![thread isMainThread])
+//    {
+//        NSString* str = [NSString stringWithFormat:@"Thread: %@", thread];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            NSLog(@"%@", str);
+//        });
+//    }
 	if(theCurrentSend != nil)
 	{
 		if(theSocket != [self socketForPacket:theCurrentSend])

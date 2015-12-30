@@ -35,7 +35,6 @@ namespace rs
                                        int aCode);
         void quicSessionDidChangeState(QUICSession* aSession, bool aConnected);
     private:
-        int mId;
         std::string mURL;
         ConnectionDelegate* mDelegate;
         std::shared_ptr<Connection> mAnchor;

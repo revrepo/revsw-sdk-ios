@@ -181,7 +181,7 @@ namespace rs
         
         mConfService->setOperationMode(aOperationMode);
         
-        std::cout << activeConf->statsReportingInterval;
+        std::cout << activeConf->statsReportingInterval << std::endl;
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {

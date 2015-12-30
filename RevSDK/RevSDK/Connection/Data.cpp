@@ -12,61 +12,45 @@
 
 using namespace rs;
 
-Data::Data()
+Data::Content::Content(size_t aLength):
+    mLength(aLength),
+    mBytes(nullptr)
 {
-    mLength = 0;
-    mBytes  = nullptr;
+    if (mLength != 0)
+        mBytes = malloc(mLength);
+}
+
+Data::Content::~Content()
+{
+    if (mBytes != nullptr)
+        free(mBytes);
+}
+
+Data::Data():
+    mContent(nullptr)
+{
 }
 
 Data::Data(const void* aBytes, size_t aLength):
-    mBytes(nullptr),
-    mLength(0)
+    mContent(nullptr)
 {
-    if (aBytes != nullptr && aLength > 0)
+    if (aLength > 0)
     {
-        mLength = aLength;
-        void* ptr = ::malloc(mLength);
-        ::memcpy(ptr, aBytes, mLength);
-        
-        mBytes = std::shared_ptr<void>(ptr, []( void* mem ) {
-            free(mem); // custom deleter
-        });
-    }
-}
-
-Data::Data(const Data& aData):
-    mBytes(nullptr),
-    mLength(0)
-{
-    if (aData.mBytes != nullptr && aData.mLength > 0)
-    {
-        mLength = aData.mLength;
-        mBytes = aData.mBytes;
+        mContent.reset(new Content(aLength));
+        if (aBytes != nullptr)
+            ::memcpy(mContent->bytes(), aBytes, aLength);
     }
 }
 
 Data::~Data()
 {
-    if (mBytes != nullptr)
-    {
-        mBytes = nullptr;
-    }
 }
-
-Data& Data::operator=(const Data& aData)
-{
-    mLength = aData.mLength;
-    mBytes = aData.mBytes;
-
-    return *this;
-}
-
 
 std::string Data::toString() const
 {
-    if (mBytes == nullptr)
+    if (mContent.get() == nullptr)
         return std::string();
     
-    return std::string((char*)mBytes.get(), length());
+    return std::string((char*)bytes(), length());
 }
 

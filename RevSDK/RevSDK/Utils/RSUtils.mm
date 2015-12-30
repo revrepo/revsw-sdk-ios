@@ -258,6 +258,9 @@ namespace rs
             r.location       = 0;
             
             std::string rString = stdStringFromNSString([urlStr stringByReplacingCharactersInRange:r withString:@""]);
+            
+            if (rString.length() == 0)
+                rString = "/";
             request->setRest(rString);
         }
         

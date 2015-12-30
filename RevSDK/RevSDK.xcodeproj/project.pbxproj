@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
+		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
 		11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FD81C2D469300CDE34D /* quic_client_session.cc */; };
 		11C9610E1C2D469300CDE34D /* quic_client_session.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C95FD91C2D469300CDE34D /* quic_client_session.h */; };
 		11C9610F1C2D469300CDE34D /* quic_spdy_client_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FDA1C2D469300CDE34D /* quic_spdy_client_stream.cc */; };
@@ -121,6 +123,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
+		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
 		11C95FD91C2D469300CDE34D /* quic_client_session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quic_client_session.h; sourceTree = "<group>"; };
 		11C95FDA1C2D469300CDE34D /* quic_spdy_client_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_spdy_client_stream.cc; sourceTree = "<group>"; };
@@ -477,6 +481,8 @@
 				11C9622B1C2D7A9300CDE34D /* QUICHeaders.h */,
 				11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */,
 				11C962281C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h */,
+				119145311C33D2D800B91C6E /* QUICThread.h */,
+				119145301C33D2D800B91C6E /* QUICThread.mm */,
 				11C962231C2D779100CDE34D /* RSNativeUDPSocketWrapper.h */,
 				11C962241C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm */,
 				11C962201C2D54CE00CDE34D /* QUICHelpers.h */,
@@ -551,6 +557,7 @@
 				5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */,
 				11C962221C2D54CE00CDE34D /* QUICHelpers.h in Headers */,
 				5B2F4BD41BFDD20B003DCB27 /* Data.hpp in Headers */,
+				119145331C33D2D800B91C6E /* QUICThread.h in Headers */,
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
 				6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */,
@@ -738,6 +745,7 @@
 				6DEAB1CD1C2D803C0078CE65 /* RSLocationService.m in Sources */,
 				5B46D1E51C217BC100A9834C /* StatsHandler.cpp in Sources */,
 				5B54C32F1BFB700C00217971 /* Model.cpp in Sources */,
+				119145321C33D2D800B91C6E /* QUICThread.mm in Sources */,
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
 				5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */,

@@ -25,16 +25,29 @@ using namespace net;
 using namespace net::tools;
 
 QUICSession* QUICSession::mInstance = nullptr;
+QUICThread QUICSession::mInstanceThread;
+std::mutex QUICSession::mInstanceLock;
+
+void QUICSession::executeOnQUICThread(std::function<void(void)> aFunction)
+{
+    mInstanceThread.perform(aFunction);
+}
 
 QUICSession* QUICSession::instance()
 {
     if (mInstance == nullptr)
     {
-        mInstance = new QUICSession();
-        int port = 443;
-        std::string address("www.revapm.com");
-        QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
-        mInstance->connect(serverId);
+        mInstanceLock.lock();
+        if (mInstance == nullptr)
+        {
+            mInstance = new QUICSession();
+            
+            int port = 443;
+            std::string address("www.revapm.com");
+            QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
+            mInstance->connect(serverId);
+        }
+        mInstanceLock.unlock();
     }
     return mInstance;
 }
@@ -57,10 +70,36 @@ void QUICSession::setSessionDelegate(QUICSessionDelegate* aSessionDelegate)
     mSessionDelegate = aSessionDelegate;
 }
 
-void QUICSession::connect(QuicServerId aTargetServerId)
+void QUICSession::connect(net::QuicServerId aTargetServerId)
+{
+    executeOnQUICThread([this, aTargetServerId]()
+    {
+        p_connect(aTargetServerId);
+    });
+}
+
+void QUICSession::disconnect()
+{
+    executeOnQUICThread([this]()
+    {
+        p_disconnect();
+    });
+}
+
+void QUICSession::sendRequest(const net::SpdyHeaderBlock &headers,
+                 base::StringPiece body,
+                 QUICStreamDelegate* aStreamDelegate)
+{
+    executeOnQUICThread([this, headers, body, aStreamDelegate]()
+    {
+        p_sendRequest(headers, body, aStreamDelegate);
+    });
+}
+
+void QUICSession::p_connect(QuicServerId aTargetServerId)
 {
     if (mSession.get())
-        disconnect();
+        p_disconnect();
     
     mServerAddress = IPEndPoint({0, 0, 0, 0}, aTargetServerId.port());
     mServerId = aTargetServerId;
@@ -105,9 +144,9 @@ void QUICSession::connect(QuicServerId aTargetServerId)
     mSession->CryptoConnect();
 }
 
-void QUICSession::disconnect()
+void QUICSession::p_disconnect()
 {
-    if (connected())
+    if (p_connected())
     {
         mSession->connection()->SendConnectionClose(QUIC_PEER_GOING_AWAY);
     }
@@ -116,7 +155,7 @@ void QUICSession::disconnect()
     mSession.reset();
 }
 
-bool QUICSession::connected() const
+bool QUICSession::p_connected() const
 {
     if (mSession.get())
     {
@@ -131,11 +170,11 @@ bool QUICSession::connected() const
     return false;
 }
 
-bool QUICSession::sendRequest(const net::SpdyHeaderBlock &headers,
+bool QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
                               base::StringPiece body,
                               QUICStreamDelegate* aStreamDelegate)
 {
-    if (!connected())
+    if (!p_connected())
     {
         return false;
     }
@@ -150,8 +189,8 @@ bool QUICSession::sendRequest(const net::SpdyHeaderBlock &headers,
     
     stream->set_visitor(this);
     mStreamDelegateMap[stream] = aStreamDelegate;
-    const size_t numBytesWritten = stream->SendRequest(headers, body, true);
-    std::cout << "Written: " << numBytesWritten << std::endl;
+    /*const size_t numBytesWritten = */stream->SendRequest(headers, body, true);
+    //std::cout << "Written: " << numBytesWritten << std::endl;
     return true;
 }
 
@@ -199,7 +238,7 @@ QuicClientSession *QUICSession::createQuicClientSession(const QuicConfig &config
 
 QuicSpdyClientStream *QUICSession::createReliableClientStream()
 {
-    if (!connected())
+    if (!p_connected())
         return nullptr;
     
     return mSession->CreateOutgoingDynamicStream();
@@ -212,7 +251,7 @@ bool QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
         return false;
     }
     
-    NSLog(@"<< incoming %zu", aPacket.length());
+    //NSLog(@"<< incoming %zu", aPacket.length());
     mSession->connection()->ProcessUdpPacket(mClientAddress, mServerAddress, aPacket);
     
     if (!mSession->connection()->connected())
@@ -225,5 +264,5 @@ bool QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
 
 void QUICSession::onQUICError()
 {
-    disconnect();
+    p_disconnect();
 }

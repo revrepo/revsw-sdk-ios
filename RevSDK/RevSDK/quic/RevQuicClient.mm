@@ -56,7 +56,7 @@
  didSendDataWithTag:(long)tag
 {
     self->blocked = false;
-    NSLog(@">>> outgoing ok");
+    //NSLog(@">>> outgoing ok");
 }
 
 - (void)onUdpSocket:(RevAsyncUdpSocket *)sock
@@ -150,7 +150,7 @@ CocoaQuicPacketWriter::WritePacket(const char* buffer, size_t buf_len,
     
     if (sendResult)
     {
-        NSLog(@">> outgoing %zu", buf_len);
+        //NSLog(@">> outgoing %zu", buf_len);
     }
     else
     {
@@ -373,7 +373,7 @@ bool RevQuicClient::onPacket(const QuicEncryptedPacket &packet)
         return false;
     }
     
-    NSLog(@"<< incoming %zu", packet.length());
+    //NSLog(@"<< incoming %zu", packet.length());
     this->session->connection()->ProcessUdpPacket(this->clientAddress, this->serverAddress, packet);
     
     if (! this->session->connection()->connected())
