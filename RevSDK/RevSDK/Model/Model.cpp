@@ -26,30 +26,20 @@
 #include "Request.hpp"
 #include "StatsHandler.hpp"
 
-#define RSStartTimer(aFunc, aTimer, aInterval)\
-        do{\
-             if (!aTimer && aInterval > 0)\
-             {\
-                std::function<void()> scheduledFunction = std::bind(aFunc, this);\
-                scheduleTimer(aTimer, aInterval, scheduledFunction);\
-             }\
-        }while(0)
-
 namespace rs
 {
-    Model::Model() : mUpdateEnabledFlag(true)
+    Model::Model() 
     {
-        mConfiguration             = nullptr;
-        mStatsReportingTimer       = nullptr;
-        mConfigurationRefreshTimer = nullptr;
-        mNetwork                   = std::unique_ptr<Network>(new Network);
-        mDataStorage               = std::make_shared<DataStorage>();
+        data_storage::initDataStorage();
+        
+        auto conf = new ConfigurationService(this);
+        
+        mConfService               = std::unique_ptr<ConfigurationService>(conf);
+        mStatsReportingTimer       = nullptr; 
         mSpareDomainsWhiteList     = std::vector<std::string>();
-        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler(mDataStorage));
+        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
         
-        Configuration configuration = mDataStorage->configuration();
-        
-        applyConfiguration(configuration, false);
+        applyConfiguration(mConfService->getActive());
         
         QUICConnection::initialize();
     }
@@ -74,8 +64,8 @@ namespace rs
     
     std::string Model::edgeHost()
     {
-        std::lock_guard<std::mutex> scopedLock(mLock);
-        return mConfiguration->edgeHost;
+        //std::lock_guard<std::mutex> scopedLock(mLock);
+        return mConfService->getActive()->edgeHost;
     }
     
     std::shared_ptr<Protocol>  Model::currentProtocol()
@@ -106,86 +96,14 @@ namespace rs
         }
     }
     
-    void Model::loadConfiguration()
+    void Model::applyConfiguration(std::shared_ptr<const Configuration> aConfiguration)
     {
-        std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
-            
-#ifdef RS_ENABLE_DEBUG_LOGGING
-            std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
-#endif
-            
-           if (aError.isNoError())
-           {
-               Configuration configuration = processConfigurationData(aData);
-               
-               if (configuration.isValid())
-               {
-                   applyConfiguration(configuration, true);
-                   RSStartTimer(&Model::loadConfiguration, mConfigurationRefreshTimer, mConfiguration->refreshInterval);
-               }
-               else
-               {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-                   std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
-#endif
-               }
-           }
-           else
-           {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-               std::cout << "\n" << "RevSDK.Model::loadConfiguration Failed to load configuration " << aError.description();
-#endif
-           }
-        };
-        
-        mNetwork->loadConfiguration(mSDKKey, completionBlock);
-    }
-    
-    void Model::applyConfiguration(const Configuration& aConfiguration, bool aShouldSave)
-    {
-        bool isUpdateEnabled = mUpdateEnabledFlag.load();
-        if (isUpdateEnabled)
         {
-            {
-                std::lock_guard<std::mutex> lockGuard(mLock);
-#ifdef RS_ENABLE_DEBUG_LOGGING
-                std::cout<<"RevSDK.Model:: applying new configuretion"<<std::endl;
-#endif
-                
-                mConfiguration = std::make_shared<Configuration>(aConfiguration);
-                mStatsHandler->setReportingLevel(aConfiguration.statsReportingLevel);
-                mNetwork->setStatsReportingURL(aConfiguration.statsReportingURL);
-            }
-            setOperationMode(aConfiguration.operationMode);
+            std::lock_guard<std::mutex> lockGuard(mLock);
+            //mConfiguration = aConfiguration;
+            mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
         }
-        else
-        {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-            std::cout<<"RevSDK.Model:: saving new configuretion while update disabled"<<std::endl;
-#endif
-        }
-        
-        aShouldSave = aShouldSave || !isUpdateEnabled;
-        if (aShouldSave)
-        {
-            mDataStorage->saveConfiguration(aConfiguration);
-        }
-    }
-    
-    void Model::scheduleTimer(std::unique_ptr<Timer>& aTimer, int aInterval, std::function<void()> aFunction)
-    {
-        aTimer = std::unique_ptr<Timer>(new Timer(aInterval, aFunction));
-        aTimer->start();
-    }
-    
-    void Model::disableTimer(std::unique_ptr<Timer>& aTimer)
-    {
-        if (aTimer)
-        {
-            aTimer->invalidate();
-            //delete aTimer;
-            aTimer = nullptr;
-        }
+        setOperationMode(aConfiguration->operationMode);
     }
     
     void Model::reportStats()
@@ -198,7 +116,7 @@ namespace rs
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
-                statsData = mStatsHandler->createSendTransaction(this->mConfiguration->statsReportingMaxRequests);
+                statsData = mStatsHandler->createSendTransaction(this->mConfService->getActive()->statsReportingMaxRequests);
 #else
                 statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
 #endif
@@ -227,7 +145,7 @@ namespace rs
             };
             assert(statsData.Buffer.length());
             
-            mNetwork->sendStats(statsData.Buffer, completion);
+            mNetwork.sendStats(mConfService->getActive()->statsReportingURL, statsData.Buffer, completion);
         }
         while (hasDataToSend);
     }
@@ -236,36 +154,39 @@ namespace rs
     {
         std::lock_guard<std::mutex> lockGuard(mLock);
         mSDKKey = aSDKKey;
-        loadConfiguration();
+        mConfService->init();
     }
     
     void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
-        
+        auto activeConf = mConfService->getActive();
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"<<mCurrentOperationMode<<" -> "
-        <<" newModeID:"<<aOperationMode<<std::endl;
+        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
+        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
 #endif
         
-        mCurrentOperationMode = aOperationMode;
+        mConfService->setOperationMode(aOperationMode);
         
-        std::cout << mConfiguration->statsReportingInterval;
-        if (mCurrentOperationMode == kRSOperationModeInnerReport ||
-            mCurrentOperationMode == kRSOperationModeInnerTransportAndReport)
+        std::cout << activeConf->statsReportingInterval;
+        if (activeConf->operationMode == kRSOperationModeInnerReport ||
+            activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
-            RSStartTimer(&Model::reportStats, mStatsReportingTimer, mConfiguration->statsReportingInterval);
+            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, activeConf->statsReportingInterval);
+            Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
+                this->reportStats();
+            });
         }
         else
         {
-            disableTimer(mStatsReportingTimer);
+            Timer::disableTimer(mStatsReportingTimer);
         }
     }
     
     RSOperationModeInner Model::currentOperationMode()
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
-        return mCurrentOperationMode;
+        return mConfService->getActive()->operationMode;
     }
     
     bool Model::canTransport()
@@ -273,24 +194,29 @@ namespace rs
         bool flag;
         {
             std::lock_guard<std::mutex> scopedLock(mLock);
-            flag = mCurrentOperationMode == kRSOperationModeInnerTransport || mCurrentOperationMode == kRSOperationModeInnerTransportAndReport;
+            auto conf = mConfService->getActive();
+            flag =  conf->operationMode == kRSOperationModeInnerTransport ||
+                    conf->operationMode == kRSOperationModeInnerTransportAndReport;
         }
         return flag;
     }
     
-    void Model::switchWhiteListOption(bool aOn)
-    {
-        std::lock_guard<std::mutex> scopedLock(mLock);
-        if (aOn)
-        {
-           mConfiguration->domainsWhiteList = mSpareDomainsWhiteList;
-        }
-        else
-        {
-           mSpareDomainsWhiteList = mConfiguration->domainsWhiteList;
-           mConfiguration->domainsWhiteList.clear();
-        }
-    }
+//    void Model::switchWhiteListOption(bool aOn)
+//    {
+//        std::lock_guard<std::mutex> scopedLock(mLock);
+//        
+//        auto conf = mConfService->getActive();
+//        
+//        if (aOn)
+//        {
+//           conf->domainsWhiteList = mSpareDomainsWhiteList;
+//        }
+//        else
+//        {
+//           mSpareDomainsWhiteList = conf->domainsWhiteList;
+//           conf->domainsWhiteList.clear();
+//        }
+//    }
     
     bool rs::Model::shouldTransportDomainName(std::string aDomainName)
     {
@@ -300,38 +226,45 @@ namespace rs
         }
         
         std::lock_guard<std::mutex> scopedLock(mLock);
-        auto begin = mConfiguration->domainsBlackList.begin();
-        auto end   = mConfiguration->domainsBlackList.end();
+        
+        auto conf = mConfService->getActive();
+        
+        auto begin = conf->domainsBlackList.begin();
+        auto end   = conf->domainsBlackList.end();
         
         if (std::find(begin, end, aDomainName) != end)
         {
             return false;
         }
         
-        begin = mConfiguration->domainsProvisionedList.begin();
-        end   = mConfiguration->domainsProvisionedList.end();
+        begin = conf->domainsProvisionedList.begin();
+        end   = conf->domainsProvisionedList.end();
         
         if (std::find(begin, end, aDomainName) != end)
         {
             return true;
         }
         
-        begin = mConfiguration->domainsWhiteList.begin();
-        end   = mConfiguration->domainsWhiteList.end();
+        begin = conf->domainsWhiteList.begin();
+        end   = conf->domainsWhiteList.end();
         
         if (std::find(begin, end, aDomainName) != end)
         {
             return true;
         }
         
-        return mConfiguration->domainsWhiteList.empty();
+        return conf->domainsWhiteList.empty();
     }
     
     bool rs::Model::isDomainNameProvisioned(std::string aDomainName)
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
-        auto begin = mConfiguration->domainsProvisionedList.begin();
-        auto end   = mConfiguration->domainsProvisionedList.end();
+        
+        auto conf = mConfService->getActive();
+        
+        auto begin = conf->domainsProvisionedList.begin();
+        auto end   = conf->domainsProvisionedList.end();
+        
         return std::find(begin, end, aDomainName) != end;
     }
     
@@ -346,7 +279,7 @@ namespace rs
 #ifdef RS_ENABLE_DEBUG_LOGGING
         std::cout<<"RevSDK.Model:: stopped configuration update"<<std::endl;
 #endif
-        mUpdateEnabledFlag.store(false);
+        mConfService->stopUpdate();
     }
     
     void rs::Model::resumeConfigurationUpdate()
@@ -354,20 +287,16 @@ namespace rs
 #ifdef RS_ENABLE_DEBUG_LOGGING
         std::cout<<"RevSDK.Model:: resumed configuration update"<<std::endl;
 #endif
-        mUpdateEnabledFlag.store(true);
-        {
-//            mConfiguration.reset(mCachedConfiguration.release());
-//            applyConfiguration(*mCachedConfiguration.get(), false);
-            Configuration configuration = mDataStorage->configuration();
-            applyConfiguration(configuration, false);
-        }
+        mConfService->resumeUpdate();
     }
     
     bool rs::Model::shouldCollectRequestsData()
     {
         return  true;
         /// ASK ALEX OR ANDREW, MERGE CONFLICT
-        RSStatsReportingLevel statsReportingLevel = mConfiguration->statsReportingLevel;
+        auto conf = mConfService->getActive();
+        
+        RSStatsReportingLevel statsReportingLevel = conf->statsReportingLevel;
         
         bool shouldCollect;
         {

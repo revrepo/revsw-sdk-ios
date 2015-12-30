@@ -21,15 +21,10 @@
 namespace rs
 {
     class Data;
-    class DataStorage;
     
     class RequestStatsHandler
     {
         void deleteRequestsData();
-        
-        //std::mutex mLock;
-        
-        std::weak_ptr<DataStorage> mDataStorage;
         std::vector<Data> mRequestsDataVector;
         
         std::vector<Transaction> mSentData;
@@ -41,7 +36,7 @@ namespace rs
         
     public:
         
-        RequestStatsHandler(std::weak_ptr<DataStorage>);
+        RequestStatsHandler();
         ~RequestStatsHandler(){};
         
         void addNewRequestData(const Data&);

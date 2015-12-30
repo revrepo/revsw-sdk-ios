@@ -100,6 +100,8 @@
 		6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */; };
 		6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */; };
 		6D45447D1C32B1CA0020224C /* ReportTransaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D45447C1C32B1CA0020224C /* ReportTransaction.cpp */; };
+		6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D45447E1C33C5160020224C /* ConfigurationService.cpp */; };
+		6D4544811C33C5160020224C /* ConfigurationService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D45447F1C33C5160020224C /* ConfigurationService.h */; };
 		6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DEAB1CA1C2D803C0078CE65 /* RSLocationService.h */; };
 		6DEAB1CD1C2D803C0078CE65 /* RSLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DEAB1CB1C2D803C0078CE65 /* RSLocationService.m */; };
 		6DEAB1CF1C2D8D2B0078CE65 /* RSStaticStatsProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 6DEAB1CE1C2D8D2B0078CE65 /* RSStaticStatsProvider.h */; };
@@ -200,8 +202,8 @@
 		5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLRequestProcessor.mm; sourceTree = "<group>"; };
 		5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+RSUtils.h"; sourceTree = "<group>"; };
 		5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+RSUtils.m"; sourceTree = "<group>"; };
-		5BC497B51C03782B00FF0922 /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Configuration.cpp; sourceTree = "<group>"; };
-		5BC497B61C03782B00FF0922 /* Configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Configuration.hpp; sourceTree = "<group>"; };
+		5BC497B51C03782B00FF0922 /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Configuration.cpp; path = ../Utils/Configuration.cpp; sourceTree = "<group>"; };
+		5BC497B61C03782B00FF0922 /* Configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Configuration.hpp; path = ../Utils/Configuration.hpp; sourceTree = "<group>"; };
 		5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionProxy.cpp; sourceTree = "<group>"; };
 		5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ConnectionProxy.h; sourceTree = "<group>"; };
 		5BE3F8631C0454890087BC28 /* DataStorage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStorage.hpp; sourceTree = "<group>"; };
@@ -218,6 +220,8 @@
 		6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLSessionDelegate.h; sourceTree = "<group>"; };
 		6D45447B1C32A2070020224C /* ReportTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportTransaction.h; sourceTree = "<group>"; };
 		6D45447C1C32B1CA0020224C /* ReportTransaction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReportTransaction.cpp; sourceTree = "<group>"; };
+		6D45447E1C33C5160020224C /* ConfigurationService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationService.cpp; sourceTree = "<group>"; };
+		6D45447F1C33C5160020224C /* ConfigurationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigurationService.h; sourceTree = "<group>"; };
 		6DEAB1CA1C2D803C0078CE65 /* RSLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLocationService.h; sourceTree = "<group>"; };
 		6DEAB1CB1C2D803C0078CE65 /* RSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLocationService.m; sourceTree = "<group>"; };
 		6DEAB1CE1C2D8D2B0078CE65 /* RSStaticStatsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSStaticStatsProvider.h; sourceTree = "<group>"; };
@@ -412,8 +416,6 @@
 				5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */,
 				5B54C3281BFB5EF000217971 /* RSUtils.h */,
 				5B54C3291BFB5EF000217971 /* RSUtils.mm */,
-				5BC497B51C03782B00FF0922 /* Configuration.cpp */,
-				5BC497B61C03782B00FF0922 /* Configuration.hpp */,
 				5B7C91AF1C08A9D200676ADC /* RSURLRequestProcessor.h */,
 				5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */,
 				5B46D1EB1C21B61C00A9834C /* Utils.mm */,
@@ -432,8 +434,12 @@
 		5B54C32C1BFB6FFB00217971 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5B54C32D1BFB700C00217971 /* Model.cpp */,
 				5B54C32E1BFB700C00217971 /* Model.hpp */,
+				5B54C32D1BFB700C00217971 /* Model.cpp */,
+				5BC497B51C03782B00FF0922 /* Configuration.cpp */,
+				5BC497B61C03782B00FF0922 /* Configuration.hpp */,
+				6D45447E1C33C5160020224C /* ConfigurationService.cpp */,
+				6D45447F1C33C5160020224C /* ConfigurationService.h */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 				5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */,
 				5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */,
 				11C9610E1C2D469300CDE34D /* quic_client_session.h in Headers */,
+				6D4544811C33C5160020224C /* ConfigurationService.h in Headers */,
 				5B3096EE1BFA0CD30045024C /* RSURLConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -709,6 +716,7 @@
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
 				5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */,
+				6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */,
 				5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.mm in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,

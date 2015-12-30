@@ -21,7 +21,9 @@ namespace rs
     
     struct Configuration
     {
-        Configuration(){}
+        Configuration() : operationMode(RSOperationModeInner::kRSOperationModeInnerOff)
+        {}
+        
         Configuration(const Configuration&);
         
         float sdkReleaseVersion;
