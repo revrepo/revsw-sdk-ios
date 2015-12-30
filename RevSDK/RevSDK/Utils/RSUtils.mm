@@ -15,6 +15,7 @@
 #include "Error.hpp"
 #include "Configuration.hpp"
 #include "Connection.hpp"
+#import "NSURL+RevSDK.h"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
@@ -384,11 +385,17 @@ namespace rs
     {
         assert(aConnection);
         
+        
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
         NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
+        NSURL* originalURL = URL;
         BOOL isRedirecting                  = [URL.host isEqualToString:kRSRevRedirectHost];
-        NSString* URLString                 = isRedirecting ? headers[kRSRevHostHeader] : URL.host;
+        
+        if (isRedirecting)
+            originalURL = [originalURL revURLByReplacingHostWithHost:headers[kRSRevHostHeader]];
+        
+        NSString* URLString                 = [originalURL absoluteString];
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
         
         dataDictionary[kRSURLKey]           = URLString;

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		114D65871C34502C00C2D176 /* DebugUsageTracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */; };
 		114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 114D65861C34502C00C2D176 /* DebugUsageTracker.mm */; };
+		114D658D1C3476E400C2D176 /* NSURL+RevSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */; };
+		114D658E1C3476E400C2D176 /* NSURL+RevSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
 		11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FD81C2D469300CDE34D /* quic_client_session.cc */; };
@@ -127,6 +129,8 @@
 /* Begin PBXFileReference section */
 		114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DebugUsageTracker.hpp; sourceTree = "<group>"; };
 		114D65861C34502C00C2D176 /* DebugUsageTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebugUsageTracker.mm; sourceTree = "<group>"; };
+		114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RevSDK.h"; sourceTree = "<group>"; };
+		114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RevSDK.m"; sourceTree = "<group>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
@@ -451,6 +455,8 @@
 				5B20359E1C3404DC00A28C01 /* RSIPUtils.h */,
 				5B20359F1C3404DC00A28C01 /* RSIPUtils.m */,
 				5B2035A21C34227A00A28C01 /* route.h */,
+				114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */,
+				114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -572,6 +578,7 @@
 				5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */,
 				11C962221C2D54CE00CDE34D /* QUICHelpers.h in Headers */,
 				5B2F4BD41BFDD20B003DCB27 /* Data.hpp in Headers */,
+				114D658D1C3476E400C2D176 /* NSURL+RevSDK.h in Headers */,
 				119145331C33D2D800B91C6E /* QUICThread.h in Headers */,
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
@@ -776,6 +783,7 @@
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,
 				11C962211C2D54CE00CDE34D /* QUICHelpers.mm in Sources */,
+				114D658E1C3476E400C2D176 /* NSURL+RevSDK.m in Sources */,
 				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
 				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,
