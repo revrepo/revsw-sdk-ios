@@ -28,7 +28,7 @@ namespace rs
         Data networkData();
         Data wifiData();
         Data logData();
-         Data allData(const Data& aRequestsData, const std::map<std::string, std::string>& aParams);
+        Data allData(const Data& aRequestsData, const std::map<std::string, std::string>& aParams);
          
          std::string appName();
      };

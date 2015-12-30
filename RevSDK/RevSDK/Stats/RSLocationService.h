@@ -2,7 +2,6 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h> 
-//extern NSString * const kRSLocationServiceDidUpdate;
 
 @class CLLocation;
 

@@ -17,6 +17,7 @@ FOUNDATION_EXPORT const unsigned char RevSDKVersionString[];
 
 #import <RevSDK/RSPublicConsts.h>
 
+
 typedef enum
 {
     kRSOperationModeOff,
@@ -32,6 +33,6 @@ typedef enum
 + (void)debug_stopConfigurationUpdate;
 + (void)debug_resumeConfigurationUpdate;
 + (RSOperationMode)operationMode;
-+ (void)setWhiteListOption:(BOOL)aOn;
+//+ (void)setWhiteListOption:(BOOL)aOn;
 
 @end

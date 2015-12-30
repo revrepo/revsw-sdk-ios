@@ -17,17 +17,6 @@
 #import "RSUtils.h"
 #import "NSURLSessionConfiguration+RSUtils.h"
 
-#import <sys/utsname.h>
-
-NSString* deviceName()
-{
-    struct utsname systemInfo;
-    uname(&systemInfo);
-    
-    return [NSString stringWithCString:systemInfo.machine
-                              encoding:NSUTF8StringEncoding];
-}
-
 @implementation RevSDK
 
 static bool gIsInitialized = false;
@@ -104,9 +93,9 @@ static bool gIsInitialized = false;
     }
 }
 
-+ (void)setWhiteListOption:(BOOL)aOn
-{
-   rs::Model::instance()->switchWhiteListOption(aOn);
-}
+//+ (void)setWhiteListOption:(BOOL)aOn
+//{
+//   rs::Model::instance()->switchWhiteListOption(aOn);
+//}
 
 @end
