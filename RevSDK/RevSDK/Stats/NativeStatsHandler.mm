@@ -17,6 +17,7 @@
 #import "RSStaticStatsProvider.h"
 #include "Data.hpp"
 #include "RSUtils.h"
+#include "RSSystemInfo.h"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
@@ -388,21 +389,18 @@ namespace rs
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
-        CTTelephonyNetworkInfo* network_Info = [CTTelephonyNetworkInfo new];
-        CTCarrier* carrier                   = network_Info.subscriberCellularProvider;
-        
-        statsDictionary[@"country_code"] = STRVALUE_OR_DEFAULT(carrier.isoCountryCode);
+        statsDictionary[@"country_code"] = STRVALUE_OR_DEFAULT([RSSystemInfo countryCode]);
         statsDictionary[@"device_id"] = @"_";
-        statsDictionary[@"mcc"] = STRVALUE_OR_DEFAULT(carrier.mobileCountryCode);
-        statsDictionary[@"mnc"] = STRVALUE_OR_DEFAULT(carrier.mobileNetworkCode);
-        statsDictionary[@"net_operator"] = processCarrierName(carrier.carrierName);
-        statsDictionary[@"network_type"] = radioAccessTechnology();
+        statsDictionary[@"mcc"] =  STRVALUE_OR_DEFAULT([RSSystemInfo mobileCountryCode]);
+        statsDictionary[@"mnc"] = STRVALUE_OR_DEFAULT([RSSystemInfo mobileNetworkCode]);
+        statsDictionary[@"net_operator"] = STRVALUE_OR_DEFAULT([RSSystemInfo carrierName]);
+        statsDictionary[@"network_type"] = STRVALUE_OR_DEFAULT([RSSystemInfo radioAccessTechnology]);
         statsDictionary[@"phone_type"] = phoneType();
         statsDictionary[@"rssi"] = @"_";
         statsDictionary[@"rssi_avg"] = @"_";
         statsDictionary[@"rssi_best"] = @"_";
         statsDictionary[@"signal_type"] = signalType();
-        statsDictionary[@"sim_operator"] = [RSSystemInfo carrierName];
+        statsDictionary[@"sim_operator"] = STRVALUE_OR_DEFAULT([RSSystemInfo carrierName]);
         statsDictionary[@"tower_cell_id_l"] = @"_";
         statsDictionary[@"tower_cell_id_s"] = @"_";
         
