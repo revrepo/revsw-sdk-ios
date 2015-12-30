@@ -349,7 +349,7 @@ namespace rs
         statsDictionary[@"wifi_extip"] = STRVALUE_OR_DEFAULT(ipUtils.publicWifiIP);
         statsDictionary[@"wifi_qw"] = @"_";
         statsDictionary[@"wifi_ip"] = STRVALUE_OR_DEFAULT(ipUtils.privateWiFiIP);
-        statsDictionary[@"wifi_mask"] = @"_";
+        statsDictionary[@"wifi_mask"] = STRVALUE_OR_DEFAULT(ipUtils.netmask);
         
         return statsDictionary;
     }

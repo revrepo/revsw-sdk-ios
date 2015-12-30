@@ -23,6 +23,12 @@
 @property (nonatomic, strong) RSReachability* reachability;
 @property (nonatomic, strong) NSTimer* timer;
 
+@property (nonatomic, copy, readwrite) NSString* publicWifiIP;
+@property (nonatomic, copy, readwrite) NSString* publicCellularIP;
+@property (nonatomic, copy, readwrite) NSString* privateWiFiIP;
+@property (nonatomic, copy, readwrite) NSString* privateCellularIP;
+@property (nonatomic, copy, readwrite) NSString* netmask;
+
 @end
 
 @implementation RSIPUtils
@@ -99,6 +105,7 @@
     struct ifaddrs *temp_addr = NULL;
     NSString *wifiAddress = nil;
     NSString *cellAddress = nil;
+    NSString *netmask = nil;
     
     if(!getifaddrs(&interfaces))
     {
@@ -116,6 +123,7 @@
                 if([name isEqualToString:@"en0"])
                 {
                     wifiAddress = addr;
+                    netmask = @(inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_netmask)->sin_addr));
                 }
                 else
                 if([name isEqualToString:@"pdp_ip0"])
@@ -137,6 +145,11 @@
     if (cellAddress)
     {
        self.privateCellularIP = cellAddress;
+    }
+    
+    if (netmask)
+    {
+        self.netmask = netmask;
     }
 }
 

@@ -10,10 +10,11 @@
 
 @interface RSIPUtils : NSObject
 
-@property (nonatomic, copy) NSString* publicWifiIP;
-@property (nonatomic, copy) NSString* publicCellularIP;
-@property (nonatomic, copy) NSString* privateWiFiIP;
-@property (nonatomic, copy) NSString* privateCellularIP;
+@property (nonatomic, copy, readonly) NSString* publicWifiIP;
+@property (nonatomic, copy, readonly) NSString* publicCellularIP;
+@property (nonatomic, copy, readonly) NSString* privateWiFiIP;
+@property (nonatomic, copy, readonly) NSString* privateCellularIP;
+@property (nonatomic, copy, readonly) NSString* netmask;
 
 - (void)start;
 
