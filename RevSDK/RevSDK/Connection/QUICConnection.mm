@@ -103,3 +103,18 @@ std::string QUICConnection::edgeTransport()const
 {
     return kRSQUICProtocolName;
 }
+
+void QUICConnection::didReceiveData(void* aData)
+{
+    
+}
+
+void QUICConnection::didReceiveResponse(void* aResponse)
+{
+    
+}
+
+void QUICConnection::didCompleteWithError(void* aError)
+{
+    
+}
