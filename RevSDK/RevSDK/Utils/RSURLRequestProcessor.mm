@@ -38,26 +38,17 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     BOOL isProvisioned                  = rs::Model::instance()->isDomainNameProvisioned(stdHost);
     NSString* transformedBaseHost       = rs::NSStringFromStdString(rs::kRSRevBaseHost);
     NSString* scheme                    = URL.scheme;
-    NSURLComponents* originalComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO]; 
+    NSURLComponents* originalComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     
-    if (isProvisioned)
-    {
-        [newRequest addValue:host forHTTPHeaderField:kRSHostHeader];
-    }
-    else
-    {
-        if ([RSURLRequestProcessor isValidScheme:scheme])
-            [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
-        
-        scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
-        std::string SDKKey          = rs::Model::instance()->SDKKey();
-        NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-        NSString* hostHeader        = [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
-        [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
-        [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
-    }
+    if ([RSURLRequestProcessor isValidScheme:scheme])
+        [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
     
-    
+    scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
+    std::string SDKKey          = rs::Model::instance()->SDKKey();
+    NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
+    NSString* hostHeader        = isProvisioned ? [NSString stringWithFormat:@"%@", transformedBaseHost] : [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
+    [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
+    [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
     
     NSURLComponents* URLComponents = [NSURLComponents new];
     URLComponents.host             = rs::kRSRevRedirectHost;
