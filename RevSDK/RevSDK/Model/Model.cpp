@@ -26,6 +26,7 @@
 #include "Request.hpp"
 #include "StatsHandler.hpp"
 #include "Event.hpp"
+#include "DebugUsageTracker.hpp"
 
 namespace rs
 {
@@ -39,6 +40,7 @@ namespace rs
         mStatsReportingTimer       = nullptr; 
         mSpareDomainsWhiteList     = std::vector<std::string>();
         mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
+        mUsageTracker              = std::make_shared<DebugUsageTracker>();
         
         applyConfiguration(mConfService->getActive());
         
@@ -61,6 +63,16 @@ namespace rs
         }
         
         return _instance;
+    }
+    
+    std::shared_ptr<DebugUsageTracker> Model::debug_usageTracker() const
+    {
+        return mUsageTracker;
+    }
+    
+    void Model::debug_forceReloadConfiguration()
+    {
+        //mConfService->loadConfiguration();
     }
     
     std::string Model::edgeHost()
@@ -155,6 +167,8 @@ namespace rs
             mNetwork.sendStats(mConfService->getActive()->statsReportingURL, statsData.Buffer, completion);
         }
         while (hasDataToSend);
+        
+        mUsageTracker->trackStatsReported();
     }
     
     void Model::initialize(std::string aSDKKey)

@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6508409C1C2A75BF00B72CAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6508409B1C2A75BF00B72CAF /* main.m */; };
+		6508409F1C2A75BF00B72CAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6508409E1C2A75BF00B72CAF /* AppDelegate.m */; };
+		650840A21C2A75BF00B72CAF /* RevDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840A11C2A75BF00B72CAF /* RevDemoViewController.m */; };
+		650840A51C2A75BF00B72CAF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650840A31C2A75BF00B72CAF /* Main.storyboard */; };
+		650840A71C2A75BF00B72CAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 650840A61C2A75BF00B72CAF /* Assets.xcassets */; };
+		650840AA1C2A75BF00B72CAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650840A81C2A75BF00B72CAF /* LaunchScreen.storyboard */; };
+		650840B51C2A75BF00B72CAF /* RevDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840B41C2A75BF00B72CAF /* RevDemoUITests.m */; };
+		650840C01C2A762000B72CAF /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; };
+		650840C51C2A7A7700B72CAF /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		650840C81C2A7D3700B72CAF /* RevConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840C71C2A7D3700B72CAF /* RevConfigurationViewController.m */; };
+		650840CB1C2A7D4B00B72CAF /* RevStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840CA1C2A7D4B00B72CAF /* RevStatisticsViewController.m */; };
+		65F05F981C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F05F971C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		650840B11C2A75BF00B72CAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6508408F1C2A75BF00B72CAF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 650840961C2A75BF00B72CAF;
+			remoteInfo = RevDemo;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		650840C41C2A7A6100B72CAF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				650840C51C2A7A7700B72CAF /* RevSDK.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		650840971C2A75BF00B72CAF /* RevSDK Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevSDK Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6508409B1C2A75BF00B72CAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6508409D1C2A75BF00B72CAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		6508409E1C2A75BF00B72CAF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		650840A01C2A75BF00B72CAF /* RevDemoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RevDemoViewController.h; sourceTree = "<group>"; };
+		650840A11C2A75BF00B72CAF /* RevDemoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevDemoViewController.m; sourceTree = "<group>"; };
+		650840A41C2A75BF00B72CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		650840A61C2A75BF00B72CAF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		650840A91C2A75BF00B72CAF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		650840AB1C2A75BF00B72CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		650840B01C2A75BF00B72CAF /* RevSDK Demo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RevSDK Demo.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		650840B41C2A75BF00B72CAF /* RevDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevDemoUITests.m; sourceTree = "<group>"; };
+		650840B61C2A75BF00B72CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		650840BF1C2A762000B72CAF /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RevSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		650840C61C2A7D3700B72CAF /* RevConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevConfigurationViewController.h; sourceTree = "<group>"; };
+		650840C71C2A7D3700B72CAF /* RevConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevConfigurationViewController.m; sourceTree = "<group>"; };
+		650840C91C2A7D4B00B72CAF /* RevStatisticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevStatisticsViewController.h; sourceTree = "<group>"; };
+		650840CA1C2A7D4B00B72CAF /* RevStatisticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevStatisticsViewController.m; sourceTree = "<group>"; };
+		65F05F961C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevStatisticsTableViewCell.h; sourceTree = "<group>"; };
+		65F05F971C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevStatisticsTableViewCell.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		650840941C2A75BF00B72CAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				650840C01C2A762000B72CAF /* RevSDK.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		650840AD1C2A75BF00B72CAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6508408E1C2A75BF00B72CAF = {
+			isa = PBXGroup;
+			children = (
+				650840991C2A75BF00B72CAF /* RevDemo */,
+				650840B31C2A75BF00B72CAF /* RevDemoUITests */,
+				650840981C2A75BF00B72CAF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		650840981C2A75BF00B72CAF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				650840971C2A75BF00B72CAF /* RevSDK Demo.app */,
+				650840B01C2A75BF00B72CAF /* RevSDK Demo.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		650840991C2A75BF00B72CAF /* RevDemo */ = {
+			isa = PBXGroup;
+			children = (
+				6508409D1C2A75BF00B72CAF /* AppDelegate.h */,
+				6508409E1C2A75BF00B72CAF /* AppDelegate.m */,
+				650840A01C2A75BF00B72CAF /* RevDemoViewController.h */,
+				650840A11C2A75BF00B72CAF /* RevDemoViewController.m */,
+				650840C61C2A7D3700B72CAF /* RevConfigurationViewController.h */,
+				650840C71C2A7D3700B72CAF /* RevConfigurationViewController.m */,
+				650840C91C2A7D4B00B72CAF /* RevStatisticsViewController.h */,
+				650840CA1C2A7D4B00B72CAF /* RevStatisticsViewController.m */,
+				65F05F961C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.h */,
+				65F05F971C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m */,
+				650840A31C2A75BF00B72CAF /* Main.storyboard */,
+				650840A61C2A75BF00B72CAF /* Assets.xcassets */,
+				650840A81C2A75BF00B72CAF /* LaunchScreen.storyboard */,
+				650840AB1C2A75BF00B72CAF /* Info.plist */,
+				6508409A1C2A75BF00B72CAF /* Supporting Files */,
+				650840C11C2A763500B72CAF /* Frameworks */,
+			);
+			path = RevDemo;
+			sourceTree = "<group>";
+		};
+		6508409A1C2A75BF00B72CAF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6508409B1C2A75BF00B72CAF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		650840B31C2A75BF00B72CAF /* RevDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				650840B41C2A75BF00B72CAF /* RevDemoUITests.m */,
+				650840B61C2A75BF00B72CAF /* Info.plist */,
+			);
+			path = RevDemoUITests;
+			sourceTree = "<group>";
+		};
+		650840C11C2A763500B72CAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				650840BF1C2A762000B72CAF /* RevSDK.framework */,
+			);
+			name = Frameworks;
+			path = ..;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		650840961C2A75BF00B72CAF /* RevSDK Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 650840B91C2A75BF00B72CAF /* Build configuration list for PBXNativeTarget "RevSDK Demo" */;
+			buildPhases = (
+				650840931C2A75BF00B72CAF /* Sources */,
+				650840941C2A75BF00B72CAF /* Frameworks */,
+				650840951C2A75BF00B72CAF /* Resources */,
+				650840C41C2A7A6100B72CAF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "RevSDK Demo";
+			productName = RevDemo;
+			productReference = 650840971C2A75BF00B72CAF /* RevSDK Demo.app */;
+			productType = "com.apple.product-type.application";
+		};
+		650840AF1C2A75BF00B72CAF /* RevSDK DemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 650840BC1C2A75BF00B72CAF /* Build configuration list for PBXNativeTarget "RevSDK DemoUITests" */;
+			buildPhases = (
+				650840AC1C2A75BF00B72CAF /* Sources */,
+				650840AD1C2A75BF00B72CAF /* Frameworks */,
+				650840AE1C2A75BF00B72CAF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				650840B21C2A75BF00B72CAF /* PBXTargetDependency */,
+			);
+			name = "RevSDK DemoUITests";
+			productName = RevDemoUITests;
+			productReference = 650840B01C2A75BF00B72CAF /* RevSDK Demo.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6508408F1C2A75BF00B72CAF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = 65Gb;
+				TargetAttributes = {
+					650840961C2A75BF00B72CAF = {
+						CreatedOnToolsVersion = 7.1.1;
+						DevelopmentTeam = Q83P3NSKAP;
+					};
+					650840AF1C2A75BF00B72CAF = {
+						CreatedOnToolsVersion = 7.1.1;
+						TestTargetID = 650840961C2A75BF00B72CAF;
+					};
+				};
+			};
+			buildConfigurationList = 650840921C2A75BF00B72CAF /* Build configuration list for PBXProject "RevSDK Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6508408E1C2A75BF00B72CAF;
+			productRefGroup = 650840981C2A75BF00B72CAF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				650840961C2A75BF00B72CAF /* RevSDK Demo */,
+				650840AF1C2A75BF00B72CAF /* RevSDK DemoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		650840951C2A75BF00B72CAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				650840AA1C2A75BF00B72CAF /* LaunchScreen.storyboard in Resources */,
+				650840A71C2A75BF00B72CAF /* Assets.xcassets in Resources */,
+				650840A51C2A75BF00B72CAF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		650840AE1C2A75BF00B72CAF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		650840931C2A75BF00B72CAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				650840A21C2A75BF00B72CAF /* RevDemoViewController.m in Sources */,
+				6508409F1C2A75BF00B72CAF /* AppDelegate.m in Sources */,
+				65F05F981C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m in Sources */,
+				650840C81C2A7D3700B72CAF /* RevConfigurationViewController.m in Sources */,
+				650840CB1C2A7D4B00B72CAF /* RevStatisticsViewController.m in Sources */,
+				6508409C1C2A75BF00B72CAF /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		650840AC1C2A75BF00B72CAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				650840B51C2A75BF00B72CAF /* RevDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		650840B21C2A75BF00B72CAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 650840961C2A75BF00B72CAF /* RevSDK Demo */;
+			targetProxy = 650840B11C2A75BF00B72CAF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		650840A31C2A75BF00B72CAF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				650840A41C2A75BF00B72CAF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		650840A81C2A75BF00B72CAF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				650840A91C2A75BF00B72CAF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		650840B71C2A75BF00B72CAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		650840B81C2A75BF00B72CAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		650840BA1C2A75BF00B72CAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = RevDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo2;
+				PRODUCT_NAME = "RevSDK Demo";
+				PROVISIONING_PROFILE = "c0c5c052-86a9-40f4-a47c-e2233e1a6bfb";
+			};
+			name = Debug;
+		};
+		650840BB1C2A75BF00B72CAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = RevDemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo2;
+				PRODUCT_NAME = "RevSDK Demo";
+				PROVISIONING_PROFILE = "05825b2d-4c03-46d3-839c-1e72ba45cf7e";
+			};
+			name = Release;
+		};
+		650840BD1C2A75BF00B72CAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RevDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.65gb.RevDemoUITests;
+				PRODUCT_NAME = "RevSDK Demo";
+				TEST_TARGET_NAME = RevDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		650840BE1C2A75BF00B72CAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = RevDemoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.65gb.RevDemoUITests;
+				PRODUCT_NAME = "RevSDK Demo";
+				TEST_TARGET_NAME = RevDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		650840921C2A75BF00B72CAF /* Build configuration list for PBXProject "RevSDK Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				650840B71C2A75BF00B72CAF /* Debug */,
+				650840B81C2A75BF00B72CAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		650840B91C2A75BF00B72CAF /* Build configuration list for PBXNativeTarget "RevSDK Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				650840BA1C2A75BF00B72CAF /* Debug */,
+				650840BB1C2A75BF00B72CAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		650840BC1C2A75BF00B72CAF /* Build configuration list for PBXNativeTarget "RevSDK DemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				650840BD1C2A75BF00B72CAF /* Debug */,
+				650840BE1C2A75BF00B72CAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6508408F1C2A75BF00B72CAF /* Project object */;
+}
