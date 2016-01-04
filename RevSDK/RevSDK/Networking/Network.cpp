@@ -12,6 +12,7 @@
 #include "Response.hpp"
 #include "NativeNetwork.h"
 #include "Utils.hpp"
+#include "Protocol.hpp"
 
 namespace rs
 {
@@ -67,6 +68,11 @@ namespace rs
         };
         
         performRequest(aURL, aStatsData, c);
+    }
+    
+    void Network::performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, std::function<void(const Error&)> cbCompletition)
+    {
+        
     }
 }
 

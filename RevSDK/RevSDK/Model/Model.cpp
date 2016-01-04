@@ -83,8 +83,8 @@ namespace rs
     
     std::shared_ptr<Protocol>  Model::currentProtocol()
     {
-        return std::make_shared<StandardProtocol>();
-        //return std::make_shared<QUICProtocol>();
+        return mProtocolSelector.bestProtocol();
+        //std::make_shared<StandardProtocol>();
     }
     
     std::shared_ptr<Connection> Model::currentConnection()
@@ -117,6 +117,8 @@ namespace rs
             mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
         }
         setOperationMode(aConfiguration->operationMode);
+        
+        mProtocolSelector.onConfigurationApplied(aConfiguration);
         
         std::vector<std::string> logLevels = {"none", "error", "debug", "info"};
         auto logLevelIterator = std::find(logLevels.begin(), logLevels.end(), aConfiguration->loggingLevel);

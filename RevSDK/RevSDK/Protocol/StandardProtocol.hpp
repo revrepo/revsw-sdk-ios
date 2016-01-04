@@ -18,6 +18,7 @@ namespace rs
     class StandardProtocol : public Protocol
     {
     public:
+        std::shared_ptr<Protocol> clone() { return std::make_shared<StandardProtocol>(); }
         
         std::string protocolName(); 
     };
