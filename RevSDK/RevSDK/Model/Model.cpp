@@ -185,8 +185,13 @@ namespace rs
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
-            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, activeConf->statsReportingInterval);
-            Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
+        
+
+#define RS_DEBUG_STATS_REPORT_INTERVAL 10
+            
+            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
+            
+            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
                 this->reportStats();
             });
         }
