@@ -101,6 +101,7 @@ namespace rs
     //protocols
     const std::string kRSHTTPSProtocolName = "https";
     const std::string kRSQUICProtocolName = "quic";
+    const std::string kRSStandardProtocolName = "standard";
     
     std::vector<std::string> vectorFromNSArray(NSArray<NSString *>* aArray)
     {

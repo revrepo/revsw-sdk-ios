@@ -122,5 +122,5 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
 
 std::string StandardConnection::edgeTransport()const
 {
-    return kRSHTTPSProtocolName;
+    return kRSStandardProtocolName;
 }

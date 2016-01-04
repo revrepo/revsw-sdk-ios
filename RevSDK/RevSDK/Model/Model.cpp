@@ -201,7 +201,7 @@ namespace rs
         {
         
 
-#define RS_DEBUG_STATS_REPORT_INTERVAL 10
+#define RS_DEBUG_STATS_REPORT_INTERVAL -1
             
             int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
             

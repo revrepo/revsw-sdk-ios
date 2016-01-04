@@ -74,6 +74,7 @@ namespace rs
     //protocols
     extern const std::string kRSHTTPSProtocolName;
     extern const std::string kRSQUICProtocolName;
+    extern const std::string kRSStandardProtocolName;
     
     Configuration configurationFromNSDictionary(NSDictionary* aDictionary);
     NSDictionary* NSDictionaryFromConfiguration(const Configuration&);
