@@ -21,6 +21,8 @@
 @interface QUICThreadImpl : NSObject
 {
     rs::QUICThread* mOwner;
+    CFAbsoluteTime mInitialTime;
+    size_t mAge;
 }
 
 @property (nonatomic, readwrite, strong) NSThread* thread;
@@ -48,13 +50,14 @@ namespace rs
     {
         self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(run:) object:nil];
         [self.thread start];
+        mInitialTime = CFAbsoluteTimeGetCurrent();
     }
     return self;
 }
 
 - (int)run:(id)ctx
 {
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0f
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:0.1f
                                                   target:self
                                                 selector:@selector(onTimerFired:)
                                                 userInfo:nil
@@ -63,7 +66,13 @@ namespace rs
     return 0;
 }
 
-- (void)onTimerFired:(NSTimer*)aTimer {}
+- (void)onTimerFired:(NSTimer*)aTimer
+{
+    CFAbsoluteTime ageClock = CFAbsoluteTimeGetCurrent() - mInitialTime;
+    double age = 1000.0 * ageClock;
+    mAge = age;
+    self.owner->update(mAge);
+}
 
 - (void)doCall:(QUICFunc*)aFunc
 {
@@ -107,4 +116,14 @@ void QUICThread::perform(std::function<void(void)> aFunc)
                           waitUntilDone:NO];
 }
 
+void QUICThread::update(size_t aNowMS)
+{
+    if (mUpd != nullptr)
+        mUpd(aNowMS);
+}
+
+void QUICThread::setUpdateCallback(std::function<void(size_t)> aUpd)
+{
+    mUpd = aUpd;
+}
 

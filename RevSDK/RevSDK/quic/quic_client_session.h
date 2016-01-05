@@ -60,8 +60,6 @@ namespace net
             // but wish to use the sanity checks in CreateOutgoingDynamicStream.
             virtual QuicSpdyClientStream* CreateClientStream();
             
-        private:
-            
             scoped_ptr<QuicCryptoClientStream> crypto_stream_;
             // If this is set to false, the client will ignore server GOAWAYs and allow
             // the creation of streams regardless of the high chance they will fail.

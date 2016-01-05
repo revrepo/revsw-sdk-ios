@@ -57,6 +57,11 @@ namespace rs
             return (mContent.get() != nullptr) ? (mContent->length()) : (0);
         }
         
+        static Data concat(Data d0, Data d1);
+        Data byAppendingData(const void* aData, size_t aDataLen);
+        
+        bool isEmpty() const { return mContent.get(); }
+        
     private:
         Content::Ref mContent;
     };

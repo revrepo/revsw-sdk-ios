@@ -63,15 +63,12 @@ void QUICConnection::startWithRequest(std::shared_ptr<Request> aRequest, Connect
 //        }
 }
 
-void QUICConnection::quicSessionDidCloseStream(QUICSession* aSession,
-                                               net::QuicDataStream* aStream,
-                                               const net::SpdyHeaderBlock& aHeaders,
-                                               const std::string& aData,
-                                               int aCode)
+void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicDataStream* aStream,
+                                   const net::SpdyHeaderBlock& aHedaers, int aCode)
 {
     net::SpdyHeaderBlock headers;
     
-    for (const auto& h : aHeaders)
+    for (const auto& h : aHedaers)
     {
         if (h.first.size() == 0)
             continue;
@@ -81,18 +78,70 @@ void QUICConnection::quicSessionDidCloseStream(QUICSession* aSession,
     }
     
     std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
-    Data data(aData.c_str(), aData.size());
-    response->setBody(data);
-    
     if (mDelegate != nullptr)
     {
         mDelegate->connectionDidReceiveResponse(mWeakThis.lock(), response);
+    }
+}
+
+void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicDataStream* aStream, const char* aData, size_t aLen)
+{
+    Data data(aData, aLen);
+    if (mDelegate != nullptr)
+    {
         mDelegate->connectionDidReceiveData(mWeakThis.lock(), data);
+    }
+}
+
+void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataStream* aStream)
+{
+    if (mDelegate != nullptr)
+    {
         mDelegate->connectionDidFinish(mWeakThis.lock());
     }
-    
     mAnchor.reset();
 }
+
+void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicDataStream* aStream)
+{
+    if (mDelegate != nullptr)
+    {
+        QUICDataStream* qds = (QUICDataStream*)aStream;
+        mDelegate->connectionDidFailWithError(mWeakThis.lock(), qds->error());
+    }
+    mAnchor.reset();
+}
+
+//void QUICConnection::quicSessionDidCloseStream(QUICSession* aSession,
+//                                               net::QuicDataStream* aStream,
+//                                               const net::SpdyHeaderBlock& aHeaders,
+//                                               const std::string& aData,
+//                                               int aCode)
+//{
+//    net::SpdyHeaderBlock headers;
+//    
+//    for (const auto& h : aHeaders)
+//    {
+//        if (h.first.size() == 0)
+//            continue;
+//        
+//        if (h.first[0] != ':')
+//            headers[h.first] = h.second;
+//    }
+//    
+//    std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
+//    Data data(aData.c_str(), aData.size());
+//    response->setBody(data);
+//    
+//    if (mDelegate != nullptr)
+//    {
+//        mDelegate->connectionDidReceiveResponse(mWeakThis.lock(), response);
+//        mDelegate->connectionDidReceiveData(mWeakThis.lock(), data);
+//        mDelegate->connectionDidFinish(mWeakThis.lock());
+//    }
+//    
+//    mAnchor.reset();
+//}
 
 void QUICConnection::quicSessionDidChangeState(QUICSession* aSession, bool aConnected)
 {
@@ -102,19 +151,4 @@ void QUICConnection::quicSessionDidChangeState(QUICSession* aSession, bool aConn
 std::string QUICConnection::edgeTransport()const
 {
     return kQUICProtocolName;
-}
-
-void QUICConnection::didReceiveData(void* aData)
-{
-    
-}
-
-void QUICConnection::didReceiveResponse(void* aResponse)
-{
-    
-}
-
-void QUICConnection::didCompleteWithError(void* aError)
-{
-    
 }

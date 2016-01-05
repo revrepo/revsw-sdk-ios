@@ -25,10 +25,10 @@ using namespace net;
 using namespace net::tools;
 
 QUICSession* QUICSession::mInstance = nullptr;
-QUICThread QUICSession::mInstanceThread;
-std::mutex QUICSession::mInstanceLock;
+//QUICThread QUICSession::mInstanceThread;
+//std::mutex QUICSession::mInstanceLock;
 
-void QUICSession::executeOnQUICThread(std::function<void(void)> aFunction)
+void QUICSession::executeOnSessionThread(std::function<void(void)> aFunction)
 {
     mInstanceThread.perform(aFunction);
 }
@@ -37,17 +37,12 @@ QUICSession* QUICSession::instance()
 {
     if (mInstance == nullptr)
     {
-        mInstanceLock.lock();
-        if (mInstance == nullptr)
-        {
-            mInstance = new QUICSession();
-            
-            int port = 443;
-            std::string address("www.revapm.com");
-            QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
-            mInstance->connect(serverId);
-        }
-        mInstanceLock.unlock();
+        mInstance = new QUICSession();
+        
+        int port = 443;
+        std::string address("www.revapm.com");
+        QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
+        mInstance->connect(serverId);
     }
     return mInstance;
 }
@@ -57,7 +52,8 @@ QUICSession::QUICSession():
     mObjC(new ObjCImpl()),
     mClientAddress({0, 0, 0, 0}, 443)
 {
-    
+    std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, this, std::placeholders::_1);
+    mInstanceThread.setUpdateCallback(updFunc);
 }
 
 QUICSession::~QUICSession()
@@ -72,7 +68,7 @@ void QUICSession::setSessionDelegate(QUICSessionDelegate* aSessionDelegate)
 
 void QUICSession::connect(net::QuicServerId aTargetServerId)
 {
-    executeOnQUICThread([this, aTargetServerId]()
+    executeOnSessionThread([this, aTargetServerId]()
     {
         p_connect(aTargetServerId);
     });
@@ -80,7 +76,7 @@ void QUICSession::connect(net::QuicServerId aTargetServerId)
 
 void QUICSession::disconnect()
 {
-    executeOnQUICThread([this]()
+    executeOnSessionThread([this]()
     {
         p_disconnect();
     });
@@ -90,7 +86,7 @@ void QUICSession::sendRequest(const net::SpdyHeaderBlock &headers,
                  base::StringPiece body,
                  QUICStreamDelegate* aStreamDelegate)
 {
-    executeOnQUICThread([this, headers, body, aStreamDelegate]()
+    executeOnSessionThread([this, headers, body, aStreamDelegate]()
     {
         p_sendRequest(headers, body, aStreamDelegate);
     });
@@ -134,10 +130,10 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
                                                         mServerId.is_https(),
                                                         QuicSupportedVersions());
         
-        mSession.reset(createQuicClientSession(mConfig,
-                                               connection,
-                                               mServerId,
-                                               &mCryptoConfig));
+        mSession.reset(new QUICClientSession(mConfig,
+                                             connection,
+                                             mServerId,
+                                             &mCryptoConfig));
     }
     
     mSession->Initialize();
@@ -179,7 +175,7 @@ bool QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
         return false;
     }
     
-    QuicSpdyClientStream* stream = createReliableClientStream();
+    QUICDataStream* stream = createReliableClientStream();
     
     if (stream == nullptr)
     {
@@ -187,7 +183,7 @@ bool QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
         return false;
     }
     
-    stream->set_visitor(this);
+    stream->setDelegate(this);
     mStreamDelegateMap[stream] = aStreamDelegate;
     /*const size_t numBytesWritten = */stream->SendRequest(headers, body, true);
     //std::cout << "Written: " << numBytesWritten << std::endl;
@@ -196,6 +192,11 @@ bool QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
 
 void QUICSession::OnClose(QuicDataStream* aStream)
 {
+    assert(false);
+}
+
+void QUICSession::onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen)
+{
     StreamDelegateMap::iterator w = mStreamDelegateMap.find(aStream);
     if (w == mStreamDelegateMap.end())
         return;
@@ -203,13 +204,48 @@ void QUICSession::OnClose(QuicDataStream* aStream)
     QUICStreamDelegate* sd = w->second;
     if (sd != nullptr)
     {
-        QuicSpdyClientStream* clientStream = static_cast<QuicSpdyClientStream*>(aStream);
-        SpdyHeaderBlock headers = clientStream->headers();
-        std::string body = clientStream->data();
-        int code = clientStream->response_code();
-        sd->quicSessionDidCloseStream(this, aStream, headers, body, code);
+        sd->quicSessionDidReceiveData(this, aStream, aData, aDataLen);
     }
+}
+
+void QUICSession::onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCode, const net::SpdyHeaderBlock& aHeaders)
+{
+    StreamDelegateMap::iterator w = mStreamDelegateMap.find(aStream);
+    if (w == mStreamDelegateMap.end())
+        return;
     
+    QUICStreamDelegate* sd = w->second;
+    if (sd != nullptr)
+    {
+        sd->quicSessionDidReceiveResponse(this, aStream, aHeaders, aCode);
+    }
+}
+
+void QUICSession::onQUICStreamFailed(QUICDataStream* aStream)
+{
+    StreamDelegateMap::iterator w = mStreamDelegateMap.find(aStream);
+    if (w == mStreamDelegateMap.end())
+        return;
+    
+    QUICStreamDelegate* sd = w->second;
+    if (sd != nullptr)
+    {
+        sd->quicSessionDidFail(this, aStream);
+    }
+    mStreamDelegateMap.erase(w);
+}
+
+void QUICSession::onQUICStreamCompleted(QUICDataStream* aStream)
+{
+    StreamDelegateMap::iterator w = mStreamDelegateMap.find(aStream);
+    if (w == mStreamDelegateMap.end())
+        return;
+    
+    QUICStreamDelegate* sd = w->second;
+    if (sd != nullptr)
+    {
+        sd->quicSessionDidFinish(this, aStream);
+    }
     mStreamDelegateMap.erase(w);
 }
 
@@ -236,12 +272,12 @@ QuicClientSession *QUICSession::createQuicClientSession(const QuicConfig &config
     return new QuicClientSession(config, connection, serverId, cryptoConfig);
 }
 
-QuicSpdyClientStream *QUICSession::createReliableClientStream()
+QUICDataStream *QUICSession::createReliableClientStream()
 {
     if (!p_connected())
         return nullptr;
     
-    return mSession->CreateOutgoingDynamicStream();
+    return mSession->rsCreateOutgoingDynamicStream();
 }
 
 bool QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
@@ -265,4 +301,20 @@ bool QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
 void QUICSession::onQUICError()
 {
     p_disconnect();
+    std::vector<QUICDataStream*> streams;
+    for (auto& i : mStreamDelegateMap)
+        streams.push_back(i.first);
+    
+    for (auto& s : streams)
+        s->onSocketError();
+}
+
+void QUICSession::update(size_t aNowMS)
+{
+    std::vector<QUICDataStream*> streams;
+    for (auto& i : mStreamDelegateMap)
+        streams.push_back(i.first);
+    
+    for (auto& s : streams)
+        s->update(aNowMS);
 }
