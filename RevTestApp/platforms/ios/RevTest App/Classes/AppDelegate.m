@@ -125,35 +125,6 @@ id setBeingRemoved(id self, SEL selector, ...)
     class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), setBeingRemoved, NULL);
 #pragma clang diagnostic pop
 
-    /*NSString* path = [[NSBundle mainBundle] pathForResource:@"Stats" ofType:@"json"];
-    NSString* str = [NSString stringWithContentsOfFile:path
-                                              encoding:NSUTF8StringEncoding
-                                                 error:nil];
-    
-    NSData* data = [str dataUsingEncoding:NSUTF8StringEncoding];
-    
-    NSDictionary* dictionary = [NSJSONSerialization JSONObjectWithData:data
-                                                               options:kNilOptions
-                                                                 error:nil];
-    
-    NSLog(@"Dictionary %@", dictionary);
-    
-    NSURL* url = [NSURL URLWithString:@"https://stats-api.revsw.net/v1/stats/apps"];
-    
-    NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:url];
-
-    request.HTTPMethod = @"PUT";
-    
-    request.HTTPBody = data;
-    
-    NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
-                                                                 completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
-                                                                 
-                                                                     NSLog(@"DATA %@ Response %@ Error %@", [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding], response, error);
-                                                                 }];
-    
-    [task resume];
-    */
     return YES;
 }
 
