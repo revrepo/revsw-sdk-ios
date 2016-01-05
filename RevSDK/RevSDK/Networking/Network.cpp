@@ -13,6 +13,11 @@
 #include "NativeNetwork.h"
 #include "Utils.hpp"
 #include "Protocol.hpp"
+#include "Connection.hpp"
+#include "StandardConnection.hpp"
+#include "QUICConnection.hpp"
+
+#include "Request.hpp"
 
 namespace rs
 {
@@ -70,10 +75,41 @@ namespace rs
         performRequest(aURL, aStatsData, c);
     }
     
-    void Network::performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, std::function<void(const Error&)> cbCompletition)
+    void Network::performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, rs::ConnectionDelegate* aDelegate)
     {
+        auto getConnectionFromProto = [](std::string protocolName) {
+            if (protocolName == httpsProtocolName())
+                return Connection::create<StandardConnection>();
+            else if (protocolName == quicProtocolName())
+                return Connection::create<QUICConnection>();
+            else
+            {
+                assert(false);
+            }
+        };
         
+        std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName());
+        //const std::string& aURL, const std::map<std::string, std::string>& aHeaders, const std::string& aMethod, const Data& aBody
+        std::map<std::string, std::string> headers;
+        Data body;
+        std::shared_ptr<rs::Request> req = std::make_shared<rs::Request>(aURL, headers, "GET", body);
+        
+        connection->startWithRequest(req, aDelegate);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

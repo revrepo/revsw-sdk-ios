@@ -8,6 +8,7 @@
 
 #pragma once
 
+#include "Timer.hpp"
 
 namespace rs
 {
@@ -29,7 +30,9 @@ namespace rs
         void* mNativeHandle;
         void* mNativeTelephonyHandle;
         
-        int mNetworkStatusCode; 
+        int mNetworkStatusCode;
+        
+        std::unique_ptr<Timer>         mSSIDCheckTimer;
         
     public:
         NativeNetworkEventsHandler(INetworkEventsDelegate* aDelegate);

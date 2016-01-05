@@ -9,11 +9,16 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
+#include "RSUtils.h"
+#include "Utils.hpp"
+
 #include "NativeNetworkEventsHandler.hpp"
 
 #include "RSReachability.h"
 
 using namespace rs;
+
+const int kRefreshIntervalSec = 3;
 
 NativeNetworkEventsHandler::NativeNetworkEventsHandler(INetworkEventsDelegate* aDelegate) :
 mDelegate(aDelegate),
@@ -58,8 +63,14 @@ mNativeTelephonyHandle(nullptr)
         NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
     }];
     
-    mNativeTelephonyHandle = (void*)CFBridgingRetain(telObserver);
+    /////////////////////
+    Timer::scheduleTimer(mSSIDCheckTimer, kRefreshIntervalSec, [this]{
+        
+    });
+    ////////////////////
     
+    
+    mNativeTelephonyHandle = (void*)CFBridgingRetain(telObserver);
     
     NSNumber* val = [[NSUserDefaults standardUserDefaults] objectForKey:@"initguard_key_rssdk"];
     if (![val boolValue])

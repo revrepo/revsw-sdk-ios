@@ -18,6 +18,7 @@ namespace rs
     class Error;
     class NativeNetwork;
     class Protocol;
+    class ConnectionDelegate;
     
     class Network
     {
@@ -36,7 +37,7 @@ namespace rs
         
         void sendStats(std::string aURL, const Data&, std::function<void(const Error&)>);
         
-        void performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, std::function<void(const Error&)> cbCompletition);
+        void performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, ConnectionDelegate* aDelegate);
     };
 }
 

@@ -6,35 +6,69 @@
 //  Copyright © 2016 TundraMobile. All rights reserved.
 //
 
-#include "RSReachability.h"
-
 #include "RSUtils.h"
 #include "ProtocolAvailabilityTester.hpp"
+#include "QUICProtocol.hpp"
+#include "StandardProtocol.hpp"
+
 #include "Model.hpp"
 
 using namespace rs;
 
-ProtocolAvailabilityTester::ProtocolAvailabilityTester() : mRunning(false)
+ProtocolAvailabilityTester::ProtocolAvailabilityTester() :
+mRunning(false)
 {
-    
+    mConnectionEventHandler = MockDelegate([this](bool succes){
+        this->onTestResult(succes);
+    });
 }
 
+void ProtocolAvailabilityTester::onTestResult(bool aSuccess)
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        AvailabilityTestResult result;
+        
+        result.Available = aSuccess;
+        result.ProtocolID = mProtocolsToTest.top()->protocolName();
+        
+        mCurrentResults.push_back(result);
+        mProtocolsToTest.pop();
+        
+        if (mProtocolsToTest.empty())
+        {
+            mCompletitionCallback(mCurrentResults);
+            mCurrentResults.clear();
+            mRunning.store(false);
+        } 
+    });
+}
 
 void ProtocolAvailabilityTester::runTests(std::string aMonitoringURL, std::function<void(std::vector<AvailabilityTestResult>)> cbOnComplete)
 {
     if (!mRunning.exchange(true))
     {
-        std::vector<AvailabilityTestResult> results;
         /////////////////////////////////////////////
         
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            initTester();
+            mCompletitionCallback = cbOnComplete;
         
-        
-        
-        
-        /////////////////////////////////////////// 
-        cbOnComplete(results);
+            mNetwork.performReques(mProtocolsToTest.top()->clone(), aMonitoringURL, &mConnectionEventHandler);
+            mProtocolsToTest.pop();
+        });
+        ///////////////////////////////////////////
     }
 }
 
+void ProtocolAvailabilityTester::initTester()
+{
+    mCurrentResults.clear();
+    mProtocolsToTest = std::stack<std::shared_ptr<Protocol>>();
+    
+    mProtocolsToTest.push(std::make_shared<QUICProtocol>());
+    mProtocolsToTest.push(std::make_shared<StandardProtocol>() );
+}
 
 
