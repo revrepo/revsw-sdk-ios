@@ -18,6 +18,8 @@
 
 #import "AppDelegate.h"
 #import <RevSDK/RevSDK.h>
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
 
 @interface AppDelegate ()
 
@@ -34,9 +36,11 @@
                                                             diskCapacity:0
                                                                 diskPath:nil];
     [NSURLCache setSharedURLCache:sharedCache];
-    
     [RevSDK startWithSDKKey:@"42e276ea-1823-4945-baa4-8747f08d0abe"];
+    [Fabric with:@[[Crashlytics class]]];
     
+    NSLog(@"LOG TEST");
+
     return YES;
 }
 

@@ -34,6 +34,9 @@
 
 #import <RevSDK/RevSDK.h>
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
 id setBeingRemoved(id self, SEL selector, ...)
 {
     return nil;
@@ -101,7 +104,8 @@ id setBeingRemoved(id self, SEL selector, ...)
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
 
-   
+    [Fabric with:@[[Crashlytics class]]];
+    
     RTStartViewController* startViewController = [[RTStartViewController alloc] initWithNibName:@"RTStartViewController" bundle:[NSBundle mainBundle]];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:startViewController];
     self.window.rootViewController = self.navigationController;

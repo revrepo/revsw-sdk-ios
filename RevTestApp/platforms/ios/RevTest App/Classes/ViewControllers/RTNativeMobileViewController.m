@@ -73,6 +73,8 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     self.methodButton.layer.cornerRadius = 8.f;
     self.formatButton.layer.cornerRadius = 8.f;
     self.startButton.layer.cornerRadius  = 8.f;
+    
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 - (void)viewWillAppear:(BOOL)animated
