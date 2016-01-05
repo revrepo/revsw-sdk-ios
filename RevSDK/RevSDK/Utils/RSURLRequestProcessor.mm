@@ -43,7 +43,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     if ([RSURLRequestProcessor isValidScheme:scheme])
         [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
     
-    scheme                      = rs::NSStringFromStdString(rs::kRSHTTPSProtocolName);
+    scheme                      = rs::kRSHTTPSProtocolName;
     std::string SDKKey          = rs::Model::instance()->SDKKey();
     NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
     NSString* hostHeader        = isProvisioned ? [NSString stringWithFormat:@"%@", transformedBaseHost] : [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];

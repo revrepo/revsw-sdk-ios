@@ -74,12 +74,16 @@ void ConfigurationService::loadConfiguration()
 #endif
         if (aError.isNoError())
         {
-            Configuration configuration = processConfigurationData(aData);
+            Error error;
             
-            Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
+            bool isValid = isValidConfiguration(aData, &error);
             
-            if (configuration.isValid())
+            if (isValid)
             {
+                Configuration configuration = processConfigurationData(aData);
+                
+                Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
+                
                 int refreshInterval = 0;
                 mLastUpdated = std::chrono::system_clock::now();
                 if (mUpdateEnabledFlag)
@@ -108,16 +112,14 @@ void ConfigurationService::loadConfiguration()
             }
             else
             {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-                std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
-#endif
+                std::cout << "RevSDK.Model::loadConfiguration Failed to validate configuration " << error.description() << std::endl;
             }
         }
         else
         {
 #ifdef RS_ENABLE_DEBUG_LOGGING
             std::cout << "\n" << "RevSDK.Model::loadConfiguration Failed to load configuration "
-                              << aError.description();
+            << aError.description() << std::endl;;
 #endif
         }
     };

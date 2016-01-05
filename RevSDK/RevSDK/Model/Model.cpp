@@ -118,7 +118,7 @@ namespace rs
         }
         setOperationMode(aConfiguration->operationMode);
         
-        std::vector<std::string> logLevels = {"none", "error", "debug", "info"};
+        std::vector<std::string> logLevels = {kLogLevelNone, kLogLevelError, kLogLevelDebug, kLogLevelInfo};
         auto logLevelIterator = std::find(logLevels.begin(), logLevels.end(), aConfiguration->loggingLevel);
         auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
         

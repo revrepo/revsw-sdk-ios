@@ -11,7 +11,7 @@
 
 namespace rs
 {
-    const float kSDKVersionNumber = kRSSDKVersion;
+    const int kSDKVersionNumber = kRSSDKVersion;
     
     const std::string kOSKey                           = stdStringFromNSString(kRSOSKey);
     const std::string kAppNameKey                      = stdStringFromNSString(kRSAppNameKey);
@@ -31,10 +31,24 @@ namespace rs
     const std::string kDomainsProvisionedListKey       = stdStringFromNSString(kRSDomainsProvisionedListKey);
     const std::string kDomainsWhiteListKey             = stdStringFromNSString(kRSDomainsWhiteListKey);
     const std::string kDomainsBlackListKey             = stdStringFromNSString(kRSDomainsBlackListKey);
-    const std::string kConfigsKey                      = "configs";
+    const std::string kConfigsKey                      = stdStringFromNSString(kRSConfigsKey);
     const std::string kDeviceStatsKey                  = "stats";
     const std::string kRequestsStatsKey                = "requests";
     const std::string kLoggingLevelKey                 = stdStringFromNSString(kRSLoggingLevelKey);
+    
+    const std::string kHTTPSProtocolName    = stdStringFromNSString(kRSHTTPSProtocolName);
+    const std::string kStandardProtocolName = stdStringFromNSString(kRSStandardProtocolName);
+    const std::string kQUICProtocolName     = stdStringFromNSString(kRSQUICProtocolName);
+    
+    const std::string kLogLevelNone  = stdStringFromNSString(kRSLogLevelNone);
+    const std::string kLogLevelDebug = stdStringFromNSString(kRSLogLevelDebug);
+    const std::string kLogLevelError = stdStringFromNSString(kRSLogLevelError);
+    const std::string kLogLevelInfo  = stdStringFromNSString(kRSLogLevelInfo);
+    
+    const std::string kOperationModeOffString            = stdStringFromNSString(kRSOperationModeOffString);
+    const std::string kOperationModeTransferString       = stdStringFromNSString(kRSOperationModeTransferString);
+    const std::string kOperationModeReportString         = stdStringFromNSString(kRSOperationModeReportString);
+    const std::string kOperationModeTransferReportString = stdStringFromNSString(kRSOperationModeTransferReportString);
     
     std::string loadConfigurationURL(const std::string& aSDKKey)
     {
@@ -53,16 +67,22 @@ namespace rs
     
     std::string httpsProtocolName()
     {
-        return kRSHTTPSProtocolName;
+        return kHTTPSProtocolName;
     }
     
     std::string quicProtocolName()
     {
-        return kRSQUICProtocolName;
+        return kQUICProtocolName;
     }
     
-    bool isValidURL(std::string aURLString)
+    bool isValidURL(const std::string& aURLString)
     {
-        return _isValidURL(aURLString);
+        NSString* urlNSString = NSStringFromStdString(aURLString);
+        return _isValidURL(urlNSString);
+    }
+    
+    bool isValidConfiguration(const Data& aConfigurationData, Error* aError)
+    {
+        return _isValidConfiguration(aConfigurationData, aError);
     }
 }

@@ -14,6 +14,8 @@
 
 namespace rs
 {
+    class Data;
+    class Error;
     
 typedef enum
 {
@@ -39,7 +41,7 @@ typedef enum
     
 }RSStatsReportingLevel;
     
-    extern const float kSDKVersionNumber;
+    extern const int kSDKVersionNumber;
     
     extern const std::string kOSKey;
     extern const std::string kAppNameKey;
@@ -64,6 +66,20 @@ typedef enum
     extern const std::string kRequestsStatsKey;
     extern const std::string kLoggingLevelKey;
     
+    extern const std::string kHTTPSProtocolName;
+    extern const std::string kStandardProtocolName;
+    extern const std::string kQUICProtocolName;
+    
+    extern const std::string kLogLevelNone;
+    extern const std::string kLogLevelDebug;
+    extern const std::string kLogLevelError;
+    extern const std::string kLogLevelInfo;
+    
+    extern const std::string kOperationModeOffString;
+    extern const std::string kOperationModeTransferString;
+    extern const std::string kOperationModeReportString;
+    extern const std::string kOperationModeTransferReportString;
+    
     std::string loadConfigurationURL(const std::string&);
     std::string reportStatsURL();
     std::string errorDescriptionKey();
@@ -71,7 +87,8 @@ typedef enum
     std::string httpsProtocolName();
     std::string quicProtocolName();
     
-    bool isValidURL(std::string);
+    bool isValidURL(const std::string&);
+    bool isValidConfiguration(const Data&, Error*);
 }
 
 #endif /* Utils_hpp */

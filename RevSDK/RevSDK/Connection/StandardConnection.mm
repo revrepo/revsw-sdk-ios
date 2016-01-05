@@ -80,7 +80,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
 
 std::string StandardConnection::edgeTransport()const
 {
-    return kRSStandardProtocolName;
+    return kStandardProtocolName;
 }
 
 void StandardConnection::didReceiveData(void* aData)
