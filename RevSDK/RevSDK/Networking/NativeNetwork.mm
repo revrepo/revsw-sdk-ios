@@ -34,7 +34,7 @@ namespace rs
             const BOOL usingRevHost =
             [aResponse.URL.host isEqualToString:kRSRevRedirectHost] ||
             [aResponse.URL.host isEqualToString:kRSRevLoadConfigurationHost];
-            Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data, response, error);
+            Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data.length(), response, error);
             
             aCompletionBlock(data, response, error);
         };
@@ -58,7 +58,7 @@ namespace rs
             const BOOL usingRevHost =
             [aResponse.URL.host isEqualToString:kRSRevRedirectHost] ||
             [aResponse.URL.host isEqualToString:kRSRevLoadConfigurationHost];
-            Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data, response, error);
+            Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data.length(), response, error);
             
             aCompletionBlock(data, response, error);
         };

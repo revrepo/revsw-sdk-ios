@@ -9,6 +9,8 @@
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
 
+#include "RSSystemInfo.h"
+
 #include "RSUtils.h"
 #include "Utils.hpp"
 
@@ -63,21 +65,22 @@ mNativeTelephonyHandle(nullptr)
         NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
     }];
     
+    mSSID = stdStringFromNSString([RSSystemInfo ssid]);
     /////////////////////
     Timer::scheduleTimer(mSSIDCheckTimer, kRefreshIntervalSec, [this]{
         
+        const std::string str = stdStringFromNSString([RSSystemInfo ssid]);
+        
+        if (str != mSSID && "" != mSSID)
+        {
+            mDelegate->onSSIDChanged();
+        }
+        mSSID = str;
     });
     ////////////////////
     
     
     mNativeTelephonyHandle = (void*)CFBridgingRetain(telObserver);
-    
-    NSNumber* val = [[NSUserDefaults standardUserDefaults] objectForKey:@"initguard_key_rssdk"];
-    if (![val boolValue])
-    {
-        [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:@"initguard_key_rssdk"];
-        aDelegate->onFirstInit();
-    }
 }
 
 NativeNetworkEventsHandler::~NativeNetworkEventsHandler()
@@ -89,7 +92,16 @@ NativeNetworkEventsHandler::~NativeNetworkEventsHandler()
     [[NSNotificationCenter defaultCenter] removeObserver:obsTel];
 }
 
-
+bool NativeNetworkEventsHandler::isInitialized()
+{
+    NSNumber* val = [[NSUserDefaults standardUserDefaults] objectForKey:@"initguard_key_rssdk"];
+    if (![val boolValue])
+    {
+        [[NSUserDefaults standardUserDefaults] setObject:@(1) forKey:@"initguard_key_rssdk"];
+        return false;
+    }
+    return true;
+}
 
 
 

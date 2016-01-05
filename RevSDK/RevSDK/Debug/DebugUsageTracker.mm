@@ -55,39 +55,39 @@ void DebugUsageTracker::trackStatsReported()
 }
 
 void DebugUsageTracker::trackRequest(bool usingRevHost,
-                                     const Data& aData,
+                                     int64_t aDataLength,
                                      const Response& aResponse,
                                      const Error& aError)
 {
     if (aError.isNoError()) {
-        trackRequestFinished(usingRevHost, aData, aResponse);
+        trackRequestFinished(usingRevHost, aDataLength, aResponse);
     } else {
-        trackRequestFailed(usingRevHost, aData, aError);
+        trackRequestFailed(usingRevHost, aDataLength, aError);
     }
 }
 
 void DebugUsageTracker::trackRequestFinished(bool usingRevHost,
-                                             const Data& aData,
+                                             int64_t aDataLength,
                                              const Response& aResponse)
 {
     if (usingRevHost) {
-        mNumberOfBytesServedViaRev += aData.length();
+        mNumberOfBytesServedViaRev += aDataLength;
         mNumberOfRequestsServedViaRev++;
     } else {
-        mNumberOfBytesServedViaOrigin += aData.length();
+        mNumberOfBytesServedViaOrigin += aDataLength;
         mNumberOfRequestsServedViaOrigin++;
     }
 }
 
 void DebugUsageTracker::trackRequestFailed(bool usingRevHost,
-                                           const Data& aData,
+                                           int64_t aDataLength,
                                            const Error& aError)
 {
     if (usingRevHost) {
-        mNumberOfBytesServedViaRev += aData.length();
+        mNumberOfBytesServedViaRev += aDataLength;
         mNumberOfRequestsFailedViaRev++;
     } else {
-        mNumberOfBytesServedViaOrigin += aData.length();
+        mNumberOfBytesServedViaOrigin += aDataLength;
         mNumberOfRequestsFailedViaOrigin++;
     }
 }

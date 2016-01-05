@@ -77,6 +77,8 @@ namespace rs
         
         void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
         
+        std::vector<std::string> getAllowedProtocolIDs() const;
+        
         static Model* instance();
         
         std::shared_ptr<DebugUsageTracker> debug_usageTracker() const;

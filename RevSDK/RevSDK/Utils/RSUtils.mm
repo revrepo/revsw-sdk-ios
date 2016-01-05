@@ -37,26 +37,26 @@ NSString* const kRSDataKey = @"kRSDataKey";
 namespace rs
 {
     //version
-    const float kRSSDKVersion = 1.0;
+    const int kRSSDKVersion = 1;
     
     //Rev Host
     const std::string kRSRevBaseHost   = "revsdk.net";
     NSString* const kRSRevRedirectHost = @"rev-200.revdn.net";
     const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
-//    const std::string kRSRevLoadConfigurationHost = "iad02-api03.revsw.net";
     NSString* const kRSRevLoadConfigurationHost = @"iad02-api03.revsw.net";
     NSString* const kRSRevHostHeader = @"X-Rev-Host";
     
     //codes
     const long kRSNoErrorCode = -10000;
+    const long kRSErrorCodeConfigurationNotValid = 100;
     
     //keys
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
     NSString* const kRSRequestDataStorageKey           = @"kRSRequestDataStorageKey";
+    NSString* const kRSLastMileDataStorageKey          = @"kRSLastMileDataStorageKey";
     NSString* const kRSEventsDataStorageKey            = @"kRSEventsDataStorageKey";
-//    NSString* const kRSStatusCodeKey                   = @"status_code";
     NSString* const kRSURLKey                          = @"url";
     NSString* const kRSOSKey                           = @"os";
     NSString* const kRSAppNameKey                      = @"app_name";
@@ -77,6 +77,7 @@ namespace rs
     NSString* const kRSDomainsWhiteListKey             = @"domains_white_list";
     NSString* const kRSDomainsBlackListKey             = @"domains_black_list";
     NSString* const kRSLoggingLevelKey                 = @"logging_level";
+    NSString* const kRSConfigsKey                      = @"configs";
     
     //request keys
     NSString* const kRS_JKey_ConnID    = @"conn_id";
@@ -98,9 +99,26 @@ namespace rs
     NSString* const kRS_JKey_Destination = @"destination";
     NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
     
+    //field
+    NSString* const kRSiOSField = @"iOS";
+    
     //protocols
-    const std::string kRSHTTPSProtocolName = "https";
-    const std::string kRSQUICProtocolName = "quic";
+    NSString* const kRSHTTPSProtocolName = @"https";
+    NSString* const kRSQUICProtocolName = @"quic";
+    NSString* const kRSStandardProtocolName = @"standard";
+    NSString* const kRSRevProtocolName = @"rev";
+    
+    //log levels
+    NSString* const kRSLogLevelNone  = @"none";
+    NSString* const kRSLogLevelDebug = @"debug";
+    NSString* const kRSLogLevelError = @"error";
+    NSString* const kRSLogLevelInfo  = @"info";
+    
+    //operation mode strings
+    NSString* const kRSOperationModeOffString            = @"off";
+    NSString* const kRSOperationModeTransferString       = @"transfer";
+    NSString* const kRSOperationModeReportString         = @"report";
+    NSString* const kRSOperationModeTransferReportString = @"transfer_and_report";
     
     std::vector<std::string> vectorFromNSArray(NSArray<NSString *>* aArray)
     {
@@ -353,7 +371,7 @@ namespace rs
     
     std::string HTTPSURLWithPath(std::string aPath)
     {
-        return URLWithSchemeAndPath(kRSHTTPSProtocolName, aPath);
+        return URLWithSchemeAndPath(kHTTPSProtocolName, aPath);
     }
     
     std::string URLWithPath(std::string aPath)
@@ -364,7 +382,7 @@ namespace rs
     std::string _loadConfigurationURL(const std::string& aSDKKey)
     {
         const std::string path = "/v" + std::to_string((int)kRSSDKVersion) + kRSLoadConfigurationEndPoint + aSDKKey;
-        return URLWithComponents(kRSHTTPSProtocolName, stdStringFromNSString(kRSRevLoadConfigurationHost), path);
+        return URLWithComponents(kHTTPSProtocolName, stdStringFromNSString(kRSRevLoadConfigurationHost), path);
     }
     
     std::vector<Data> dataNSArrayToStdVector(NSArray * aArray)
@@ -457,12 +475,224 @@ namespace rs
         return data;
     }
     
-    bool _isValidURL(std::string aURLString)
+    bool _isValidURL(NSString* aURLString)
     {
-        NSString* URLString = NSStringFromStdString(aURLString);
-        NSURL* URL          = [NSURL URLWithString:URLString];
-        BOOL isValid        = URL.scheme && URL.host;
+        if (![aURLString isKindOfClass:[NSString class]])
+        {
+            return false;
+        }
+        
+        NSURL* URL   = [NSURL URLWithString:aURLString];
+        BOOL isValid = URL.scheme && URL.host;
         
         return isValid;
+    }
+    
+    bool _isValidConfiguration(const Data& aConfData, Error* aError)
+    {
+        if (aConfData.length() == 0)
+        {
+            return false;
+        }
+        
+        NSData* data = NSDataFromData(aConfData);
+        
+        if (!data)
+        {
+            return false;
+        }
+        
+        NSDictionary* confDictionary = [NSJSONSerialization JSONObjectWithData:data
+                                                                       options:kNilOptions
+                                                                         error:nil];
+        if (!confDictionary)
+        {
+            return false;
+        }
+        
+        std::string errorDescrKey = errorDescriptionKey();
+        
+        NSString* osString = confDictionary[kRSOSKey];
+        
+        if (![osString isKindOfClass:[NSString class]] || ![osString isEqualToString:kRSiOSField])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "OS incorrect " + stdStringFromNSString(osString)}};
+            
+            return false;
+        }
+        
+        NSArray* configsArray     = confDictionary[kRSConfigsKey];
+        NSDictionary* configsDict = [configsArray lastObject];
+        
+        if (![configsDict isKindOfClass:[NSDictionary class]])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "configs missing"}};
+            
+            return false;
+        }
+        
+        NSArray* allowedTransportProtocols = configsDict[kRSAllowedTransportProtocolsKey];
+        
+        if (! [allowedTransportProtocols isKindOfClass:[NSArray class]] || [allowedTransportProtocols count] == 0)
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "allowed transport protocols invalid " + stdStringFromNSString([allowedTransportProtocols description])}};
+            
+            return false;
+        }
+        
+        NSString* configurationApiURL = configsDict[kRSConfigurationApiURLKey];
+        
+        if (!_isValidURL(configurationApiURL))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "configuration api url invalid " + stdStringFromNSString(configurationApiURL)}};
+            
+            return false;
+        }
+        
+        id refreshInterval = configsDict[kRSConfigurationRefreshIntervalKey];
+        
+        if (!([refreshInterval respondsToSelector:@selector(integerValue)] && [refreshInterval integerValue] > 0))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "configuration refresh interval invalid " + stdStringFromNSString([refreshInterval description])}};
+            
+            return false;
+        }
+       
+        id staleTimeout = configsDict[kRSConfigurationStaleTimeoutKey];
+        
+        if (!([staleTimeout respondsToSelector:@selector(integerValue)] && [staleTimeout integerValue] > 0))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "stale timeout invalid " + stdStringFromNSString([staleTimeout description])}};
+            
+            return false;
+        }
+        
+        NSArray* blackList = configsDict[kRSDomainsBlackListKey];
+        
+        if (![blackList isKindOfClass:[NSArray class]])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "configuration refresh interval invalid " + stdStringFromNSString([refreshInterval description])}};
+            
+            return false;
+        }
+        
+        NSArray* provisionedList = configsDict[kRSDomainsProvisionedListKey];
+        
+        if (![provisionedList isKindOfClass:[NSArray class]])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "provisioned list invalid " + stdStringFromNSString([provisionedList description])}};
+            
+            return false;
+        }
+        
+        NSString* edgeHost = configsDict[kRSEdgeHostKey];
+        
+        if (![edgeHost isKindOfClass:[NSString class]] || edgeHost.length == 0)
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "edge host invalid " + stdStringFromNSString([edgeHost description])}};
+            
+            return false;
+        }
+        
+        NSString* initialTransportProtocol = configsDict[kRSInitialTransportProtocolsKey];
+        
+        if (! [initialTransportProtocol isKindOfClass:[NSString class]] || ![@[kRSStandardProtocolName, kRSQUICProtocolName, kRSRevProtocolName] containsObject:initialTransportProtocol])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "initial transport protocol invalid " + stdStringFromNSString([initialTransportProtocol description])}};
+            
+            return false;
+        }
+        
+        NSString* loggingLevel = configsDict[kRSLoggingLevelKey];
+
+        if (![loggingLevel isKindOfClass:[NSString class]] || ![@[kRSLogLevelDebug, kRSLogLevelError, kRSLogLevelInfo] containsObject:loggingLevel])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "logging level invalid " + stdStringFromNSString([loggingLevel description])}};
+            
+            return false;
+        }
+        
+        NSString* operationMode = configsDict[kRSOperationModeKey];
+        
+        if (! [operationMode isKindOfClass:[NSString class]] || ![@[kRSOperationModeOffString, kRSOperationModeTransferString, kRSOperationModeReportString, kRSOperationModeTransferReportString] containsObject:operationMode])
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "operation mode invalid " + stdStringFromNSString([operationMode description])}};
+            
+            return false;
+        }
+        
+        id releaseVersion = configsDict[kRSSDKReleaseVersionKey];
+        
+        if (! ([releaseVersion respondsToSelector:@selector(intValue)] && [releaseVersion intValue] == kRSSDKVersion))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "sdk release version invalid " + stdStringFromNSString([releaseVersion description])}};
+            
+            return false;
+        }
+        
+        id statsReportingInterval = configsDict[kRSStatsReportingIntervalKey];
+        
+        if (!([statsReportingInterval respondsToSelector:@selector(integerValue)] && [statsReportingInterval integerValue] > 0))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "stats reporting interval invalid " + stdStringFromNSString([statsReportingInterval description])}};
+            
+            return false;
+        }
+        
+        NSString* statsReportingLevel = configsDict[kRSStatsReportingLevelKey];
+        
+        if (!([statsReportingLevel isKindOfClass:[NSString class]] && statsReportingLevel.length > 0))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "stats reporting level invalid " + stdStringFromNSString([statsReportingLevel description])}};
+            
+            return false;
+        }
+        
+        id maxRequests = configsDict[kRSStatsReportingMaxRequestsKey];
+        
+        if (!([maxRequests respondsToSelector:@selector(intValue)] && [maxRequests intValue] > 0))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "max requests per request invalid " + stdStringFromNSString([maxRequests description])}};
+            
+            return false;
+        }
+        
+        NSString* statsReportingURL = configsDict[kRSStatsReportingURLKey];
+        
+        if (! _isValidURL(statsReportingURL))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "stats reporting url invalid " + stdStringFromNSString([statsReportingURL description])}};
+            
+            return false;
+        }
+        
+        NSString* transportMonitoringURL = configsDict[kRSTransportMonitoringURLKey];
+        
+        if (!_isValidURL(transportMonitoringURL))
+        {
+            (*aError).code = kRSErrorCodeConfigurationNotValid;
+            (*aError).userInfo = {{errorDescrKey, "transport monitoring url invalid " + stdStringFromNSString([transportMonitoringURL description])}};
+            
+            return false;
+        }
+        
+        return true;
     }
 }

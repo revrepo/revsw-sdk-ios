@@ -37,14 +37,10 @@ namespace rs
         static std::atomic<int> gLastConnectionID;
         int mConnectionID;
         
-        int64_t mBytesSent;
-        int64_t mBytesReceived;
-        
         int64_t mFirstByteReceivedTimestamp;
         
         int64_t mStartTimestamp;
         int64_t mEndTimestamp;
-        
         
     public:
         Connection();
@@ -76,7 +72,15 @@ namespace rs
         
         virtual std::string edgeTransport()const = 0;
         
+        virtual void didReceiveData(void* ) = 0;
+        virtual void didReceiveResponse(void* ) = 0;
+        virtual void didCompleteWithError(void* ) = 0;
+        
     protected:
+        
+        int64_t mBytesSent;
+        int64_t mBytesReceived;
+        
         std::weak_ptr<Connection> mWeakThis;
     };
 }

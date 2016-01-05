@@ -55,9 +55,9 @@ namespace rs
         
         void trackConfigurationPulled(const Data&);
         void trackStatsReported();
-        void trackRequest(bool usingRevHost, const Data&, const Response&, const Error&);
-        void trackRequestFinished(bool usingRevHost, const Data&, const Response&);
-        void trackRequestFailed(bool usingRevHost, const Data&, const Error&);
+        void trackRequest(bool usingRevHost, int64_t, const Response&, const Error&);
+        void trackRequestFinished(bool usingRevHost, int64_t, const Response&);
+        void trackRequestFailed(bool usingRevHost, int64_t, const Error&);
         
         Statistics getUsageStatistics() const;
         std::string getLatestConfiguration() const;

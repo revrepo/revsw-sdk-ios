@@ -89,7 +89,7 @@ namespace rs
         };
         
         std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName());
-        //const std::string& aURL, const std::map<std::string, std::string>& aHeaders, const std::string& aMethod, const Data& aBody
+        
         std::map<std::string, std::string> headers;
         Data body;
         std::shared_ptr<rs::Request> req = std::make_shared<rs::Request>(aURL, headers, "GET", body);

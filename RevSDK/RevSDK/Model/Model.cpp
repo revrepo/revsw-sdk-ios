@@ -42,7 +42,7 @@ namespace rs
         mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
         mUsageTracker              = std::make_shared<DebugUsageTracker>();
         
-        applyConfiguration(mConfService->getActive());
+        //applyConfiguration(mConfService->getActive());
         
         QUICConnection::initialize();
     }
@@ -87,6 +87,11 @@ namespace rs
         //std::make_shared<StandardProtocol>();
     }
     
+    std::vector<std::string> Model::getAllowedProtocolIDs() const
+    {
+        return mConfService->getActive()->allowedProtocols;
+    }
+    
     std::shared_ptr<Connection> Model::currentConnection()
     {
 //        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
@@ -111,16 +116,21 @@ namespace rs
     
     void Model::applyConfiguration(std::shared_ptr<const Configuration> aConfiguration)
     {
+        if (aConfiguration.get() == nullptr)
+        {
+            return;
+        }
+        //scope
         {
             std::lock_guard<std::mutex> lockGuard(mLock);
             //mConfiguration = aConfiguration;
             mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
         }
-        setOperationMode(aConfiguration->operationMode);
+        //setOperationMode(aConfiguration->operationMode);
         
         mProtocolSelector.onConfigurationApplied(aConfiguration);
         
-        std::vector<std::string> logLevels = {"none", "error", "debug", "info"};
+        std::vector<std::string> logLevels = {kLogLevelNone, kLogLevelError, kLogLevelDebug, kLogLevelInfo};
         auto logLevelIterator = std::find(logLevels.begin(), logLevels.end(), aConfiguration->loggingLevel);
         auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
         
@@ -201,8 +211,13 @@ namespace rs
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
-            //RSStartTimer(&Model::reportStats, mStatsReportingTimer, activeConf->statsReportingInterval);
-            Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
+        
+
+#define RS_DEBUG_STATS_REPORT_INTERVAL -1
+            
+            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
+            
+            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
                 this->reportStats();
             });
         }

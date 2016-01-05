@@ -35,7 +35,7 @@ namespace rs
     class Connection;
     
     //version
-    extern const float kRSSDKVersion;
+    extern const int kRSSDKVersion;
     
     // Rev Host
     extern const std::string kRSRevBaseHost;
@@ -45,11 +45,13 @@ namespace rs
     
     //codes
     extern const long kRSNoErrorCode;
+    extern const long kRSErrorCodeConfigurationNotValid;
     
     //keys
     extern NSString* const kRSURLProtocolHandledKey;
     extern NSString* const kRSConfigurationStorageKey;
     extern NSString* const kRSRequestDataStorageKey;
+    extern NSString* const kRSLastMileDataStorageKey;
     extern NSString* const kRSEventsDataStorageKey;
     extern NSString* const kRSOSKey;
     extern NSString* const kRSAppNameKey;
@@ -70,10 +72,28 @@ namespace rs
     extern NSString* const kRSDomainsWhiteListKey;
     extern NSString* const kRSDomainsBlackListKey;
     extern NSString* const kRSLoggingLevelKey;
+    extern NSString* const kRSConfigsKey;
+    
+    //fields
+    extern NSString*  const kRSiOSField;
     
     //protocols
-    extern const std::string kRSHTTPSProtocolName;
-    extern const std::string kRSQUICProtocolName;
+    extern NSString* const kRSHTTPSProtocolName;
+    extern NSString* const kRSQUICProtocolName;
+    extern NSString* const kRSStandardProtocolName;
+    extern NSString* const kRSRevProtocolName;
+    
+    // log levels
+    extern NSString* const kRSLogLevelNone;
+    extern NSString* const kRSLogLevelDebug;
+    extern NSString* const kRSLogLevelError;
+    extern NSString* const kRSLogLevelInfo;
+    
+    //operation mode strings
+    extern NSString* const kRSOperationModeOffString;
+    extern NSString* const kRSOperationModeTransferString;
+    extern NSString* const kRSOperationModeReportString;
+    extern NSString* const kRSOperationModeTransferReportString;
     
     Configuration configurationFromNSDictionary(NSDictionary* aDictionary);
     NSDictionary* NSDictionaryFromConfiguration(const Configuration&);
@@ -105,6 +125,7 @@ namespace rs
     
     Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*, NSString*);
     
-    bool _isValidURL(std::string);
+    bool _isValidURL(NSString* aURLString);
+    bool _isValidConfiguration(const Data&, Error*);
 }
 #endif

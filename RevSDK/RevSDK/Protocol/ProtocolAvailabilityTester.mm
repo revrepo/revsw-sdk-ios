@@ -40,7 +40,11 @@ void ProtocolAvailabilityTester::onTestResult(bool aSuccess)
             mCompletitionCallback(mCurrentResults);
             mCurrentResults.clear();
             mRunning.store(false);
-        } 
+        }
+        else
+        { 
+            mNetwork.performReques(mProtocolsToTest.top()->clone(), mCachedURL, &mConnectionEventHandler);
+        }
     });
 }
 
@@ -54,9 +58,8 @@ void ProtocolAvailabilityTester::runTests(std::string aMonitoringURL, std::funct
             
             initTester();
             mCompletitionCallback = cbOnComplete;
-        
+            mCachedURL = aMonitoringURL;
             mNetwork.performReques(mProtocolsToTest.top()->clone(), aMonitoringURL, &mConnectionEventHandler);
-            mProtocolsToTest.pop();
         });
         ///////////////////////////////////////////
     }

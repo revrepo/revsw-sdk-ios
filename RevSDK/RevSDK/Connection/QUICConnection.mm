@@ -14,7 +14,7 @@
 
 #include "QUICSession.h"
 #include "Error.hpp"
-#include "RSUTils.h"
+#include "UTils.hpp"
 
 using namespace rs;
 using namespace net;
@@ -101,5 +101,20 @@ void QUICConnection::quicSessionDidChangeState(QUICSession* aSession, bool aConn
 
 std::string QUICConnection::edgeTransport()const
 {
-    return kRSQUICProtocolName;
+    return kQUICProtocolName;
+}
+
+void QUICConnection::didReceiveData(void* aData)
+{
+    
+}
+
+void QUICConnection::didReceiveResponse(void* aResponse)
+{
+    
+}
+
+void QUICConnection::didCompleteWithError(void* aError)
+{
+    
 }

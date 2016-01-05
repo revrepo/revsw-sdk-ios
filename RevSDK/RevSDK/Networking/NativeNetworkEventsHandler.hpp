@@ -34,8 +34,12 @@ namespace rs
         
         std::unique_ptr<Timer>         mSSIDCheckTimer;
         
+        std::string mSSID;
+        
     public:
         NativeNetworkEventsHandler(INetworkEventsDelegate* aDelegate);
+        
+        bool isInitialized();
         
         NativeNetworkEventsHandler(const NativeNetworkEventsHandler& aOther) = delete;
         

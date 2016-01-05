@@ -15,6 +15,10 @@
 
 namespace rs
 {
+    class Data;
+    class Response;
+    class Error;
+    
     class StandardConnection : public Connection
     {
     public:
@@ -25,7 +29,16 @@ namespace rs
         void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*);
         
         std::string edgeTransport()const;
-    private: 
+        
+        virtual void didReceiveData(void* );
+        virtual void didReceiveResponse(void* );
+        virtual void didCompleteWithError(void* );
+        
+    private:
+        
+       std::shared_ptr<Request> mCurrentRequest;
+       std::shared_ptr<Response> mResponse;
+       ConnectionDelegate* mConnectionDelegate;
     };
 }
 

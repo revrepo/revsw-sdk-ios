@@ -32,6 +32,8 @@ namespace rs
         
         void refreshTestInfo();
         
+        void convertIDsToPropocols(std::vector<std::string> aVec);
+        
         void sortProtocols(std::vector<std::string> aProtocolNamesOrdered);
         
         void saveAvailable();

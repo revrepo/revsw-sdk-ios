@@ -22,11 +22,19 @@
 
 #import "RSURLSessionDelegate.h"
 
+@interface RSURLSessionDataDelegate : NSObject<NSURLSessionDataDelegate>
+
+@end
+
+@implementation RSURLSessionDataDelegate
+
+@end
+
 using namespace rs;
 
 StandardConnection::StandardConnection()
 {
-    
+    mConnectionDelegate = nullptr;
 } 
 
 StandardConnection::~StandardConnection()
@@ -35,6 +43,8 @@ StandardConnection::~StandardConnection()
 
 void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
 {
+    mCurrentRequest                     = aRequest;
+    mConnectionDelegate                 = aDelegate;
     std::shared_ptr<Connection> oAnchor = mWeakThis.lock();
     NSURLRequest* request               = URLRequestFromRequest(aRequest);
     NSMutableURLRequest* mutableRequest = request.mutableCopy;
@@ -55,72 +65,67 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
 
     RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
-        [customDelegate setConnection:oAnchor];
+    [customDelegate setConnection:oAnchor];
         
     NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
     NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
                                                                                     delegate:customDelegate
-                                                                               delegateQueue:nullptr
-                                                          ];
-
-    // It turns out that NSURLSession doesn't support synchronous calls
-    // The only solution found on the web is to use semaphores, but it provides only pseudo synchronous behaviour and doesn't resolve the problem
-    // Another solution is to use NSURLConnection, but it is deprecated, so I've decided to stick to NSURLSession by now
-    // NSLog(@"Request %@ headers %@", mutableRequest, mutableRequest.allHTTPHeaderFields);
-    //NSLog(@"CONNECTION %@", mutableRequest.URL);
+                                                                               delegateQueue:nil];
     
-    NSString* originalURL = request.URL.absoluteString;
-    
-    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest
-                                        completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                            
-                                            std::shared_ptr<Connection> anchor = oAnchor;
-                                            
-                                            anchor->onEnd();
-                                            
-                                            NSLog(@"URL: %@\nError: %@\nResponse: %@\nRequest: %@", originalURL, aError, aResponse, mutableRequest.allHTTPHeaderFields);
-
-                                            const BOOL usingRevHost = [mutableRequest.URL.host isEqualToString:kRSRevRedirectHost];
-                                            NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
-                                        
-                                            if (aData)
-                                            {
-                                                anchor->addReceivedBytesCount([aData length]);
-                                            }
-                                                
-                                            if (!aError)
-                                            {
-                                                Data data                          = dataFromNSData(aData);
-                                                std::shared_ptr<Response> response = responseFromHTTPURLResponse(httpResponse);
-                                                
-                                                aDelegate->connectionDidReceiveResponse(anchor, response);
-                                                aDelegate->connectionDidReceiveData(anchor, data);
-                                                aDelegate->connectionDidFinish(anchor);
-                                                Model::instance()->debug_usageTracker()->trackRequestFinished(usingRevHost, data, *response.get());
-                                            }
-                                            else
-                                            {
-                                                Data data   = dataFromNSData(aData);
-                                                Error error = errorFromNSError(aError);
-                                                aDelegate->connectionDidFailWithError(anchor, error);
-                                                Model::instance()->debug_usageTracker()->
-                                                trackRequestFailed(usingRevHost, data, error);
-                                            }
-                                            
-                                            if (Model::instance()->shouldCollectRequestsData())
-                                            {
-                                                NSString* originalScheme = NSStringFromStdString(aRequest->originalScheme());
-                                                Data requestData = dataFromRequestAndResponse(mutableRequest, httpResponse, anchor.get(), originalScheme);
-                                                Model::instance()->addRequestData(requestData);
-                                            }
-                                        }];
-        
+    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
     oAnchor->onStart();
     [task resume];
 }
 
 std::string StandardConnection::edgeTransport()const
 {
-    return kRSHTTPSProtocolName;
+    return kStandardProtocolName;
+}
+
+void StandardConnection::didReceiveData(void* aData)
+{
+    NSData* data = (__bridge NSData*)aData;
+    addReceivedBytesCount([data length]);
+    Data rsData = rs::dataFromNSData(data);
+    mConnectionDelegate->connectionDidReceiveData(mWeakThis.lock(), rsData);
+}
+
+void StandardConnection::didReceiveResponse(void* aResponse)
+{
+    NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
+    mResponse                   = responseFromHTTPURLResponse(response);
+    mConnectionDelegate->connectionDidReceiveResponse(mWeakThis.lock(), mResponse);
+}
+
+void StandardConnection::didCompleteWithError(void* aError)
+{
+    onEnd();
+    
+    NSURLRequest* request   = URLRequestFromRequest(mCurrentRequest);
+    const BOOL usingRevHost = [request.URL.host isEqualToString:kRSRevRedirectHost];
+    
+    if (!aError)
+    {
+        mConnectionDelegate->connectionDidFinish(mWeakThis.lock());
+        Model::instance()->debug_usageTracker()->trackRequestFinished(usingRevHost, mBytesReceived, *mResponse.get());
+    }
+    else
+    {
+        NSError* error = (__bridge NSError*)aError;
+        
+        Error rsError = errorFromNSError(error);
+        mConnectionDelegate->connectionDidFailWithError(mWeakThis.lock(), rsError);
+        Model::instance()->debug_usageTracker()->
+        trackRequestFailed(usingRevHost, mBytesReceived, rsError);
+    }
+    
+    if (Model::instance()->shouldCollectRequestsData())
+    {
+        NSURLRequest* request       = URLRequestFromRequest(mCurrentRequest);
+        NSHTTPURLResponse* response = NSHTTPURLResponseFromResponse(mResponse);
+        NSString* originalScheme    = NSStringFromStdString(mCurrentRequest->originalScheme());
+        Data requestData            = dataFromRequestAndResponse(request, response, mWeakThis.lock().get(), originalScheme);
+        Model::instance()->addRequestData(requestData);
+    }
 }

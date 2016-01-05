@@ -172,6 +172,63 @@ namespace rs
         saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
     
+    void data_storage::saveAvailableProtocols(std::vector<std::string> aVec)
+    {
+        NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
+        NSArray* requestDataArray        = savedData ? [NSPropertyListSerialization propertyListWithData:savedData
+                                                                                                 options:NSPropertyListImmutable
+                                                                                                  format:0
+                                                                                                   error:nil] : @[];
+        NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
+        
+        for (auto it: aVec)
+        {
+            [mutableDataArray addObject:NSStringFromStdString(it)];
+        }
+        
+        saveObject(mutableDataArray, kRSLastMileDataStorageKey);
+    }
+    
+    std::vector<std::string> data_storage::restoreAvailableProtocols()
+    {
+        std::vector<std::string> vec;
+        
+        NSData* data = contentsOfFileWithName(kRSLastMileDataStorageKey);
+        
+        if (!data)
+        {
+            return vec;
+        }
+        
+        NSArray* requestDataArray    = [NSPropertyListSerialization propertyListWithData:data
+                                                                                 options:NSPropertyListImmutable
+                                                                                  format:0
+                                                                                   error:nil];
+  
+        for (id object in requestDataArray)
+        {
+            vec.push_back(stdStringFromNSString(object));
+        }
+        
+        return vec;
+    }
+    
+    void data_storage::saveIntForKey(const std::string& aKey, int64_t aVal)
+    {
+        NSString* nsKey = NSStringFromStdString(aKey);
+        
+        [[NSUserDefaults standardUserDefaults] setInteger:aVal forKey:nsKey];
+    }
+    
+    int64_t data_storage::getIntForKey(const std::string& aKey)
+    {
+        NSString* nsKey = NSStringFromStdString(aKey);
+        
+        int64_t val = [[NSUserDefaults standardUserDefaults] integerForKey:nsKey];
+        
+        return val;
+    }
+    
     std::vector<Data> data_storage::loadRequestsData()
     {
         NSData* data = contentsOfFileWithName(kRSRequestDataStorageKey);

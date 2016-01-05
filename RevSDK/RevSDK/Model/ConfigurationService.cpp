@@ -12,13 +12,19 @@
 
 using namespace rs;
 
+const std::string kTimestampKey = "kRS_timestamp";
+
 //todo : remove
 
 ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate ) :
     mUpdateEnabledFlag(true),
     mDelegate(aDelegate)
 {
-    mLastUpdated = std::chrono::system_clock::now();
+    auto secCnt = data_storage::getIntForKey(kTimestampKey);
+    
+    std::chrono::system_clock::duration d(secCnt);
+    
+    mLastUpdated = std::chrono::system_clock::time_point(d);
     
     mNetwork = std::unique_ptr<Network>(new Network());
     
@@ -74,14 +80,20 @@ void ConfigurationService::loadConfiguration()
 #endif
         if (aError.isNoError())
         {
-            Configuration configuration = processConfigurationData(aData);
+            Error error;
             
-            Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
+            bool isValid = isValidConfiguration(aData, &error);
             
-            if (configuration.isValid())
+            if (isValid)
             {
+                Configuration configuration = processConfigurationData(aData);
+                
+                Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
+                
                 int refreshInterval = 0;
                 mLastUpdated = std::chrono::system_clock::now();
+                data_storage::saveIntForKey(kTimestampKey, mLastUpdated.load().time_since_epoch().count());
+                
                 if (mUpdateEnabledFlag)
                 {
                     mActiveConfiguration = std::make_shared<Configuration>(configuration);
@@ -108,16 +120,14 @@ void ConfigurationService::loadConfiguration()
             }
             else
             {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-                std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
-#endif
+                std::cout << "RevSDK.Model::loadConfiguration Failed to validate configuration " << error.description() << std::endl;
             }
         }
         else
         {
 #ifdef RS_ENABLE_DEBUG_LOGGING
             std::cout << "\n" << "RevSDK.Model::loadConfiguration Failed to load configuration "
-                              << aError.description();
+            << aError.description() << std::endl;;
 #endif
         }
     };
@@ -134,7 +144,7 @@ bool ConfigurationService::isStale() const
     auto span = std::chrono::duration_cast<tSec>(tSclock::now() - last);
     
     int staleTimeout = mActiveConfiguration->staleTimeout;
-    int timeSincleLastUPD = span.count();
+    int64_t timeSincleLastUPD = span.count();
     
     return staleTimeout < timeSincleLastUPD;
 }

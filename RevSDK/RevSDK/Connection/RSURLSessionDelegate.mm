@@ -8,12 +8,13 @@
 
 #import "RSURLSessionDelegate.h"
 #import "RSURLRequestProcessor.h"
+#import "RSUtils.h"
 
 #include "Model.hpp"
 
 @interface RSURLSessionDelegate ()
 {
-    std::weak_ptr<rs::Connection> connection;
+    std::shared_ptr<rs::Connection> connection;
 }
 @end
 
@@ -45,15 +46,27 @@
         completionHandler(request);
     }
 }
-// only for put and post
-//- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task
-//             didSendBodyData:(int64_t)bytesSent
-//              totalBytesSent:(int64_t)totalBytesSent
-//    totalBytesExpectedToSend:(int64_t)totalBytesExpectedToSend
-//{
-//    auto owner = connection.lock();
-//    owner->addSentBytesCount(bytesSent);
-//} 
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
+    connection->didReceiveData((__bridge void *)data);
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
+{
+    connection->didReceiveResponse((__bridge void *) response);
+    
+    if (completionHandler)
+    {
+        completionHandler(NSURLSessionResponseAllow);
+    }
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+{
+    connection->didCompleteWithError((__bridge void*)error);
+    [session invalidateAndCancel];
+}
 
 @end
 

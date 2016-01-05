@@ -72,6 +72,8 @@ namespace rs
         
         Network              mNetwork;
         
+        std::string          mCachedURL;
+        
         void onTestResult(bool aSuccess);
         
         void initTester();

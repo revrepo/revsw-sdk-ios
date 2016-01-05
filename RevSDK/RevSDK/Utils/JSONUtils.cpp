@@ -87,7 +87,7 @@ namespace rs
         else
         {
             Json::Value configs                     = value[kConfigsKey][0];
-            std::vector<std::string> operationModes = {"off", "transfer", "report", "transfer_and_report"};
+            std::vector<std::string> operationModes = {kOperationModeOffString, kOperationModeTransferString, kOperationModeReportString, kOperationModeTransferReportString};
             std::vector<std::string> statsLevels    = {"debug", "release"};
             auto operation_mode_iterator            = std::find(operationModes.begin(), operationModes.end(), configs[kOperationModeKey].asString());
             auto operation_mode_index               = std::distance(operationModes.begin(), operation_mode_iterator);

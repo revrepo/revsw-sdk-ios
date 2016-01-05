@@ -27,6 +27,11 @@ namespace rs
         
         void startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate);
          std::string edgeTransport()const;
+        
+        virtual void didReceiveData(void* );
+        virtual void didReceiveResponse(void* );
+        virtual void didCompleteWithError(void* );
+        
     private:
         void quicSessionDidCloseStream(QUICSession* aSession,
                                        net::QuicDataStream* aStream,
