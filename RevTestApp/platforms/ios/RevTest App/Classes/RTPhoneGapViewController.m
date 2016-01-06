@@ -220,7 +220,7 @@
         {
             if (!theWebView.isLoading)
             {
-                [self loadFinished];
+                [self loadFinished:200]; // TODO :::::: FIX ME !!!!!!!!
             }
         }
     }

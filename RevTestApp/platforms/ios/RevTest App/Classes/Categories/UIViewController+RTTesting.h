@@ -30,7 +30,7 @@
 - (void)startTesting;
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest;
 - (void)loadStarted;
-- (void)loadFinished;
+- (void)loadFinished:(NSInteger) aCode;
 
 - (void)stepStarted;
 - (void)stepFinished:(bool)result;

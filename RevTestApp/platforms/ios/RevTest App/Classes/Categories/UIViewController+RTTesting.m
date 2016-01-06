@@ -115,23 +115,19 @@
         RTPerformBlockOnMainQueue(weakSelf.restartBlock);
     };
     
-    self.testModel.completionBlock = ^(NSArray* aTestResults, NSArray* aSdkTestResults, NSArray* aDataLengths, NSArray* aSdkDataLengths, NSArray* aResultFlags){
+    self.testModel.completionBlock = ^(NSArray* aTestResults){
         RTPerformBlockOnMainQueue(weakSelf.completionBlock);
-        [weakSelf goToStatsWithTestResults:aTestResults
-                                sdkResults:aSdkTestResults
-                               dataLengths:aDataLengths
-                            sdkDataLengths:aSdkDataLengths
-                               resultFlags:aResultFlags];
+        [weakSelf goToStatsWithTestResults:aTestResults];
         [weakSelf hideHud];
     };
     
-    self.testModel.cancelBlock = ^{
+    self.testModel.cancelBlock = ^(NSInteger aCode){
         RTPerformBlockOnMainQueue(weakSelf.cancelBlock);
-        [weakSelf loadFinished];
+        [weakSelf loadFinished:aCode];
     };
 }
 
-- (void)goToStatsWithTestResults:(NSArray *)aTestResults sdkResults:(NSArray *)aSdkTestResults dataLengths:(NSArray *)aDataLengths sdkDataLengths:(NSArray *)aSdkDataLengths resultFlags:(NSArray *)aResultFlags
+- (void)goToStatsWithTestResults:(NSArray *)aTestResults
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
@@ -145,12 +141,6 @@
         
         RTContainerViewController* containerViewController = [RTContainerViewController new];
         containerViewController.directResults              = aTestResults;
-        containerViewController.sdkResults                 = aSdkTestResults;
-        containerViewController.dataLengths                = aDataLengths;
-        containerViewController.sdkDataLengths             = aSdkDataLengths;
-        containerViewController.userInfo                   = userInfo;
-        
-        containerViewController.resultSuccessFlags = aResultFlags;
         
         [self.navigationController pushViewController:containerViewController animated:YES];
     });
@@ -188,9 +178,9 @@
     [self.testModel loadStarted];
 }
 
-- (void)loadFinished
+- (void)loadFinished:(NSInteger) aCode
 {
-    [self.testModel loadFinished];
+    [self.testModel loadFinished:aCode];
 }
 
 - (void)stepStarted

@@ -115,8 +115,8 @@
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
 		6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */; };
-		6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE0A1C2833280095EA9C /* RTTestCycleInfo.m */; };
-		6D7CB05D1C3D516500416020 /* IterationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05C1C3D516500416020 /* IterationResult.m */; };
+		6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05C1C3D516500416020 /* RTIterationResult.m */; };
+		6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05F1C3D54E800416020 /* RTTestResult.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -288,11 +288,10 @@
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
 		6D73CE061C27F1BA0095EA9C /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5.h"; path = "RevTest App/Classes/Categories/NSString+MD5.h"; sourceTree = SOURCE_ROOT; };
 		6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5.m"; path = "RevTest App/Classes/Categories/NSString+MD5.m"; sourceTree = SOURCE_ROOT; };
-		6D73CE091C2833280095EA9C /* RTTestCycleInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTestCycleInfo.h; sourceTree = "<group>"; };
-		6D73CE0A1C2833280095EA9C /* RTTestCycleInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestCycleInfo.m; sourceTree = "<group>"; };
-		6D7CB05B1C3D514900416020 /* IterationResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IterationResult.h; sourceTree = "<group>"; };
-		6D7CB05C1C3D516500416020 /* IterationResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IterationResult.m; sourceTree = "<group>"; };
-		6D7CB05E1C3D518F00416020 /* TestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestResult.h; sourceTree = "<group>"; };
+		6D7CB05B1C3D514900416020 /* RTIterationResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTIterationResult.h; sourceTree = "<group>"; };
+		6D7CB05C1C3D516500416020 /* RTIterationResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTIterationResult.m; sourceTree = "<group>"; };
+		6D7CB05E1C3D518F00416020 /* RTTestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTestResult.h; sourceTree = "<group>"; };
+		6D7CB05F1C3D54E800416020 /* RTTestResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestResult.m; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -772,9 +771,10 @@
 			children = (
 				5B1039781C11763C003CA9A1 /* RTTestModel.h */,
 				5B1039791C11763C003CA9A1 /* RTTestModel.m */,
-				6D7CB05B1C3D514900416020 /* IterationResult.h */,
-				6D7CB05C1C3D516500416020 /* IterationResult.m */,
-				6D7CB05E1C3D518F00416020 /* TestResult.h */,
+				6D7CB05B1C3D514900416020 /* RTIterationResult.h */,
+				6D7CB05C1C3D516500416020 /* RTIterationResult.m */,
+				6D7CB05E1C3D518F00416020 /* RTTestResult.h */,
+				6D7CB05F1C3D54E800416020 /* RTTestResult.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -784,8 +784,6 @@
 			children = (
 				5B25817D1C17155F00C55959 /* RTUtils.h */,
 				5B25817E1C17155F00C55959 /* RTUtils.m */,
-				6D73CE091C2833280095EA9C /* RTTestCycleInfo.h */,
-				6D73CE0A1C2833280095EA9C /* RTTestCycleInfo.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1079,8 +1077,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */,
 				5B0BFEE71C0C6C1B0057715A /* RTReportCell.m in Sources */,
-				6D7CB05D1C3D516500416020 /* IterationResult.m in Sources */,
+				6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */,
 				5B04C9C71C0DBBE900621B67 /* RSPlugin.m in Sources */,
 				5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
@@ -1098,7 +1097,6 @@
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
-				6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */,
 				302D95F114D2391D003F00A1 /* RTPhoneGapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
