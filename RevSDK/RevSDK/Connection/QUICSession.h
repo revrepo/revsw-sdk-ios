@@ -13,6 +13,7 @@
 #include "RevProofVerifier.h"
 #include "QUICSessionDelegates.h"
 #include "QUICThread.h"
+#include "QUICClientSession.h"
 
 #include <map>
 #include <thread>
@@ -20,7 +21,7 @@
 
 namespace rs
 {
-    class QUICSession : public net::QuicDataStream::Visitor, public NativeUDPSocketCPPDelegate
+    class QUICSession : public NativeUDPSocketCPPDelegate, public QUICDataStream::Delegate
     {
     public:
         static QUICSession* instance();
@@ -30,9 +31,12 @@ namespace rs
         void setSessionDelegate(QUICSessionDelegate* aSessionDelegate);
         void connect(net::QuicServerId aTargetServerId);
         void disconnect();
+        bool connected() const { return p_connected(); /*just accessing flag*/ };
         void sendRequest(const net::SpdyHeaderBlock &headers,
                          base::StringPiece body,
                          QUICStreamDelegate* aStreamDelegate);
+        void update(size_t aNowMS);
+        
         
     private:
         void p_connect(net::QuicServerId aTargetServerId);
@@ -42,22 +46,27 @@ namespace rs
                            base::StringPiece body,
                            QUICStreamDelegate* aStreamDelegate);
         void OnClose(net::QuicDataStream* stream);
+        
+        void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) override;
+        void onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCode, const net::SpdyHeaderBlock& aHeaders) override;
+        void onQUICStreamFailed(QUICDataStream* aStream) override;
+        void onQUICStreamCompleted(QUICDataStream* aStream) override;
+
         net::QuicConnectionId generateConnectionId();
         QuicConnectionHelper *createQuicConnectionHelper();
         net::QuicPacketWriter *createQuicPacketWriter();
-        net::tools::QuicSpdyClientStream *createReliableClientStream();
+        QUICDataStream *createReliableClientStream();
         net::tools::QuicClientSession *createQuicClientSession(const net::QuicConfig &config,
                                                                net::QuicConnection *connection,
                                                                const net::QuicServerId &serverId,
                                                                net::QuicCryptoClientConfig *cryptoConfig);
-        bool onQUICPacket(const net::QuicEncryptedPacket &packet);
-        void onQUICError();
+        bool onQUICPacket(const net::QuicEncryptedPacket &packet) override;
+        void onQUICError() override;
     private:
         static QUICSession* mInstance;
-        static QUICThread mInstanceThread;
-        static std::mutex mInstanceLock;
+        QUICThread mInstanceThread;
         
-        static void executeOnQUICThread(std::function<void(void)> aFunction);
+        void executeOnSessionThread(std::function<void(void)> aFunction);
         
         class ObjCImpl;
         
@@ -73,7 +82,7 @@ namespace rs
         scoped_ptr<net::QuicPacketWriter> mWriter;
         
         // Session which manages streams and connection.
-        scoped_ptr<net::tools::QuicClientSession> mSession;
+        scoped_ptr<QUICClientSession> mSession;
         scoped_ptr<QuicConnectionHelper> mConnectionHelper;
         
         // Configuration and cached state about servers.
@@ -85,7 +94,7 @@ namespace rs
         net::IPEndPoint mServerAddress;
         net::QuicServerId mServerId;
         
-        typedef std::map<net::QuicDataStream*, QUICStreamDelegate*> StreamDelegateMap;
+        typedef std::map<QUICDataStream*, QUICStreamDelegate*> StreamDelegateMap;
         StreamDelegateMap mStreamDelegateMap;
     };
 }

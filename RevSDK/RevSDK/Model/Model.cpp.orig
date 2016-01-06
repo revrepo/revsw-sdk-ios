@@ -1,0 +1,357 @@
+//
+//  Model.cpp
+//  RevSDK
+//
+//  Created by Andrey Chernukha on 11/17/15.
+//  Copyright © 2015 TundraMobile. All rights reserved.
+//
+
+#include <mutex>
+#include <map>
+#include <algorithm>
+
+#include "Model.hpp"
+#include "StandardProtocol.hpp"
+#include "QUICProtocol.hpp"
+#include "StandardConnection.hpp"
+#include "QUICConnection.hpp"
+#include "Utils.hpp"
+#include "Network.hpp"
+#include "Data.hpp"
+#include "Error.hpp"
+#include "JSONUtils.hpp"
+#include "Configuration.hpp"
+#include "DataStorage.hpp"
+#include "Timer.hpp"
+#include "Request.hpp"
+#include "StatsHandler.hpp"
+#include "Event.hpp"
+#include "DebugUsageTracker.hpp"
+
+namespace rs
+{
+    Model::Model() 
+    {
+        data_storage::initDataStorage();
+        
+        auto conf = new ConfigurationService(this);
+        
+        mConfService               = std::unique_ptr<ConfigurationService>(conf);
+        mStatsReportingTimer       = nullptr; 
+        mSpareDomainsWhiteList     = std::vector<std::string>();
+        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
+        mUsageTracker              = std::make_shared<DebugUsageTracker>();
+        
+        //applyConfiguration(mConfService->getActive());
+        
+        QUICConnection::initialize();
+    }
+    
+    Model::~Model()
+    {
+    }
+    
+    Model* Model::instance()
+    {
+        static std::mutex mtx;
+        static Model* _instance = nullptr;
+        
+        if (!_instance)
+        {
+            std::lock_guard<std::mutex> scopedLock(mtx);
+            _instance = new Model;
+        }
+        
+        return _instance;
+    }
+    
+    std::shared_ptr<DebugUsageTracker> Model::debug_usageTracker() const
+    {
+        return mUsageTracker;
+    }
+    
+    void Model::debug_forceReloadConfiguration()
+    {
+        //mConfService->loadConfiguration();
+    }
+    
+    std::string Model::edgeHost()
+    {
+        //std::lock_guard<std::mutex> scopedLock(mLock);
+        return mConfService->getActive()->edgeHost;
+    }
+    
+    std::shared_ptr<Protocol>  Model::currentProtocol()
+    {
+<<<<<<< HEAD
+        return mProtocolSelector.bestProtocol();
+        //std::make_shared<StandardProtocol>();
+    }
+    
+    std::vector<std::string> Model::getAllowedProtocolIDs() const
+    {
+        return mConfService->getActive()->allowedProtocols;
+=======
+        //return std::make_shared<StandardProtocol>();
+        return std::make_shared<QUICProtocol>();
+>>>>>>> master
+    }
+    
+    std::shared_ptr<Connection> Model::currentConnection()
+    {
+//        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
+//        
+//            {httpsProtocolName(), Connection::create<StandardConnection>() },
+//            {quicProtocolName(), Connection::create<QUICConnection>() }
+//        };
+
+        std::shared_ptr<Protocol> protocol     = currentProtocol();
+        std::string protocolName               = protocol.get()->protocolName();
+        
+        if (protocolName == httpsProtocolName())
+            return Connection::create<StandardConnection>();
+        else if (protocolName == quicProtocolName())
+            return Connection::create<QUICConnection>();
+        else
+        {
+            assert(false);
+            return nullptr;
+        }
+    }
+    
+    void Model::applyConfiguration(std::shared_ptr<const Configuration> aConfiguration)
+    {
+        if (aConfiguration.get() == nullptr)
+        {
+            return;
+        }
+        //scope
+        {
+            std::lock_guard<std::mutex> lockGuard(mLock);
+            //mConfiguration = aConfiguration;
+            mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
+        }
+        //setOperationMode(aConfiguration->operationMode);
+        
+        mProtocolSelector.onConfigurationApplied(aConfiguration);
+        
+        std::vector<std::string> logLevels = {kLogLevelNone, kLogLevelError, kLogLevelDebug, kLogLevelInfo};
+        auto logLevelIterator = std::find(logLevels.begin(), logLevels.end(), aConfiguration->loggingLevel);
+        auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
+        
+        mCurrentLoggingLevel = (RSLogginLevel)logLevelIndex;
+    }
+    
+    void Model::reportStats()
+    {
+        bool hasDataToSend = true;
+        do
+        {
+            ReportTransactionHanle statsData;
+            
+            {
+                std::lock_guard<std::mutex> lockGuard(mLock);
+#ifndef RS_DBG_MAXREQESTS
+                statsData = mStatsHandler->createSendTransaction(this->mConfService->getActive()->statsReportingMaxRequests);
+#else
+                statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
+#endif
+                hasDataToSend = mStatsHandler->hasRequestsData();
+            }
+            
+            std::function<void(const Error& )> completion = [=](const Error& aError){
+                std::lock_guard<std::mutex> lockGuard(mLock);
+    #ifdef RS_ENABLE_DEBUG_LOGGING
+                std::cout << "Stats reported" << std::endl;
+    #endif
+                if (aError.isNoError())
+                {
+                    if (statsData.cbOnSuccess)
+                    {
+                        statsData.cbOnSuccess();
+                    }
+                }
+                else
+                {
+                    if (statsData.cbOnFail)
+                    {
+                        statsData.cbOnFail();
+                    } 
+                }
+            };
+            assert(statsData.Buffer.length());
+            
+            mNetwork.sendStats(mConfService->getActive()->statsReportingURL, statsData.Buffer, completion);
+        }
+        while (hasDataToSend);
+        
+        mUsageTracker->trackStatsReported();
+    }
+    
+    void Model::initialize(std::string aSDKKey)
+    {
+        std::lock_guard<std::mutex> lockGuard(mLock);
+        mSDKKey = aSDKKey;
+        mConfService->init();
+       
+        if (mCurrentLoggingLevel >= kRSLogginLevelInfo)
+        {
+            Event initializeEvent("info", 3, "SDK Initialized", 0.0f);
+            mStatsHandler->addEvent(initializeEvent);
+        }
+    }
+    
+    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
+    {
+        std::lock_guard<std::mutex> scopedLock(mLock);
+        auto activeConf = mConfService->getActive();
+#ifdef RS_ENABLE_DEBUG_LOGGING
+        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
+        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
+#endif
+        
+        mConfService->setOperationMode(aOperationMode);
+        
+        std::cout << activeConf->statsReportingInterval << std::endl;
+        if (activeConf->operationMode == kRSOperationModeInnerReport ||
+            activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
+        {
+        
+
+#define RS_DEBUG_STATS_REPORT_INTERVAL -1
+            
+            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
+            
+            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
+                this->reportStats();
+            });
+        }
+        else
+        {
+            Timer::disableTimer(mStatsReportingTimer);
+        }
+    }
+    
+    RSOperationModeInner Model::currentOperationMode()
+    {
+        std::lock_guard<std::mutex> scopedLock(mLock);
+        return mConfService->getActive()->operationMode;
+    }
+    
+    bool Model::canTransport()
+    {
+        bool flag;
+        {
+            std::lock_guard<std::mutex> scopedLock(mLock);
+            auto conf = mConfService->getActive();
+            flag =  conf->operationMode == kRSOperationModeInnerTransport ||
+                    conf->operationMode == kRSOperationModeInnerTransportAndReport;
+        }
+        return flag;
+    }
+    
+//    void Model::switchWhiteListOption(bool aOn)
+//    {
+//        std::lock_guard<std::mutex> scopedLock(mLock);
+//        
+//        auto conf = mConfService->getActive();
+//        
+//        if (aOn)
+//        {
+//           conf->domainsWhiteList = mSpareDomainsWhiteList;
+//        }
+//        else
+//        {
+//           mSpareDomainsWhiteList = conf->domainsWhiteList;
+//           conf->domainsWhiteList.clear();
+//        }
+//    }
+    
+    bool rs::Model::shouldTransportDomainName(std::string aDomainName)
+    {
+        if (!canTransport())
+        {
+            return false;
+        }
+        
+        std::lock_guard<std::mutex> scopedLock(mLock);
+        
+        auto conf = mConfService->getActive();
+        
+        auto begin = conf->domainsBlackList.begin();
+        auto end   = conf->domainsBlackList.end();
+        
+        if (std::find(begin, end, aDomainName) != end)
+        {
+            return false;
+        }
+        
+        begin = conf->domainsProvisionedList.begin();
+        end   = conf->domainsProvisionedList.end();
+        
+        if (std::find(begin, end, aDomainName) != end)
+        {
+            return true;
+        }
+        
+        begin = conf->domainsWhiteList.begin();
+        end   = conf->domainsWhiteList.end();
+        
+        if (std::find(begin, end, aDomainName) != end)
+        {
+            return true;
+        }
+        
+        return conf->domainsWhiteList.empty();
+    }
+    
+    bool rs::Model::isDomainNameProvisioned(std::string aDomainName)
+    {
+        std::lock_guard<std::mutex> scopedLock(mLock);
+        
+        auto conf = mConfService->getActive();
+        
+        auto begin = conf->domainsProvisionedList.begin();
+        auto end   = conf->domainsProvisionedList.end();
+        
+        return std::find(begin, end, aDomainName) != end;
+    }
+    
+    void rs::Model::addRequestData(const Data& aRequestData)
+    {
+        std::lock_guard<std::mutex> lockGuard(mLock);
+        mStatsHandler->addRequestData(aRequestData);
+    }
+    
+    void Model::stopConfigurationUpdate()
+    {
+#ifdef RS_ENABLE_DEBUG_LOGGING
+        std::cout<<"RevSDK.Model:: stopped configuration update"<<std::endl;
+#endif
+        mConfService->stopUpdate();
+    }
+    
+    void rs::Model::resumeConfigurationUpdate()
+    {
+#ifdef RS_ENABLE_DEBUG_LOGGING
+        std::cout<<"RevSDK.Model:: resumed configuration update"<<std::endl;
+#endif
+        mConfService->resumeUpdate();
+    }
+    
+    bool rs::Model::shouldCollectRequestsData()
+    {
+        return  true;
+        /// ASK ALEX OR ANDREW, MERGE CONFLICT
+        auto conf = mConfService->getActive();
+        
+        RSStatsReportingLevel statsReportingLevel = conf->statsReportingLevel;
+        
+        bool shouldCollect;
+        {
+            std::lock_guard<std::mutex> scopedLock(mLock);
+            shouldCollect= statsReportingLevel == kRSStatsReportingLevelRelease || statsReportingLevel == kRSStatsReportingLevelDebug;
+        }
+        return shouldCollect;
+    }
+}

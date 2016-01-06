@@ -66,6 +66,27 @@ enum AsyncUdpSocketFlags
 	kFlipFlop                = 1 << 12,  // Used to alternate between IPv4 and IPv6 sockets.
 };
 
+static void trace_socket_speed(int aDataSize)
+{
+    static CFAbsoluteTime lastUpd = 0;
+    static CFAbsoluteTime interval = 1.0;
+    static int dataSizeAccum = 0;
+    
+    CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+    
+    dataSizeAccum += aDataSize;
+    
+    if (now - lastUpd > interval)
+    {
+        float speed = (float)dataSizeAccum / (now - lastUpd);
+        speed /= 1024.0f;
+        NSLog(@"Socket speed: %.1f kb/s", speed);
+        lastUpd = now;
+        dataSizeAccum = 0;
+        return;
+    }
+}
+
 @interface RevAsyncUdpSocket (Private)
 
 // Run Loop
@@ -1643,6 +1664,9 @@ static void MyCFSocketCallback(CFSocketRef, CFSocketCallBackType, CFDataRef, con
 					socklen_t sockaddr4len = sizeof(sockaddr4);
 					
 					result = recvfrom(theNativeSocket, buf, bufSize, 0, (struct sockaddr *)&sockaddr4, &sockaddr4len);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        trace_socket_speed(result);
+                    });
 					
 					if(result >= 0)
 					{
@@ -1678,6 +1702,9 @@ static void MyCFSocketCallback(CFSocketRef, CFSocketCallBackType, CFDataRef, con
 					socklen_t sockaddr6len = sizeof(sockaddr6);
 					
 					result = recvfrom(theNativeSocket, buf, bufSize, 0, (struct sockaddr *)&sockaddr6, &sockaddr6len);
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        trace_socket_speed(result);
+                    });
 					
 					if(result >= 0)
 					{
@@ -1838,10 +1865,12 @@ static void MyCFSocketCallback(CFSocketRef, CFSocketCallBackType, CFDataRef, con
  * This is the callback we setup for CFSocket.
  * This method does nothing but forward the call to it's Objective-C counterpart
 **/
+
 static void MyCFSocketCallback(CFSocketRef sref, CFSocketCallBackType type, CFDataRef address, const void *pData, void *pInfo)
 {
-	@autoreleasepool {
-	
+	@autoreleasepool
+    {
+        
 		RevAsyncUdpSocket *theSocket = (__bridge RevAsyncUdpSocket *)pInfo;
 		[theSocket doCFSocketCallback:type forSocket:sref withAddress:(__bridge NSData *)address withData:pData];
 	

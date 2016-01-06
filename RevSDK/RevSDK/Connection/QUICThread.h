@@ -22,9 +22,12 @@ namespace rs
         QUICThread();
         ~QUICThread();
         void perform(std::function<void(void)> aFunc);
+        void update(size_t aNowMS);
+        void setUpdateCallback(std::function<void(size_t)> aUpd);
     private:
         struct Impl;
     private:
         Impl* mImpl;
+        std::function<void(size_t)> mUpd;
     };
 }

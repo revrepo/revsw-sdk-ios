@@ -26,19 +26,25 @@ namespace rs
         ~QUICConnection();
         
         void startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate);
-         std::string edgeTransport()const;
-        
-        virtual void didReceiveData(void* );
-        virtual void didReceiveResponse(void* );
-        virtual void didCompleteWithError(void* );
+        std::string edgeTransport()const;
         
     private:
-        void quicSessionDidCloseStream(QUICSession* aSession,
+        void quicSessionDidReceiveResponse(QUICSession* aSession,
+                                           net::QuicDataStream* aStream,
+                                           const net::SpdyHeaderBlock& aHedaers,
+                                           int aCode);
+        void quicSessionDidReceiveData(QUICSession* aSession,
                                        net::QuicDataStream* aStream,
-                                       const net::SpdyHeaderBlock& aHedaers,
-                                       const std::string& aData,
-                                       int aCode);
+                                       const char* aData, size_t aLen);
+        void quicSessionDidFinish(QUICSession* aSession,
+                                  net::QuicDataStream* aStream);
+        void quicSessionDidFail(QUICSession* aSession,
+                                net::QuicDataStream* aStream);
         void quicSessionDidChangeState(QUICSession* aSession, bool aConnected);
+
+        void didReceiveData(void* ) {}
+        void didReceiveResponse(void* ) {}
+        void didCompleteWithError(void* ) {}
     private:
         std::string mURL;
         ConnectionDelegate* mDelegate;

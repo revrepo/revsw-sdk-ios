@@ -31,6 +31,10 @@
 		11C962261C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11C962241C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm */; };
 		11C9622A1C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C962281C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h */; };
 		11C9622D1C2D7AE400CDE34D /* RevProofVerifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */; };
+		11F24B341C3C06B900DABAE5 /* QUICDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */; };
+		11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B331C3C06B900DABAE5 /* QUICDataStream.h */; };
+		11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */; };
+		11F24B391C3C09C100DABAE5 /* QUICClientSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B371C3C09C100DABAE5 /* QUICClientSession.h */; };
 		45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
@@ -159,6 +163,10 @@
 		11C9622B1C2D7A9300CDE34D /* QUICHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QUICHeaders.h; sourceTree = "<group>"; };
 		11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevProofVerifier.h; sourceTree = "<group>"; };
 		11C9622E1C2D820300CDE34D /* QUICSessionDelegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QUICSessionDelegates.h; sourceTree = "<group>"; };
+		11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QUICDataStream.cpp; sourceTree = "<group>"; };
+		11F24B331C3C06B900DABAE5 /* QUICDataStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICDataStream.h; sourceTree = "<group>"; };
+		11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QUICClientSession.cpp; sourceTree = "<group>"; };
+		11F24B371C3C09C100DABAE5 /* QUICClientSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICClientSession.h; sourceTree = "<group>"; };
 		31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
 		5B2035821C33DBB400A28C01 /* RSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReachability.h; sourceTree = "<group>"; };
 		5B2035831C33DBB400A28C01 /* RSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReachability.m; sourceTree = "<group>"; };
@@ -530,6 +538,10 @@
 				11C9621B1C2D54C000CDE34D /* QUICSession.mm */,
 				5B54C3471BFB7B8700217971 /* QUICConnection.hpp */,
 				5B54C3461BFB7B8700217971 /* QUICConnection.mm */,
+				11F24B331C3C06B900DABAE5 /* QUICDataStream.h */,
+				11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */,
+				11F24B371C3C09C100DABAE5 /* QUICClientSession.h */,
+				11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */,
 				5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */,
 				5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */,
 				5B2F4BD11BFDD20B003DCB27 /* Data.cpp */,
@@ -609,8 +621,10 @@
 				11C961141C2D469300CDE34D /* RevQuicClient.h in Headers */,
 				5B4FCD311C0321B400C8D320 /* NativeNetwork.h in Headers */,
 				5B46D1EE1C21B61C00A9834C /* Utils.hpp in Headers */,
+				11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */,
 				5B2F4BD81BFE11F6003DCB27 /* Error.hpp in Headers */,
 				5B3096EA1BFA0CB70045024C /* RSURLProtocol.h in Headers */,
+				11F24B391C3C09C100DABAE5 /* QUICClientSession.h in Headers */,
 				5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */,
 				5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */,
 				5B54C3351BFB705B00217971 /* Protocol.hpp in Headers */,
@@ -770,6 +784,7 @@
 				5B20359D1C33FF7000A28C01 /* STUNClient.m in Sources */,
 				5BC497B71C03782B00FF0922 /* Configuration.cpp in Sources */,
 				5B46D1ED1C21B61C00A9834C /* Utils.mm in Sources */,
+				11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */,
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
 				114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */,
@@ -777,6 +792,7 @@
 				6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */,
 				5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.mm in Sources */,
+				11F24B341C3C06B900DABAE5 /* QUICDataStream.cpp in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,
 				11C9610F1C2D469300CDE34D /* quic_spdy_client_stream.cc in Sources */,
 				11C9621D1C2D54C000CDE34D /* QUICSession.mm in Sources */,

@@ -54,3 +54,25 @@ std::string Data::toString() const
     return std::string((char*)bytes(), length());
 }
 
+Data Data::concat(Data d0, Data d1)
+{
+    Data data(nullptr, d0.length() + d1.length());
+    char* p = (char*)data.bytes();
+    ::memcpy(&p[0], d0.bytes(), d0.length());
+    ::memcpy(&p[d0.length()], d1.bytes(), d1.length());
+    return data;
+}
+
+Data Data::byAppendingData(const void* aData, size_t aDataLen)
+{
+    if (isEmpty())
+    {
+        return Data(aData, aDataLen);
+    }
+    Data data(nullptr, length() + aDataLen);
+    char* p = (char*)data.bytes();
+    ::memcpy(&p[0], bytes(), length());
+    ::memcpy(&p[length()], aData, aDataLen);
+    return data;
+}
+

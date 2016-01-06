@@ -19,11 +19,17 @@ namespace rs
     public:
         QUICStreamDelegate() {}
         virtual ~QUICStreamDelegate() {}
-        virtual void quicSessionDidCloseStream(QUICSession* aSession,
+        virtual void quicSessionDidReceiveResponse(QUICSession* aSession,
+                                                   net::QuicDataStream* aStream,
+                                                   const net::SpdyHeaderBlock& aHedaers,
+                                                   int aCode) = 0;
+        virtual void quicSessionDidReceiveData(QUICSession* aSession,
                                                net::QuicDataStream* aStream,
-                                               const net::SpdyHeaderBlock& aHedaers,
-                                               const std::string& aData,
-                                               int aCode) = 0;
+                                               const char* aData, size_t aLen) = 0;
+        virtual void quicSessionDidFinish(QUICSession* aSession,
+                                          net::QuicDataStream* aStream) = 0;
+        virtual void quicSessionDidFail(QUICSession* aSession,
+                                        net::QuicDataStream* aStream) = 0;
     };
     
     class QUICSessionDelegate
