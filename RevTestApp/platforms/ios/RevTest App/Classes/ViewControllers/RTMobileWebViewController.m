@@ -199,16 +199,7 @@ static const NSInteger kSuccessCode = 200;
     {
         RSOperationMode mode = [RevSDK operationMode];
         
-        if (mode == kRSOperationModeReport)
-        {
-            self.currentResult.errorAsIs = aCode;
-        }
-        else
-        {
-            self.currentResult.errorEdge = aCode;
-        }
-        
-        [self loadFinished];
+        [self loadFinished:aCode];
         self.testLeftOnThisStep--;
         if (0 == self.testLeftOnThisStep)
         {

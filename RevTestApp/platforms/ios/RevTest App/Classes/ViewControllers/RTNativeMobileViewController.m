@@ -185,33 +185,33 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     [self loadRequest:request];
 }
 
-- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
-{
-    NSString* sum = [aRequestData MD5String];
-    
-    if (aMode == kRSOperationModeReport)
-    {
-        if (aSent)
-        {
-           self.currentResult.asisSentChecksum = sum;
-        }
-        else
-        {
-            self.currentResult.asisRcvdChecksum = sum;
-        }
-    }
-    else
-    {
-        if (aSent)
-        {
-            self.currentResult.edgeSentChecksum = sum;
-        }
-        else
-        {
-            self.currentResult.edgeRcvdChecksum = sum;
-        }
-    }
-}
+//- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
+//{
+//    NSString* sum = [aRequestData MD5String];
+//    
+//    if (aMode == kRSOperationModeOff)
+//    {
+//        if (aSent)
+//        {
+//           self.currentResult.asisSentChecksum = sum;
+//        }
+//        else
+//        {
+//            self.currentResult.asisRcvdChecksum = sum;
+//        }
+//    }
+//    else
+//    {
+//        if (aSent)
+//        {
+//            self.currentResult.edgeSentChecksum = sum;
+//        }
+//        else
+//        {
+//            self.currentResult.edgeRcvdChecksum = sum;
+//        }
+//    }
+//}
 
 - (void)loadRequest:(NSURLRequest *)aRequest
 {
@@ -247,17 +247,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                             NSString* data = [dictionary objectForKey:@"data"];
                                             data = data ? data : rcvdData;
                                             
-                                            [self calculateMD5AndSave:data sent:false mode:[RevSDK operationMode]];
-                                            
-                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse;
-                                            if ([RevSDK operationMode] == kRSOperationModeReport)
-                                            {
-                                                self.currentResult.errorAsIs = [httpResponse statusCode];
-                                            }
-                                            else
-                                            {
-                                                self.currentResult.errorEdge = [httpResponse statusCode];
-                                            }
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse; 
                                             
                                             [self loadFinished:[httpResponse statusCode]];
                                             

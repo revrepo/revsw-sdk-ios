@@ -172,22 +172,23 @@
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
-    NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeReport ? self.testResults : self.sdkTestResults;
-    [array addObject:@(interval)];
     
-    array = [RevSDK operationMode] == kRSOperationModeReport ? self.dataLengthArray : self.sdkDataLengthArray;
-    [array addObject:@(mCurrentDataSize / 1024.0)];
+    tres.dataLength = mCurrentDataSize / 1024.0;
+    tres.errorCode = aResult;
     mCurrentDataSize = 0;
     
     
     if (kRSOperationModeReport == mMode)
     {
-        mMode = kRSOperationModeTransportAndReport;
+        mMode = kRSOperationModeTransport;
+        tres.testName = @"RevSDK";
     }
     else
     {
-        mMode = kRSOperationModeReport;
-    } 
+        mMode = kRSOperationModeOff;
+        tres.testName = @"Origin";
+    }
+    [self.currentResult pushResult:tres];
     
     if (self.loadFinishedBlock)
     {
