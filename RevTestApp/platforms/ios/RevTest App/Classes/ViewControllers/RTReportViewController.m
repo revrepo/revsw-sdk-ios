@@ -7,8 +7,9 @@
 //
 
 #import "RTReportViewController.h"
-#import "RTReportCell.h"
+#import "RTCell.h"
 #import "RTUtils.h"
+#import "RTIterationResult.h"
 
 @interface RTReportViewController ()<UITableViewDataSource, UITableViewDelegate>
 
@@ -32,45 +33,58 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.directResults count] + 1;
+    return [self.testResults count] + 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString* const kIdentifier = @"kIdentifier";
     
-    RTReportCell* cell = (RTReportCell *)[tableView dequeueReusableCellWithIdentifier:kIdentifier];
+    RTCell* cell = (RTCell *)[tableView dequeueReusableCellWithIdentifier:kIdentifier];
     
     if (!cell)
     {
-        cell = [RTReportCell cellWithCenterOffset:-70.f];
+        cell = [[RTCell alloc] initWithStyle:UITableViewCellStyleDefault
+                             reuseIdentifier:kIdentifier];
     }
+    
+    NSInteger row = indexPath.row == 0 ? indexPath.row : indexPath.row - 1;
+    
+    RTIterationResult* iterationResult = self.testResults[row];
     
     if (indexPath.row == 0)
     {
-        NSString* sdkLabelText = self.userInfo[kRTSDKLabelTextKey];
-        
-        cell.directLabel.text = @"Current(KB)";
-        cell.sdkLabel.text    = [NSString stringWithFormat:@"%@(KB)", sdkLabelText];
+       NSArray* texts = [iterationResult.testResults valueForKeyPath:@"@unionOfObjects.testName"];
+       [cell setTexts:texts];
     }
     else
     {
-        NSNumber* directResult  = self.directResults[indexPath.row - 1];
-        NSNumber* sdkResults    = self.sdkResults[indexPath.row - 1];
-        NSNumber* dataLength    = self.dataLengths[indexPath.row - 1];
-        NSNumber* sdkDataLength = self.sdkDataLengths[indexPath.row - 1];
-        
-        cell.numberLabel.text = [NSString stringWithFormat:@"%ld.", (long)indexPath.row];
-        cell.directLabel.text = [NSString stringWithFormat:@"%.3f (%.1f)", directResult.doubleValue, dataLength.floatValue];
-        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%.1f)", sdkResults.doubleValue, sdkDataLength.floatValue];
+        NSArray* durations = [iterationResult.testResults valueForKeyPath:@"@unionOfObjects.wholeString"];
+        [cell setTexts:durations];
     }
     
-    if ([self.resultSuccessFlags count] > indexPath.row - 1)
+    [cell setNumber:indexPath.row];
+//    
+//    if (indexPath.row == 0)
+//    {
+//       // NSString* sdkLabelText = self.userInfo[kRTSDKLabelTextKey];
+//        
+//        cell.directLabel.text = @"Current(KB)";
+//        cell.sdkLabel.text    = [NSString stringWithFormat:@"%@(KB)", @"Rev"];
+//    }
+//    else
+//    {
+//       /* cell.numberLabel.text = [NSString stringWithFormat:@"%ld.", (long)indexPath.row];
+//        cell.directLabel.text = [NSString stringWithFormat:@"%.3f (%.1f)", directResult.doubleValue, dataLength.floatValue];
+//        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%.1f)", sdkResults.doubleValue, sdkDataLength.floatValue];*/
+//    }
+    
+    /*if ([self.resultSuccessFlags count] > indexPath.row - 1)
     {
         NSNumber* numb = (NSNumber*)self.resultSuccessFlags[indexPath.row - 1];
         bool flag = ![numb boolValue];
         cell.contentView.backgroundColor = flag ? ([UIColor redColor]) : ([UIColor whiteColor]);
-    }
+    }*/
     
     return cell;
 }

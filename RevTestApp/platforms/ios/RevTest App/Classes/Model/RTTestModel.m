@@ -173,20 +173,22 @@
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
     
-    tres.dataLength = mCurrentDataSize / 1024.0;
-    tres.errorCode = aResult;
-    mCurrentDataSize = 0;
+    NSLog(@"DATA SIZE %ld", mCurrentDataSize);
     
+    tres.dataLength  = mCurrentDataSize / 1024.0;
+    tres.errorCode   = aResult;
+    tres.duration    = interval;
+    mCurrentDataSize = 0;
     
     if (kRSOperationModeReport == mMode)
     {
         mMode = kRSOperationModeTransport;
-        tres.testName = @"RevSDK";
+        tres.testName = @"Origin";
     }
     else
     {
-        mMode = kRSOperationModeOff;
-        tres.testName = @"Origin";
+        mMode = kRSOperationModeReport;
+        tres.testName = @"RevSDK";
     }
     [self.currentResult pushResult:tres];
     

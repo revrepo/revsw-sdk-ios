@@ -11,6 +11,7 @@
 
 @interface RTIterationResult : NSObject
 
+@property (nonatomic, strong) NSMutableArray* testResults;
 @property (nonatomic, readonly, assign) BOOL valid; 
 
 - (id) init;

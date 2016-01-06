@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "RTIterationResult.h"
 
-@interface RTIterationResult()
-
-@property (nonatomic, strong) NSMutableArray* testResults;
-
-@end
-
 @implementation RTIterationResult
 
 - (id)init

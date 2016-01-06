@@ -10,6 +10,19 @@
 
 @implementation RTTestResult
 
+- (NSString *)durationString
+{
+    return [NSString stringWithFormat:@"%.1f", _duration];
+}
 
+- (NSString *)dataLengthString
+{
+    return [NSString stringWithFormat:@"%.1f", _dataLength];
+}
+
+- (NSString *)wholeString
+{
+    return [NSString stringWithFormat:@"%@(%@)", self.durationString, self.dataLengthString];
+}
 
 @end

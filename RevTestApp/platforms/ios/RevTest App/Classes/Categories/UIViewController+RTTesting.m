@@ -131,16 +131,16 @@
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
-        NSArray* classNames = @[@"RTNativeMobileViewController", @"RTPhoneGapViewController", @"RTMobileWebViewController"];
-        NSArray* labelTexts = @[@"RevSDK", @"RevSDK", @"RevAPM"];
+       // NSArray* classNames = @[@"RTNativeMobileViewController", @"RTPhoneGapViewController", @"RTMobileWebViewController"];
+        //NSArray* labelTexts = @[@"RevSDK", @"RevSDK", @"RevAPM"];
         
-        NSUInteger index    = [classNames indexOfObject:NSStringFromClass([self class])];
-        NSString* labelText = labelTexts[index];
+        //NSUInteger index    = [classNames indexOfObject:NSStringFromClass([self class])];
+        //NSString* labelText = labelTexts[index];
         
-        NSDictionary* userInfo = @{kRTSDKLabelTextKey : labelText};
+        //NSDictionary* userInfo = @{kRTSDKLabelTextKey : labelText};
         
         RTContainerViewController* containerViewController = [RTContainerViewController new];
-        containerViewController.directResults              = aTestResults;
+        containerViewController.testResults                = aTestResults;
         
         [self.navigationController pushViewController:containerViewController animated:YES];
     });
