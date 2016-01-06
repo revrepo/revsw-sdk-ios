@@ -43,6 +43,8 @@ namespace rs
         
         std::unique_ptr<Network> mNetwork;
         
+        std::function<bool()> cbAdditionalStaleCondition;
+        
         IConfvigServDelegate* mDelegate;
         
         void loadConfiguration();
@@ -52,7 +54,7 @@ namespace rs
         std::atomic<tSpan> mLastUpdated;
         
     public:
-        ConfigurationService(IConfvigServDelegate* aDelegate);
+        ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCondition);
         
         void setOperationMode(RSOperationModeInner aMode);
         

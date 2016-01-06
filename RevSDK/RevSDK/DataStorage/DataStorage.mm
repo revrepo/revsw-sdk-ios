@@ -174,11 +174,8 @@ namespace rs
     
     void data_storage::saveAvailableProtocols(std::vector<std::string> aVec)
     {
-        NSData* savedData                = contentsOfFileWithName(kRSRequestDataStorageKey);
-        NSArray* requestDataArray        = savedData ? [NSPropertyListSerialization propertyListWithData:savedData
-                                                                                                 options:NSPropertyListImmutable
-                                                                                                  format:0
-                                                                                                   error:nil] : @[];
+        NSData* savedData                = contentsOfFileWithName(kRSLastMileDataStorageKey);
+        NSArray* requestDataArray        = @[];
         NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
         
         for (auto it: aVec)

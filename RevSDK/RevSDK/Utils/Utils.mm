@@ -75,6 +75,11 @@ namespace rs
         return kQUICProtocolName;
     }
     
+    std::string standardProtocolName()
+    {
+        return kStandardProtocolName;
+    }
+    
     bool isValidURL(const std::string& aURLString)
     {
         NSString* urlNSString = NSStringFromStdString(aURLString);

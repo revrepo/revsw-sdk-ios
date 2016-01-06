@@ -16,7 +16,7 @@ const std::string kTimestampKey = "kRS_timestamp";
 
 //todo : remove
 
-ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate ) :
+ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond) :
     mUpdateEnabledFlag(true),
     mDelegate(aDelegate)
 {
@@ -27,6 +27,9 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate ) :
     mLastUpdated = std::chrono::system_clock::time_point(d);
     
     mNetwork = std::unique_ptr<Network>(new Network());
+    
+    // :(
+    cbAdditionalStaleCondition = fExternalStaleCond;
     
     Configuration configuration = data_storage::configuration();
     mActiveConfiguration = std::make_shared<Configuration>(configuration);
@@ -146,7 +149,9 @@ bool ConfigurationService::isStale() const
     int staleTimeout = mActiveConfiguration->staleTimeout;
     int64_t timeSincleLastUPD = span.count();
     
-    return staleTimeout < timeSincleLastUPD;
+    bool externalFlag = cbAdditionalStaleCondition();
+    
+    return (staleTimeout < timeSincleLastUPD) || externalFlag;
 }
 
 void ConfigurationService::setOperationMode(RSOperationModeInner aMode)

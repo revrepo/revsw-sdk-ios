@@ -78,7 +78,7 @@ namespace rs
     void Network::performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, rs::ConnectionDelegate* aDelegate)
     {
         auto getConnectionFromProto = [](std::string protocolName) {
-            if (protocolName == httpsProtocolName())
+            if (protocolName == standardProtocolName())
                 return Connection::create<StandardConnection>();
             else if (protocolName == quicProtocolName())
                 return Connection::create<QUICConnection>();
@@ -88,11 +88,8 @@ namespace rs
             }
         };
         
-        std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName());
-        
-        std::map<std::string, std::string> headers;
-        Data body;
-        std::shared_ptr<rs::Request> req = std::make_shared<rs::Request>(aURL, headers, "GET", body);
+        std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName()); 
+        std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL);
         
         connection->startWithRequest(req, aDelegate);
     }

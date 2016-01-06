@@ -9,6 +9,7 @@
 #pragma once 
 
 #include <memory>
+#include <mutex>
 
 #include "Protocol.hpp"
 #include "StandardProtocol.hpp"
@@ -26,6 +27,8 @@ namespace rs
         NativeNetworkEventsHandler mEventsHandler;
         ProtocolAvailabilityTester mTester;
         
+        std::mutex                 mLock;
+        
         std::string                mMonitoringURL;
         
         std::vector<std::shared_ptr<Protocol>> mSortedProtocols;
@@ -36,13 +39,15 @@ namespace rs
         
         void sortProtocols(std::vector<std::string> aProtocolNamesOrdered);
         
-        void saveAvailable();
+        void saveAvailable(); 
         
     public:
         ProtocolSelector();
         ~ProtocolSelector() = default;
         
         std::shared_ptr<Protocol> bestProtocol();
+        
+        bool haveAvailadleProtocols();
         
         virtual void onNetworkTechnologyChanged() override;
         virtual void onCelluarStandardChanged() override;

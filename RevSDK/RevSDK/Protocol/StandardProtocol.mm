@@ -13,6 +13,6 @@ namespace rs
 {
     std::string StandardProtocol::protocolName()
     {
-        { return httpsProtocolName(); }
+        { return standardProtocolName(); }
     }
 }
