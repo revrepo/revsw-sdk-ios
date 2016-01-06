@@ -101,6 +101,8 @@
 		5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BC497B61C03782B00FF0922 /* Configuration.hpp */; };
 		5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */; };
 		5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */; };
+		5BE0D5B31C3D5E3F0064F97D /* RSURLConnectionNative.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BE0D5B11C3D5E3F0064F97D /* RSURLConnectionNative.h */; };
+		5BE0D5B41C3D5E3F0064F97D /* RSURLConnectionNative.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0D5B21C3D5E3F0064F97D /* RSURLConnectionNative.mm */; };
 		5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F8631C0454890087BC28 /* DataStorage.hpp */; };
 		5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5BE3F8671C0455CC0087BC28 /* DataStorage.mm */; };
 		5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BE3F86C1C04A0C50087BC28 /* Timer.hpp */; };
@@ -236,6 +238,8 @@
 		5BC497B61C03782B00FF0922 /* Configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Configuration.hpp; path = ../Utils/Configuration.hpp; sourceTree = "<group>"; };
 		5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionProxy.cpp; sourceTree = "<group>"; };
 		5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = ConnectionProxy.h; sourceTree = "<group>"; };
+		5BE0D5B11C3D5E3F0064F97D /* RSURLConnectionNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLConnectionNative.h; sourceTree = "<group>"; };
+		5BE0D5B21C3D5E3F0064F97D /* RSURLConnectionNative.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLConnectionNative.mm; sourceTree = "<group>"; };
 		5BE3F8631C0454890087BC28 /* DataStorage.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStorage.hpp; sourceTree = "<group>"; };
 		5BE3F8671C0455CC0087BC28 /* DataStorage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataStorage.mm; sourceTree = "<group>"; };
 		5BE3F86C1C04A0C50087BC28 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
@@ -413,6 +417,8 @@
 				5B3096E91BFA0CB70045024C /* RSURLProtocol.mm */,
 				5B3096EC1BFA0CD30045024C /* RSURLConnection.h */,
 				5B3096ED1BFA0CD30045024C /* RSURLConnection.mm */,
+				5BE0D5B11C3D5E3F0064F97D /* RSURLConnectionNative.h */,
+				5BE0D5B21C3D5E3F0064F97D /* RSURLConnectionNative.mm */,
 			);
 			path = Interception;
 			sourceTree = "<group>";
@@ -620,6 +626,7 @@
 				5B4FCD361C032A6A00C8D320 /* Network.hpp in Headers */,
 				11C961141C2D469300CDE34D /* RevQuicClient.h in Headers */,
 				5B4FCD311C0321B400C8D320 /* NativeNetwork.h in Headers */,
+				5BE0D5B31C3D5E3F0064F97D /* RSURLConnectionNative.h in Headers */,
 				5B46D1EE1C21B61C00A9834C /* Utils.hpp in Headers */,
 				11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */,
 				5B2F4BD81BFE11F6003DCB27 /* Error.hpp in Headers */,
@@ -806,6 +813,7 @@
 				5B46D1E51C217BC100A9834C /* StatsHandler.cpp in Sources */,
 				5B54C32F1BFB700C00217971 /* Model.cpp in Sources */,
 				119145321C33D2D800B91C6E /* QUICThread.mm in Sources */,
+				5BE0D5B41C3D5E3F0064F97D /* RSURLConnectionNative.mm in Sources */,
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
 				5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */,

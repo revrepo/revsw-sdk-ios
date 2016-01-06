@@ -11,13 +11,15 @@
 #import "RSURLConnection.h"
 #import "RSURLRequestProcessor.h"
 #import "Model.hpp"
+#import "RSURLConnectionNative.h"
 
 @interface RSURLProtocol ()<RSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection* nativeConnection;
 @property (nonatomic, strong) RSURLConnection* connection;
 @property (nonatomic, strong) NSMutableData* data;
-@property (nonatomic, strong) NSURLConnection* directConnection;
+@property (nonatomic, strong) RSURLConnectionNative* directConnection;
+@property (nonatomic, copy)   NSURLResponse* response;
 
 @end
 
@@ -39,8 +41,6 @@
     {
         return NO;
     }
-    
-    NSLog(@"CAN INIT WITH REQUEST %@", aRequest);
     
     return YES;
 }
@@ -71,21 +71,17 @@
     
     if ([self shouldRedirectRequest:self.request])
     {
-        NSLog(@"SHOULD REDIRECT %@", self.request);
-        
        self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
       [self.connection start];
     }
     else
     {
-        NSLog(@"SHOULD NOT REDIRECT %@", self.request);
-        
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
                          inRequest:newRequest];
         
-        self.directConnection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
+        self.directConnection = [[RSURLConnectionNative alloc] initWithRequest:newRequest delegate:self];
     }
 }
 
@@ -127,6 +123,13 @@
 
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
+    if (self.directConnection.firstByteTimestamp == nil)
+    {
+        NSDate* now                              = [NSDate date];
+        NSTimeInterval interval                  = [now timeIntervalSince1970];
+        self.directConnection.firstByteTimestamp = @(interval);
+    }
+    
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
@@ -148,15 +151,6 @@
 #pragma mark - 
 #pragma mark - NSURLConnectionDelegate
 
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
-{
-    if (response != nil)
-    {
-        [[self client] URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
-    }
-    return request;
-}
-
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [self.client URLProtocol:self didFailWithError:error];
@@ -174,13 +168,25 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    self.response = response;
+    
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSLog(@"Request %@ Response %@", self.request, self.cachedResponse.response);
-    
+    if (rs::Model::instance()->shouldCollectRequestsData())
+    {
+        self.directConnection.totalBytesReceived = @(self.data.length);
+        NSDate* now = [NSDate date];
+        NSTimeInterval interval = [now timeIntervalSince1970];
+        self.directConnection.endTimestamp = @(interval);
+        
+        NSHTTPURLResponse* response = (NSHTTPURLResponse *)self.response;
+        rs::Data requestData        = rs::dataFromRequestAndResponse(self.directConnection.currentRequest, response, self.directConnection);
+        rs::Model::instance()->addRequestData(requestData);
+    }
+
     [self.client URLProtocolDidFinishLoading:self];
 }
 

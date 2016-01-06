@@ -192,7 +192,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 {
     NSString* sum = [aRequestData MD5String];
     
-    if (aMode == kRSOperationModeOff)
+    if (aMode == kRSOperationModeReport)
     {
         if (aSent)
         {
@@ -254,7 +254,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                             [self calculateMD5AndSave:data sent:false mode:[RevSDK operationMode]];
                                             
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse;
-                                            if ([RevSDK operationMode] == kRSOperationModeOff)
+                                            if ([RevSDK operationMode] == kRSOperationModeReport)
                                             {
                                                 self.currentResult.errorAsIs = [httpResponse statusCode];
                                             }

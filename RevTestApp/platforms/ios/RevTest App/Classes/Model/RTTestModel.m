@@ -122,7 +122,7 @@
         mIsLoading = YES;
         mStartDate = [NSDate date];
         
-        NSString* type = [RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
+        NSString* type = [RevSDK operationMode] == kRSOperationModeReport ? @"Origin" : @"SDK";
         
         NSLog(@"-test: %ld mode: %@", (unsigned long)mTestsCounter, type);
         
@@ -170,10 +170,10 @@
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
-    NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeOff ? self.testResults : self.sdkTestResults;
+    NSMutableArray* array   = [RevSDK operationMode] == kRSOperationModeReport ? self.testResults : self.sdkTestResults;
     [array addObject:@(interval)];
     
-    array = [RevSDK operationMode] == kRSOperationModeOff ? self.dataLengthArray : self.sdkDataLengthArray;
+    array = [RevSDK operationMode] == kRSOperationModeReport ? self.dataLengthArray : self.sdkDataLengthArray;
     [array addObject:@(mCurrentDataSize / 1024.0)];
     mCurrentDataSize = 0;
     
