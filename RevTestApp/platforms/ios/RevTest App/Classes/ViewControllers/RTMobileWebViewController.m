@@ -205,7 +205,7 @@ static const NSInteger kSuccessCode = 200;
     {
         RSOperationMode mode = [RevSDK operationMode];
         
-        if (mode == kRSOperationModeOff)
+        if (mode == kRSOperationModeReport)
         {
             self.currentResult.errorAsIs = aCode;
         }

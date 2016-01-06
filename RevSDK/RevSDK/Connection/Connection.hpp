@@ -76,6 +76,8 @@ namespace rs
         virtual void didReceiveResponse(void* ) = 0;
         virtual void didCompleteWithError(void* ) = 0;
         
+        static int getLastConnectionId();
+        
     protected:
         
         int64_t mBytesSent;

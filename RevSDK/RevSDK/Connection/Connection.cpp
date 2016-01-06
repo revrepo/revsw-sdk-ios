@@ -54,3 +54,10 @@ void rs::Connection::onEnd()
     int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
     mEndTimestamp = milliseconds_since_epoch;
 }
+
+int rs::Connection:: getLastConnectionId()
+{
+    int lastConnectionId = gLastConnectionID++;
+    
+    return lastConnectionId;
+}
