@@ -91,7 +91,7 @@
     [self.sdkDataLengthArray removeAllObjects];
     [self.resultFlags removeAllObjects];
     
-    mMode = kRSOperationModeOff;
+    mMode = kRSOperationModeReport;
     
     [RevSDK debug_setOperationMode:mMode];
     [self stepStarted];
@@ -146,7 +146,7 @@
     {
         NSLog(@"Start %ld", (unsigned long)mTestsCounter);
         
-        mMode = kRSOperationModeOff;
+        mMode = kRSOperationModeReport;
         
         NSString* type = @" ";//[RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
         NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
@@ -178,13 +178,13 @@
     mCurrentDataSize = 0;
     
     
-    if (kRSOperationModeOff == mMode)
+    if (kRSOperationModeReport == mMode)
     {
-        mMode = kRSOperationModeTransport; 
+        mMode = kRSOperationModeTransportAndReport;
     }
     else
     {
-        mMode = kRSOperationModeOff;
+        mMode = kRSOperationModeReport;
     } 
     
     if (self.loadFinishedBlock)
@@ -195,7 +195,7 @@
     //mMode = kRSOperationModeTransport;
     [RevSDK debug_setOperationMode:mMode];
     
-    bool isLastTest = (kRSOperationModeOff == mMode) && (mTestsCounter == mNumberOfTestsToPerform);
+    bool isLastTest = (kRSOperationModeReport == mMode) && (mTestsCounter == mNumberOfTestsToPerform);
     if (mTestsCounter <= mNumberOfTestsToPerform && !isLastTest)
     {
         if (self.restartBlock)

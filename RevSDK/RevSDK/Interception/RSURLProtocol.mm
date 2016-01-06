@@ -12,11 +12,12 @@
 #import "RSURLRequestProcessor.h"
 #import "Model.hpp"
 
-@interface RSURLProtocol ()<RSURLConnectionDelegate>
+@interface RSURLProtocol ()<RSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection* nativeConnection;
 @property (nonatomic, strong) RSURLConnection* connection;
 @property (nonatomic, strong) NSMutableData* data;
+@property (nonatomic, strong) NSURLConnection* directConnection;
 
 @end
 
@@ -39,6 +40,8 @@
         return NO;
     }
     
+    NSLog(@"CAN INIT WITH REQUEST %@", aRequest);
+    
     return YES;
 }
 
@@ -53,11 +56,37 @@
     return aRequest;
 }
 
+- (BOOL)shouldRedirectRequest:(NSURLRequest *)aRequest
+{
+    NSURL* URL             = [aRequest URL];
+    NSString* host         = [URL host];
+    std::string domainName = rs::stdStringFromNSString(host);
+    BOOL should            = rs::Model::instance()->shouldTransportDomainName(domainName);
+    return should;
+}
+
 - (void)startLoading
 {
-    self.data       = [NSMutableData data];
-    self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
-    [self.connection start];
+    self.data = [NSMutableData data];
+    
+    if ([self shouldRedirectRequest:self.request])
+    {
+        NSLog(@"SHOULD REDIRECT %@", self.request);
+        
+       self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
+      [self.connection start];
+    }
+    else
+    {
+        NSLog(@"SHOULD NOT REDIRECT %@", self.request);
+        
+        NSMutableURLRequest* newRequest = [self.request mutableCopy];
+        [NSURLProtocol setProperty:@YES
+                            forKey:rs::kRSURLProtocolHandledKey
+                         inRequest:newRequest];
+        
+        self.directConnection = [NSURLConnection connectionWithRequest:newRequest delegate:self];
+    }
 }
 
 - (void)stopLoading
@@ -88,31 +117,36 @@
     return self;
 }
 
-- (void) connection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+#pragma mark -
+#pragma mark - RSURLConnectionDelegate
+
+- (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
-- (void) connection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
+- (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
 
-- (void) connectionDidFinishLoading:(RSURLConnection *)connection
+- (void) rsconnectionDidFinishLoading:(RSURLConnection *)connection
 {
     [self.client URLProtocolDidFinishLoading:self];
 }
 
-- (void) connection:(RSURLConnection *)connection didFailWithError:(NSError *)error
+- (void) rsconnection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
     dispatch_sync(dispatch_get_main_queue(), ^{
         flag = YES;
     });
-    
 }
+
+#pragma mark - 
+#pragma mark - NSURLConnectionDelegate
 
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
@@ -121,6 +155,33 @@
         [[self client] URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
     }
     return request;
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    [self.client URLProtocol:self didFailWithError:error];
+    __block BOOL flag = NO;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        flag = YES;
+    });
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
+{
+    [self.data appendData:aData];
+    [self.client URLProtocol:self didLoadData:aData];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+   [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSLog(@"Request %@ Response %@", self.request, self.cachedResponse.response);
+    
+    [self.client URLProtocolDidFinishLoading:self];
 }
 
 @end
