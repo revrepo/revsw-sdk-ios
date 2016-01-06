@@ -29,6 +29,8 @@ void ProtocolSelector::refreshTestInfo()
     if (mMonitoringURL != "")
     {
         mTester.runTests(mMonitoringURL, [this] (std::vector<AvailabilityTestResult> aResults){
+            auto confProtos = Model::instance()->getAllowedProtocolIDs();
+            
             std::lock_guard<std::mutex> lockGuard(mLock);
             std::vector<std::string> allowedProtocols;
             
@@ -41,7 +43,7 @@ void ProtocolSelector::refreshTestInfo()
             }
             
             convertIDsToPropocols(allowedProtocols);
-            sortProtocols(Model::instance()->getAllowedProtocolIDs());
+            sortProtocols(confProtos);
             this->saveAvailable();
         });
     } 
@@ -152,7 +154,6 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
 {
     std::lock_guard<std::mutex> lockGuard(mLock);
     this->mMonitoringURL = aConf->transportMonitoringURL;
-    this->sortProtocols(aConf->allowedProtocols);
     
     if (mEventsHandler.isInitialized() == false)
     {
@@ -162,6 +163,10 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
         this->convertIDsToPropocols(vec);
         saveAvailable();
         this->refreshTestInfo();
+    }
+    else
+    {
+        this->sortProtocols(aConf->allowedProtocols);
     }
 }
 
