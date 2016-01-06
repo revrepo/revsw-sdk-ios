@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <memory>
+#include <vector>
 
 namespace rs
 {
@@ -37,6 +38,7 @@ namespace rs
             size_t mLength;
             void* mBytes;
         };
+        typedef std::vector<Data> List;
     public:
         Data();
         Data(const void* aBytes, size_t aLength);
@@ -60,7 +62,7 @@ namespace rs
         static Data concat(Data d0, Data d1);
         Data byAppendingData(const void* aData, size_t aDataLen);
         
-        bool isEmpty() const { return mContent.get(); }
+        bool isEmpty() const { return mContent.get() == nullptr; }
         
     private:
         Content::Ref mContent;

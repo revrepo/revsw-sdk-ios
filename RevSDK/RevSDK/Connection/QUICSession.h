@@ -21,6 +21,7 @@
 
 namespace rs
 {
+    class UDPService;
     class QUICSession : public NativeUDPSocketCPPDelegate, public QUICDataStream::Delegate
     {
     public:
@@ -64,7 +65,8 @@ namespace rs
         void onQUICError() override;
     private:
         static QUICSession* mInstance;
-        QUICThread mInstanceThread;
+        //QUICThread mInstanceThread;
+        UDPService* mService;
         
         void executeOnSessionThread(std::function<void(void)> aFunction);
         
@@ -75,7 +77,7 @@ namespace rs
         base::AtExitManager mAtExitManager;
         
         // Obj-C object that manages the udp socket, needs to outlive writer.
-        ObjCImpl* mObjC;
+        //ObjCImpl* mObjC;
         
         // Writer used to send packets to the wire.
         // Wraps around the cocoaUDPSocketWrapper.
