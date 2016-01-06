@@ -15,7 +15,7 @@
 
 - (id) init;
 
--(void)pushResult:(RTTestResult*)aResult;
+- (void) pushResult:(RTTestResult*)aResult;
 
 
 @end
