@@ -102,6 +102,12 @@
 		5B3286F91C1EAEF9009CFDB5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */; };
 		5B3286FB1C1EAFF9009CFDB5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */; };
 		5B3286FC1C1EAFF9009CFDB5 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0E1C3D17F60051D31F /* Security.framework */; };
+		5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */; };
+		5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
+		5B70CA151C3D17F60051D31F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
+		5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
+		5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
 		5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */; };
 		5B7804E11C15E241003AD4F5 /* RTNativeMobileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
@@ -268,6 +274,12 @@
 		5B25817E1C17155F00C55959 /* RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTUtils.m; sourceTree = "<group>"; };
 		5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RevSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B70CA0E1C3D17F60051D31F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Security.framework; sourceTree = "<group>"; };
+		5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SystemConfiguration.framework; sourceTree = "<group>"; };
+		5B70CA101C3D17F60051D31F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		5B70CA111C3D17F60051D31F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		5B70CA161C3D19E00051D31F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		5B70CA181C3D19E80051D31F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		5B7804DD1C15E241003AD4F5 /* RTNativeMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNativeMobileViewController.h; sourceTree = "<group>"; };
 		5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNativeMobileViewController.m; sourceTree = "<group>"; };
 		5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTNativeMobileViewController.xib; sourceTree = "<group>"; };
@@ -312,13 +324,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
+				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
 				5B3286F91C1EAEF9009CFDB5 /* RevSDK.framework in Frameworks */,
+				5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */,
+				5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
+				5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */,
 				5B3286FB1C1EAFF9009CFDB5 /* RevSDK.framework in Frameworks */,
+				5B70CA151C3D17F60051D31F /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +413,12 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B70CA181C3D19E80051D31F /* libc++.tbd */,
+				5B70CA161C3D19E00051D31F /* libz.tbd */,
+				5B70CA0E1C3D17F60051D31F /* Security.framework */,
+				5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */,
+				5B70CA101C3D17F60051D31F /* Fabric.framework */,
+				5B70CA111C3D17F60051D31F /* Crashlytics.framework */,
 				5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -1129,6 +1153,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1175,6 +1203,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
