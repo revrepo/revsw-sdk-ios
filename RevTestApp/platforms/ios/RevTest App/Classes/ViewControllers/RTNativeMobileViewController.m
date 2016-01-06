@@ -31,8 +31,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
 
-@property (nonatomic, strong) RTTestCycleInfo* currentResult;
-
 @property (nonatomic, assign) int testLeftOnThisStep;
 
 @end
@@ -174,7 +172,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     
     __weak id weakSelf = self;
     self.testLeftOnThisStep = kTestsPerStep;
-    self.currentResult = [[RTTestCycleInfo alloc] init];
     
     self.restartBlock = ^{
     
@@ -222,15 +219,14 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     {
         [self stepStarted];
         self.testLeftOnThisStep = kTestsPerStep;
-        self.currentResult = [[RTTestCycleInfo alloc] init];
     }
     NSURLSession* session = [NSURLSession sharedSession];
     
     NSData* body = aRequest.HTTPBody;
     NSString* requestData = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-    self.currentResult.method = aRequest.HTTPMethod;
-    
-    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
+//    self.currentResult.method = aRequest.HTTPMethod;
+//    
+//    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
     
     [self loadStarted];
     
@@ -263,13 +259,12 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                                 self.currentResult.errorEdge = [httpResponse statusCode];
                                             }
                                             
-                                            [self loadFinished];
+                                            [self loadFinished:[httpResponse statusCode]];
                                             
                                             self.testLeftOnThisStep--;
                                             if (0 >= self.testLeftOnThisStep)
                                             {
-                                                bool valid = self.currentResult.valid;
-                                                [self stepFinished:valid];
+                                                [self stepFinished:true];
                                             }
                                         }];
     [task resume];

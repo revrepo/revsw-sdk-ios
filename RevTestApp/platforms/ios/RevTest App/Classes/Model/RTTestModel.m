@@ -7,6 +7,7 @@
 //
 
 #import "RTTestModel.h"
+#import "RTIterationResult.h"
 
 #import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
@@ -23,12 +24,10 @@
     RSOperationMode mMode;
 }
 
-@property (nonatomic, strong) NSMutableArray* testResults;
-@property (nonatomic, strong) NSMutableArray* sdkTestResults;
-@property (nonatomic, strong) NSMutableArray* dataLengthArray;
-@property (nonatomic, strong) NSMutableArray* sdkDataLengthArray;
+@property (nonatomic, strong) NSMutableArray* testResults;  
 
-@property (nonatomic, strong) NSMutableArray* resultFlags;
+
+@property (nonatomic, strong) RTIterationResult* currentResult;
 
 @property (nonatomic, strong) NSTimer* timer;
 
@@ -48,10 +47,10 @@
          mIsLoading              = NO;
          self.shouldLoad         = NO;
          self.testResults        = [NSMutableArray array];
-         self.sdkTestResults     = [NSMutableArray array];
-         self.dataLengthArray    = [NSMutableArray array];
-         self.sdkDataLengthArray = [NSMutableArray array];
-         self.resultFlags = [NSMutableArray array];
+//         self.sdkTestResults     = [NSMutableArray array];
+//         self.dataLengthArray    = [NSMutableArray array];
+//         self.sdkDataLengthArray = [NSMutableArray array];
+//         self.resultFlags = [NSMutableArray array];
         
          //[RevSDK setWhiteListOption:NO];
         
@@ -85,11 +84,13 @@
     self.shouldLoad  = YES;
     mTestsCounter    = 0;
     
+    self.currentResult = [[RTIterationResult alloc ]init];
+    
     [self.testResults removeAllObjects];
-    [self.sdkTestResults removeAllObjects];
-    [self.dataLengthArray removeAllObjects];
-    [self.sdkDataLengthArray removeAllObjects];
-    [self.resultFlags removeAllObjects];
+//    [self.sdkTestResults removeAllObjects];
+//    [self.dataLengthArray removeAllObjects];
+//    [self.sdkDataLengthArray removeAllObjects];
+//    [self.resultFlags removeAllObjects];
     
     mMode = kRSOperationModeReport;
     
@@ -159,13 +160,14 @@
     }
 }
 
-- (void)loadFinished
+- (void)loadFinished:(NSInteger) aResult
 {
     if (self.timer)
     {
         [self.timer invalidate];
          self.timer = nil;
     }
+    RTTestResult* tres = [[RTTestResult alloc] init];
     
     mIsLoading              = NO;
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
@@ -191,7 +193,6 @@
     {
         self.loadFinishedBlock();
     }
-    
     //mMode = kRSOperationModeTransport;
     [RevSDK debug_setOperationMode:mMode];
     
@@ -207,14 +208,16 @@
 
 - (void)stepFinished:(bool)withSuccess
 {
-    [self.resultFlags addObject:[NSNumber numberWithBool:withSuccess]];
+    [self.testResults addObject:self.currentResult];
+    
+    self.currentResult = [[RTIterationResult alloc ]init];
     
     if (mTestsCounter >= mNumberOfTestsToPerform)
     {
         self.shouldLoad = NO;
         if (self.completionBlock)
         {
-            self.completionBlock(self.testResults, self.sdkTestResults, self.dataLengthArray, self.sdkDataLengthArray, self.resultFlags);
+            self.completionBlock(self.testResults);
         }
         [self didFinishedTests];
     }

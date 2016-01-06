@@ -14,8 +14,6 @@
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
 
-#import "RTTestCycleInfo.h"
-
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kTestsPerStep = 2;
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
@@ -26,8 +24,6 @@ static const NSInteger kSuccessCode = 200;
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
-
-@property (nonatomic, strong) RTTestCycleInfo* currentResult;
 
 @property (nonatomic, assign) int testLeftOnThisStep;
 
@@ -130,8 +126,6 @@ static const NSInteger kSuccessCode = 200;
 {
     self.testLeftOnThisStep = kTestsPerStep;
     
-    self.currentResult = [[RTTestCycleInfo alloc] init];
-    
     [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
@@ -218,9 +212,7 @@ static const NSInteger kSuccessCode = 200;
         self.testLeftOnThisStep--;
         if (0 == self.testLeftOnThisStep)
         {
-            [self stepFinished:self.currentResult.valid];
-            
-            self.currentResult = [[RTTestCycleInfo alloc] init];
+            [self stepFinished:false];
         }
     }
 }

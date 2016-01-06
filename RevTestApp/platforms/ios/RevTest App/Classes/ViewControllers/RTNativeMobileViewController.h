@@ -6,8 +6,7 @@
 //
 //
 
-#import <UIKit/UIKit.h>
-#import "RTTestCycleInfo.h"
+#import <UIKit/UIKit.h> 
 
 @interface RTNativeMobileViewController : UIViewController
 
