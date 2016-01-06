@@ -11,6 +11,9 @@
 
 #include <iostream>
 
+#include <memory>
+#include "Request.hpp"
+
 namespace rs
 {
     class Data;
@@ -22,6 +25,8 @@ namespace rs
       public:
           void performRequest(std::string aURL, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock);
           void performRequest(std::string aURL, const Data& aBody, std::function<void(const Data&, const Response&, const Error&)> aCompletionBlock);
+        
+        std::shared_ptr<Request> testRequestByURL(const std::string& aURL);
     };
 }
 #endif

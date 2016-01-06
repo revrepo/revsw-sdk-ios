@@ -31,8 +31,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
 
-@property (nonatomic, strong) RTTestCycleInfo* currentResult;
-
 @property (nonatomic, assign) int testLeftOnThisStep;
 
 @end
@@ -174,7 +172,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     
     __weak id weakSelf = self;
     self.testLeftOnThisStep = kTestsPerStep;
-    self.currentResult = [[RTTestCycleInfo alloc] init];
     
     self.restartBlock = ^{
     
@@ -188,33 +185,33 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     [self loadRequest:request];
 }
 
-- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
-{
-    NSString* sum = [aRequestData MD5String];
-    
-    if (aMode == kRSOperationModeOff)
-    {
-        if (aSent)
-        {
-           self.currentResult.asisSentChecksum = sum;
-        }
-        else
-        {
-            self.currentResult.asisRcvdChecksum = sum;
-        }
-    }
-    else
-    {
-        if (aSent)
-        {
-            self.currentResult.edgeSentChecksum = sum;
-        }
-        else
-        {
-            self.currentResult.edgeRcvdChecksum = sum;
-        }
-    }
-}
+//- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
+//{
+//    NSString* sum = [aRequestData MD5String];
+//    
+//    if (aMode == kRSOperationModeOff)
+//    {
+//        if (aSent)
+//        {
+//           self.currentResult.asisSentChecksum = sum;
+//        }
+//        else
+//        {
+//            self.currentResult.asisRcvdChecksum = sum;
+//        }
+//    }
+//    else
+//    {
+//        if (aSent)
+//        {
+//            self.currentResult.edgeSentChecksum = sum;
+//        }
+//        else
+//        {
+//            self.currentResult.edgeRcvdChecksum = sum;
+//        }
+//    }
+//}
 
 - (void)loadRequest:(NSURLRequest *)aRequest
 {
@@ -222,15 +219,14 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     {
         [self stepStarted];
         self.testLeftOnThisStep = kTestsPerStep;
-        self.currentResult = [[RTTestCycleInfo alloc] init];
     }
     NSURLSession* session = [NSURLSession sharedSession];
     
     NSData* body = aRequest.HTTPBody;
     NSString* requestData = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-    self.currentResult.method = aRequest.HTTPMethod;
-    
-    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
+//    self.currentResult.method = aRequest.HTTPMethod;
+//    
+//    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
     
     [self loadStarted];
     
@@ -251,25 +247,14 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                             NSString* data = [dictionary objectForKey:@"data"];
                                             data = data ? data : rcvdData;
                                             
-                                            [self calculateMD5AndSave:data sent:false mode:[RevSDK operationMode]];
+                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse; 
                                             
-                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse;
-                                            if ([RevSDK operationMode] == kRSOperationModeOff)
-                                            {
-                                                self.currentResult.errorAsIs = [httpResponse statusCode];
-                                            }
-                                            else
-                                            {
-                                                self.currentResult.errorEdge = [httpResponse statusCode];
-                                            }
-                                            
-                                            [self loadFinished];
+                                            [self loadFinished:[httpResponse statusCode]];
                                             
                                             self.testLeftOnThisStep--;
                                             if (0 >= self.testLeftOnThisStep)
                                             {
-                                                bool valid = self.currentResult.valid;
-                                                [self stepFinished:valid];
+                                                [self stepFinished:true];
                                             }
                                         }];
     [task resume];

@@ -70,4 +70,25 @@ namespace rs
                                                                            completionHandler:completionHandler];
         [operationQueue addOperation:requestOperation];
     }
+    
+    std::shared_ptr<Request> NativeNetwork::testRequestByURL(const std::string& aURL)
+    {
+        NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:NSStringFromStdString(aURL)]];
+        return requestFromURLRequest(req);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

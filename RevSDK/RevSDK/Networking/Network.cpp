@@ -12,6 +12,12 @@
 #include "Response.hpp"
 #include "NativeNetwork.h"
 #include "Utils.hpp"
+#include "Protocol.hpp"
+#include "Connection.hpp"
+#include "StandardConnection.hpp"
+#include "QUICConnection.hpp"
+
+#include "Request.hpp"
 
 namespace rs
 {
@@ -68,6 +74,39 @@ namespace rs
         
         performRequest(aURL, aStatsData, c);
     }
+    
+    void Network::performReques(std::shared_ptr<Protocol> aProtocol, std::string aURL, rs::ConnectionDelegate* aDelegate)
+    {
+        auto getConnectionFromProto = [](std::string protocolName) {
+            if (protocolName == standardProtocolName())
+                return Connection::create<StandardConnection>();
+            else if (protocolName == quicProtocolName())
+                return Connection::create<QUICConnection>();
+            else
+            {
+                assert(false);
+            }
+        };
+        
+        std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName()); 
+        std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL);
+        
+        connection->startWithRequest(req, aDelegate);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

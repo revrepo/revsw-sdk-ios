@@ -12,15 +12,24 @@
 
 using namespace rs;
 
+const std::string kTimestampKey = "kRS_timestamp";
+
 //todo : remove
 
-ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate ) :
+ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond) :
     mUpdateEnabledFlag(true),
     mDelegate(aDelegate)
 {
-    mLastUpdated = std::chrono::system_clock::now();
+    auto secCnt = data_storage::getIntForKey(kTimestampKey);
+    
+    std::chrono::system_clock::duration d(secCnt);
+    
+    mLastUpdated = std::chrono::system_clock::time_point(d);
     
     mNetwork = std::unique_ptr<Network>(new Network());
+    
+    // :(
+    cbAdditionalStaleCondition = fExternalStaleCond;
     
     Configuration configuration = data_storage::configuration();
     mActiveConfiguration = std::make_shared<Configuration>(configuration);
@@ -86,6 +95,8 @@ void ConfigurationService::loadConfiguration()
                 
                 int refreshInterval = 0;
                 mLastUpdated = std::chrono::system_clock::now();
+                data_storage::saveIntForKey(kTimestampKey, mLastUpdated.load().time_since_epoch().count());
+                
                 if (mUpdateEnabledFlag)
                 {
                     mActiveConfiguration = std::make_shared<Configuration>(configuration);
@@ -136,9 +147,11 @@ bool ConfigurationService::isStale() const
     auto span = std::chrono::duration_cast<tSec>(tSclock::now() - last);
     
     int staleTimeout = mActiveConfiguration->staleTimeout;
-    int timeSincleLastUPD = span.count();
+    int64_t timeSincleLastUPD = span.count();
     
-    return staleTimeout < timeSincleLastUPD;
+    bool externalFlag = cbAdditionalStaleCondition();
+    
+    return (staleTimeout < timeSincleLastUPD) || externalFlag;
 }
 
 void ConfigurationService::setOperationMode(RSOperationModeInner aMode)

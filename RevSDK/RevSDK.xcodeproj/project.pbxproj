@@ -43,7 +43,7 @@
 		45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
-		5B2035851C33DBB400A28C01 /* RReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RReachability.m */; };
+		5B2035851C33DBB400A28C01 /* RSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RSReachability.m */; };
 		5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035921C33E85E00A28C01 /* RSSystemInfo.h */; };
 		5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035931C33E85E00A28C01 /* RSSystemInfo.m */; };
 		5B20359A1C33FF7000A28C01 /* GCDAsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035961C33FF7000A28C01 /* GCDAsyncUdpSocket.h */; };
@@ -114,6 +114,12 @@
 		5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */; };
 		5BEBD7301C22EB95002EC0CB /* JSONUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */; };
 		5BEBD7311C22EB95002EC0CB /* JSONUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */; };
+		6D1F86091C3A730800E48AC9 /* ProtocolSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F86071C3A730800E48AC9 /* ProtocolSelector.cpp */; };
+		6D1F860A1C3A730800E48AC9 /* ProtocolSelector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6D1F86081C3A730800E48AC9 /* ProtocolSelector.hpp */; };
+		6D1F860D1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F860B1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm */; };
+		6D1F860E1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6D1F860C1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp */; };
+		6D1F86111C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F860F1C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm */; };
+		6D1F86121C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6D1F86101C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp */; };
 		6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */; };
 		6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */; };
 		6D45447D1C32B1CA0020224C /* ReportTransaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D45447C1C32B1CA0020224C /* ReportTransaction.cpp */; };
@@ -173,7 +179,7 @@
 		11F24B491C3D695D00DABAE5 /* RSUDPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUDPService.h; sourceTree = "<group>"; };
 		31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
 		5B2035821C33DBB400A28C01 /* RSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReachability.h; sourceTree = "<group>"; };
-		5B2035831C33DBB400A28C01 /* RReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RReachability.m; sourceTree = "<group>"; };
+		5B2035831C33DBB400A28C01 /* RSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReachability.m; sourceTree = "<group>"; };
 		5B2035921C33E85E00A28C01 /* RSSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSystemInfo.h; sourceTree = "<group>"; };
 		5B2035931C33E85E00A28C01 /* RSSystemInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSSystemInfo.m; sourceTree = "<group>"; };
 		5B2035961C33FF7000A28C01 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
@@ -250,6 +256,12 @@
 		5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONUtils.cpp; sourceTree = "<group>"; };
 		5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONUtils.hpp; sourceTree = "<group>"; };
 		5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPublicConsts.h; sourceTree = "<group>"; };
+		6D1F86071C3A730800E48AC9 /* ProtocolSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolSelector.cpp; sourceTree = "<group>"; };
+		6D1F86081C3A730800E48AC9 /* ProtocolSelector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProtocolSelector.hpp; sourceTree = "<group>"; };
+		6D1F860B1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeNetworkEventsHandler.mm; path = RevSDK/Networking/NativeNetworkEventsHandler.mm; sourceTree = SOURCE_ROOT; };
+		6D1F860C1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NativeNetworkEventsHandler.hpp; path = RevSDK/Networking/NativeNetworkEventsHandler.hpp; sourceTree = SOURCE_ROOT; };
+		6D1F860F1C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolAvailabilityTester.mm; sourceTree = "<group>"; };
+		6D1F86101C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProtocolAvailabilityTester.hpp; sourceTree = "<group>"; };
 		6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLSessionDelegate.mm; sourceTree = "<group>"; };
 		6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLSessionDelegate.h; sourceTree = "<group>"; };
 		6D45447B1C32A2070020224C /* ReportTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportTransaction.h; sourceTree = "<group>"; };
@@ -459,7 +471,7 @@
 				5B2035981C33FF7000A28C01 /* STUNClient.h */,
 				5B2035991C33FF7000A28C01 /* STUNClient.m */,
 				5B2035821C33DBB400A28C01 /* RSReachability.h */,
-				5B2035831C33DBB400A28C01 /* RReachability.m */,
+				5B2035831C33DBB400A28C01 /* RSReachability.m */,
 				5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */,
 				5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */,
 				5B54C3281BFB5EF000217971 /* RSUtils.h */,
@@ -503,6 +515,12 @@
 				5B54C3371BFB70C100217971 /* StandardProtocol.hpp */,
 				5B54C33A1BFB714C00217971 /* QUICProtocol.cpp */,
 				5B54C33B1BFB714C00217971 /* QUICProtocol.hpp */,
+				6D1F86071C3A730800E48AC9 /* ProtocolSelector.cpp */,
+				6D1F86081C3A730800E48AC9 /* ProtocolSelector.hpp */,
+				6D1F860B1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm */,
+				6D1F860C1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp */,
+				6D1F860F1C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm */,
+				6D1F86101C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -629,14 +647,17 @@
 				5B20359A1C33FF7000A28C01 /* GCDAsyncUdpSocket.h in Headers */,
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
 				11F24B411C3C57E500DABAE5 /* RSUDPSocket.h in Headers */,
+				6D1F860E1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp in Headers */,
 				6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */,
 				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
 				11C9621E1C2D54C000CDE34D /* QUICSession.h in Headers */,
+				6D1F860A1C3A730800E48AC9 /* ProtocolSelector.hpp in Headers */,
 				5B20359C1C33FF7000A28C01 /* STUNClient.h in Headers */,
 				5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */,
 				11C962251C2D779100CDE34D /* RSNativeUDPSocketWrapper.h in Headers */,
 				5B7C91B11C08A9D200676ADC /* RSURLRequestProcessor.h in Headers */,
+				6D1F86121C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp in Headers */,
 				11C9622A1C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h in Headers */,
 				5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */,
 				5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */,
@@ -807,6 +828,7 @@
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
 				5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */,
+				6D1F86111C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm in Sources */,
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
 				6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */,
 				5B20359B1C33FF7000A28C01 /* GCDAsyncUdpSocket.m in Sources */,
@@ -820,18 +842,20 @@
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,
 				11C962211C2D54CE00CDE34D /* QUICHelpers.mm in Sources */,
 				114D658E1C3476E400C2D176 /* NSURL+RevSDK.m in Sources */,
+				6D1F86091C3A730800E48AC9 /* ProtocolSelector.cpp in Sources */,
 				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
 				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,
 				5B54C3481BFB7B8700217971 /* QUICConnection.mm in Sources */,
 				11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */,
 				5BEBD7301C22EB95002EC0CB /* JSONUtils.cpp in Sources */,
-				5B2035851C33DBB400A28C01 /* RReachability.m in Sources */,
+				5B2035851C33DBB400A28C01 /* RSReachability.m in Sources */,
 				5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */,
 				5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */,
 				11C962261C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm in Sources */,
 				5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */,
 				5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */,
+				6D1F860D1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

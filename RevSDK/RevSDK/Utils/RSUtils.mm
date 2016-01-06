@@ -55,6 +55,7 @@ namespace rs
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
     NSString* const kRSRequestDataStorageKey           = @"kRSRequestDataStorageKey";
+    NSString* const kRSLastMileDataStorageKey          = @"kRSLastMileDataStorageKey";
     NSString* const kRSEventsDataStorageKey            = @"kRSEventsDataStorageKey";
     NSString* const kRSURLKey                          = @"url";
     NSString* const kRSOSKey                           = @"os";

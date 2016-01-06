@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RTTestResult.h"
 
 @interface RTTestModel : NSObject
 
@@ -14,14 +15,14 @@
 @property (nonatomic, copy) void (^loadStartedBlock)(NSString*);
 @property (nonatomic, copy) void (^loadFinishedBlock)(void);
 @property (nonatomic, copy) void (^restartBlock)(void);
-@property (nonatomic, copy) void (^completionBlock)(NSArray*, NSArray*, NSArray*, NSArray*, NSArray*);
+@property (nonatomic, copy) void (^completionBlock)(NSArray*);
 @property (nonatomic, copy) void (^cancelBlock)();
 
 - (void)start;
 - (void)setWhiteListOption:(BOOL)aOn;
 - (void)setNumberOfTests:(NSUInteger)aNumberOfTests;
 
-- (void)loadFinished;
+- (void)loadFinished:(NSInteger)aResult;
 - (void)loadStarted;
 
 - (void)stepStarted;

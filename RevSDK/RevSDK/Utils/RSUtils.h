@@ -51,6 +51,7 @@ namespace rs
     extern NSString* const kRSURLProtocolHandledKey;
     extern NSString* const kRSConfigurationStorageKey;
     extern NSString* const kRSRequestDataStorageKey;
+    extern NSString* const kRSLastMileDataStorageKey;
     extern NSString* const kRSEventsDataStorageKey;
     extern NSString* const kRSOSKey;
     extern NSString* const kRSAppNameKey;
