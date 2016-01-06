@@ -18,6 +18,7 @@ namespace rs
     class QUICProtocol : public Protocol
     {
     public:
+        std::shared_ptr<Protocol> clone() { return std::make_shared<QUICProtocol>(); }
         
         std::string protocolName() { return "quic"; }
     };

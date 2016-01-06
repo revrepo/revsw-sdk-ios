@@ -28,8 +28,14 @@ namespace rs
       void saveRequestData(const Data&);
       void saveRequestDataVec(const std::vector<Data>&);
       
+      void saveAvailableProtocols(std::vector<std::string> aVec);
+      std::vector<std::string> restoreAvailableProtocols();
+      
       std::vector<Data> loadRequestsData();
       void deleteRequestsData();
+      
+      void saveIntForKey(const std::string& aKey, int64_t aVal);
+      int64_t getIntForKey(const std::string& aKey);
       
       void addEvent(const Event&);
       void* loadEvents();

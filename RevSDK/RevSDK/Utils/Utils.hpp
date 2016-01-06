@@ -86,6 +86,7 @@ typedef enum
     long noErrorCode();
     std::string httpsProtocolName();
     std::string quicProtocolName();
+    std::string standardProtocolName();
     
     bool isValidURL(const std::string&);
     bool isValidConfiguration(const Data&, Error*);

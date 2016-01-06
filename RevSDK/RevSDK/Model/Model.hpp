@@ -23,6 +23,8 @@
 #include "Network.hpp"
 #include "JSONUtils.hpp"
 
+#include "ProtocolSelector.hpp"
+
 #ifdef DEBUG
 #define RS_ENABLE_DEBUG_LOGGING
 #endif
@@ -59,6 +61,7 @@ namespace rs
         std::unique_ptr<Timer> mStatsReportingTimer;
         
         Network mNetwork;
+        ProtocolSelector mProtocolSelector;
         
         //std::shared_ptr<Configuration> mConfiguration;
         std::unique_ptr<ConfigurationService> mConfService;
@@ -73,6 +76,8 @@ namespace rs
         ~Model();
         
         void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
+        
+        std::vector<std::string> getAllowedProtocolIDs() const;
         
         static Model* instance();
         

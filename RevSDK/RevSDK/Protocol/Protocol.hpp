@@ -12,11 +12,14 @@
 #include <stdio.h>
 #include <string>
 
+#include <memory>
+
 namespace rs
 {
     class Protocol
     {
     public:
+        virtual std::shared_ptr<Protocol> clone() = 0;
         
         virtual std::string protocolName() = 0;
     };

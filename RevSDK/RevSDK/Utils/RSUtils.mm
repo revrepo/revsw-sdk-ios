@@ -55,6 +55,7 @@ namespace rs
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
     NSString* const kRSRequestDataStorageKey           = @"kRSRequestDataStorageKey";
+    NSString* const kRSLastMileDataStorageKey          = @"kRSLastMileDataStorageKey";
     NSString* const kRSEventsDataStorageKey            = @"kRSEventsDataStorageKey";
     NSString* const kRSURLKey                          = @"url";
     NSString* const kRSOSKey                           = @"os";
@@ -312,6 +313,8 @@ namespace rs
     
     NSHTTPURLResponse* NSHTTPURLResponseFromResponse(std::shared_ptr<Response> aResponse)
     {
+        if (aResponse.get() == nullptr)
+            return nil;
         NSString* URLString         = NSStringFromStdString(aResponse.get()->URL());
         NSURL* URL                  = [NSURL URLWithString:URLString];
         NSDictionary* headerFields  = NSDictionaryFromStdMap(aResponse.get()->headerFields());

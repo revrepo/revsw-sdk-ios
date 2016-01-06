@@ -34,9 +34,7 @@ namespace rs
     {
         data_storage::initDataStorage();
         
-        auto conf = new ConfigurationService(this, [this](){
-            return !mProtocolSelector.haveAvailadleProtocols();
-        });
+        auto conf = new ConfigurationService(this);
         
         mConfService               = std::unique_ptr<ConfigurationService>(conf);
         mStatsReportingTimer       = nullptr; 
@@ -85,6 +83,7 @@ namespace rs
     
     std::shared_ptr<Protocol>  Model::currentProtocol()
     {
+<<<<<<< HEAD
         return mProtocolSelector.bestProtocol();
         //std::make_shared<StandardProtocol>();
     }
@@ -92,6 +91,10 @@ namespace rs
     std::vector<std::string> Model::getAllowedProtocolIDs() const
     {
         return mConfService->getActive()->allowedProtocols;
+=======
+        //return std::make_shared<StandardProtocol>();
+        return std::make_shared<QUICProtocol>();
+>>>>>>> master
     }
     
     std::shared_ptr<Connection> Model::currentConnection()
@@ -105,7 +108,7 @@ namespace rs
         std::shared_ptr<Protocol> protocol     = currentProtocol();
         std::string protocolName               = protocol.get()->protocolName();
         
-        if (protocolName == standardProtocolName())
+        if (protocolName == httpsProtocolName())
             return Connection::create<StandardConnection>();
         else if (protocolName == quicProtocolName())
             return Connection::create<QUICConnection>();
