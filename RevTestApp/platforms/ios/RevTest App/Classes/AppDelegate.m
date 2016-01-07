@@ -30,7 +30,7 @@
 #import "AppDelegate.h"
 #import "RTStartViewController.h"
 
-#import <Cordova/CDVPlugin.h>
+//#import <Cordova/CDVPlugin.h>
 
 #import <RevSDK/RevSDK.h>
 
@@ -162,7 +162,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     }
 
     // all plugins will get the notification, and their handlers will be called
-    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+//    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
 
     return YES;
 }
@@ -172,7 +172,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     didReceiveLocalNotification:(UILocalNotification*)notification
 {
     // re-post ( broadcast )
-    [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:CDVLocalNotification object:notification];
 }
 
 #ifndef DISABLE_PUSH_NOTIFICATIONS
@@ -186,14 +186,14 @@ id setBeingRemoved(id self, SEL selector, ...)
             stringByReplacingOccurrencesOfString:@">" withString:@""]
             stringByReplacingOccurrencesOfString:@" " withString:@""];
 
-        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
     }
 
     - (void)                                 application:(UIApplication*)application
         didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
     {
         // re-post ( broadcast )
-        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
+//        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotificationError object:error];
     }
 #endif
 /*

@@ -11,7 +11,6 @@
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
-		302D95F114D2391D003F00A1 /* RTPhoneGapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* RTPhoneGapViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
 		305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
 		3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 3088BBB7154F3926009F9C59 /* Default-Landscape@2x~ipad.png */; };
@@ -87,7 +86,6 @@
 		5B04C9941C0D88A300621B67 /* jasmine.js in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9581C0D88A300621B67 /* jasmine.js */; };
 		5B04C9951C0D88A300621B67 /* MIT.LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C9591C0D88A300621B67 /* MIT.LICENSE */; };
 		5B04C9961C0D88A300621B67 /* spec.html in Resources */ = {isa = PBXBuildFile; fileRef = 5B04C95A1C0D88A300621B67 /* spec.html */; };
-		5B04C9C71C0DBBE900621B67 /* RSPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B04C9C61C0DBBE900621B67 /* RSPlugin.m */; };
 		5B0BFEDA1C0C53DE0057715A /* RTReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFED91C0C53DE0057715A /* RTReportViewController.m */; };
 		5B0BFEE71C0C6C1B0057715A /* RTReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFEE61C0C6C1B0057715A /* RTReportCell.m */; };
 		5B0BFEE91C0C6C2E0057715A /* RTReportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEE81C0C6C2E0057715A /* RTReportCell.xib */; };
@@ -1081,7 +1079,6 @@
 			files = (
 				5B0BFEE71C0C6C1B0057715A /* RTReportCell.m in Sources */,
 				6D7CB05D1C3D516500416020 /* IterationResult.m in Sources */,
-				5B04C9C71C0DBBE900621B67 /* RSPlugin.m in Sources */,
 				5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
@@ -1099,7 +1096,6 @@
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 				6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */,
-				302D95F114D2391D003F00A1 /* RTPhoneGapViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
