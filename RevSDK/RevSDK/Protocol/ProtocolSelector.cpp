@@ -140,7 +140,6 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
 
 std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
-//    // TODO :: !!!!!!!!
 //    return std::make_shared<QUICProtocol>();
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (!mSortedProtocols.empty())

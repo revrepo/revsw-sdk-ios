@@ -114,8 +114,58 @@ namespace rs
     
     void traceSocketSpeed(int aDataSize)
     {
+        return;
         dispatch_async(dispatch_get_main_queue(), ^{
             p_traceSocketSpeed(aDataSize);
         });
+    }
+    
+    bool decomposeURL(const std::string& aBaseURL, const std::string& aURL, std::string& aHost, std::string& aPath, std::string& aScheme)
+    {
+        @autoreleasepool
+        {
+            NSString* urlStr = [NSString stringWithUTF8String:aURL.c_str()];
+            
+            if (urlStr.length == 0)
+                return false;
+            NSURL* url = [NSURL URLWithString:urlStr];
+            if (url == nil)
+                return false;
+            
+
+            NSString* host = url.host;
+            NSString* scheme = url.scheme;
+            
+            if (host == nil || scheme == nil)
+            {
+                NSString* baseURLStr = [NSString stringWithUTF8String:aBaseURL.c_str()];
+                if (baseURLStr == nil)
+                    return false;
+                NSURL* baseURL = [NSURL URLWithString:baseURLStr];
+                if (baseURL == nil)
+                    return false;
+                
+                url = [[NSURL alloc] initWithString:urlStr relativeToURL:baseURL];
+                urlStr = url.absoluteString;
+                
+                host = url.host;
+                scheme = url.scheme;
+                
+                if (host == nil || scheme == nil)
+                    return false;
+            }
+            
+            NSRange r        = [urlStr rangeOfString:host];
+            r.length        += r.location;
+            r.location       = 0;
+            
+            NSString* path = [urlStr stringByReplacingCharactersInRange:r withString:@""];
+            
+            aHost = stdStringFromNSString(host);
+            aPath = stdStringFromNSString(path);
+            aScheme = stdStringFromNSString(scheme);
+        }
+
+        return true;
     }
 }

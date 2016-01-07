@@ -26,6 +26,8 @@ namespace rs
     {
     public:
         static QUICSession* instance();
+        static void reconnect();
+        
         QUICSession();
         ~QUICSession();
         
@@ -36,6 +38,11 @@ namespace rs
         void sendRequest(const net::SpdyHeaderBlock &headers,
                          base::StringPiece body,
                          QUICStreamDelegate* aStreamDelegate);
+        void sendRequest(const net::SpdyHeaderBlock &headers,
+                         base::StringPiece body,
+                         QUICStreamDelegate* aStreamDelegate,
+                         int aTag,
+                         std::function<void(int, QUICDataStream*)> aCallback);
         void update(size_t aNowMS);
         
         
@@ -43,9 +50,9 @@ namespace rs
         void p_connect(net::QuicServerId aTargetServerId);
         void p_disconnect();
         bool p_connected() const;
-        bool p_sendRequest(const net::SpdyHeaderBlock &headers,
-                           base::StringPiece body,
-                           QUICStreamDelegate* aStreamDelegate);
+        QUICDataStream* p_sendRequest(const net::SpdyHeaderBlock &headers,
+                                      base::StringPiece body,
+                                      QUICStreamDelegate* aStreamDelegate);
         void OnClose(net::QuicDataStream* stream);
         
         void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) override;
@@ -68,7 +75,7 @@ namespace rs
         //QUICThread mInstanceThread;
         UDPService* mService;
         
-        void executeOnSessionThread(std::function<void(void)> aFunction);
+        void executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync = false);
         
         class ObjCImpl;
         
@@ -98,5 +105,7 @@ namespace rs
         
         typedef std::map<QUICDataStream*, QUICStreamDelegate*> StreamDelegateMap;
         StreamDelegateMap mStreamDelegateMap;
+        
+        bool mConnecting;
     };
 }

@@ -76,3 +76,11 @@ Data Data::byAppendingData(const void* aData, size_t aDataLen)
     return data;
 }
 
+Data Data::clone() const
+{
+    if (isEmpty())
+        return Data();
+    
+    return Data(bytes(), length());
+}
+

@@ -61,6 +61,7 @@ namespace rs
         
         static Data concat(Data d0, Data d1);
         Data byAppendingData(const void* aData, size_t aDataLen);
+        Data clone() const;
         
         bool isEmpty() const { return mContent.get() == nullptr; }
         

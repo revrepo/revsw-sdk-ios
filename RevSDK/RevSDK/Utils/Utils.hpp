@@ -92,6 +92,8 @@ typedef enum
     bool isValidConfiguration(const Data&, Error*);
 
     void traceSocketSpeed(int aDataSize);
+    
+    bool decomposeURL(const std::string& aBaseURL, const std::string& aURL, std::string& aHost, std::string& aPath, std::string& aScheme);
 }
 
 #endif /* Utils_hpp */

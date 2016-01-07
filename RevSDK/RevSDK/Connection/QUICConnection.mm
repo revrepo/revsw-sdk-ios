@@ -14,18 +14,20 @@
 
 #include "QUICSession.h"
 #include "Error.hpp"
-#include "UTils.hpp"
+#include "Utils.hpp"
 
 using namespace rs;
 using namespace net;
 
 QUICConnection::QUICConnection():
-    mDelegate (nullptr)
+    mDelegate(nullptr),
+    mDepth (0)
 {
 }
 
 QUICConnection::~QUICConnection()
 {
+    //std::cout << "QUICConnection::~QUICConnection()" << std::endl;
 }
 
 void QUICConnection::initialize()
@@ -35,14 +37,29 @@ void QUICConnection::initialize()
 
 void QUICConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
 {
-    mAnchor = mWeakThis.lock();
+    p_startWithRequest(aRequest, aDelegate, false);
+}
+
+void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate, bool aRedirect)
+{
+    mRequest.reset(aRequest->clone());
+    mAnchor0 = mWeakThis.lock();
     mDelegate = aDelegate;
     mURL = aRequest->URL();
+    
+    std::string rest = aRequest->rest();
+    if (rest.find("//") != std::string::npos)
+    {
+        //std::cout << "QUIC: Double slash detected!" << std::endl;
+    }
+    
+    if (rest == "/")
+        rest = "/";
 
     SpdyHeaderBlock headers;
     headers[":authority"] = aRequest->host();
     headers[":method"] = aRequest->method();
-    headers[":path"] = aRequest->rest();
+    headers[":path"] = rest;
     headers[":scheme"] = "https";
     headers["accept"] = "txt/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
     headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4";
@@ -53,63 +70,137 @@ void QUICConnection::startWithRequest(std::shared_ptr<Request> aRequest, Connect
     for (const auto& i : aRequest->headers())
         headers[i.first] = i.second;
     
-    QUICSession::instance()->sendRequest(headers, body, this);
-//        {
-//            Error error;
-//            error.code = 0;
-//            error.domain = "revsdk";
-//            error.userInfo["description"] = "QUIC connection not established";
-//            return;
-//        }
+    headers["X-Rev-Host"] = aRequest->host();
+    headers["X-Rev-Proto"] = aRequest->originalScheme();
+    
+    QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
 
 void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicDataStream* aStream,
                                    const net::SpdyHeaderBlock& aHedaers, int aCode)
 {
-    net::SpdyHeaderBlock headers;
-    
-    for (const auto& h : aHedaers)
+    if (mRedirect.get() == nullptr)
     {
-        if (h.first.size() == 0)
-            continue;
-        
-        if (h.first[0] != ':')
-            headers[h.first] = h.second;
+        if (aCode == 301 || aCode == 302)
+        {
+            if (mDepth < 10)
+            {
+                mAnchor1 = mAnchor0;
+                std::shared_ptr<Request> newRequest(mRequest->clone());
+                
+                net::SpdyHeaderBlock::const_iterator w = aHedaers.find("Location");
+                if (w == aHedaers.end())
+                {
+                    assert(false);
+                }
+                
+                std::string baseURL = mURL;
+                std::string url = w->second;
+                newRequest->setURL(url);
+                std::string host;
+                std::string path;
+                std::string scheme;
+                
+                if (decomposeURL(baseURL, url, host, path, scheme))
+                {
+                    mRedirect.reset(new QUICConnection());
+                    mRedirect->p_setRedirectDepth(mDepth + 1);
+                    
+                    newRequest->setHost(host);
+                    newRequest->setPath(path);
+                    newRequest->setRest(path);
+                    newRequest->setOriginalScheme(scheme);
+                    
+                    mRedirect->startWithRequest(newRequest, this);
+                    return;
+                }
+            }
+            else
+            {
+                std::cout << "Too many redirects" << std::endl;
+                //assert(false);
+            }
+        }
     }
-    
-    std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
+
     if (mDelegate != nullptr)
     {
+        net::SpdyHeaderBlock headers;
+
+        for (const auto& h : aHedaers)
+        {
+            if (h.first.size() == 0)
+                continue;
+            
+            if (h.first[0] != ':')
+                headers[h.first] = h.second;
+        }
+        std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
         mDelegate->connectionDidReceiveResponse(mWeakThis.lock(), response);
     }
 }
 
 void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicDataStream* aStream, const char* aData, size_t aLen)
 {
-    Data data(aData, aLen);
+//    if (mParent != nullptr)
+//    {
+//        mParent->quicSessionDidReceiveData(aSession, aStream, aData, aLen);
+//        return;
+//    }
+
+    if (mRedirect.get() != nullptr)
+        return;
+    
     if (mDelegate != nullptr)
     {
+        Data data(aData, aLen);
         mDelegate->connectionDidReceiveData(mWeakThis.lock(), data);
     }
 }
 
 void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataStream* aStream)
 {
+//    if (mParent != nullptr)
+//    {
+//        if (aStream == mRedirectedStream)
+//        {
+//            // ignore
+//            return;
+//        }
+//        mParent->quicSessionDidFinish(aSession, aStream);
+//        return;
+//    }
+    if (mRedirect.get() != nullptr)
+        return;
+
     if (mDelegate != nullptr)
     {
         mDelegate->connectionDidFinish(mWeakThis.lock());
     }
-    mAnchor.reset();
+    mAnchor0.reset();
 }
 
 void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicDataStream* aStream)
 {
+//    if (mParent != nullptr)
+//    {
+//        if (aStream == mRedirectedStream)
+//        {
+//            // ignore
+//            return;
+//        }
+//        mParent->quicSessionDidFail(aSession, aStream);
+//        return;
+//    }
+    if (mRedirect.get() != nullptr)
+        return;
+    
     if (mDelegate != nullptr)
     {
         QUICDataStream* qds = (QUICDataStream*)aStream;
         mDelegate->connectionDidFailWithError(mWeakThis.lock(), qds->error());
     }
-    mAnchor.reset();
+    mAnchor0.reset();
 }
 
 //void QUICConnection::quicSessionDidCloseStream(QUICSession* aSession,
@@ -152,3 +243,26 @@ std::string QUICConnection::edgeTransport()const
 {
     return kQUICProtocolName;
 }
+
+void QUICConnection::connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse)
+{
+    mDelegate->connectionDidReceiveResponse(aConnection, aResponse);
+}
+
+void QUICConnection::connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData)
+{
+    mDelegate->connectionDidReceiveData(aConnection, aData);
+}
+
+void QUICConnection::connectionDidFinish(std::shared_ptr<Connection> aConnection)
+{
+    mDelegate->connectionDidFinish(aConnection);
+    mAnchor1.reset();
+}
+
+void QUICConnection::connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError)
+{
+    mDelegate->connectionDidFailWithError(aConnection, aError);
+    mAnchor1.reset();
+}
+

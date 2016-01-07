@@ -39,9 +39,11 @@ namespace rs
         void setOnError(std::function<void(UDPService*, int, std::string)> aOnError) { mOnError = aOnError; }
         void setOnIdle(std::function<void(size_t)> aOnIdle) { mOnIdle = aOnIdle; }
         bool send(const void*, size_t, bool* aSyncAndOk = nullptr);
-        void perform(std::function<void(void)> aFunc);
+        void perform(std::function<void(void)> aFunc, bool aForceAsync);
         
         bool connected() const;
+        
+        void shutdown();
         
     private:
         static void threadFunc(void*);
@@ -67,5 +69,7 @@ namespace rs
         std::mutex mCallsLock;
         
         bool mFirstConnect;
+        bool mCloseFlag;
+        int mId;
     };
 }

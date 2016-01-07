@@ -26,13 +26,17 @@ boost::posix_time::ptime beginning()
     return t;
 }
 
+static int gUDPServiceCounter = 0;
+
 UDPService::UDPService(const Info& aInfo):
     mHost(aInfo.host),
     mPort(aInfo.port),
     mSocket(nullptr),
     mHandler(aInfo.handler),
     mThread(aInfo.thread),
-    mFirstConnect(false)
+    mFirstConnect(false),
+    mCloseFlag (false),
+    mId (gUDPServiceCounter++)
 {
     mBuffer.resize(65536);
     mBuffer.shrink_to_fit();
@@ -66,13 +70,13 @@ void UDPService::threadFunc(void* t)
     delete info;
 
     service->run();
+    
+    delete service;
 }
 
 void UDPService::run()
 {
-    bool closeFlag = false;
-    
-    while (!closeFlag)
+    while (!mCloseFlag)
     {
         if (mSocket == nullptr)
             mSocket = new UDPSocket(mHost, mPort);
@@ -124,6 +128,8 @@ void UDPService::run()
         if (mOnIdle)
             mOnIdle((size_t)diff.total_milliseconds());
     }
+    
+    mSocket->close();
 }
 
 bool UDPService::send(const void* aData, size_t aSize, bool* aSync)
@@ -151,12 +157,12 @@ bool UDPService::send(const void* aData, size_t aSize, bool* aSync)
     return false;
 }
 
-void UDPService::perform(std::function<void(void)> aFunc)
+void UDPService::perform(std::function<void(void)> aFunc, bool aForceAsync)
 {
     if (!aFunc)
         return;
     
-    if (p_properThread())
+    if (p_properThread() && aForceAsync)
     {
         aFunc();
         return;
@@ -172,6 +178,11 @@ bool UDPService::connected() const
     assert(p_properThread());
     
     return mSocket->connected();
+}
+
+void UDPService::shutdown()
+{
+    mCloseFlag = true;
 }
 
 bool UDPService::p_properThread() const
