@@ -90,6 +90,8 @@ typedef enum
     
     bool isValidURL(const std::string&);
     bool isValidConfiguration(const Data&, Error*);
+
+    void traceSocketSpeed(int aDataSize);
 }
 
 #endif /* Utils_hpp */

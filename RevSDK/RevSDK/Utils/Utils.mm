@@ -90,4 +90,32 @@ namespace rs
     {
         return _isValidConfiguration(aConfigurationData, aError);
     }
+    
+    void p_traceSocketSpeed(int aDataSize)
+    {
+        static CFAbsoluteTime lastUpd = 0;
+        static CFAbsoluteTime interval = 1.0;
+        static int dataSizeAccum = 0;
+        
+        CFAbsoluteTime now = CFAbsoluteTimeGetCurrent();
+        
+        dataSizeAccum += aDataSize;
+        
+        if (now - lastUpd > interval)
+        {
+            float speed = (float)dataSizeAccum / (now - lastUpd);
+            speed /= 1024.0f;
+            NSLog(@"Socket speed: %.1f kb/s", speed);
+            lastUpd = now;
+            dataSizeAccum = 0;
+            return;
+        }
+    }
+    
+    void traceSocketSpeed(int aDataSize)
+    {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            p_traceSocketSpeed(aDataSize);
+        });
+    }
 }

@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
 
+#include "Utils.hpp"
 #include "RSUDPSocket.h"
 
 namespace rs
@@ -184,6 +185,7 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
                 *aTimoutFlag = true;
         }
     }
+    traceSocketSpeed(res);
 
     return res;
 }
