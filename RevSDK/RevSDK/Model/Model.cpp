@@ -320,22 +320,6 @@ namespace rs
         mStatsHandler->addRequestData(aRequestData);
     }
     
-    void Model::stopConfigurationUpdate()
-    {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"RevSDK.Model:: stopped configuration update"<<std::endl;
-#endif
-        mConfService->stopUpdate();
-    }
-    
-    void rs::Model::resumeConfigurationUpdate()
-    {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"RevSDK.Model:: resumed configuration update"<<std::endl;
-#endif
-        mConfService->resumeUpdate();
-    }
-    
     bool rs::Model::shouldCollectRequestsData()
     {
         return  true;
@@ -351,4 +335,31 @@ namespace rs
         }
         return shouldCollect;
     }
+    
+    void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
+    {
+        mConfService = std::unique_ptr<IConfigurationService>(aNewService); 
+    }
+    
+    
+    void Model::debug_disableDebugMode()
+    {
+        auto conf = new ConfigurationService(this, [this](){
+            return !mProtocolSelector.haveAvailadleProtocols();
+        });
+        
+        mConfService               = std::unique_ptr<ConfigurationService>(conf);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+

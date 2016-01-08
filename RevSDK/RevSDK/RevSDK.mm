@@ -14,13 +14,18 @@
 #import "RSURLProtocol.h"
 
 #import "Model.hpp"
+#include "Utils.hpp"
 #import "RSUtils.h"
 #import "NSURLSessionConfiguration+RSUtils.h"
 #import "DebugUsageTracker.hpp"
 
+#include "TestConfigurationService.h"
+
 @implementation RevSDK
 
 static bool gIsInitialized = false;
+
+static rs::TestConfigurationService* TestConfService = nullptr;
 
 + (void)startWithSDKKey:(NSString *)aSDKKey
 {
@@ -71,14 +76,47 @@ static bool gIsInitialized = false;
     rs::Model::instance()->setOperationMode(innerMode);
 }
 
-+ (void)debug_stopConfigurationUpdate
++ (void)debug_enableTestMode
 {
-    rs::Model::instance()->stopConfigurationUpdate();
+    TestConfService = new rs::TestConfigurationService();
+    TestConfService->init();
+    rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
 }
 
-+ (void)debug_resumeConfigurationUpdate
++ (void)debug_disableTestMode
 {
-    rs::Model::instance()->resumeConfigurationUpdate();
+    rs::Model::instance()->debug_disableDebugMode();
+    
+    TestConfService = nullptr;
+}
+
++ (void)debug_pushTestConifguration:(NSString *)aProtocolID mode:(RSOperationMode)aOperationMode
+{
+    assert(TestConfService);
+    if (TestConfService)
+    {
+        rs::RSOperationModeInner innerMode;
+        
+        switch (aOperationMode)
+        {
+            case kRSOperationModeOff:
+                innerMode = rs::kRSOperationModeInnerOff;
+                break;
+            case kRSOperationModeTransport:
+                innerMode = rs::kRSOperationModeInnerTransport;
+                break;
+            case kRSOperationModeReport:
+                innerMode = rs::kRSOperationModeInnerReport;
+                break;
+            case kRSOperationModeTransportAndReport:
+                innerMode = rs::kRSOperationModeInnerTransportAndReport;
+                break;
+                
+            default: break;
+        }
+        
+        TestConfService->pushTestConfig(rs::stdStringFromNSString(aProtocolID), (int)innerMode);
+    }
 }
 
 + (RSOperationMode)operationMode
@@ -93,11 +131,6 @@ static bool gIsInitialized = false;
         case rs::kRSOperationModeInnerTransportAndReport: return kRSOperationModeTransportAndReport;
     }
 }
-
-//+ (void)setWhiteListOption:(BOOL)aOn
-//{
-//   rs::Model::instance()->switchWhiteListOption(aOn);
-//}
 
 + (NSDictionary *)debug_getUsageStatistics
 {

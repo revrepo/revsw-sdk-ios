@@ -29,9 +29,10 @@ typedef enum
 @interface RevSDK : NSObject
 
 + (void)startWithSDKKey:(NSString *)aSDKKey;
-+ (void)debug_setOperationMode:(RSOperationMode)aOperationMode;
-+ (void)debug_stopConfigurationUpdate;
-+ (void)debug_resumeConfigurationUpdate;
+
++ (void)debug_pushTestConifguration:(NSString*)aProtocolID mode:(RSOperationMode)aOperationMode;
++ (void)debug_enableTestMode;
++ (void)debug_disableTestMode;
 + (RSOperationMode)operationMode;
 //+ (void)setWhiteListOption:(BOOL)aOn;
 

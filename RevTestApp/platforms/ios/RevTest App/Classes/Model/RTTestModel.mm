@@ -12,6 +12,8 @@
 #import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
 
+#include "RTTestCase.h"
+
 
 @interface RTTestModel ()
 {
@@ -24,8 +26,8 @@
     RSOperationMode mMode;
 }
 
-@property (nonatomic, strong) NSMutableArray* testResults;  
-
+@property (nonatomic, strong) NSMutableArray* testResults;
+@property (nonatomic, strong) NSMutableArray* testCases;
 
 @property (nonatomic, strong) RTIterationResult* currentResult;
 
@@ -79,7 +81,6 @@
 
 - (void)start
 {
-    [RevSDK debug_stopConfigurationUpdate];
     mCurrentDataSize = 0;
     self.shouldLoad  = YES;
     mTestsCounter    = 0;
@@ -94,8 +95,59 @@
     
     mMode = kRSOperationModeOff;
     
-    [RevSDK debug_setOperationMode:mMode];
+    //[RevSDK debug_setOperationMode:mMode];
     [self stepStarted];
+}
+
+- (void)createCases
+{
+    self.testCases = [NSMutableArray array];
+    
+    RTTestCase* tcase = [[RTTestCase init] alloc];
+    // 1st case
+    tcase.testName = @"Origin";
+    tcase.protocolID = @"standard";
+    tcase.operationMode = RSOperationMode::kRSOperationModeOff;
+    
+    [self.testCases addObject:tcase];
+    ////////////////////////////////
+    
+    tcase = [[RTTestCase init] alloc];
+    tcase.testName = @"Standard";
+    tcase.protocolID = @"standard";
+    tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
+    
+    [self.testCases addObject:tcase];
+    ////////////////////////////////
+    
+    tcase = [[RTTestCase init] alloc];
+    tcase.testName = @"QUIC";
+    tcase.protocolID = @"quic";
+    tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
+    
+    [self.testCases addObject:tcase];
+    ////////////////////////////////
+    
+//    tcase = [[RTTestCase init] alloc];
+//    tcase.testName = @"Origin";
+//    tcase.protocolID = @"standard";
+//    tcase.operationMode = RSOperationMode::kRSOperationModeOff;
+//    
+//    [self.testCases addObject:tcase];
+    ////////////////////////////////
+}
+
+- (void)toNextCase
+{
+    if ([self.testCases count])
+    {
+        RTTestCase* tcase = [self.testCases objectAtIndex:0];
+        
+        RSOperationMode mode = (RSOperationMode) tcase.operationMode;
+        
+        [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
+        [self.testCases removeObjectAtIndex:0];
+    }
 }
 
 - (void)setWhiteListOption:(BOOL)aOn
@@ -137,7 +189,7 @@
 
 - (void)didFinishedTests
 {
-    [RevSDK debug_resumeConfigurationUpdate];
+    [RevSDK debug_disableTestMode];
 }
 
 - (void)stepStarted
@@ -146,6 +198,8 @@
     if (mTestsCounter <= mNumberOfTestsToPerform)
     {
         NSLog(@"Start %ld", (unsigned long)mTestsCounter);
+        
+        [self createCases];
         
         mMode = kRSOperationModeOff;
         
@@ -177,25 +231,20 @@
     tres.errorCode = aResult;
     mCurrentDataSize = 0;
     
+    assert([self.testCases count]);
     
-    if (kRSOperationModeOff == mMode)
-    {
-        mMode = kRSOperationModeTransport;
-        tres.testName = @"RevSDK";
-    }
-    else
-    {
-        mMode = kRSOperationModeOff;
-        tres.testName = @"Origin";
-    }
+    RTTestCase* tcase = [self.testCases objectAtIndex:0];
+    tres.testName = tcase.testName;
     [self.currentResult pushResult:tres];
+    
+    [self toNextCase];
     
     if (self.loadFinishedBlock)
     {
         self.loadFinishedBlock();
     }
     //mMode = kRSOperationModeTransport;
-    [RevSDK debug_setOperationMode:mMode];
+    //[RevSDK debug_setOperationMode:mMode];
     
     bool isLastTest = (kRSOperationModeOff == mMode) && (mTestsCounter == mNumberOfTestsToPerform);
     if (mTestsCounter <= mNumberOfTestsToPerform && !isLastTest)

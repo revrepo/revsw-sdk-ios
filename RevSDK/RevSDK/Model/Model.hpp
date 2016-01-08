@@ -63,8 +63,8 @@ namespace rs
         Network mNetwork;
         ProtocolSelector mProtocolSelector;
         
-        //std::shared_ptr<Configuration> mConfiguration;
-        std::unique_ptr<ConfigurationService> mConfService;
+        std::unique_ptr<IConfigurationService> mConfService;
+        //std::unique_ptr<IConfigurationService> mCachedConfService;
         
         std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
@@ -102,10 +102,13 @@ namespace rs
         
         void addRequestData(const Data &);
         
-        void stopConfigurationUpdate();
         void resumeConfigurationUpdate();
         
         bool shouldCollectRequestsData();
+        
+        //void debug_enableDebugMode();
+        void debug_disableDebugMode();
+        void debug_replaceConfigurationService(IConfigurationService* aNewService);
     };
 }
 

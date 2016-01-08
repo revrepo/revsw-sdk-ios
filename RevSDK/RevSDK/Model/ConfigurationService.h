@@ -16,7 +16,8 @@
 
 #include "DataStorage.hpp"
 #include "Timer.hpp"
-#include "Configuration.hpp"
+
+#include "IConfigurationService.h"
 
 namespace rs
 {
@@ -27,7 +28,7 @@ namespace rs
         virtual void applyConfiguration(std::shared_ptr<const Configuration> aNewConfiguration) = 0;
     };
     
-    class ConfigurationService
+    class ConfigurationService : public IConfigurationService
     {
     private:
         typedef std::chrono::time_point<std::chrono::system_clock> tSpan;
@@ -55,14 +56,15 @@ namespace rs
         
     public:
         ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCondition);
+        virtual ~ConfigurationService();
         
-        void setOperationMode(RSOperationModeInner aMode);
+        void setOperationMode(RSOperationModeInner aMode) override;
         
-        void init();
+        void init() override;
         
-        void stopUpdate();
-        void resumeUpdate();
+        void stopUpdate() override;
+        void resumeUpdate() override;
         
-        std::shared_ptr<const Configuration> getActive() const;
+        std::shared_ptr<const Configuration> getActive() const override;
     };
 }
