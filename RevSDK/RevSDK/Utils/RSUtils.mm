@@ -449,7 +449,7 @@ namespace rs
                 dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
                 dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
                 dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
-                dataDictionary[kRS_JKey_TransportProt] = aRequest.URL.scheme;
+                dataDictionary[kRS_JKey_TransportProt] = aDictionary[kRS_JKey_TransportProt];//aRequest.URL.scheme;
                 
                 dataDictionary[kRS_JKey_StartTs] 		= aDictionary[kRS_JKey_StartTs];
                 dataDictionary[kRS_JKey_RecDytes] 		= aDictionary[kRS_JKey_RecDytes];
@@ -459,6 +459,7 @@ namespace rs
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
                 dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
+                dataDictionary[kRS_JKey_EdgeTransport]  = aDictionary[kRS_JKey_EdgeTransport];
             }
         }
         
@@ -478,7 +479,9 @@ namespace rs
                                      kRS_JKey_RecDytes : @(aConnection->getTotalReceived()),
                                      kRS_JKey_SentBytes : @(aConnection->getTotalSent()),
                                      kRS_JKey_EndTs : @(aConnection->getEndTimestamp()),
-                                     kRS_JKey_FirstByteTs : @(aConnection->getFirstByteTimestamp())
+                                     kRS_JKey_FirstByteTs : @(aConnection->getFirstByteTimestamp()),
+                                     kRS_JKey_TransportProt : aOriginalScheme,
+                                     kRS_JKey_EdgeTransport : NSStringFromStdString(aConnection->edgeTransport())
                                      
                                      };
         
@@ -493,7 +496,9 @@ namespace rs
                                      kRS_JKey_RecDytes : aConnection.totalBytesReceived,
                                      kRS_JKey_SentBytes : @(aRequest.HTTPBody.length),
                                      kRS_JKey_EndTs : aConnection.endTimestamp,
-                                     kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp
+                                     kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp,
+                                     kRS_JKey_TransportProt : aRequest.URL.scheme,
+                                     kRS_JKey_EdgeTransport : @"_"
                                      };
         
         return dataFromRequestsDictionary(aRequest, aResponse, dictionary);
