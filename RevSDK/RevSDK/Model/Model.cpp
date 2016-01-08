@@ -140,6 +140,24 @@ namespace rs
         auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
         
         mCurrentLoggingLevel = (RSLogginLevel)logLevelIndex;
+        
+        auto activeConf = mConfService->getActive();
+        std::cout << activeConf->statsReportingInterval << std::endl;
+        if (activeConf->operationMode == kRSOperationModeInnerReport ||
+            activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
+        {
+#define RS_DEBUG_STATS_REPORT_INTERVAL -1
+            
+            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
+            
+            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
+                this->reportStats();
+            });
+        }
+        else
+        {
+            Timer::disableTimer(mStatsReportingTimer);
+        }
     }
     
     void Model::reportStats()
@@ -211,25 +229,6 @@ namespace rs
 #endif
         
         mConfService->setOperationMode(aOperationMode);
-        
-        std::cout << activeConf->statsReportingInterval << std::endl;
-        if (activeConf->operationMode == kRSOperationModeInnerReport ||
-            activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
-        {
-        
-
-#define RS_DEBUG_STATS_REPORT_INTERVAL -1
-            
-            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
-            
-            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
-                this->reportStats();
-            });
-        }
-        else
-        {
-            Timer::disableTimer(mStatsReportingTimer);
-        }
     }
     
     RSOperationModeInner Model::currentOperationMode()
