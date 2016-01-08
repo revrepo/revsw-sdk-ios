@@ -13,6 +13,8 @@
 		114D658E1C3476E400C2D176 /* NSURL+RevSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
+		11C1968B1C3FAF4600F28120 /* RSLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C196891C3FAF4600F28120 /* RSLog.cpp */; };
+		11C1968C1C3FAF4600F28120 /* RSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C1968A1C3FAF4600F28120 /* RSLog.h */; };
 		11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FD81C2D469300CDE34D /* quic_client_session.cc */; };
 		11C9610E1C2D469300CDE34D /* quic_client_session.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C95FD91C2D469300CDE34D /* quic_client_session.h */; };
 		11C9610F1C2D469300CDE34D /* quic_spdy_client_stream.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FDA1C2D469300CDE34D /* quic_spdy_client_stream.cc */; };
@@ -150,6 +152,8 @@
 		114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RevSDK.m"; sourceTree = "<group>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
+		11C196891C3FAF4600F28120 /* RSLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSLog.cpp; sourceTree = "<group>"; };
+		11C1968A1C3FAF4600F28120 /* RSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLog.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
 		11C95FD91C2D469300CDE34D /* quic_client_session.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quic_client_session.h; sourceTree = "<group>"; };
 		11C95FDA1C2D469300CDE34D /* quic_spdy_client_stream.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_spdy_client_stream.cc; sourceTree = "<group>"; };
@@ -317,6 +321,8 @@
 			children = (
 				114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */,
 				114D65861C34502C00C2D176 /* DebugUsageTracker.mm */,
+				11C1968A1C3FAF4600F28120 /* RSLog.h */,
+				11C196891C3FAF4600F28120 /* RSLog.cpp */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -647,6 +653,7 @@
 				11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */,
 				5B2F4BD81BFE11F6003DCB27 /* Error.hpp in Headers */,
 				5B3096EA1BFA0CB70045024C /* RSURLProtocol.h in Headers */,
+				11C1968C1C3FAF4600F28120 /* RSLog.h in Headers */,
 				11F24B391C3C09C100DABAE5 /* QUICClientSession.h in Headers */,
 				5BE3F8651C0454890087BC28 /* DataStorage.hpp in Headers */,
 				5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */,
@@ -861,6 +868,7 @@
 				5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */,
 				5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */,
 				11C962261C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm in Sources */,
+				11C1968B1C3FAF4600F28120 /* RSLog.cpp in Sources */,
 				5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */,
 				5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */,
 				6D1F860D1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm in Sources */,

@@ -29,6 +29,7 @@
 #define RS_ENABLE_DEBUG_LOGGING
 #endif
 
+#include "RSLog.h"
 
 //#ifdef DEBUG
 //#define RS_DBG_MAXREQESTS 3
@@ -70,6 +71,8 @@ namespace rs
         
         void reportStats();
         
+        Log::Target::Ref mMemoryLog;
+        
       public:
         
         Model();
@@ -106,6 +109,8 @@ namespace rs
         void resumeConfigurationUpdate();
         
         bool shouldCollectRequestsData();
+        
+        LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
     };
 }
 
