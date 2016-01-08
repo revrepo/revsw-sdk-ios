@@ -42,6 +42,10 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     });
 }
 
+ConfigurationService::~ConfigurationService()
+{ 
+}
+
 void ConfigurationService::init()
 {
     loadConfiguration();

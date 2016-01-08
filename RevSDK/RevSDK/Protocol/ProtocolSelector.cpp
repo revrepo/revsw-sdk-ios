@@ -17,10 +17,7 @@ using namespace rs;
 ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
 {
     auto vec = data_storage::restoreAvailableProtocols();
-    if (vec.size() > 0)
-    {
-        convertIDsToPropocols(vec);
-    }
+    mAvailableProtocols = vec;
 }
 
 void ProtocolSelector::refreshTestInfo()
@@ -40,40 +37,32 @@ void ProtocolSelector::refreshTestInfo()
                     allowedProtocols.push_back(it.ProtocolID);
                 }
             }
+            mAvailableProtocols = allowedProtocols;
             
-            convertIDsToPropocols(allowedProtocols);
             sortProtocols(confProtos);
-            this->saveAvailable();
         });
     } 
 }
 
-void ProtocolSelector::convertIDsToPropocols(std::vector<std::string> aVec)
+void ProtocolSelector::convertIDToPropocol(const std::string& aID)
 {
-    mSortedProtocols.clear();
-    
-    for (auto& it: aVec)
+    if (quicProtocolName() == aID)
     {
-        if (quicProtocolName() == it)
-        {
-            mSortedProtocols.push_back(std::make_shared<QUICProtocol>());
-        }
-        else if (standardProtocolName() == it)
-        {
-            mSortedProtocols.push_back(std::make_shared<StandardProtocol>());
-        }
-        ///add more
+        mBestProtocol = (std::make_shared<QUICProtocol>());
+    }
+    else if (standardProtocolName() == aID)
+    {
+        mBestProtocol = (std::make_shared<StandardProtocol>());
+    }
+    else
+    {
+        mBestProtocol = nullptr;
     }
 }
 
 void ProtocolSelector::saveAvailable()
 {
-    std::vector<std::string> ids;
-    for (auto it: mSortedProtocols)
-    {
-        ids.push_back(it->protocolName());
-    }
-    data_storage::saveAvailableProtocols(ids);
+    data_storage::saveAvailableProtocols(mAvailableProtocols);
 }
 
 void ProtocolSelector::onCelluarStandardChanged()
@@ -99,14 +88,15 @@ void ProtocolSelector::onFirstInit()
 bool ProtocolSelector::haveAvailadleProtocols()
 { 
     std::lock_guard<std::mutex> lockGuard(mLock);
-    return !mSortedProtocols.empty();
+    return mBestProtocol.get() != nullptr;
 }
 
 void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrdered)
 {
-    if (!mSortedProtocols.empty() && !aProtocolNamesOrdered.empty())
+    if (!mAvailableProtocols.empty() && !aProtocolNamesOrdered.empty())
     {
-        if(mSortedProtocols.front()->protocolName() == aProtocolNamesOrdered.front())
+        std::string dbg = aProtocolNamesOrdered.front();
+        if(mBestProtocol && (mBestProtocol->protocolName() == dbg))
         {
             return;
         }
@@ -114,27 +104,22 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
         //delete not allowed protos
         std::remove_if(aProtocolNamesOrdered.begin(),
                        aProtocolNamesOrdered.end(),[this](const std::string& item){
-                           auto elem = std::find_if(mSortedProtocols.begin(), mSortedProtocols.end(), [item](std::shared_ptr<Protocol> it)
+                           auto elem = std::find_if(mAvailableProtocols.begin(), mAvailableProtocols.end(), [item](std::string& it)
                            {
-                               return  item == it->protocolName();
+                               return  item == it;
                            });
                            
-                           return mSortedProtocols.end() == elem;
+                           return mAvailableProtocols.end() == elem;
                        });
         
-        convertIDsToPropocols(aProtocolNamesOrdered);
-        
-        if (mSortedProtocols.empty())
-        {
-            
-        }
+        convertIDToPropocol(aProtocolNamesOrdered.front());
         
         //save
         saveAvailable();
     }
     else if (aProtocolNamesOrdered.empty())
     {
-        mSortedProtocols.clear();
+        mBestProtocol = nullptr;
     }
 }
 
@@ -142,11 +127,14 @@ std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
 //    return std::make_shared<QUICProtocol>();
     std::lock_guard<std::mutex> lockGuard(mLock);
-    if (!mSortedProtocols.empty())
+    if (mBestProtocol && mAvailableProtocols.size())
     {
-        return mSortedProtocols.front()->clone();
+        std::cout<<"|| ========= PICKING PROTOCOL :: " + mBestProtocol->protocolName()<<std::endl;
+        return mBestProtocol->clone();
     }
     // TODO :: !!!!!!!!
+    std::cout<<"|| ========= PICKING PROTOCOL :: standard"<<std::endl;
+    
     return std::make_shared<StandardProtocol>();
 }
 
@@ -157,10 +145,8 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
     
     if (mEventsHandler.isInitialized() == false)
     {
-        std::vector<std::string> vec;
-        vec.push_back(aConf->initialTransportProtocol);
-        
-        this->convertIDsToPropocols(vec);
+        this->convertIDToPropocol(aConf->initialTransportProtocol);
+        mAvailableProtocols.push_back(aConf->initialTransportProtocol);
         saveAvailable();
         this->refreshTestInfo();
     }

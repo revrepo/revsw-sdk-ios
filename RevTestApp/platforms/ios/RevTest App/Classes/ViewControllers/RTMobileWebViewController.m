@@ -14,8 +14,7 @@
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
 
-static const NSUInteger kDefaultNumberOfTests = 5;
-static const NSInteger kTestsPerStep = 2;
+static const NSUInteger kDefaultNumberOfTests = 5; 
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
 static const NSInteger kSuccessCode = 200;
 
@@ -24,8 +23,6 @@ static const NSInteger kSuccessCode = 200;
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
-
-@property (nonatomic, assign) int testLeftOnThisStep;
 
 @end
 
@@ -124,8 +121,6 @@ static const NSInteger kSuccessCode = 200;
 
 - (IBAction)start:(id)sender
 {
-    self.testLeftOnThisStep = kTestsPerStep;
-    
     [self startTesting];
     [self.fakeTextField resignFirstResponder];
     [self.URLTextField resignFirstResponder];
@@ -159,11 +154,10 @@ static const NSInteger kSuccessCode = 200;
     if ([URL isValid])
     {
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
-        if (0 >= self.testLeftOnThisStep)
-        {
-            self.testLeftOnThisStep = kTestsPerStep;
-            [self stepStarted];
-        }
+//        if (0 >= self.testLeftOnThisStep)
+//        {
+//            [self stepStarted];
+//        }
         [self.webView loadRequest:request];
     }
     else
@@ -195,17 +189,9 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)didFinishLoadWithCode:(NSInteger)aCode
 {
-    if (self.testLeftOnThisStep > 0)
-    {
-        RSOperationMode mode = [RevSDK operationMode];
-        
-        [self loadFinished:aCode];
-        self.testLeftOnThisStep--;
-        if (0 == self.testLeftOnThisStep)
-        {
-            [self stepFinished:false];
-        }
-    }
+    RSOperationMode mode = [RevSDK operationMode];
+    
+    [self loadFinished:aCode];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView

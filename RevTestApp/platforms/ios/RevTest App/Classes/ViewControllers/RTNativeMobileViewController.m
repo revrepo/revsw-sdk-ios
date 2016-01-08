@@ -19,7 +19,6 @@
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kMethodPickerTag = 1;
 static const NSInteger kFormatPickerTag = 2;
-static const NSInteger kTestsPerStep = 2;
 static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 
 @interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
@@ -30,8 +29,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, copy) NSString* method;
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
-
-@property (nonatomic, assign) int testLeftOnThisStep;
 
 @end
 
@@ -170,8 +167,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
         request.HTTPBody = properBlock();
     }
     
-    __weak id weakSelf = self;
-    self.testLeftOnThisStep = kTestsPerStep;
+    __weak id weakSelf = self; 
     
     self.restartBlock = ^{
     
@@ -214,12 +210,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 //}
 
 - (void)loadRequest:(NSURLRequest *)aRequest
-{
-    if (0 == self.testLeftOnThisStep)
-    {
-        [self stepStarted];
-        self.testLeftOnThisStep = kTestsPerStep;
-    }
+{ 
     NSURLSession* session = [NSURLSession sharedSession];
     
     NSData* body = aRequest.HTTPBody;
@@ -250,12 +241,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse; 
                                             
                                             [self loadFinished:[httpResponse statusCode]];
-                                            
-                                            self.testLeftOnThisStep--;
-                                            if (0 >= self.testLeftOnThisStep)
-                                            {
-                                                [self stepFinished:true];
-                                            }
                                         }];
     [task resume];
 }

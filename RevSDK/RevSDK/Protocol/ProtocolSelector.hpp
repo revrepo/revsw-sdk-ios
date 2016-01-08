@@ -24,18 +24,20 @@ namespace rs
     class ProtocolSelector : INetworkEventsDelegate
     {
     private:
-        NativeNetworkEventsHandler mEventsHandler;
-        ProtocolAvailabilityTester mTester;
+        NativeNetworkEventsHandler  mEventsHandler;
+        ProtocolAvailabilityTester  mTester;
         
-        std::mutex                 mLock;
+        std::mutex                  mLock;
         
-        std::string                mMonitoringURL;
+        std::string                 mMonitoringURL;
         
-        std::vector<std::shared_ptr<Protocol>> mSortedProtocols;
+        std::shared_ptr<Protocol>   mBestProtocol;
+        
+        std::vector<std::string>    mAvailableProtocols;
         
         void refreshTestInfo();
         
-        void convertIDsToPropocols(std::vector<std::string> aVec);
+        void convertIDToPropocol(const std::string& aID);
         
         void sortProtocols(std::vector<std::string> aProtocolNamesOrdered);
         

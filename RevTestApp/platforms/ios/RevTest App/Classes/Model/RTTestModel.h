@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RTTestResult.h"
+#import "RTTestCase.h"
 
 @interface RTTestModel : NSObject
 
@@ -26,6 +27,6 @@
 - (void)loadStarted;
 
 - (void)stepStarted;
-- (void)stepFinished:(bool)withSuccess;
+- (void)stepFinished;
 
 @end

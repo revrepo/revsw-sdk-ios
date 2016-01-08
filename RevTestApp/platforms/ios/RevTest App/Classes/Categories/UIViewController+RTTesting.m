@@ -188,10 +188,10 @@
     [self.testModel stepStarted];
 }
 
-- (void)stepFinished:(bool)result
-{
-    [self.testModel stepFinished:result];
-}
+//- (void)stepFinished:(bool)result
+//{
+//    [self.testModel stepFinished:result];
+//}
 
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest
 {

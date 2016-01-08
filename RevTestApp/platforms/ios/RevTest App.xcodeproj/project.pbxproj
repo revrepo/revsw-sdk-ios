@@ -94,12 +94,19 @@
 		5B0BFEF11C0C86ED0057715A /* RTTestStatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEEF1C0C86ED0057715A /* RTTestStatsViewController.xib */; };
 		5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */; };
 		5B0BFEFC1C0CACC90057715A /* RTReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEFB1C0CACC90057715A /* RTReportViewController.xib */; };
-		5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RTTestModel.m */; };
+		5B10397A1C11763C003CA9A1 /* RTTestModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RTTestModel.mm */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5B25817F1C17155F00C55959 /* RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25817E1C17155F00C55959 /* RTUtils.m */; };
 		5B3286F91C1EAEF9009CFDB5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */; };
 		5B3286FB1C1EAFF9009CFDB5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */; };
 		5B3286FC1C1EAFF9009CFDB5 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0E1C3D17F60051D31F /* Security.framework */; };
+		5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */; };
+		5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
+		5B70CA151C3D17F60051D31F /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
+		5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
+		5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
+		5B70CA1B1C3D1BDD0051D31F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B70CA1A1C3D1BDD0051D31F /* GoogleService-Info.plist */; };
 		5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */; };
 		5B7804E11C15E241003AD4F5 /* RTNativeMobileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
@@ -116,6 +123,7 @@
 		6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */; };
 		6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05C1C3D516500416020 /* RTIterationResult.m */; };
 		6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05F1C3D54E800416020 /* RTTestResult.m */; };
+		6D8BD9AA1C3FCD23008353DB /* RTTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D8BD9A91C3FCD23008353DB /* RTTestCase.m */; };
 		7E7966DE1810823500FA85AD /* icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D41810823500FA85AD /* icon-40.png */; };
 		7E7966DF1810823500FA85AD /* icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D51810823500FA85AD /* icon-40@2x.png */; };
 		7E7966E01810823500FA85AD /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966D61810823500FA85AD /* icon-50.png */; };
@@ -263,12 +271,19 @@
 		5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Stats.m"; sourceTree = "<group>"; };
 		5B0BFEFB1C0CACC90057715A /* RTReportViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTReportViewController.xib; sourceTree = "<group>"; };
 		5B1039781C11763C003CA9A1 /* RTTestModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTestModel.h; sourceTree = "<group>"; };
-		5B1039791C11763C003CA9A1 /* RTTestModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestModel.m; sourceTree = "<group>"; };
+		5B1039791C11763C003CA9A1 /* RTTestModel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RTTestModel.mm; sourceTree = "<group>"; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5B25817D1C17155F00C55959 /* RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTUtils.h; sourceTree = "<group>"; };
 		5B25817E1C17155F00C55959 /* RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTUtils.m; sourceTree = "<group>"; };
 		5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RevSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B70CA0E1C3D17F60051D31F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Security.framework; sourceTree = "<group>"; };
+		5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SystemConfiguration.framework; sourceTree = "<group>"; };
+		5B70CA101C3D17F60051D31F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		5B70CA111C3D17F60051D31F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		5B70CA161C3D19E00051D31F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		5B70CA181C3D19E80051D31F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
+		5B70CA1A1C3D1BDD0051D31F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5B7804DD1C15E241003AD4F5 /* RTNativeMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNativeMobileViewController.h; sourceTree = "<group>"; };
 		5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNativeMobileViewController.m; sourceTree = "<group>"; };
 		5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTNativeMobileViewController.xib; sourceTree = "<group>"; };
@@ -294,6 +309,8 @@
 		6D7CB05C1C3D516500416020 /* RTIterationResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTIterationResult.m; sourceTree = "<group>"; };
 		6D7CB05E1C3D518F00416020 /* RTTestResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTTestResult.h; sourceTree = "<group>"; };
 		6D7CB05F1C3D54E800416020 /* RTTestResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestResult.m; sourceTree = "<group>"; };
+		6D8BD9A91C3FCD23008353DB /* RTTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTTestCase.m; sourceTree = "<group>"; };
+		6D8BD9AB1C3FCD31008353DB /* RTTestCase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RTTestCase.h; sourceTree = "<group>"; };
 		7E7966D41810823500FA85AD /* icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40.png"; sourceTree = "<group>"; };
 		7E7966D51810823500FA85AD /* icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-40@2x.png"; sourceTree = "<group>"; };
 		7E7966D61810823500FA85AD /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
@@ -317,13 +334,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
+				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
 				5B3286F91C1EAEF9009CFDB5 /* RevSDK.framework in Frameworks */,
+				5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */,
+				5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
+				5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */,
 				5B3286FB1C1EAFF9009CFDB5 /* RevSDK.framework in Frameworks */,
+				5B70CA151C3D17F60051D31F /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -359,6 +382,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				5B70CA1A1C3D1BDD0051D31F /* GoogleService-Info.plist */,
 				5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */,
 				5B04C9041C0D88A300621B67 /* www */,
 				EB87FDF41871DAF40020F90C /* config.xml */,
@@ -401,6 +425,12 @@
 			isa = PBXGroup;
 			children = (
 				1109F3CC1C401ED000ABB160 /* MessageUI.framework */,
+				5B70CA181C3D19E80051D31F /* libc++.tbd */,
+				5B70CA161C3D19E00051D31F /* libz.tbd */,
+				5B70CA0E1C3D17F60051D31F /* Security.framework */,
+				5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */,
+				5B70CA101C3D17F60051D31F /* Fabric.framework */,
+				5B70CA111C3D17F60051D31F /* Crashlytics.framework */,
 				5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -775,11 +805,13 @@
 			isa = PBXGroup;
 			children = (
 				5B1039781C11763C003CA9A1 /* RTTestModel.h */,
-				5B1039791C11763C003CA9A1 /* RTTestModel.m */,
+				5B1039791C11763C003CA9A1 /* RTTestModel.mm */,
 				6D7CB05B1C3D514900416020 /* RTIterationResult.h */,
 				6D7CB05C1C3D516500416020 /* RTIterationResult.m */,
 				6D7CB05E1C3D518F00416020 /* RTTestResult.h */,
 				6D7CB05F1C3D54E800416020 /* RTTestResult.m */,
+				6D8BD9AB1C3FCD31008353DB /* RTTestCase.h */,
+				6D8BD9A91C3FCD23008353DB /* RTTestCase.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -849,6 +881,7 @@
 				5B0BFEE11C0C5D3B0057715A /* Embed Frameworks */,
 				5C96B74CB3B997516D0ED1E3 /* Embed Pods Frameworks */,
 				82C4D0D12F137246DFBD27DA /* Copy Pods Resources */,
+				5BC4E24A1C3C1D1700530846 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -994,6 +1027,7 @@
 				30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */,
 				5B04C9601C0D88A300621B67 /* icon.png in Resources */,
 				5B04C9881C0D88A300621B67 /* screen-iphone-landscape-2x.png in Resources */,
+				5B70CA1B1C3D1BDD0051D31F /* GoogleService-Info.plist in Resources */,
 				30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */,
 				5B04C9811C0D88A300621B67 /* screen-type4.png in Resources */,
 				5B04C95D1C0D88A300621B67 /* cordova.js in Resources */,
@@ -1029,6 +1063,19 @@
 			shellPath = /bin/sh;
 			shellScript = "NODEJS_PATH=/usr/local/bin; NVM_NODE_PATH=~/.nvm/versions/node/`nvm version 2>/dev/null`/bin; N_NODE_PATH=`find /usr/local/n/versions/node/* -maxdepth 0 -type d 2>/dev/null | tail -1`/bin; XCODE_NODE_PATH=`xcode-select --print-path`/usr/share/xcs/Node/bin; PATH=$NODEJS_PATH:$NVM_NODE_PATH:$N_NODE_PATH:$XCODE_NODE_PATH:$PATH && node cordova/lib/copy-www-build-step.js";
 			showEnvVarsInLog = 0;
+		};
+		5BC4E24A1C3C1D1700530846 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 57f92a4f85e4b755011bf87ff9ebc137380f5d2d 974e8f9a8ce392a112da439c5b9bc40d406b6963471f3983176830086f895a66";
 		};
 		5C96B74CB3B997516D0ED1E3 /* Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1085,13 +1132,14 @@
 				6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */,
 				5B0BFEE71C0C6C1B0057715A /* RTReportCell.m in Sources */,
 				6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */,
-				5B10397A1C11763C003CA9A1 /* RTTestModel.m in Sources */,
+				5B10397A1C11763C003CA9A1 /* RTTestModel.mm in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
 				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5B04C98D1C0D88A300621B67 /* README.md in Sources */,
+				6D8BD9AA1C3FCD23008353DB /* RTTestCase.m in Sources */,
 				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
 				5B0BFEDA1C0C53DE0057715A /* RTReportViewController.m in Sources */,
@@ -1125,6 +1173,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -1171,6 +1223,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
