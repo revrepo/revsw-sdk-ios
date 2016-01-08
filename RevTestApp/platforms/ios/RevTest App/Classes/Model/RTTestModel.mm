@@ -75,6 +75,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [RevSDK debug_disableTestMode];
 }
 
 - (void)start

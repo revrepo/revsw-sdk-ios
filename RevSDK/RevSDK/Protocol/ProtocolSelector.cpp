@@ -105,6 +105,7 @@ bool ProtocolSelector::haveAvailadleProtocols()
 
 void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrdered)
 {
+    
     if (!mSortedProtocols.empty() && !aProtocolNamesOrdered.empty())
     {
         if(mSortedProtocols.front()->protocolName() == aProtocolNamesOrdered.front())
@@ -124,11 +125,6 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
                        });
         
         convertIDsToPropocols(aProtocolNamesOrdered);
-        
-        if (mSortedProtocols.empty())
-        {
-            
-        }
         
         //save
         saveAvailable();
