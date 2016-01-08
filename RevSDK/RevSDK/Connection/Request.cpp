@@ -14,4 +14,14 @@ namespace rs
     {
         
     }
+    
+    Request* Request::clone() const
+    {
+        Request* res = new Request(mURL, mHeaders, mMethod, mBody.clone());
+        res->setHost(mHost);
+        res->setPath(mPath);
+        res->setRest(mRest);
+        res->setOriginalScheme(mOriginalScheme);
+        return res;
+    }
 }

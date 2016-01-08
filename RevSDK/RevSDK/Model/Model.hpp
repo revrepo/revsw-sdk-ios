@@ -29,6 +29,7 @@
 #define RS_ENABLE_DEBUG_LOGGING
 #endif
 
+#include "RSLog.h"
 
 //#ifdef DEBUG
 //#define RS_DBG_MAXREQESTS 3
@@ -69,6 +70,8 @@ namespace rs
         std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
         void reportStats();
+        
+        Log::Target::Ref mMemoryLog;
         
       public:
         

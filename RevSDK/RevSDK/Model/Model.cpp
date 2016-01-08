@@ -32,6 +32,9 @@ namespace rs
 {
     Model::Model() 
     {
+        Log::initialize();
+        mMemoryLog.reset(new LogTargetMemory());
+        Log::instance()->addTarget(mMemoryLog);
         data_storage::initDataStorage();
         
         auto conf = new ConfigurationService(this, [this](){

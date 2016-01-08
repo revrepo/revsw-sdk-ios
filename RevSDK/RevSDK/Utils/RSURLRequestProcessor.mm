@@ -10,6 +10,7 @@
 
 #import "Model.hpp"
 #import "RSUtils.h"
+#import "Utils.hpp"
 
 #include <string>
 
@@ -50,18 +51,25 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
     [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
     
+    BOOL isEdge = rs::Model::instance()->currentProtocol()->protocolName() == rs::standardProtocolName();
+    
     NSURLComponents* URLComponents = [NSURLComponents new];
-    URLComponents.host             = rs::kRSRevRedirectHost;
+    if (isEdge)
+    {
+        URLComponents.host         = rs::kRSRevRedirectHost;
+    }
+    else
+    {
+        URLComponents.host         = originalComponents.host;
+    }
     URLComponents.scheme           = scheme;
     URLComponents.path             = URL.path;
     URLComponents.queryItems       = originalComponents.queryItems;
-    
-    
+
     NSMutableString* urlPath = [[URLComponents.URL absoluteString] mutableCopy];
-    if ([[URL absoluteString] hasSuffix:@"/"])
+    if ([[URL absoluteString] hasSuffix:@"/"] && ![urlPath hasSuffix:@"/"])
     {
-        NSString* slash = @"/";
-        [urlPath appendString:slash];
+        [urlPath appendString:@"/"];
     }
     
     NSURL* newURL = [NSURL URLWithString:urlPath];

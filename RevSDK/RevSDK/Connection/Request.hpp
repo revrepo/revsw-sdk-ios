@@ -33,7 +33,7 @@ namespace rs
        
        Request(const std::string& aURL, const std::map<std::string, std::string>& aHeaders, const std::string& aMethod, const Data& aBody);
        Request() = delete;
-       ~Request(){ printf("Request destructor called\n");}
+       ~Request(){ /*printf("Request destructor called\n");*/ }
        
        std::string method() const { return mMethod; }
        std::string URL() const { return mURL; }
@@ -49,6 +49,11 @@ namespace rs
        void setPath(const std::string& aPath) { mPath = aPath; }
        void setRest(const std::string& aRest) { mRest = aRest; }
        void setOriginalScheme(const std::string& aOriginalScheme) { mOriginalScheme = aOriginalScheme; }
+       void setMethod(const std::string& aMethod) { mMethod = aMethod; }
+       void setURL(const std::string& aURL) { mURL = aURL; }
+       void setHeaders(const std::map<std::string, std::string>& aHeaders) { mHeaders = aHeaders; }
+       
+       Request* clone() const;
    };
 }
 

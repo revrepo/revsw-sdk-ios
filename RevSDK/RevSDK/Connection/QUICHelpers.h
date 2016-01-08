@@ -10,6 +10,7 @@
 
 #include "QUICHeaders.h"
 #include "RevProofVerifier.h"
+#include "RSUDPService.h"
 
 @class NativeUDPSocketWrapper;
 
@@ -45,9 +46,7 @@ namespace rs
     {
     public:
         
-        static NativeUDPSocketWrapper* createNativeSocket();
-        
-        explicit CocoaQuicPacketWriter(NativeUDPSocketWrapper *cocoaUDPSocketDelegate);
+        explicit CocoaQuicPacketWriter(UDPService *cocoaUDPSocketDelegate);
         
         virtual net::WriteResult WritePacket(const char *buffer, size_t buf_len,
                                              const net::IPAddressNumber& self_address,
@@ -58,7 +57,7 @@ namespace rs
         
     public:
         
-        NativeUDPSocketWrapper *socketOwner;
+        UDPService* socketOwner;
     };
     
     class CocoaWriterFactory : public net::QuicConnection::PacketWriterFactory
