@@ -146,11 +146,7 @@ namespace rs
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
-#define RS_DEBUG_STATS_REPORT_INTERVAL -1
-            
-            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
-            
-            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
+            Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
                 this->reportStats();
             });
         }
@@ -159,6 +155,8 @@ namespace rs
             Timer::disableTimer(mStatsReportingTimer);
         }
     }
+    
+    static int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
     
     void Model::reportStats()
     {
@@ -176,6 +174,12 @@ namespace rs
 #endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
+            
+            int64 t = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+            
+            std::cout << "\nDIFFERENCE " << t - milliseconds_since_epoch << std::endl;
+            
+            milliseconds_since_epoch = t;
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
                 std::lock_guard<std::mutex> lockGuard(mLock);
