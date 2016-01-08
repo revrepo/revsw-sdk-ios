@@ -30,7 +30,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     return [@[@"http", @"https"] indexOfObject:aScheme] != NSNotFound;
 }
 
-+ (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest
++ (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest isEdge:(bool)aIsEdge
 {
     NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
     NSURL* URL                          = aRequest.URL;
@@ -51,10 +51,10 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
     [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
     
-    BOOL isEdge = rs::Model::instance()->currentProtocol()->protocolName() == rs::standardProtocolName();
+    //BOOL isEdge = rs::Model::instance()->currentProtocol()->protocolName() == rs::standardProtocolName();
     
     NSURLComponents* URLComponents = [NSURLComponents new];
-    if (isEdge)
+    if (aIsEdge)
     {
         URLComponents.host         = rs::kRSRevRedirectHost;
     }

@@ -17,6 +17,9 @@
 
 namespace rs
 {
+    const int kRSLogKey_LastMile = 10;
+    const int kRSLogKey_Configuration = 11;
+    
     class Log
     {
     public:

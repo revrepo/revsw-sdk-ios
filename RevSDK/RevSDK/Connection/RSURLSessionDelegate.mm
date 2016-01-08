@@ -30,6 +30,7 @@
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
     int code = [httpResponse statusCode];
     
+    BOOL isEdgeFlag = rs::Model::instance()->currentProtocol()->protocolName() == rs::standardProtocolName();
     NSLog(@"Redirect with code %d", code);
     
     if (!request)
@@ -42,7 +43,7 @@
     }
     else
     {
-        request = [RSURLRequestProcessor proccessRequest:request];
+        request = [RSURLRequestProcessor proccessRequest:request isEdge:isEdgeFlag];
         completionHandler(request);
     }
 }

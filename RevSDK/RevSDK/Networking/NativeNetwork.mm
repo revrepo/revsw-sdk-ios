@@ -10,6 +10,7 @@
 #import <Foundation/Foundation.h>
 
 #include "NativeNetwork.h"
+#include "RSURLRequestProcessor.h"
 #include "RSRequestOperation.h"
 #include "Data.hpp"
 #include "Response.hpp"
@@ -71,10 +72,24 @@ namespace rs
         [operationQueue addOperation:requestOperation];
     }
     
-    std::shared_ptr<Request> NativeNetwork::testRequestByURL(const std::string& aURL)
+    std::shared_ptr<Request> NativeNetwork::testRequestByURL(const std::string& aURL, Protocol* aProto, bool aProcess /*=true*/)
     {
         NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:NSStringFromStdString(aURL)]];
-        return requestFromURLRequest(req);
+        
+        NSMutableURLRequest* mreq = [req mutableCopy];
+        
+        [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mreq];
+        
+        if (aProcess)
+        {
+            bool flag = aProto->protocolName() == standardProtocolName();
+            req = [RSURLRequestProcessor proccessRequest:mreq isEdge:flag];
+        }
+        
+        auto request = requestFromURLRequest(mreq);
+        request->setOriginalScheme(rs::stdStringFromNSString(req.URL.scheme));
+        
+        return request;
     }
 }
 

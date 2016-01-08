@@ -10,6 +10,6 @@
 
 @interface RSURLRequestProcessor : NSObject
 
-+ (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest;
++ (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest isEdge:(bool)aIsEdge;
 
 @end

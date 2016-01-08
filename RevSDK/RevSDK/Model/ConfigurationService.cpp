@@ -4,6 +4,8 @@
 #include <chrono>
 #include <ctime>
 
+#include "RSLog.h"
+
 #include "Error.hpp"
 #include "ConfigurationService.h"
 #include "Network.hpp"
@@ -38,8 +40,12 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     mStaleConfiguration->operationMode = RSOperationModeInner::kRSOperationModeInnerOff;
     
     Timer::scheduleTimer(mConfigurationRefreshTimer, configuration.refreshInterval, [this]{
+        Log::info(kRSLogKey_Configuration, "Trying to load configuration...");
         this->loadConfiguration();
     });
+    
+    
+    Log::info(kRSLogKey_Configuration, "ConfigurationService was just created.");
 }
 
 ConfigurationService::~ConfigurationService()
@@ -72,6 +78,7 @@ std::shared_ptr<const Configuration> ConfigurationService::getActive() const
 {
     if (isStale())
     {
+        Log::info(kRSLogKey_Configuration, "Configuration is stale or no protocols available, OFF MODE");
         return mStaleConfiguration;
     }
     
@@ -82,9 +89,6 @@ void ConfigurationService::loadConfiguration()
 {
     std::function<void(const Data&, const Error&)> completionBlock = [this](const Data& aData, const Error& aError){
         
-#ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout << "RevSDK.Model::loadConfiguration Configuration loaded\n";
-#endif
         if (aError.isNoError())
         {
             Error error;
@@ -93,6 +97,8 @@ void ConfigurationService::loadConfiguration()
             
             if (isValid)
             {
+                Log::info(kRSLogKey_Configuration, "ConfigurationService: new conf received, valid");
+                
                 Configuration configuration = processConfigurationData(aData);
                 
                 Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
@@ -127,15 +133,12 @@ void ConfigurationService::loadConfiguration()
             }
             else
             {
-                std::cout << "RevSDK.Model::loadConfiguration Failed to validate configuration " << error.description() << std::endl;
+                Log::error(kRSLogKey_Configuration, "Failed to load configuration.");
             }
         }
         else
         {
-#ifdef RS_ENABLE_DEBUG_LOGGING
-            std::cout << "\n" << "RevSDK.Model::loadConfiguration Failed to load configuration "
-            << aError.description() << std::endl;;
-#endif
+            Log::error(kRSLogKey_Configuration, "Failed to load configuration.");
         }
     };
     
@@ -167,8 +170,7 @@ void ConfigurationService::setOperationMode(RSOperationModeInner aMode)
     else
     {
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout << "\n" << "RevSDK.ConfigurationService::setOperationMode\n"
-        "    Stale Configuration is immutable, doing nothign" <<std::endl;
+        Log::warning(kRSLogKey_Configuration, "Can't change operation mode - stale conf is immutable.");
 #endif
     }
 }

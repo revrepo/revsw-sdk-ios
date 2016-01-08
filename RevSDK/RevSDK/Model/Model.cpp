@@ -341,7 +341,8 @@ namespace rs
     
     void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
     {
-        mConfService = std::unique_ptr<IConfigurationService>(aNewService); 
+        mConfService = std::unique_ptr<IConfigurationService>(aNewService);
+        Log::info(kRSLogKey_Configuration, "Replacing configuration service on mock");
     }
     
     
@@ -352,6 +353,7 @@ namespace rs
         });
         
         mConfService               = std::unique_ptr<ConfigurationService>(conf);
+        Log::info(kRSLogKey_Configuration, "Recovering standard configuration service");
     }
 }
 

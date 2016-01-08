@@ -89,7 +89,7 @@ namespace rs
         };
         
         std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName()); 
-        std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL);
+        std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL, aProtocol.get());
         
         connection->startWithRequest(req, aDelegate);
     }
