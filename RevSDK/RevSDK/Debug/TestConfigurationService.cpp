@@ -23,6 +23,7 @@ void TestConfigurationService::pushTestConfig(const std::string &aProtocolName, 
     test.operationMode = (RSOperationModeInner) aOperationMode;
     
     mTestConfiguration = std::make_shared<Configuration>(test);
+    mDelegate->applyConfiguration(mTestConfiguration);
 }
 
 std::shared_ptr<const Configuration> TestConfigurationService::getActive() const

@@ -132,3 +132,15 @@ namespace rs
     bool _isValidConfiguration(const Data&, Error*);
 }
 #endif
+
+
+
+
+
+
+
+
+
+
+
+

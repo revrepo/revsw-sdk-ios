@@ -45,7 +45,7 @@ namespace rs
     class StatsHandler;
     class DebugUsageTracker;
     
-    class Model : IConfvigServDelegate
+    class Model : public IConfvigServDelegate
     {
     private:
         

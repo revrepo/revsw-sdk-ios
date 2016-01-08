@@ -19,7 +19,11 @@ namespace rs
     private:
         std::shared_ptr<Configuration> mTestConfiguration;
         
+        IConfvigServDelegate* mDelegate;
+        
     public:
+        TestConfigurationService(IConfvigServDelegate* aDelegate) : mDelegate(aDelegate){};
+        
         void pushTestConfig(const std::string& aProtocolName, int aOperationMode);
         
         void setOperationMode(RSOperationModeInner aMode) override;

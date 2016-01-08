@@ -78,7 +78,7 @@ static rs::TestConfigurationService* TestConfService = nullptr;
 
 + (void)debug_enableTestMode
 {
-    TestConfService = new rs::TestConfigurationService();
+    TestConfService = new rs::TestConfigurationService(rs::Model::instance());
     TestConfService->init();
     rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
 }

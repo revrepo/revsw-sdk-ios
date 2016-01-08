@@ -136,6 +136,7 @@
 
 - (void)toNextCase
 {
+    [self.testCases removeObjectAtIndex:0];
     if ([self.testCases count])
     {
         RTTestCase* tcase = [self.testCases objectAtIndex:0];
@@ -143,7 +144,6 @@
         RSOperationMode mode = (RSOperationMode) tcase.operationMode;
         
         [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
-        [self.testCases removeObjectAtIndex:0];
         
         NSString* type = tcase.testName;
         
@@ -209,6 +209,9 @@
         RSOperationMode mode = (RSOperationMode) tcase.operationMode; 
         [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
         
+        NSString* proto = tcase.testName;
+        
+        NSLog(@"-test: %ld mode: %@", (unsigned long)mTestsCounter, proto);
         
         NSString* type = @" ";//[RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
         NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
