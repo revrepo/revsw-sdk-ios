@@ -12,7 +12,7 @@
 
 - (NSString *)durationString
 {
-    return [NSString stringWithFormat:@"%.2f", _duration];
+    return [NSString stringWithFormat:@"%.3f", _duration];
 }
 
 - (NSString *)dataLengthString

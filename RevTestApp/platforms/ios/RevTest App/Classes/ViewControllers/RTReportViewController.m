@@ -53,43 +53,12 @@
                              reuseIdentifier:kIdentifier];
     }
     
-    NSInteger row = indexPath.row == 0 ? indexPath.row : indexPath.row - 1;
-    
+    NSInteger row                      = indexPath.row == 0 ? indexPath.row : indexPath.row - 1;
     RTIterationResult* iterationResult = self.testResults[row];
-    
-    if (indexPath.row == 0)
-    {
-       NSArray* texts = [iterationResult.testResults valueForKeyPath:@"@unionOfObjects.nameString"];
-       [cell setTexts:texts];
-    }
-    else
-    {
-        NSArray* durations = [iterationResult.testResults valueForKeyPath:@"@unionOfObjects.wholeString"];
-        [cell setTexts:durations];
-    }
-    
-    [cell setNumber:indexPath.row];
-//    
-//    if (indexPath.row == 0)
-//    {
-//       // NSString* sdkLabelText = self.userInfo[kRTSDKLabelTextKey];
-//        
-//        cell.directLabel.text = @"Current(KB)";
-//        cell.sdkLabel.text    = [NSString stringWithFormat:@"%@(KB)", @"Rev"];
-//    }
-//    else
-//    {
-//       /* cell.numberLabel.text = [NSString stringWithFormat:@"%ld.", (long)indexPath.row];
-//        cell.directLabel.text = [NSString stringWithFormat:@"%.3f (%.1f)", directResult.doubleValue, dataLength.floatValue];
-//        cell.sdkLabel.text    = [NSString stringWithFormat:@"%.3f (%.1f)", sdkResults.doubleValue, sdkDataLength.floatValue];*/
-//    }
-    
-    /*if ([self.resultSuccessFlags count] > indexPath.row - 1)
-    {
-        NSNumber* numb = (NSNumber*)self.resultSuccessFlags[indexPath.row - 1];
-        bool flag = ![numb boolValue];
-        cell.contentView.backgroundColor = flag ? ([UIColor redColor]) : ([UIColor whiteColor]);
-    }*/
+    NSString* propertyString           = indexPath.row == 0 ? @"nameString" : @"wholeString";
+    NSString* keyPath                  = [NSString stringWithFormat:@"@unionOfObjects.%@", propertyString];
+    NSArray* texts                     = [iterationResult.testResults valueForKeyPath:keyPath];
+    [cell setTexts:texts number:indexPath.row];
     
     return cell;
 }

@@ -173,8 +173,6 @@
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
     
-    NSLog(@"DATA SIZE %ld", mCurrentDataSize);
-    
     tres.dataLength  = mCurrentDataSize / 1024.0;
     tres.errorCode   = aResult;
     tres.duration    = interval;

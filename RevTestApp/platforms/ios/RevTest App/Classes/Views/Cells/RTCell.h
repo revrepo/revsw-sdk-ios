@@ -14,7 +14,6 @@
 
 @property (nonatomic, strong) RTIterationResult* iterationResult;
 
-- (void)setTexts:(NSArray<NSString *>*)aTexts;
-- (void)setNumber:(NSInteger)aNumber;
+- (void)setTexts:(NSArray<NSString *>*)aTexts number:(NSInteger)aNumber;
 
 @end
