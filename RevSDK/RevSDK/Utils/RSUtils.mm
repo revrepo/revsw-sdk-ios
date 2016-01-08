@@ -417,10 +417,11 @@ namespace rs
         
         NSString* URLString                 = [originalURL absoluteString];
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
+        BOOL successStatus                  = aResponse.statusCode >= 200 && aResponse.statusCode < 300;
         
         dataDictionary[kRSURLKey]           = URLString;
         dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
-        dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
+        dataDictionary[kRS_JKey_SuccessStatus] = @((int)successStatus);
         
         //fill with defaults
         {
@@ -488,10 +489,11 @@ namespace rs
         
         NSString* URLString                 = [originalURL absoluteString];
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
+        BOOL successStatus                  = aResponse.statusCode >= 200 && aResponse.statusCode < 300;
         
         dataDictionary[kRSURLKey]           = URLString;
         dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
-        dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
+        dataDictionary[kRS_JKey_SuccessStatus] = @((int)successStatus);
         
         //fill with defaults
         {
