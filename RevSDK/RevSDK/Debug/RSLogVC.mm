@@ -97,17 +97,19 @@
     
     NSMutableArray* c = [NSMutableArray array];
     rs::LogTarget* lt = rs::Model::instance()->log();
-    lt->visit([c](const rs::LogTarget::Entry::List& aEntries)
+    rs::LogTarget::Entry::List entries;
+    rs::LogTarget::SimpleFilter filter;
+    // play with filter here
+    
+    lt->filter(entries, &filter);
+    for (const rs::LogTarget::Entry& e : entries)
     {
-        for (const rs::LogTarget::Entry& e : aEntries)
-        {
-            RSLogEntry* entry = [[RSLogEntry alloc] init];
-            entry.level = e.level();
-            entry.tag = e.tag();
-            entry.message = [NSString stringWithUTF8String:e.message().c_str()];
-            [c addObject:entry];
-        }
-    });
+        RSLogEntry* entry = [[RSLogEntry alloc] init];
+        entry.level = e.level();
+        entry.tag = e.tag();
+        entry.message = [NSString stringWithUTF8String:e.message().c_str()];
+        [c addObject:entry];
+    }
     
     UITableView* tv = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.table = tv;
