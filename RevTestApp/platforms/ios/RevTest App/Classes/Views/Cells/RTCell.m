@@ -42,7 +42,7 @@
     
      if (!label)
      {
-        label = [self addLabelWithOffsetConstant:12.f tag:100];
+        label = [self addLabelWithOffsetConstant:16.f tag:100];
      }
     
     label.text = aNumber == 0 ? @"" : [NSString stringWithFormat:@"%ld.", aNumber];

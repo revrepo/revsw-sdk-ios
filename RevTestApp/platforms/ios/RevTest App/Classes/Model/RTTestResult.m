@@ -12,7 +12,7 @@
 
 - (NSString *)durationString
 {
-    return [NSString stringWithFormat:@"%.1f", _duration];
+    return [NSString stringWithFormat:@"%.2f", _duration];
 }
 
 - (NSString *)dataLengthString
@@ -22,7 +22,12 @@
 
 - (NSString *)wholeString
 {
-    return [NSString stringWithFormat:@"%@(%@)", self.durationString, self.dataLengthString];
+    return [NSString stringWithFormat:@"%@ (%@)", self.durationString, self.dataLengthString];
+}
+
+- (NSString *)nameString
+{
+    return [NSString stringWithFormat:@"%@(KB)", _testName];
 }
 
 @end

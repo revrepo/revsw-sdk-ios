@@ -59,7 +59,7 @@
     
     if (indexPath.row == 0)
     {
-       NSArray* texts = [iterationResult.testResults valueForKeyPath:@"@unionOfObjects.testName"];
+       NSArray* texts = [iterationResult.testResults valueForKeyPath:@"@unionOfObjects.nameString"];
        [cell setTexts:texts];
     }
     else

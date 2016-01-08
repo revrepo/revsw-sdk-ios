@@ -15,6 +15,7 @@
 @property (nonatomic, assign) NSTimeInterval duration;
 @property (nonatomic, readonly) NSString* durationString;
 @property (nonatomic, readonly) NSString* dataLengthString;
-@property (nonatomic, strong) NSString* wholeString;
+@property (nonatomic, readonly) NSString* wholeString;
+@property (nonatomic, readonly) NSString* nameString;
 
 @end
