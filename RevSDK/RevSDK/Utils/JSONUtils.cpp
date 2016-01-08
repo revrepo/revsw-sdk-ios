@@ -6,6 +6,8 @@
 //  Copyright © 2015 TundraMobile. All rights reserved.
 //
 
+#include <iostream>
+
 #include <json/json.h>
 
 #include "JSONUtils.hpp"

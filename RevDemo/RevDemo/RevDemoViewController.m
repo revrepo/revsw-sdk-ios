@@ -18,6 +18,10 @@
 
 #import "RevDemoViewController.h"
 
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+
+
 @interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *urlTextField;

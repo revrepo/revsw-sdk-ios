@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B63439D1C3C106D002EE0BC /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B63439B1C3C106D002EE0BC /* Fabric.framework */; };
+		5B63439E1C3C106D002EE0BC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B63439C1C3C106D002EE0BC /* Crashlytics.framework */; };
 		6508409C1C2A75BF00B72CAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6508409B1C2A75BF00B72CAF /* main.m */; };
 		6508409F1C2A75BF00B72CAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6508409E1C2A75BF00B72CAF /* AppDelegate.m */; };
 		650840A21C2A75BF00B72CAF /* RevDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840A11C2A75BF00B72CAF /* RevDemoViewController.m */; };
@@ -46,6 +48,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B63439B1C3C106D002EE0BC /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		5B63439C1C3C106D002EE0BC /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		650840971C2A75BF00B72CAF /* RevSDK Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevSDK Demo.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6508409B1C2A75BF00B72CAF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6508409D1C2A75BF00B72CAF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -74,6 +78,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				650840C01C2A762000B72CAF /* RevSDK.framework in Frameworks */,
+				5B63439E1C3C106D002EE0BC /* Crashlytics.framework in Frameworks */,
+				5B63439D1C3C106D002EE0BC /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,6 +154,8 @@
 		650840C11C2A763500B72CAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5B63439B1C3C106D002EE0BC /* Fabric.framework */,
+				5B63439C1C3C106D002EE0BC /* Crashlytics.framework */,
 				650840BF1C2A762000B72CAF /* RevSDK.framework */,
 			);
 			name = Frameworks;
@@ -165,6 +173,7 @@
 				650840941C2A75BF00B72CAF /* Frameworks */,
 				650840951C2A75BF00B72CAF /* Resources */,
 				650840C41C2A7A6100B72CAF /* Embed Frameworks */,
+				5B63439A1C3C1033002EE0BC /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -250,6 +259,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B63439A1C3C1033002EE0BC /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 57f92a4f85e4b755011bf87ff9ebc137380f5d2d 974e8f9a8ce392a112da439c5b9bc40d406b6963471f3983176830086f895a66";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		650840931C2A75BF00B72CAF /* Sources */ = {
@@ -394,6 +419,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RevDemo",
 				);
 				INFOPLIST_FILE = RevDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -413,13 +439,14 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RevDemo",
 				);
 				INFOPLIST_FILE = RevDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo2;
 				PRODUCT_NAME = "RevSDK Demo";
-				PROVISIONING_PROFILE = "05825b2d-4c03-46d3-839c-1e72ba45cf7e";
+				PROVISIONING_PROFILE = "c0c5c052-86a9-40f4-a47c-e2233e1a6bfb";
 			};
 			name = Release;
 		};

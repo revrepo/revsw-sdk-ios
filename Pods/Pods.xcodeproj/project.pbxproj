@@ -16,10 +16,10 @@
 		5EB4F27B76513AE918BA5AE0868E87C8 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = ED72A844E11CD78D12427B6CD0B7A693 /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70D801E0B95C23BCC270E4EC8659D463 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1264325C4220C1BDC3C73E5D496129FD /* CoreGraphics.framework */; };
 		76024D31306A871F25E75AC079A68A8A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093D627869B650AB8D6411D2DE6B7A /* Foundation.framework */; };
-		78D59EE09285436A73E11667C895CA99 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509A4552941432AF44E653A192B7F7E9 /* jsoncpp.cpp */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		82FC12F67E83874B93592218E9FB4CA0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = D80885B23BD85E5E0DCEF6FF8F011C1B /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		A83A0DFAFFC95DCB52A2E1910C2B4100 /* jsoncpp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 693478F40787F2FE394F6D6DD15C00FC /* jsoncpp-dummy.m */; };
+		8EA8DDFBEF58061EEB7E741C1E82CACE /* jsoncpp-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 693478F40787F2FE394F6D6DD15C00FC /* jsoncpp-dummy.m */; };
 		D4D077C222F9FB2D85FBBB76F0C7DD72 /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = BCEE8701737D380BB8E69617E00C234C /* json-forwards.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F9E9D933E4C1A7BE8A93905F91888129 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 509A4552941432AF44E653A192B7F7E9 /* jsoncpp.cpp */; };
 		FC214077677D4F02E03C6C85F774E028 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E0EE690D65348C90CC062F677B73BEE /* MBProgressHUD-dummy.m */; };
 /* End PBXBuildFile section */
 
@@ -303,7 +303,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8F5C61CB768F534D75209F180948DF3B /* Build configuration list for PBXNativeTarget "jsoncpp" */;
 			buildPhases = (
-				93BA2D1068291FE285D0FDD89EE15470 /* Sources */,
+				6EAED9808522693FC52F358C53CDFA3F /* Sources */,
 				06BDCA54F62039C78A8F10E4E1841B21 /* Frameworks */,
 				2CB416C62EB1686CD1F852D03E698EF5 /* Headers */,
 			);
@@ -372,12 +372,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		93BA2D1068291FE285D0FDD89EE15470 /* Sources */ = {
+		6EAED9808522693FC52F358C53CDFA3F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A83A0DFAFFC95DCB52A2E1910C2B4100 /* jsoncpp-dummy.m in Sources */,
-				78D59EE09285436A73E11667C895CA99 /* jsoncpp.cpp in Sources */,
+				8EA8DDFBEF58061EEB7E741C1E82CACE /* jsoncpp-dummy.m in Sources */,
+				F9E9D933E4C1A7BE8A93905F91888129 /* jsoncpp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
