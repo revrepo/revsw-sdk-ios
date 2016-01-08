@@ -21,10 +21,13 @@
 
 namespace rs
 {
+    class UDPService;
     class QUICSession : public NativeUDPSocketCPPDelegate, public QUICDataStream::Delegate
     {
     public:
         static QUICSession* instance();
+        static void reconnect();
+        
         QUICSession();
         ~QUICSession();
         
@@ -35,6 +38,11 @@ namespace rs
         void sendRequest(const net::SpdyHeaderBlock &headers,
                          base::StringPiece body,
                          QUICStreamDelegate* aStreamDelegate);
+        void sendRequest(const net::SpdyHeaderBlock &headers,
+                         base::StringPiece body,
+                         QUICStreamDelegate* aStreamDelegate,
+                         int aTag,
+                         std::function<void(int, QUICDataStream*)> aCallback);
         void update(size_t aNowMS);
         
         
@@ -42,9 +50,9 @@ namespace rs
         void p_connect(net::QuicServerId aTargetServerId);
         void p_disconnect();
         bool p_connected() const;
-        bool p_sendRequest(const net::SpdyHeaderBlock &headers,
-                           base::StringPiece body,
-                           QUICStreamDelegate* aStreamDelegate);
+        QUICDataStream* p_sendRequest(const net::SpdyHeaderBlock &headers,
+                                      base::StringPiece body,
+                                      QUICStreamDelegate* aStreamDelegate);
         void OnClose(net::QuicDataStream* stream);
         
         void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) override;
@@ -64,9 +72,10 @@ namespace rs
         void onQUICError() override;
     private:
         static QUICSession* mInstance;
-        QUICThread mInstanceThread;
+        //QUICThread mInstanceThread;
+        UDPService* mService;
         
-        void executeOnSessionThread(std::function<void(void)> aFunction);
+        void executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync = false);
         
         class ObjCImpl;
         
@@ -75,7 +84,7 @@ namespace rs
         base::AtExitManager mAtExitManager;
         
         // Obj-C object that manages the udp socket, needs to outlive writer.
-        ObjCImpl* mObjC;
+        //ObjCImpl* mObjC;
         
         // Writer used to send packets to the wire.
         // Wraps around the cocoaUDPSocketWrapper.
@@ -96,5 +105,7 @@ namespace rs
         
         typedef std::map<QUICDataStream*, QUICStreamDelegate*> StreamDelegateMap;
         StreamDelegateMap mStreamDelegateMap;
+        
+        bool mConnecting;
     };
 }

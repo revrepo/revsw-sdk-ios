@@ -14,7 +14,6 @@
 
 using namespace rs;
 
-
 ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
 {
     auto vec = data_storage::restoreAvailableProtocols();
@@ -141,6 +140,7 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
 
 std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
+//    return std::make_shared<QUICProtocol>();
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (!mSortedProtocols.empty())
     {

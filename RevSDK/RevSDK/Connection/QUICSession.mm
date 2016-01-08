@@ -11,6 +11,7 @@
 #import "RSNativeUDPSocketWrapper.h"
 
 #include "QUICSession.h"
+#include "RSUDPService.h"
 #include <iostream>
 
 class rs::QUICSession::ObjCImpl
@@ -28,9 +29,13 @@ QUICSession* QUICSession::mInstance = nullptr;
 //QUICThread QUICSession::mInstanceThread;
 //std::mutex QUICSession::mInstanceLock;
 
-void QUICSession::executeOnSessionThread(std::function<void(void)> aFunction)
+void QUICSession::executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync)
 {
-    mInstanceThread.perform(aFunction);
+    //mInstanceThread.perform(aFunction);
+    if (mService == nullptr)
+        return;
+    
+    mService->perform(aFunction, aForceAsync);
 }
 
 QUICSession* QUICSession::instance()
@@ -39,21 +44,94 @@ QUICSession* QUICSession::instance()
     {
         mInstance = new QUICSession();
         
-        int port = 443;
         std::string address("www.revapm.com");
-        QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
-        mInstance->connect(serverId);
+        int port = 443;
+        mInstance->mConnecting = true;
+        UDPService::dispatch(address, port, [address, port](UDPService* s)
+        {
+            mInstance->mService = s;
+            QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
+            
+            s->setOnRecv([](UDPService* serv, const void* d, size_t l)
+            {
+                net::QuicEncryptedPacket packet((const char*)d, l);
+                mInstance->onQUICPacket(packet);
+            });
+            
+            s->setOnError([](UDPService* serv, int c, std::string d)
+            {
+                mInstance->onQUICError();
+            });
+            
+            std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, mInstance, std::placeholders::_1);
+            s->setOnIdle(updFunc);
+
+            mInstance->connect(serverId);
+            mInstance->mConnecting = false;
+        });
+
+//        UDPSocket* s = new UDPSocket("www.revapm.com", 443);
+//        s->connect();
+//        char sd[] = "Hello world!";
+//        s->send((const void*)sd, ::strlen(sd));
+//        char rd[16];
+//        s->recv((void*)rd, 16, 1000);
+//        s->recv((void*)rd, 16, 1000);
+//        s->recv((void*)rd, 16, 1000);
+//        s->recv((void*)rd, 16, 1000);
     }
     return mInstance;
 }
 
+void QUICSession::reconnect()
+{
+    if (mInstance->mConnecting)
+        return;
+    
+    mInstance->mConnecting = true;
+
+    mInstance->mService->setOnRecv(nullptr);
+    mInstance->mService->setOnError(nullptr);
+    mInstance->mService->setOnIdle(nullptr);
+    mInstance->mService->shutdown();
+    mInstance->mService = nullptr;
+    mInstance->mSession = nullptr; // LEAK!
+    
+    std::string address("www.revapm.com");
+    int port = 443;
+    UDPService::dispatch(address, port, [address, port](UDPService* s)
+    {
+        mInstance->mService = s;
+        QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
+        
+        s->setOnRecv([](UDPService* serv, const void* d, size_t l)
+                     {
+                         net::QuicEncryptedPacket packet((const char*)d, l);
+                         mInstance->onQUICPacket(packet);
+                     });
+        
+        s->setOnError([](UDPService* serv, int c, std::string d)
+                      {
+                          mInstance->onQUICError();
+                      });
+        
+        std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, mInstance, std::placeholders::_1);
+        s->setOnIdle(updFunc);
+        
+        mInstance->connect(serverId);
+        mInstance->mConnecting = false;
+    });
+
+
+}
+
 QUICSession::QUICSession():
     mSessionDelegate (nullptr),
-    mObjC(new ObjCImpl()),
-    mClientAddress({0, 0, 0, 0}, 443)
+    //mObjC(new ObjCImpl()),
+    mClientAddress({0, 0, 0, 0}, 443),
+    mConnecting (false)
 {
-    std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, this, std::placeholders::_1);
-    mInstanceThread.setUpdateCallback(updFunc);
+    //mInstanceThread.setUpdateCallback(updFunc);
 }
 
 QUICSession::~QUICSession()
@@ -89,7 +167,21 @@ void QUICSession::sendRequest(const net::SpdyHeaderBlock &headers,
     executeOnSessionThread([this, headers, body, aStreamDelegate]()
     {
         p_sendRequest(headers, body, aStreamDelegate);
-    });
+    }, true);
+}
+
+void QUICSession::sendRequest(const net::SpdyHeaderBlock &headers,
+                 base::StringPiece body,
+                 QUICStreamDelegate* aStreamDelegate,
+                 int aTag,
+                 std::function<void(int, QUICDataStream*)> aCallback)
+{
+    executeOnSessionThread([this, headers, body, aStreamDelegate, aTag, aCallback]()
+    {
+        QUICDataStream* stream = p_sendRequest(headers, body, aStreamDelegate);
+        if (aCallback)
+            aCallback(aTag, stream);
+    }, true);
 }
 
 void QUICSession::p_connect(QuicServerId aTargetServerId)
@@ -100,18 +192,18 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
     mServerAddress = IPEndPoint({0, 0, 0, 0}, aTargetServerId.port());
     mServerId = aTargetServerId;
     
-    const UInt16 port = mServerId.host_port_pair().port();
-    NSString *address = [NSString stringWithCString:mServerId.host_port_pair().host().c_str()
-                                           encoding:[NSString defaultCStringEncoding]];
+//    const UInt16 port = mServerId.host_port_pair().port();
+//    NSString *address = [NSString stringWithCString:mServerId.host_port_pair().host().c_str()
+//                                           encoding:[NSString defaultCStringEncoding]];
     
-    mObjC->mNativeUDPSocket = [[NativeUDPSocketWrapper alloc] initWithHost:address
-                                                                       onPort:port
-                                                                    delegate:this];
-    
-    if (mObjC->mNativeUDPSocket == nil)
-    {
-        return;
-    }
+//    mObjC->mNativeUDPSocket = [[NativeUDPSocketWrapper alloc] initWithHost:address
+//                                                                       onPort:port
+//                                                                    delegate:this];
+//    
+//    if (mObjC->mNativeUDPSocket == nil)
+//    {
+//        return;
+//    }
     
     mConnectionHelper.reset(new QuicConnectionHelper());
     mCryptoConfig.SetProofVerifier(new RevProofVerifier());
@@ -153,26 +245,31 @@ void QUICSession::p_disconnect()
 
 bool QUICSession::p_connected() const
 {
-    if (mSession.get())
-    {
-        if (mSession->connection())
-        {
-            return
-            mSession->connection()->connected() &&
-            mSession->EncryptionEstablished();
-        }
-    }
+    if (!mSession.get())
+        return false;
     
-    return false;
+    if (!mSession->connection())
+        return false;
+    
+    if (!mSession->connection()->connected() || !mSession->EncryptionEstablished())
+        return false;
+    
+    if (!mService)
+        return false;
+    
+    if (!mService->connected())
+        return false;
+    
+    return true;
 }
 
-bool QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
+QUICDataStream* QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
                               base::StringPiece body,
                               QUICStreamDelegate* aStreamDelegate)
 {
     if (!p_connected())
     {
-        return false;
+        return nullptr;
     }
     
     QUICDataStream* stream = createReliableClientStream();
@@ -180,14 +277,15 @@ bool QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
     if (stream == nullptr)
     {
         std::cout << "Stream creation failed!" << std::endl;
-        return false;
+        reconnect();
+        return nullptr;
     }
     
     stream->setDelegate(this);
     mStreamDelegateMap[stream] = aStreamDelegate;
     /*const size_t numBytesWritten = */stream->SendRequest(headers, body, true);
     //std::cout << "Written: " << numBytesWritten << std::endl;
-    return true;
+    return stream;
 }
 
 void QUICSession::OnClose(QuicDataStream* aStream)
@@ -261,7 +359,7 @@ QuicConnectionHelper *QUICSession::createQuicConnectionHelper()
 
 QuicPacketWriter *QUICSession::createQuicPacketWriter()
 {
-    return new CocoaQuicPacketWriter(mObjC->mNativeUDPSocket);
+    return new CocoaQuicPacketWriter(mService);
 }
 
 QuicClientSession *QUICSession::createQuicClientSession(const QuicConfig &config,
