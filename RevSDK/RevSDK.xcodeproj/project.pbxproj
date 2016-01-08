@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1109F3CA1C40091900ABB160 /* RSLogVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 1109F3C81C40091900ABB160 /* RSLogVC.h */; };
+		1109F3CB1C40091900ABB160 /* RSLogVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1109F3C91C40091900ABB160 /* RSLogVC.mm */; };
+		1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1109F3CE1C401EEE00ABB160 /* MessageUI.framework */; };
+		1109F3D61C401FD700ABB160 /* RSEntryVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 1109F3D41C401FD700ABB160 /* RSEntryVC.h */; };
+		1109F3D71C401FD700ABB160 /* RSEntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1109F3D51C401FD700ABB160 /* RSEntryVC.m */; };
 		114D65871C34502C00C2D176 /* DebugUsageTracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */; };
 		114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 114D65861C34502C00C2D176 /* DebugUsageTracker.mm */; };
 		114D658D1C3476E400C2D176 /* NSURL+RevSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */; };
@@ -146,6 +151,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1109F3C81C40091900ABB160 /* RSLogVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLogVC.h; sourceTree = "<group>"; };
+		1109F3C91C40091900ABB160 /* RSLogVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSLogVC.mm; sourceTree = "<group>"; };
+		1109F3CE1C401EEE00ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		1109F3D41C401FD700ABB160 /* RSEntryVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSEntryVC.h; sourceTree = "<group>"; };
+		1109F3D51C401FD700ABB160 /* RSEntryVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSEntryVC.m; sourceTree = "<group>"; };
 		114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DebugUsageTracker.hpp; sourceTree = "<group>"; };
 		114D65861C34502C00C2D176 /* DebugUsageTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebugUsageTracker.mm; sourceTree = "<group>"; };
 		114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RevSDK.h"; sourceTree = "<group>"; };
@@ -290,6 +300,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */,
 				11C961161C2D469300CDE34D /* libcrypto.a in Frameworks */,
 				45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */,
 				11C9619E1C2D469300CDE34D /* libquic.a in Frameworks */,
@@ -311,6 +322,7 @@
 		0C970DE8623DE2851A075105 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1109F3CE1C401EEE00ABB160 /* MessageUI.framework */,
 				DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */,
 			);
 			name = Frameworks;
@@ -323,6 +335,10 @@
 				114D65861C34502C00C2D176 /* DebugUsageTracker.mm */,
 				11C1968A1C3FAF4600F28120 /* RSLog.h */,
 				11C196891C3FAF4600F28120 /* RSLog.cpp */,
+				1109F3C81C40091900ABB160 /* RSLogVC.h */,
+				1109F3C91C40091900ABB160 /* RSLogVC.mm */,
+				1109F3D41C401FD700ABB160 /* RSEntryVC.h */,
+				1109F3D51C401FD700ABB160 /* RSEntryVC.m */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -666,6 +682,7 @@
 				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
 				11C9621E1C2D54C000CDE34D /* QUICSession.h in Headers */,
+				1109F3D61C401FD700ABB160 /* RSEntryVC.h in Headers */,
 				6D1F860A1C3A730800E48AC9 /* ProtocolSelector.hpp in Headers */,
 				5B20359C1C33FF7000A28C01 /* STUNClient.h in Headers */,
 				5BDA28281BFA31C9003F55F6 /* ConnectionProxy.h in Headers */,
@@ -675,6 +692,7 @@
 				11C9622A1C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h in Headers */,
 				5B54C3491BFB7B8700217971 /* QUICConnection.hpp in Headers */,
 				5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */,
+				1109F3CA1C40091900ABB160 /* RSLogVC.h in Headers */,
 				11C9610E1C2D469300CDE34D /* quic_client_session.h in Headers */,
 				11F24B4B1C3D695D00DABAE5 /* RSUDPService.h in Headers */,
 				6D4544811C33C5160020224C /* ConfigurationService.h in Headers */,
@@ -819,8 +837,10 @@
 				11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */,
 				5B54C3441BFB7AE200217971 /* StandardConnection.mm in Sources */,
 				5B3096EB1BFA0CB70045024C /* RSURLProtocol.mm in Sources */,
+				1109F3D71C401FD700ABB160 /* RSEntryVC.m in Sources */,
 				114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */,
 				5BE3F8691C0455CC0087BC28 /* DataStorage.mm in Sources */,
+				1109F3CB1C40091900ABB160 /* RSLogVC.mm in Sources */,
 				6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */,
 				5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.mm in Sources */,

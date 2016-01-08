@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
+#import "RSLogVC.h"
 
 #import "RevSDK.h"
 #import "RSURLProtocol.h"
@@ -128,6 +129,15 @@ static bool gIsInitialized = false;
 + (void)debug_forceConfigurationUpdate
 {
     rs::Model::instance()->debug_forceReloadConfiguration();
+}
+
++ (void)debug_showLogInViewController:(UIViewController*)aVC
+{
+    if (aVC == nil)
+        return;
+    
+    UINavigationController* nc = [[UINavigationController alloc] initWithRootViewController:[RSLogVC createNew]];
+    [aVC presentViewController:nc animated:YES completion:^{}];
 }
 
 @end

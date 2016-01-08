@@ -161,6 +161,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1109F3CC1C401ED000ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* RevTest App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevTest App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -399,6 +400,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1109F3CC1C401ED000ABB160 /* MessageUI.framework */,
 				5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -1100,7 +1102,6 @@
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
-				6D73CE0B1C2833280095EA9C /* RTTestCycleInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

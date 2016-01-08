@@ -35,6 +35,7 @@ namespace rs
         Log::initialize();
         mMemoryLog.reset(new LogTargetMemory());
         Log::instance()->addTarget(mMemoryLog);
+        Log::info(0, "Logging on");
         data_storage::initDataStorage();
         
         auto conf = new ConfigurationService(this, [this](){
