@@ -10,11 +10,8 @@
 
 @interface RTTestStatsViewController : UIViewController
 
-/*@property (nonatomic, copy) NSArray* directResults;
-@property (nonatomic, copy) NSArray* sdkResults;
-@property (nonatomic, copy) NSArray* resultSuccessFlags;
-@property (nonatomic, strong) NSDictionary* userInfo;
-*/
 @property (nonatomic, strong) NSArray* testResults;
+
+- (void)prepare;
 
 @end

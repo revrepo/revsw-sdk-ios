@@ -51,6 +51,8 @@
     {
         cell = [[RTCell alloc] initWithStyle:UITableViewCellStyleDefault
                              reuseIdentifier:kIdentifier];
+        
+        cell.showingReport = YES;
     }
     
     NSInteger row                      = indexPath.row == 0 ? indexPath.row : indexPath.row - 1;
@@ -58,7 +60,11 @@
     NSString* propertyString           = indexPath.row == 0 ? @"nameString" : @"wholeString";
     NSString* keyPath                  = [NSString stringWithFormat:@"@unionOfObjects.%@", propertyString];
     NSArray* texts                     = [iterationResult.testResults valueForKeyPath:keyPath];
-    [cell setTexts:texts number:indexPath.row];
+    NSString* startString              = indexPath.row == 0 ? @"" : [NSString stringWithFormat:@"%ld.", indexPath.row];
+    [cell setTexts:texts startText:startString];
+    
+    
+    cell.contentView.backgroundColor = iterationResult.valid || indexPath.row == 0 ? [UIColor whiteColor] : [UIColor redColor];
     
     return cell;
 }

@@ -7,9 +7,11 @@
 //
 
 #import "RTTestStatsViewController.h"
-#import "RTReportCell.h"
+#import "RTCell.h"
 #import "NSArray+Stats.h"
 #import "RTUtils.h"
+#import "RTIterationResult.h"
+#import "RTTestResult.h"
 
 @interface RTTestStatsViewController ()<UITableViewDataSource, UITableViewDataSource>
 
@@ -19,80 +21,121 @@
 
 @implementation RTTestStatsViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-    
+- (void)prepare
+{
     __weak RTTestStatsViewController* weakSelf = self;
     
-   /* self.cellProcessBlocks = @[
-                               ^(RTReportCell* cell){
+    RTIterationResult* result = weakSelf.testResults.firstObject;
+    NSUInteger count = result.testResults.count;
+    NSMutableArray* bigArray = [NSMutableArray array];
+    
+    for (int i = 0; i < count; i++)
+    {
+        NSMutableArray* tests = [NSMutableArray array];
+        
+        for (RTIterationResult* itResult in weakSelf.testResults)
+        {
+            RTTestResult* tr = itResult.testResults[i];
+            [tests addObject:@(tr.duration)];
+        }
+        
+        [bigArray addObject:tests];
+    }
+    
+    self.cellProcessBlocks = @[
+                               ^(RTCell* cell){
                                    
-                                  // NSString* sdkLabelText = weakSelf.userInfo[kRTSDKLabelTextKey];
+                                   NSArray* names = [result.testResults valueForKeyPath:@"@unionOfObjects.testName"];
+                                   [cell setTexts:names startText:@""];
                                    
-                                   [cell setNumberText:@""
-                                            directText:@"Current"
-                                               sdkText:@"Rev"];
                                },
-                                ^(RTReportCell* cell){
+                                ^(RTCell* cell){
                                    
-                                    NSNumber* directMin = [self.directResults valueForKeyPath:@"@min.doubleValue"];
-                                    NSNumber* sdkMin    = [self.sdkResults valueForKeyPath:@"@min.doubleValue"];
+                                    NSMutableArray* texsts = [NSMutableArray array];
                                     
-                                    [cell setNumberText:@"Min:"
-                                             directText:[NSString stringWithFormat:@"%.3f", directMin.doubleValue]
-                                                sdkText:[NSString stringWithFormat:@"%.3f", sdkMin.doubleValue]];
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        NSNumber* num = [results valueForKeyPath:@"@min.doubleValue"];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    [cell setTexts:texsts
+                                         startText:@"Min:"];
+                                },
+                                ^(RTCell* cell){
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        NSNumber* num = [results valueForKeyPath:@"@max.doubleValue"];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    [cell setTexts:texsts
+                                         startText:@"Max:"];
 
                                 },
-                                ^(RTReportCell* cell){
+                                ^(RTCell* cell){
                                     
-                                    NSNumber* directMax = [self.directResults valueForKeyPath:@"@max.doubleValue"];
-                                    NSNumber* sdkMax    = [self.sdkResults valueForKeyPath:@"@max.doubleValue"];
+                                    NSMutableArray* texsts = [NSMutableArray array];
                                     
-                                    [cell setNumberText:@"Max:"
-                                             directText:[NSString stringWithFormat:@"%.3f", directMax.doubleValue]
-                                                sdkText:[NSString stringWithFormat:@"%.3f", sdkMax.doubleValue]];
-
-                                },
-                                ^(RTReportCell* cell){
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        NSNumber* num = [results valueForKeyPath:@"@avg.doubleValue"];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
                                     
-                                    NSNumber* directAvg = [self.directResults valueForKeyPath:@"@avg.doubleValue"];
-                                    NSNumber* sdkAvg    = [self.sdkResults valueForKeyPath:@"@avg.doubleValue"];
-                            
-                                    [cell setNumberText:@"Average:"
-                                             directText:[NSString stringWithFormat:@"%.3f", directAvg.doubleValue]
-                                                sdkText:[NSString stringWithFormat:@"%.3f", sdkAvg.doubleValue]];
+                                    [cell setTexts:texsts
+                                         startText:@"Average:"];
                                     
                                 },
-                                ^(RTReportCell* cell){
+                                ^(RTCell* cell){
                                     
-                                    NSNumber* directMedian = [self.directResults median];
-                                    NSNumber* sdkMedian    = [self.sdkResults median];
+                                  
+                                    NSMutableArray* texsts = [NSMutableArray array];
                                     
-                                    [cell setNumberText:@"Median:"
-                                             directText:[NSString stringWithFormat:@"%.3f", directMedian.doubleValue]
-                                                sdkText:[NSString stringWithFormat:@"%.3f", sdkMedian.doubleValue]];
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        NSNumber* num = [results median];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    [cell setTexts:texsts
+                                         startText:@"Median:"];
                                 },
-                                ^(RTReportCell* cell){
+                                ^(RTCell* cell){
                                     
-                                    NSNumber* directDeviation = [self.directResults standardDeviation];
-                                    NSNumber* sdkDeviation    = [self.sdkResults standardDeviation];
+                                    NSMutableArray* texsts = [NSMutableArray array];
                                     
-                                    [cell setNumberText:@"Stand. deviation:"
-                                             directText:[NSString stringWithFormat:@"%.3f", directDeviation.doubleValue]
-                                                sdkText:[NSString stringWithFormat:@"%.3f", sdkDeviation.doubleValue]];
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        NSNumber* num = [results standardDeviation];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];                                    }
+                                    
+                                    [cell setTexts:texsts
+                                         startText:@"Stand. deviation:"];
                                 },
-                                ^(RTReportCell* cell){
+                                ^(RTCell* cell){
                                     
-                                    NSNumber* directExpectedValue = [self.directResults expectedValue];
-                                    NSNumber* sdkExpectedValue    = [self.sdkResults expectedValue];
+                                    NSMutableArray* texsts = [NSMutableArray array];
                                     
-                                    [cell setNumberText:@"Expected value:"
-                                             directText:[NSString stringWithFormat:@"%.3f", directExpectedValue.doubleValue]
-                                                sdkText:[NSString stringWithFormat:@"%.3f", sdkExpectedValue.doubleValue]];
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        NSNumber* num = [results expectedValue];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];                                    }
+                                    
+                                    [cell setTexts:texsts
+                                         startText:@"Expected value:"];
                                 }
                                
-                               ];*/
+                               ];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -106,27 +149,21 @@
 {
     static NSString* const kIdentifier = @"kIdentifier";
     
-    RTReportCell* cell = [tableView dequeueReusableCellWithIdentifier:kIdentifier];
+    RTCell* cell = [tableView dequeueReusableCellWithIdentifier:kIdentifier];
     
     if (!cell)
     {
-        cell = [RTReportCell cell];
+        cell = [[RTCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kIdentifier];
+        cell.showingReport = NO;
     }
     
-    void (^block)(RTReportCell *) = self.cellProcessBlocks[indexPath.row];
+    void (^block)(RTCell *) = self.cellProcessBlocks[indexPath.row];
     
     if (block)
     {
        block(cell);
     }
-    //
-//    if ([self.resultSuccessFlags count] > indexPath.row - 1)
-//    {
-//        NSNumber* numb = (NSNumber*)self.resultSuccessFlags[indexPath.row - 1];
-//        bool flag = ![numb boolValue];
-//        cell.contentView.backgroundColor = flag ? ([UIColor redColor]) : ([UIColor whiteColor]);
-//    }
-    
+     
     return cell;
 }
 

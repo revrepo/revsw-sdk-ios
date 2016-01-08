@@ -13,7 +13,8 @@
 @interface RTCell : UITableViewCell
 
 @property (nonatomic, strong) RTIterationResult* iterationResult;
+@property (nonatomic, assign, getter=isShowingReport) BOOL showingReport;
 
-- (void)setTexts:(NSArray<NSString *>*)aTexts number:(NSInteger)aNumber;
+- (void)setTexts:(NSArray<NSString *>*)aTexts startText:(NSString *)aStartText;
 
 @end
