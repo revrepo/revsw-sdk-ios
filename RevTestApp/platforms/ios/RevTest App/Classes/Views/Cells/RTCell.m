@@ -10,7 +10,7 @@
 #import "RTIterationResult.h"
 #import "RTUtils.h"
 
-#define kNumberLabelTag 100
+#define kStartLabelTag 100
 #define kNumberLabelOffset 16.f
 
 @interface RTCell ()
@@ -21,32 +21,30 @@
 
 @implementation RTCell
 
-- (void)setTexts:(NSArray<NSString *> *)aTexts number:(NSInteger)aNumber
+- (void)setTexts:(NSArray<NSString *> *)aTexts startText:(NSString *)aStartText
 {
     NSUInteger    count       = aTexts.count;
     const NSInteger kFontSize = 16;
     self.fontSize             = kFontSize + ((kFontSize / 6) * (2 - count));
    
-    
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
-    UILabel* label = [self.contentView viewWithTag:kNumberLabelTag];
+    UILabel* label = [self.contentView viewWithTag:kStartLabelTag];
     
     if (!label)
     {
-        label = [self addLabelWithOffsetConstant:kNumberLabelOffset tag:kNumberLabelTag];
+        label = [self addLabelWithOffsetConstant:kNumberLabelOffset tag:kStartLabelTag];
     }
     
-    label.text = aNumber == 0 ? @"" : [NSString stringWithFormat:@"%ld.", aNumber];
+    label.text = aStartText;
     
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     
     const NSInteger kDefaultDivider = 6;
     NSInteger divider = kDefaultDivider - ((kDefaultDivider / 3) * (2 - count));
     
-    __block CGFloat constant = screenWidth / divider;
+    __block CGFloat constant = screenWidth / (self.isShowingReport ? divider : 2);
     
-    divider /= 2;
-    
+    divider /= (self.isShowingReport ? 2 : 1);
     
     [aTexts enumerateObjectsUsingBlock:^(NSString* text, NSUInteger index, BOOL* stop){
     
