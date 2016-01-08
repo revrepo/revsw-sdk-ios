@@ -7,7 +7,7 @@
 //
 
 #import "UIViewController+RTUtils.h"
-#import "RTPhoneGapViewController.h"
+//#import "RTPhoneGapViewController.h"
 #import "RTStartViewController.h"
 #import "RTMobileWebViewController.h"
 #import "RTNativeMobileViewController.h"
@@ -30,7 +30,7 @@
 
 - (IBAction)hybridMobile:(id)sender
 {
-    [self.navigationController pushViewController:[RTPhoneGapViewController new] animated:YES];
+    //[self.navigationController pushViewController:[RTPhoneGapViewController new] animated:YES];
 }
 
 - (IBAction)mobileWeb:(id)sender
