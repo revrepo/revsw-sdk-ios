@@ -458,7 +458,7 @@ namespace rs
                 dataDictionary[kRS_JKey_FirstByteTs] 	= aDictionary[kRS_JKey_FirstByteTs];
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
-                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev" : @"origin";
+                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
             }
         }
         
