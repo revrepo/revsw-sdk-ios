@@ -8,6 +8,8 @@
 
 #import "RTUtils.h"
 
+
+const CGFloat kRTRowHeight = 50.f;
 NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
 
 @implementation RTUtils

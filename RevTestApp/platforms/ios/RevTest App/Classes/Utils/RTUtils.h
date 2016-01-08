@@ -19,6 +19,8 @@ block(__VA_ARGS__);\
 #define RTPerformBlockOnMainQueue(block, ...)\
 RTPerformBlockOnQueue(dispatch_get_main_queue(), block, __VA_ARGS__)
 
+extern const CGFloat kRTRowHeight;
+
 extern NSString* const kRTSDKLabelTextKey;
 
 @interface RTUtils : NSObject
