@@ -17,7 +17,7 @@ namespace rs
     class TestConfigurationService : public IConfigurationService
     {
     private:
-        std::stack<Configuration> mTestConfigurations;
+        std::shared_ptr<Configuration> mTestConfiguration;
         
     public:
         void pushTestConfig(const std::string& aProtocolName, int aOperationMode);
@@ -28,10 +28,6 @@ namespace rs
         
         void stopUpdate() override;
         void resumeUpdate() override;
-        
-        void next();
-        
-        bool hasTests() { return !mTestConfigurations.empty(); }
         
         std::shared_ptr<const Configuration> getActive() const override;
     };

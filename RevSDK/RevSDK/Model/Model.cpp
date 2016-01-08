@@ -322,16 +322,16 @@ namespace rs
     
     bool rs::Model::shouldCollectRequestsData()
     {
-        return  true;
-        /// ASK ALEX OR ANDREW, MERGE CONFLICT
         auto conf = mConfService->getActive();
         
         RSStatsReportingLevel statsReportingLevel = conf->statsReportingLevel;
+        RSOperationModeInner operationMode        = conf->operationMode;
         
         bool shouldCollect;
         {
             std::lock_guard<std::mutex> scopedLock(mLock);
-            shouldCollect= statsReportingLevel == kRSStatsReportingLevelRelease || statsReportingLevel == kRSStatsReportingLevelDebug;
+            shouldCollect = statsReportingLevel == kRSStatsReportingLevelRelease || statsReportingLevel == kRSStatsReportingLevelDebug;
+            shouldCollect = shouldCollect && (operationMode == kRSOperationModeInnerReport || operationMode == kRSOperationModeInnerTransportAndReport);
         }
         return shouldCollect;
     }

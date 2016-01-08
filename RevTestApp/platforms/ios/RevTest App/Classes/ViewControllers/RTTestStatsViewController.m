@@ -25,16 +25,14 @@
     
     __weak RTTestStatsViewController* weakSelf = self;
     
-    self.cellProcessBlocks = @[
+   /* self.cellProcessBlocks = @[
                                ^(RTReportCell* cell){
                                    
-                                   NSString* sdkLabelText = weakSelf.userInfo[kRTSDKLabelTextKey];
-                                   
-                                   
+                                  // NSString* sdkLabelText = weakSelf.userInfo[kRTSDKLabelTextKey];
                                    
                                    [cell setNumberText:@""
                                             directText:@"Current"
-                                               sdkText:sdkLabelText];
+                                               sdkText:@"Rev"];
                                },
                                 ^(RTReportCell* cell){
                                    
@@ -94,7 +92,7 @@
                                                 sdkText:[NSString stringWithFormat:@"%.3f", sdkExpectedValue.doubleValue]];
                                 }
                                
-                               ];
+                               ];*/
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -116,8 +114,11 @@
     }
     
     void (^block)(RTReportCell *) = self.cellProcessBlocks[indexPath.row];
-    block(cell);
     
+    if (block)
+    {
+       block(cell);
+    }
     //
 //    if ([self.resultSuccessFlags count] > indexPath.row - 1)
 //    {

@@ -12,6 +12,8 @@
 #import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
 
+#include "RTTestCase.h"
+
 
 @interface RTTestModel ()
 {
@@ -91,7 +93,9 @@
 //    [self.sdkDataLengthArray removeAllObjects];
 //    [self.resultFlags removeAllObjects];
     
-    [RevSDK debug_enableTestMode];
+    mMode = kRSOperationModeReport;
+    
+    //[RevSDK debug_setOperationMode:mMode];
     [self stepStarted];
 }
 
@@ -99,16 +103,16 @@
 {
     self.testCases = [NSMutableArray array];
     
-    RTTestCase* tcase = [[RTTestCase alloc] init];
+    RTTestCase* tcase = [[RTTestCase init] alloc];
     // 1st case
     tcase.testName = @"Origin";
-    tcase.protocolID = @"none";
-    tcase.operationMode = RSOperationMode::kRSOperationModeReport;
+    tcase.protocolID = @"standard";
+    tcase.operationMode = RSOperationMode::kRSOperationModeOff;
     
     [self.testCases addObject:tcase];
     ////////////////////////////////
     
-    tcase = [[RTTestCase alloc] init];
+    tcase = [[RTTestCase init] alloc];
     tcase.testName = @"Standard";
     tcase.protocolID = @"standard";
     tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
@@ -116,7 +120,7 @@
     [self.testCases addObject:tcase];
     ////////////////////////////////
     
-    tcase = [[RTTestCase alloc] init];
+    tcase = [[RTTestCase init] alloc];
     tcase.testName = @"QUIC";
     tcase.protocolID = @"quic";
     tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
@@ -143,10 +147,6 @@
         
         [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
         [self.testCases removeObjectAtIndex:0];
-        
-        NSString* type = tcase.testName;
-        
-        NSLog(@"-test: %ld mode: %@", (unsigned long)mTestsCounter, type);
     }
 }
 
@@ -172,16 +172,12 @@
 {
     if (!mIsLoading)
     {
-        if ([self.testCases count] == 0)
-        {
-            [self stepFinished];
-            [self stepStarted];
-        }
-        
         mIsLoading = YES;
-        
-        RTTestCase* tcase = [self.testCases objectAtIndex:0];
         mStartDate = [NSDate date];
+        
+        NSString* type = [RevSDK operationMode] == kRSOperationModeReport ? @"Origin" : @"SDK";
+        
+        NSLog(@"-test: %ld mode: %@", (unsigned long)mTestsCounter, type);
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:45.0
                                                       target:self
@@ -203,11 +199,13 @@
     {
         NSLog(@"Start %ld", (unsigned long)mTestsCounter);
         
+<<<<<<< HEAD:RevTestApp/platforms/ios/RevTest App/Classes/Model/RTTestModel.mm
         [self createCases];
-        RTTestCase* tcase = [self.testCases objectAtIndex:0];
-        RSOperationMode mode = (RSOperationMode) tcase.operationMode; 
-        [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
         
+        mMode = kRSOperationModeOff;
+=======
+        mMode = kRSOperationModeReport;
+>>>>>>> origin/RS-113:RevTestApp/platforms/ios/RevTest App/Classes/Model/RTTestModel.m
         
         NSString* type = @" ";//[RevSDK operationMode] == kRSOperationModeOff ? @"Origin" : @"SDK";
         NSString* pass = [NSString stringWithFormat:@"Pass: %ld / %ld", (unsigned long)mTestsCounter, (unsigned long)mNumberOfTestsToPerform];
@@ -238,11 +236,23 @@
     tres.duration    = interval;
     mCurrentDataSize = 0;
     
+<<<<<<< HEAD:RevTestApp/platforms/ios/RevTest App/Classes/Model/RTTestModel.mm
     assert([self.testCases count]);
     
     RTTestCase* tcase = [self.testCases objectAtIndex:0];
     tres.testName = tcase.testName;
-    
+=======
+    if (kRSOperationModeReport == mMode)
+    {
+        mMode = kRSOperationModeTransport;
+        tres.testName = @"Origin";
+    }
+    else
+    {
+        mMode = kRSOperationModeReport;
+        tres.testName = @"RevSDK";
+    }
+>>>>>>> origin/RS-113:RevTestApp/platforms/ios/RevTest App/Classes/Model/RTTestModel.m
     [self.currentResult pushResult:tres];
     
     [self toNextCase];
@@ -254,21 +264,17 @@
     //mMode = kRSOperationModeTransport;
     //[RevSDK debug_setOperationMode:mMode];
     
-    if (mTestsCounter < mNumberOfTestsToPerform ||
-        ([self.testCases count] > 0))
+    bool isLastTest = (kRSOperationModeReport == mMode) && (mTestsCounter == mNumberOfTestsToPerform);
+    if (mTestsCounter <= mNumberOfTestsToPerform && !isLastTest)
     {
         if (self.restartBlock)
         {
             self.restartBlock(); 
         }
     }
-    else
-    {
-        [self stepFinished];
-    }
 }
 
-- (void)stepFinished
+- (void)stepFinished:(bool)withSuccess
 {
     [self.testResults addObject:self.currentResult];
     

@@ -11,12 +11,15 @@
 #import "RSURLConnection.h"
 #import "RSURLRequestProcessor.h"
 #import "Model.hpp"
+#import "RSURLConnectionNative.h"
 
-@interface RSURLProtocol ()<RSURLConnectionDelegate>
+@interface RSURLProtocol ()<RSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (nonatomic, strong) NSURLConnection* nativeConnection;
 @property (nonatomic, strong) RSURLConnection* connection;
 @property (nonatomic, strong) NSMutableData* data;
+@property (nonatomic, strong) RSURLConnectionNative* directConnection;
+@property (nonatomic, copy)   NSURLResponse* response;
 
 @end
 
@@ -24,7 +27,22 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    return !aRequest.isFileRequest && ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest];
+    if (rs::Model::instance()->currentOperationMode() == rs::kRSOperationModeInnerOff)
+    {
+        return NO;
+    }
+    
+    if (aRequest.isFileRequest)
+    {
+        return NO;
+    }
+    
+    if ([NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest])
+    {
+        return NO;
+    }
+    
+    return YES;
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask
@@ -38,11 +56,33 @@
     return aRequest;
 }
 
+- (BOOL)shouldRedirectRequest:(NSURLRequest *)aRequest
+{
+    NSURL* URL             = [aRequest URL];
+    NSString* host         = [URL host];
+    std::string domainName = rs::stdStringFromNSString(host);
+    BOOL should            = rs::Model::instance()->shouldTransportDomainName(domainName);
+    return should;
+}
+
 - (void)startLoading
 {
-    self.data       = [NSMutableData data];
-    self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
-    [self.connection start];
+    self.data = [NSMutableData data];
+    
+    if ([self shouldRedirectRequest:self.request])
+    {
+       self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
+      [self.connection start];
+    }
+    else
+    {
+        NSMutableURLRequest* newRequest = [self.request mutableCopy];
+        [NSURLProtocol setProperty:@YES
+                            forKey:rs::kRSURLProtocolHandledKey
+                         inRequest:newRequest];
+        
+        self.directConnection = [[RSURLConnectionNative alloc] initWithRequest:newRequest delegate:self];
+    }
 }
 
 - (void)stopLoading
@@ -73,39 +113,81 @@
     return self;
 }
 
-- (void) connection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+#pragma mark -
+#pragma mark - RSURLConnectionDelegate
+
+- (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
-- (void) connection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
+- (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
+    if (self.directConnection.firstByteTimestamp == nil)
+    {
+        NSDate* now                              = [NSDate date];
+        NSTimeInterval interval                  = [now timeIntervalSince1970];
+        self.directConnection.firstByteTimestamp = @(interval);
+    }
+    
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
 
-- (void) connectionDidFinishLoading:(RSURLConnection *)connection
+- (void) rsconnectionDidFinishLoading:(RSURLConnection *)connection
 {
     [self.client URLProtocolDidFinishLoading:self];
 }
 
-- (void) connection:(RSURLConnection *)connection didFailWithError:(NSError *)error
+- (void) rsconnection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
     dispatch_sync(dispatch_get_main_queue(), ^{
         flag = YES;
     });
-    
 }
 
-- (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+#pragma mark - 
+#pragma mark - NSURLConnectionDelegate
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    if (response != nil)
+    [self.client URLProtocol:self didFailWithError:error];
+    __block BOOL flag = NO;
+    dispatch_sync(dispatch_get_main_queue(), ^{
+        flag = YES;
+    });
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
+{
+    [self.data appendData:aData];
+    [self.client URLProtocol:self didLoadData:aData];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    self.response = response;
+    
+   [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    if (rs::Model::instance()->shouldCollectRequestsData())
     {
-        [[self client] URLProtocol:self wasRedirectedToRequest:request redirectResponse:response];
+        self.directConnection.totalBytesReceived = @(self.data.length);
+        NSDate* now = [NSDate date];
+        NSTimeInterval interval = [now timeIntervalSince1970];
+        self.directConnection.endTimestamp = @(interval);
+        
+        NSHTTPURLResponse* response = (NSHTTPURLResponse *)self.response;
+        rs::Data requestData        = rs::dataFromRequestAndResponse(self.directConnection.currentRequest, response, self.directConnection);
+        rs::Model::instance()->addRequestData(requestData);
     }
-    return request;
+
+    [self.client URLProtocolDidFinishLoading:self];
 }
 
 @end

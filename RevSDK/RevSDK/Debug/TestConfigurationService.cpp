@@ -13,15 +13,7 @@
 
 #include "TestConfigurationService.h"
 
-using namespace rs;
-
-void TestConfigurationService::next()
-{
-    if (mTestConfigurations.size() > 0)
-    {
-        mTestConfigurations.pop();
-    }
-}
+using namespace rs; 
 
 void TestConfigurationService::pushTestConfig(const std::string &aProtocolName, int aOperationMode)
 {
@@ -30,12 +22,12 @@ void TestConfigurationService::pushTestConfig(const std::string &aProtocolName, 
     test.allowedProtocols.push_back(aProtocolName);
     test.operationMode = (RSOperationModeInner) aOperationMode;
     
-    mTestConfigurations.push(test);
+    mTestConfiguration = std::make_shared<Configuration>(test);
 }
 
 std::shared_ptr<const Configuration> TestConfigurationService::getActive() const
 {
-    return std::make_shared<const Configuration>(mTestConfigurations.top());
+    return mTestConfiguration;
 }
 
 void TestConfigurationService::stopUpdate() {}

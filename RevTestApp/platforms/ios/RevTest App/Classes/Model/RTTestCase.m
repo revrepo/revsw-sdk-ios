@@ -5,12 +5,10 @@
 //  Created by Vlad Joss on 08.01.16.
 //
 //
+ 
+#import "RTTestCase.h"
 
-#import <Foundation/Foundation.h>
-
-#include "RTTestCase.h"
-
-@implementation RTTestResult
+@implementation RTTestCase
 
 
 

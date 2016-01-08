@@ -46,38 +46,28 @@
         
         std::function<void()> finishCallback = [self](){
         
-            [self.delegate connectionDidFinishLoading:self];
+            [self.delegate rsconnectionDidFinishLoading:self];
         };
         
         std::function<void(rs::Data)> dataCallback = [self](rs::Data aData){
            
             NSData* data = rs::NSDataFromData(aData);
-            [self.delegate connection:self didReceiveData:data];
+            [self.delegate rsconnection:self didReceiveData:data];
         };
         
         std::function<void(std::shared_ptr<rs::Response>)> responseCallback = [self](std::shared_ptr<rs::Response> aResponse){
             
             NSHTTPURLResponse* response = rs::NSHTTPURLResponseFromResponse(aResponse);
-            [self.delegate connection:self didReceiveResponse:response];
+            [self.delegate rsconnection:self didReceiveResponse:response];
         };
         
         std::function<void(rs::Error)> errorCallback = [self](rs::Error aError){
         
             NSError* error = rs::NSErrorFromError(aError);
-            [self.delegate connection:self didFailWithError:error];
+            [self.delegate rsconnection:self didFailWithError:error];
         };
         
-        
-//        std::function<void(void* aRequest, void* aResponce)> willSendRequest = [self](void* aRequest, void* aResponce){
-//            
-//            NSURLRequest* request = (__bridge NSURLRequest*)aRequest;
-//            NSURLResponse* responce = (__bridge NSURLResponse*)aResponce;
-//            
-//            [self.delegate connection:self willSendRequest:request redirectResponse:responce];
-//        };
-        
-        BOOL shouldRedirect                  = [self shouldRedirectRequest:aRequest];
-        NSURLRequest* newRequest             = (aRequest.URL.host && shouldRedirect) ? [RSURLRequestProcessor proccessRequest:aRequest] : aRequest;
+        NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest];
         std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
         request->setOriginalScheme(rs::stdStringFromNSString(aRequest.URL.scheme));
         connectionProxy = std::make_shared<rs::ConnectionProxy>(request);
@@ -87,22 +77,10 @@
     return self;
 }
 
-- (BOOL)shouldRedirectRequest:(NSURLRequest *)aRequest
-{
-    NSURL* URL             = [aRequest URL];
-    NSString* host         = [URL host];
-    std::string domainName = rs::stdStringFromNSString(host);
-    BOOL should            = rs::Model::instance()->shouldTransportDomainName(domainName) &&
-                             ![NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest] &&
-                             !aRequest.isFileRequest;
-    return should;
-}
-
 - (void)start
 {
     connectionProxy.get()->start();
 }
-
 
 @end
 

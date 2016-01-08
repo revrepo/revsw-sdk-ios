@@ -19,6 +19,8 @@
 
 #import "RSPublicConsts.h"
 
+@class RSURLConnectionNative;
+
 @interface NSURLRequest (FileRequest)
 
 @property (nonatomic, readonly) BOOL isFileRequest;
@@ -124,6 +126,7 @@ namespace rs
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
     Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*, NSString*);
+    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, RSURLConnectionNative*);
     
     bool _isValidURL(NSString* aURLString);
     bool _isValidConfiguration(const Data&, Error*);

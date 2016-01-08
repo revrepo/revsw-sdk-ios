@@ -10,6 +10,24 @@
 
 @implementation RTTestResult
 
+- (NSString *)durationString
+{
+    return [NSString stringWithFormat:@"%.3f", _duration];
+}
 
+- (NSString *)dataLengthString
+{
+    return [NSString stringWithFormat:@"%.1f", _dataLength];
+}
+
+- (NSString *)wholeString
+{
+    return [NSString stringWithFormat:@"%@ (%@)", self.durationString, self.dataLengthString];
+}
+
+- (NSString *)nameString
+{
+    return [NSString stringWithFormat:@"%@(KB)", _testName];
+}
 
 @end

@@ -15,6 +15,7 @@ namespace rs
     class IConfigurationService
     {
     public:
+        virtual ~IConfigurationService() = default;
         
         virtual void setOperationMode(RSOperationModeInner aMode) = 0;
         

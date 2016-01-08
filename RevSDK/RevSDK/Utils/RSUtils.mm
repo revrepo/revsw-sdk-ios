@@ -16,6 +16,7 @@
 #include "Configuration.hpp"
 #include "Connection.hpp"
 #import "NSURL+RevSDK.h"
+#import "RSURLConnectionNative.h"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
@@ -403,7 +404,6 @@ namespace rs
     {
         assert(aConnection);
         
-        
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
         NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
@@ -457,7 +457,7 @@ namespace rs
                 dataDictionary[kRS_JKey_RecDytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalReceived()];
                 dataDictionary[kRS_JKey_SentBytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalSent()];
                 dataDictionary[kRS_JKey_EndTs] 			= [NSNumber numberWithLongLong:aConnection->getEndTimestamp()];
-                dataDictionary[kRS_JKey_FirstByteTs] 	= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
+                dataDictionary[kRS_JKey_FirstByteTs] 	= [NSNumber numberWithLongLong:aConnection->getFirstByteTimestamp()];
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
                 dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
@@ -465,7 +465,75 @@ namespace rs
             }
         }
         
-        //NSLog(@"DATA DICTIONARY %@", dataDictionary);
+        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:nil];
+        Data data = dataFromNSData(jsonData);
+        
+        return data;
+    }
+    
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, RSURLConnectionNative* aConnection)
+    {
+        NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
+        NSDictionary* headers               = aRequest.allHTTPHeaderFields;
+        NSURL* URL                          = aRequest.URL;
+        NSURL* originalURL = URL;
+        BOOL isRedirecting                  = [URL.host isEqualToString:kRSRevRedirectHost];
+        
+        if (isRedirecting)
+            originalURL = [originalURL revURLByReplacingHostWithHost:headers[kRSRevHostHeader]];
+        
+        NSString* URLString                 = [originalURL absoluteString];
+        NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
+        
+        dataDictionary[kRSURLKey]           = URLString;
+        dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
+        dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
+        
+        //fill with defaults
+        {
+            NSNumber *defaultVal = [NSNumber numberWithInt:0];
+            dataDictionary[kRS_JKey_Encoding] 		= @"-";
+            dataDictionary[kRS_JKey_ContType] 		= @"-";
+            dataDictionary[kRS_JKey_EndTs] 			= defaultVal;
+            dataDictionary[kRS_JKey_FirstByteTs] 	= defaultVal;
+            dataDictionary[kRS_JKey_KeepAliveStatus]= defaultVal;
+            dataDictionary[kRS_JKey_LocCacheStatus] = @"-";
+            dataDictionary[kRS_JKey_Method] 		= @"-";
+            dataDictionary[kRS_JKey_Network] 		= @"-";
+            dataDictionary[kRS_JKey_Protocol] 		= @"-";
+            dataDictionary[kRS_JKey_RecDytes] 		= defaultVal;
+            dataDictionary[kRS_JKey_SentBytes] 		= defaultVal;
+            dataDictionary[kRS_JKey_StartTs] 		= defaultVal;
+            dataDictionary[kRS_JKey_TransportProt] 	= @"-";
+            dataDictionary[kRS_JKey_Destination]    = @"_";
+            dataDictionary[kRS_JKey_EdgeTransport]  = @"_";
+        }
+        // fetching data
+        {
+            dataDictionary[kRS_JKey_ConnID] = aConnection.connectionId;
+            dataDictionary[kRS_JKey_Method] = [aRequest HTTPMethod];
+            
+            if (aResponse)
+            {
+                NSDictionary* headers = [aResponse allHeaderFields];
+                
+                dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
+                dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
+                dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
+                dataDictionary[kRS_JKey_TransportProt] = aRequest.URL.scheme;
+                
+                dataDictionary[kRS_JKey_StartTs] 		= aConnection.startTimestamp;
+                dataDictionary[kRS_JKey_RecDytes] 		= aConnection.totalBytesReceived;
+                dataDictionary[kRS_JKey_SentBytes] 		= [NSNumber numberWithLongLong:aRequest.HTTPBody.length];
+                dataDictionary[kRS_JKey_EndTs] 			= aConnection.endTimestamp;
+                dataDictionary[kRS_JKey_FirstByteTs] 	= aConnection.firstByteTimestamp;
+                
+                dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
+                dataDictionary[kRS_JKey_Destination]    = @"origin";
+            }
+        }
         
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
                                                            options:NSJSONWritingPrettyPrinted
