@@ -18,7 +18,7 @@ namespace rs
     class LogTargetDefault: public Log::Target
     {
     public:
-        void print(Log::Level aLevel, int aTag, const char* aMessage)
+        void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
         {
             std::cout << Log::levelToString(aLevel) << "|" << std::setw(3) << aTag << ": " << aMessage << std::endl;
         }
@@ -122,10 +122,10 @@ void Log::p_printBufferToTargets(Level aLevel, int aTag)
 {
     assert(mDefaultTarget.get());
     const char* m = &mBuffer[0];
-    mDefaultTarget->print(aLevel, aTag, m);
+    mDefaultTarget->logTargetPrint(aLevel, aTag, m);
     
     for (auto& t : mCustomTargets)
-        t->print(aLevel, aTag, m);
+        t->logTargetPrint(aLevel, aTag, m);
 }
 
 int Log::printf(Level aLevel, int aTag, const char* aFormat, ...)
@@ -298,7 +298,7 @@ void LogTargetMemory::filter(Entry::List& aList, const Filter* aFilter) const
     mLock.unlock();
 }
 
-void LogTargetMemory::print(Log::Level aLevel, int aTag, const char* aMessage)
+void LogTargetMemory::logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
 {
     if (!mOn)
         return;
