@@ -32,7 +32,7 @@
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
     int code = [httpResponse statusCode];
     
-    BOOL isEdgeFlag = connection->edgeTransport() == rs::standardProtocolName();
+    //BOOL isEdgeFlag = connection->edgeTransport() == rs::standardProtocolName();
     //NSLog(@"Redirect with code %d", code);
     
     rs::Log::info(12, std::string("Redirect with code " + std::to_string(code)).c_str());
@@ -50,7 +50,7 @@
         std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
         BOOL isEdge = currentProtocolName == rs::standardProtocolName();
         
-        request = [RSURLRequestProcessor proccessRequest:request isEdge:isEdge];
+        request = [RSURLRequestProcessor proccessRequest:request isEdge:isEdge baseURL:task.originalRequest.URL];
         completionHandler(request);
     }
 }

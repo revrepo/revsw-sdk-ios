@@ -12,7 +12,7 @@
 @interface RSStandardSession : NSObject
 
 + (RSStandardSession*)instance;
-- (NSURLSessionTask*)createTaskWithRequest:(NSURLRequest*)aRequest
+- (void)createTaskWithRequest:(NSURLRequest*)aRequest
                                 connection:(std::shared_ptr<rs::Connection>)aConnection;
 
 @end

@@ -70,7 +70,7 @@
         std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
         BOOL isEdge = currentProtocolName == rs::standardProtocolName();
         
-        NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdge];
+        NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdge baseURL:nil];
         std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
         request->setOriginalScheme(rs::stdStringFromNSString(aRequest.URL.scheme));
         connectionProxy = std::make_shared<rs::ConnectionProxy>(request, currentProtocolName);
