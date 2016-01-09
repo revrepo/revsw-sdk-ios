@@ -9,6 +9,7 @@
 #import "RSPublicConsts.h"
 #import "RSUtils.h"
 
+#include "RSLog.h"
 #include "Request.hpp"
 #include "Response.hpp"
 #include "Data.hpp"
@@ -402,8 +403,40 @@ namespace rs
         return dataVector;
     }
     
+    static const int kRSTimestampFloatErrorLogTag     = 2016;
+    static const int kRSSuccessStatusErrorLogTag      = 2015;
+    static const int kRSFirstByteTimestampErrorLogTag = 2014;
+    
     Data dataFromRequestsDictionary(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, NSDictionary* aDictionary)
     {
+        NSNumber* startTimestamp     = aDictionary[kRS_JKey_StartTs];
+        NSNumber* endTimestamp       = aDictionary[kRS_JKey_EndTs];
+        NSNumber* firstByteTimestamp = aDictionary[kRS_JKey_FirstByteTs];
+        
+        CFNumberRef stRef  = (__bridge CFNumberRef)startTimestamp;
+        CFNumberRef endRef = (__bridge CFNumberRef)endTimestamp;
+        CFNumberRef fbRef  = (__bridge CFNumberRef)firstByteTimestamp;
+        
+        if (CFNumberIsFloatType(stRef))
+        {
+            Log::error(kRSTimestampFloatErrorLogTag, "Start timestamp is not an integer");
+        }
+        
+        if (CFNumberIsFloatType(endRef))
+        {
+            Log::error(kRSTimestampFloatErrorLogTag, "End timestamp is not an integer");
+        }
+        
+        if (CFNumberIsFloatType(fbRef))
+        {
+            Log::error(kRSTimestampFloatErrorLogTag, "End timestamp is not an integer");
+        }
+        
+        if ([startTimestamp isEqualToNumber:firstByteTimestamp])
+        {
+            Log::error(kRSFirstByteTimestampErrorLogTag, "First byte timestamp is equal to start timestamp");
+        }
+        
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
         NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
@@ -420,6 +453,14 @@ namespace rs
         dataDictionary[kRSURLKey]           = URLString;
         dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
         dataDictionary[kRS_JKey_SuccessStatus] = @((int)successStatus);
+        
+        int successStatusCheck = [dataDictionary[kRS_JKey_SuccessStatus] intValue];
+        
+        if (successStatusCheck != 0 && successStatusCheck != 1)
+        {
+            std::string logFormat = "success statuc is incorrect " + std::to_string(successStatusCheck);
+            Log::error(kRSSuccessStatusErrorLogTag, logFormat.c_str());
+        }
         
         //fill with defaults
         {
@@ -444,6 +485,7 @@ namespace rs
         {
             dataDictionary[kRS_JKey_ConnID] = aDictionary[kRS_JKey_ConnID];
             dataDictionary[kRS_JKey_Method] = [aRequest HTTPMethod];
+
             
             if (aResponse)
             {
@@ -454,11 +496,11 @@ namespace rs
                 dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
                 dataDictionary[kRS_JKey_TransportProt] = aDictionary[kRS_JKey_TransportProt];//aRequest.URL.scheme;
                 
-                dataDictionary[kRS_JKey_StartTs] 		= aDictionary[kRS_JKey_StartTs];
+                dataDictionary[kRS_JKey_StartTs] 		= startTimestamp;
                 dataDictionary[kRS_JKey_RecDytes] 		= aDictionary[kRS_JKey_RecDytes];
                 dataDictionary[kRS_JKey_SentBytes] 		= aDictionary[kRS_JKey_SentBytes];
-                dataDictionary[kRS_JKey_EndTs] 			= aDictionary[kRS_JKey_EndTs];
-                dataDictionary[kRS_JKey_FirstByteTs] 	= aDictionary[kRS_JKey_FirstByteTs];
+                dataDictionary[kRS_JKey_EndTs] 			= endTimestamp;
+                dataDictionary[kRS_JKey_FirstByteTs] 	= firstByteTimestamp;
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
                 dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
