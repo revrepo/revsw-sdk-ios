@@ -127,18 +127,16 @@ namespace rs
     
     std::shared_ptr<Connection> Model::currentConnection()
     {
-//        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
-//        
-//            {httpsProtocolName(), Connection::create<StandardConnection>() },
-//            {quicProtocolName(), Connection::create<QUICConnection>() }
-//        };
-
         std::shared_ptr<Protocol> protocol     = currentProtocol();
         std::string protocolName               = protocol.get()->protocolName();
-        
-        if (protocolName == standardProtocolName())
+        return connectionForProtocolName(protocolName);
+    }
+    
+    std::shared_ptr<Connection> Model::connectionForProtocolName(const std::string& aProtocolName)
+    {
+        if (aProtocolName == standardProtocolName())
             return Connection::create<StandardConnection>();
-        else if (protocolName == quicProtocolName())
+        else if (aProtocolName == quicProtocolName())
             return Connection::create<QUICConnection>();
         else
         {

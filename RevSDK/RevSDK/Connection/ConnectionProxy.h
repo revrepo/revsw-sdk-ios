@@ -25,6 +25,7 @@ namespace rs
     class ConnectionProxy : public ConnectionDelegate
    {
        std::shared_ptr<Request> mRequest;
+       std::shared_ptr<Connection> mConnection;
        
        std::function<void()> mFinishRequestCallback;
        std::function<void(Data)> mReceivedDataCallback;
@@ -32,7 +33,7 @@ namespace rs
        std::function<void(Error)> mErrorCallback;
        
      public:
-       ConnectionProxy(std::shared_ptr<Request> aRequest);
+       ConnectionProxy(std::shared_ptr<Request> aRequest, const std::string& aCurrentProtocolName);
        ~ConnectionProxy();
        void start();
        void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>, std::function<void(Error)>);

@@ -50,6 +50,9 @@ namespace rs
     const std::string kOperationModeReportString         = stdStringFromNSString(kRSOperationModeReportString);
     const std::string kOperationModeTransferReportString = stdStringFromNSString(kRSOperationModeTransferReportString);
     
+    const std::string kRevHostHeader = stdStringFromNSString(kRSRevHostHeader);
+    const std::string kRevRedirectHost = stdStringFromNSString(kRSRevRedirectHost);
+    
     std::string loadConfigurationURL(const std::string& aSDKKey)
     {
         return _loadConfigurationURL(aSDKKey);

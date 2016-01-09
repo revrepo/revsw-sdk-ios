@@ -98,6 +98,7 @@ namespace rs
         
         std::shared_ptr<Protocol> currentProtocol();
         std::shared_ptr<Connection> currentConnection();
+        std::shared_ptr<Connection> connectionForProtocolName(const std::string&);
         std::string SDKKey()const { return mSDKKey; };
         std::string edgeHost();
         
