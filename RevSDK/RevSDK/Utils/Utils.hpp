@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <string>
+#include <map>
 
 namespace rs
 {
@@ -94,6 +95,12 @@ typedef enum
     void traceSocketSpeed(int aDataSize);
     
     bool decomposeURL(const std::string& aBaseURL, const std::string& aURL, std::string& aHost, std::string& aPath, std::string& aScheme);
+    const char* notNullString(const std::string& aString);
+    std::string intToStr(int x);
+    std::string longLongToStr(long long x);
+    long long timestampMS();
+    std::string timestampMSAsStr();
+//    std::string stringMapToString(const std::map<std::string, std::string>& aMap);
 }
 
 #endif /* Utils_hpp */

@@ -19,6 +19,8 @@
 {
     [super viewDidLoad];
     
+    [RevSDK debug_turnOnDebugBanners];
+    
     self.navigationItem.title = @"Select";
     
     UIBarButtonItem* rbbi = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks

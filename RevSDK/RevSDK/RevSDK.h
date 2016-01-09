@@ -43,5 +43,6 @@ typedef enum
 + (NSString *)debug_getLatestConfiguration;
 + (void)debug_forceConfigurationUpdate;
 + (void)debug_showLogInViewController:(UIViewController*)aVC;
++ (void)debug_turnOnDebugBanners;
 
 @end

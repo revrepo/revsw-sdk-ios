@@ -57,6 +57,8 @@ namespace rs
         void connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError);
 
     private:
+        int mId;
+        long long mTS;
         std::string mURL;
         ConnectionDelegate* mDelegate;
         std::shared_ptr<Connection> mAnchor0;

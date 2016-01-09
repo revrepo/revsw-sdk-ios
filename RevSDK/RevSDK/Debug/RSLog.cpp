@@ -10,6 +10,7 @@
 #include <iostream>
 #include <assert.h>
 #include <iomanip>
+#include "Utils.hpp"
 
 #define RS_LOG 1
 
@@ -18,14 +19,94 @@ namespace rs
     class LogTargetDefault: public Log::Target
     {
     public:
-        void print(Log::Level aLevel, int aTag, const char* aMessage)
+        void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
         {
+            if (aLevel == Log::Level::Info)
+                return;
             std::cout << Log::levelToString(aLevel) << "|" << std::setw(3) << aTag << ": " << aMessage << std::endl;
         }
     };
 }
 
 using namespace rs;
+
+Traffic* Traffic::mInstance = nullptr;
+
+static const long long kTrafficReportInterval = 100; // milliseconds
+
+Traffic::Traffic()
+{
+    
+}
+
+Traffic::~Traffic()
+{
+    
+}
+
+void Traffic::logIn(int aTag, int aSize)
+{
+    instance()->p_logIn(aTag, aSize);
+}
+
+void Traffic::logOut(int aTag, int aSize)
+{
+    instance()->p_logOut(aTag, aSize);
+}
+
+Traffic* Traffic::instance()
+{
+    assert(mInstance);
+    return mInstance;
+}
+
+void Traffic::initialize()
+{
+    if (mInstance == nullptr)
+        mInstance = new Traffic();
+}
+
+void Traffic::p_logIn(int aTag, int aSize)
+{
+    mLock.lock();
+    long long now = timestampMS();
+    Accumulator& accum = mLogMap[aTag];
+    long long age = now - accum.timestamp;
+    accum.count += aSize;
+    if (age > kTrafficReportInterval)
+    {
+        if (accum.count > 0)
+        {
+            int time = (age > kTrafficReportInterval * 1000) ? (0) : ((int)age);
+            float speed = (float)accum.count / age; // kb/s is same as b/ms
+            Log::info(aTag, "Traffic | recv: %8db | time: %4dms | speed: %.1fkb/s", accum.count, time, speed);
+        }
+        accum.count = 0;
+        accum.timestamp = now;
+    }
+    mLock.unlock();
+}
+
+void Traffic::p_logOut(int aTag, int aSize)
+{
+    mLock.lock();
+    long long now = timestampMS();
+    Accumulator& accum = mLogMap[aTag];
+    long long age = now - accum.timestamp;
+    accum.count += aSize;
+    if (age > kTrafficReportInterval)
+    {
+        if (accum.count > 0)
+        {
+            int time = (age > kTrafficReportInterval * 1000) ? (0) : ((int)age);
+            float speed = (float)accum.count / age; // kb/s is same as b/ms
+            Log::info(aTag, "Traffic | sent: %8db | time: %4dms | speed: %.1fkb/s", accum.count, time, speed);
+        }
+        accum.count = 0;
+        accum.timestamp = now;
+    }
+    mLock.unlock();
+}
 
 Log* Log::mInstance = nullptr;
 std::mutex Log::mInstanceLock;
@@ -122,10 +203,10 @@ void Log::p_printBufferToTargets(Level aLevel, int aTag)
 {
     assert(mDefaultTarget.get());
     const char* m = &mBuffer[0];
-    mDefaultTarget->print(aLevel, aTag, m);
+    mDefaultTarget->logTargetPrint(aLevel, aTag, m);
     
     for (auto& t : mCustomTargets)
-        t->print(aLevel, aTag, m);
+        t->logTargetPrint(aLevel, aTag, m);
 }
 
 int Log::printf(Level aLevel, int aTag, const char* aFormat, ...)
@@ -298,7 +379,7 @@ void LogTargetMemory::filter(Entry::List& aList, const Filter* aFilter) const
     mLock.unlock();
 }
 
-void LogTargetMemory::print(Log::Level aLevel, int aTag, const char* aMessage)
+void LogTargetMemory::logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
 {
     if (!mOn)
         return;

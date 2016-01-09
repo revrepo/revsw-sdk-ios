@@ -30,11 +30,29 @@
 
 namespace rs
 {
-    Model::Model() 
+    class ProxyTarget: public Log::Target
+    {
+    public:
+        ProxyTarget(Log::Target* aDst):mDst(aDst) {}
+        ~ProxyTarget() {}
+        void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
+        {
+            if (mDst)
+                mDst->logTargetPrint(aLevel, aTag, aMessage);
+        }
+    private:
+        Log::Target* mDst;
+    };
+    
+    Model::Model():
+        mEventTriggerOn (false)
     {
         Log::initialize();
+        Traffic::initialize();
         mMemoryLog.reset(new LogTargetMemory());
+        mProxy.reset(new ProxyTarget(this));
         Log::instance()->addTarget(mMemoryLog);
+        Log::instance()->addTarget(mProxy);
         Log::info(0, "Logging on");
         data_storage::initDataStorage();
         
@@ -58,6 +76,12 @@ namespace rs
     
     Model::~Model()
     {
+    }
+    
+    void Model::switchEventTrigger(bool aOn, std::function<void(rs::Log::Level, const char*, const char*)> aCallback)
+    {
+        mEventTriggerOn = aOn;
+        mEventTriggerCallback = aCallback;
     }
     
     Model* Model::instance()
@@ -385,6 +409,35 @@ namespace rs
     std::shared_ptr<const Configuration> Model::getActiveConfiguration()const
     {
         return mConfService->getActive();
+    }
+    
+    void Model::logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
+    {
+        if (!mEventTriggerOn || !mEventTriggerCallback)
+            return;
+        
+        if (aTag >= kLogTagQUICMIN && aTag <= kLogTagQUICMAX && (aLevel == Log::Level::Warning || aLevel == Log::Level::Error))
+        {
+            std::string title = "QUIC";
+            
+            switch (aTag)
+            {
+                case kLogTagQUICRequest: title += " request"; break;
+                case kLogTagQUICLibrary: title += " library"; break;
+                case kLogTagQUICNetwork: title += " network"; break;
+                default: title += " unknown"; break;
+            }
+            
+            switch (aLevel)
+            {
+                case Log::Level::Info:    title += " info";    break;
+                case Log::Level::Warning: title += " warning"; break;
+                case Log::Level::Error:   title += " error";   break;
+                default: title += " something";  break;
+            }
+            
+            mEventTriggerCallback(aLevel, title.c_str(), aMessage);
+        }
     }
 }
 
