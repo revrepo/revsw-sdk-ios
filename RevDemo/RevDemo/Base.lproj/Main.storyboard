@@ -4,6 +4,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -131,11 +132,18 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Configuration" id="GYR-C2-UTd">
-                        <barButtonItem key="rightBarButtonItem" title="Update" id="CrR-hM-Hbd">
-                            <connections>
-                                <action selector="onUpdateButtonTapped:" destination="szQ-YV-8iz" id="c7P-14-wMj"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Update" id="CrR-hM-Hbd">
+                                <connections>
+                                    <action selector="onUpdateButtonTapped:" destination="szQ-YV-8iz" id="c7P-14-wMj"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem systemItem="bookmarks" id="72U-2g-MLH">
+                                <connections>
+                                    <action selector="onLogsButtonTapped:" destination="szQ-YV-8iz" id="fNK-nx-Geh"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="configurationTextView" destination="Xld-Rv-v3q" id="vvD-Nt-hL5"/>

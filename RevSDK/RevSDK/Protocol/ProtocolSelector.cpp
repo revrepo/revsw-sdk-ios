@@ -172,10 +172,12 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
 
 std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
-//    return std::make_shared<QUICProtocol>();
+//    return std::make_shared<StandardProtocol>();
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (mBestProtocol/* && mAvailableProtocols.size()*/)
     {
+        Log::info(1000, (mBestProtocol->protocolName() + " Protcol name is being used").c_str());
+        
         return mBestProtocol->clone();
     }
     Log::error(kRSLogKey_LastMile, "Asking for best protocol when none of them are available");

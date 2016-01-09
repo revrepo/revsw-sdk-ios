@@ -20,6 +20,7 @@
 
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <RevSDK/RevSDK.h>
 
 
 @interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate>
@@ -35,6 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [RevSDK debug_turnOnDebugBanners];
     [self reloadPage];
 }
 
