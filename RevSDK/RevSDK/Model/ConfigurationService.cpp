@@ -38,6 +38,12 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     Configuration configuration = data_storage::configuration();
     mActiveConfiguration = std::make_shared<Configuration>(configuration);
     
+    if (!isTimedOut())
+    {
+        Log::info(kRSLogKey_Configuration, "Restored config.");
+        aDelegate->applyConfiguration(mActiveConfiguration);
+    }
+    
     mStaleConfiguration =std::make_shared<Configuration>();
     mStaleConfiguration->operationMode = RSOperationModeInner::kRSOperationModeInnerOff;
     
@@ -48,6 +54,21 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     
     
     Log::info(kRSLogKey_Configuration, "ConfigurationService was just created.");
+}
+
+bool ConfigurationService::isTimedOut() const
+{
+    typedef std::chrono::seconds tSec;
+    typedef std::chrono::system_clock tSclock;
+    auto last = mLastUpdated.load();
+    
+    auto span = std::chrono::duration_cast<tSec>(tSclock::now() - last);
+    
+    int staleTimeout = mActiveConfiguration->staleTimeout;
+    int64_t timeSincleLastUPD = span.count();
+    
+    
+    return (staleTimeout < timeSincleLastUPD);
 }
 
 ConfigurationService::~ConfigurationService()
@@ -128,6 +149,7 @@ void ConfigurationService::loadConfiguration()
                     mDelegate->scheduleStatsReporting();
                     
                     refreshInterval = mActiveConfiguration->refreshInterval;
+                    data_storage::saveConfiguration(configuration);
                 }
                 else
                 {
@@ -161,19 +183,10 @@ void ConfigurationService::loadConfiguration()
 }
 
 bool ConfigurationService::isStale() const
-{
-    typedef std::chrono::seconds tSec;
-    typedef std::chrono::system_clock tSclock;
-    auto last = mLastUpdated.load();
-    
-    auto span = std::chrono::duration_cast<tSec>(tSclock::now() - last);
-    
-    int staleTimeout = mActiveConfiguration->staleTimeout;
-    int64_t timeSincleLastUPD = span.count();
-    
+{ 
     bool externalFlag = cbAdditionalStaleCondition();
     
-    return (staleTimeout < timeSincleLastUPD) || externalFlag;
+    return isTimedOut() || externalFlag;
 }
 
 void ConfigurationService::setOperationMode(RSOperationModeInner aMode)

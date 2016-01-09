@@ -20,7 +20,7 @@ using namespace rs;
 ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
 {
     auto vec = data_storage::restoreAvailableProtocols();
-    mAvailableProtocols = vec;
+    mAvailableProtocols = vec; 
     
     ProtocolFailureMonitor::subscribeOnProtocolFailed(ProtocolFailureMonitor::kSubscriberKey_Selector, [this](const std::string& aFailedProtocol){
         std::lock_guard<std::mutex> lockGuard(mLock);
@@ -33,16 +33,6 @@ ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
             });
         }
     });
-    
-//    std::string toString = "Restored protocols:: ";
-//    
-//    for (auto& it: vec)
-//    {
-//        toString += it + ", ";
-//    }
-//    
-//    Log::info(kRSLogKey_LastMile, "ProtocolSelector was just created.");
-//    Log::info(kRSLogKey_LastMile, toString.c_str());
 }
 
 void ProtocolSelector::refreshTestInfo()

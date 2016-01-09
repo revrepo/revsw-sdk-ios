@@ -53,6 +53,8 @@ namespace rs
         
         void loadConfiguration();
         
+        bool isTimedOut() const;
+        
         
         std::atomic<tSpan> mLastUpdated;
         

@@ -32,7 +32,7 @@ namespace rs
     void ConnectionProxy::start()
     {
         mConnection.get()->startWithRequest(mRequest, this);
-        ProtocolFailureMonitor::logConnection(connection->edgeTransport());
+        ProtocolFailureMonitor::logConnection(mConnection->edgeTransport());
     }
     
     void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback, std::function<void(Error)> aErrorCallback)

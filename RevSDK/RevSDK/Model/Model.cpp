@@ -58,6 +58,8 @@ namespace rs
         Log::info(0, "Logging on");
         data_storage::initDataStorage();
         
+        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
+        
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
         }, [this](){
@@ -68,7 +70,6 @@ namespace rs
         mConfService               = std::unique_ptr<ConfigurationService>(conf);
         mStatsReportingTimer       = nullptr; 
         mSpareDomainsWhiteList     = std::vector<std::string>();
-        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
         mUsageTracker              = std::make_shared<DebugUsageTracker>();
         
         //applyConfiguration(mConfService->getActive());
