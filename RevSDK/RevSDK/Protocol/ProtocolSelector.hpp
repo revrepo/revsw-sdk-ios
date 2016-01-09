@@ -34,8 +34,11 @@ namespace rs
         std::shared_ptr<Protocol>   mBestProtocol;
         
         std::vector<std::string>    mAvailableProtocols;
+        std::vector<std::string>    mIgnoredProtocols;
         
         void refreshTestInfo();
+        
+        void handleTestResults(std::vector<AvailabilityTestResult> aResults);
         
         void convertIDToPropocol(const std::string& aID);
         

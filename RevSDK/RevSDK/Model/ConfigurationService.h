@@ -26,11 +26,14 @@ namespace rs
     {
     public:
         virtual void applyConfiguration(std::shared_ptr<const Configuration> aNewConfiguration) = 0;
+        virtual void scheduleStatsReporting() = 0;
     };
     
     class ConfigurationService : public IConfigurationService
     {
     private:
+        
+        bool mStaleOnFlag;
         typedef std::chrono::time_point<std::chrono::system_clock> tSpan;
         
         std::mutex mTimeLock;
@@ -50,21 +53,24 @@ namespace rs
         
         void loadConfiguration();
         
-        bool isStale() const;
         
         std::atomic<tSpan> mLastUpdated;
         
+        std::function<void()> mStaleCallback;
+        
     public:
-        ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCondition);
+        ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCondition, std::function<void()> aStaleCallback);
         virtual ~ConfigurationService();
         
         void setOperationMode(RSOperationModeInner aMode) override;
+        
+        bool isStale() const override;
         
         void init() override;
         
         void stopUpdate() override;
         void resumeUpdate() override;
         
-        std::shared_ptr<const Configuration> getActive() const override;
+        std::shared_ptr<const Configuration> getActive() override;
     };
 }

@@ -10,6 +10,8 @@
 #import "RSURLRequestProcessor.h"
 #import "RSUtils.h"
 
+#include "RSLog.h"
+
 #include "Model.hpp"
 
 @interface RSURLSessionDelegate ()
@@ -30,7 +32,10 @@
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
     int code = [httpResponse statusCode];
     
-    NSLog(@"Redirect with code %d", code);
+    BOOL isEdgeFlag = connection->edgeTransport() == rs::standardProtocolName();
+    //NSLog(@"Redirect with code %d", code);
+    
+    rs::Log::info(12, std::string("Redirect with code " + std::to_string(code)).c_str());
     
     if (!request)
     {
@@ -42,7 +47,10 @@
     }
     else
     {
-        request = [RSURLRequestProcessor proccessRequest:request];
+        std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
+        BOOL isEdge = currentProtocolName == rs::standardProtocolName();
+        
+        request = [RSURLRequestProcessor proccessRequest:request isEdge:isEdge];
         completionHandler(request);
     }
 }

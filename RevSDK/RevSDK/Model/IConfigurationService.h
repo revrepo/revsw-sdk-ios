@@ -24,6 +24,8 @@ namespace rs
         virtual void stopUpdate() = 0;
         virtual void resumeUpdate() = 0;
         
-        virtual std::shared_ptr<const Configuration> getActive() const = 0;
+        virtual bool isStale() const { return false; }
+        
+        virtual std::shared_ptr<const Configuration> getActive() = 0;
     };
 }

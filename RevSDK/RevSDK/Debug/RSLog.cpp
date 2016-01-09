@@ -12,7 +12,6 @@
 #include <iomanip>
 #include "Utils.hpp"
 
-#define RS_LOG 1
 
 namespace rs
 {

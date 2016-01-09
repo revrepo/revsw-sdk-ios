@@ -11,6 +11,7 @@
 #import "Model.hpp"
 #import "RSUtils.h"
 #import "Utils.hpp"
+#import "RSLog.h"
 
 #include <string>
 
@@ -30,8 +31,13 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     return [@[@"http", @"https"] indexOfObject:aScheme] != NSNotFound;
 }
 
-+ (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest
++ (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest isEdge:(BOOL)aIsEdge
 {
+    if ([aRequest.URL.scheme isEqualToString:rs::kRSDataSchemeName])
+    {
+        rs::Log::warning(rs::kLogTagRequestModification, "Data scheme is being used");
+    }
+    
     NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
     NSURL* URL                          = aRequest.URL;
     NSString* host                      = URL.host;
@@ -51,10 +57,8 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
     [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
     
-    BOOL isEdge = rs::Model::instance()->currentProtocol()->protocolName() == rs::standardProtocolName();
-    
     NSURLComponents* URLComponents = [NSURLComponents new];
-    if (isEdge)
+    if (aIsEdge)
     {
         URLComponents.host         = rs::kRSRevRedirectHost;
     }

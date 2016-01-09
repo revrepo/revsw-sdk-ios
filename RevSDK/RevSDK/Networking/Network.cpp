@@ -17,6 +17,8 @@
 #include "StandardConnection.hpp"
 #include "QUICConnection.hpp"
 
+#include "RSLog.h"
+
 #include "Request.hpp"
 
 namespace rs
@@ -79,9 +81,15 @@ namespace rs
     {
         auto getConnectionFromProto = [](std::string protocolName) {
             if (protocolName == standardProtocolName())
+            {
+                Log::info(kRSLogKey_LastMile, "...sending standard test request...");
                 return Connection::create<StandardConnection>();
+            }
             else if (protocolName == quicProtocolName())
+            {
+                Log::info(kRSLogKey_LastMile, "...sending quic test request...");
                 return Connection::create<QUICConnection>();
+            }
             else
             {
                 assert(false);
@@ -89,7 +97,9 @@ namespace rs
         };
         
         std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName()); 
-        std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL);
+        std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL, aProtocol.get());
+        
+        Log::info(kRSLogKey_LastMile, ("...request processed, headers set, esnding to " + aURL).c_str());
         
         connection->startWithRequest(req, aDelegate);
     }

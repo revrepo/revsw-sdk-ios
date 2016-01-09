@@ -106,7 +106,7 @@
     }
     else
     {
-        request = [RSURLRequestProcessor proccessRequest:request];
+        request = [RSURLRequestProcessor proccessRequest:request isEdge:YES];
         completionHandler(request);
     }
 }

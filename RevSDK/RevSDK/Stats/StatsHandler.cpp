@@ -70,4 +70,14 @@ namespace rs
     {
         mStatsHandler->addEvent(aEvent);
     }
+    
+    void StatsHandler::startMonitoring()
+    {
+        mStatsHandler->startMonitoring();
+    }
+    
+    void StatsHandler::stopMonitoring()
+    {
+        mStatsHandler->stopMonitoring();
+    }
 }

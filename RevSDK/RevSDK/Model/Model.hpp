@@ -84,8 +84,10 @@ namespace rs
         ~Model();
         
         void switchEventTrigger(bool aOn, std::function<void(rs::Log::Level, const char*, const char*)> aCallback);
+        std::shared_ptr<const Configuration> getActiveConfiguration()const;
         
         void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
+        void scheduleStatsReporting() override;
         
         std::vector<std::string> getAllowedProtocolIDs() const;
         
@@ -96,6 +98,7 @@ namespace rs
         
         std::shared_ptr<Protocol> currentProtocol();
         std::shared_ptr<Connection> currentConnection();
+        std::shared_ptr<Connection> connectionForProtocolName(const std::string&);
         std::string SDKKey()const { return mSDKKey; };
         std::string edgeHost();
         
@@ -103,7 +106,7 @@ namespace rs
         
         RSOperationModeInner currentOperationMode();
          
-        void setOperationMode(const RSOperationModeInner& aOperationMode);
+//      void setOperationMode(const RSOperationModeInner& aOperationMode);
         
         bool canTransport();
         //void switchWhiteListOption(bool aOn);
@@ -119,6 +122,8 @@ namespace rs
         //void debug_enableDebugMode();
         void debug_disableDebugMode();
         void debug_replaceConfigurationService(IConfigurationService* aNewService);
+        
+        bool debug_isConfigurationStale();
         
         LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
     };

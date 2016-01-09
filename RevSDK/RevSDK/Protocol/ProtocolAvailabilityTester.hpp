@@ -81,6 +81,7 @@ namespace rs
     public:
         ProtocolAvailabilityTester();
         
+        void runTests(std::string aMonitoringURL, std::string aIgnoreProtocol, tCompletitionCB cbOnComplete);
         void runTests(std::string aMonitoringURL, tCompletitionCB cbOnComplete);
     };
 }

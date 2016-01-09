@@ -81,6 +81,9 @@ typedef enum
     extern const std::string kOperationModeReportString;
     extern const std::string kOperationModeTransferReportString;
     
+    extern const std::string kRevHostHeader;
+    extern const std::string kRevRedirectHost;
+    
     std::string loadConfigurationURL(const std::string&);
     std::string reportStatsURL();
     std::string errorDescriptionKey();

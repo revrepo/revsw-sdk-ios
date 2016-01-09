@@ -10,6 +10,8 @@
 #include <map>
 #include <algorithm>
 
+#include "RSLog.h"
+
 #include "Model.hpp"
 #include "StandardProtocol.hpp"
 #include "QUICProtocol.hpp"
@@ -58,6 +60,9 @@ namespace rs
         
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
+        }, [this](){
+        
+            mStatsHandler->stopMonitoring();
         });
         
         mConfService               = std::unique_ptr<ConfigurationService>(conf);
@@ -102,7 +107,7 @@ namespace rs
     
     void Model::debug_forceReloadConfiguration()
     {
-        //mConfService->loadConfiguration();
+        mConfService->init();
     }
     
     std::string Model::edgeHost()
@@ -124,18 +129,16 @@ namespace rs
     
     std::shared_ptr<Connection> Model::currentConnection()
     {
-//        std::map<std::string, std::shared_ptr<Connection>> connectionDictionary = {
-//        
-//            {httpsProtocolName(), Connection::create<StandardConnection>() },
-//            {quicProtocolName(), Connection::create<QUICConnection>() }
-//        };
-
         std::shared_ptr<Protocol> protocol     = currentProtocol();
         std::string protocolName               = protocol.get()->protocolName();
-        
-        if (protocolName == standardProtocolName())
+        return connectionForProtocolName(protocolName);
+    }
+    
+    std::shared_ptr<Connection> Model::connectionForProtocolName(const std::string& aProtocolName)
+    {
+        if (aProtocolName == standardProtocolName())
             return Connection::create<StandardConnection>();
-        else if (protocolName == quicProtocolName())
+        else if (aProtocolName == quicProtocolName())
             return Connection::create<QUICConnection>();
         else
         {
@@ -155,7 +158,17 @@ namespace rs
             std::lock_guard<std::mutex> lockGuard(mLock);
             //mConfiguration = aConfiguration;
             mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
+            
+            if (aConfiguration->operationMode == kRSOperationModeInnerReport || aConfiguration->operationMode == kRSOperationModeInnerTransportAndReport)
+            {
+                mStatsHandler->startMonitoring();
+            }
+            else
+            {
+                mStatsHandler->stopMonitoring();
+            }
         }
+        
         //setOperationMode(aConfiguration->operationMode);
         
         mProtocolSelector.onConfigurationApplied(aConfiguration);
@@ -165,9 +178,12 @@ namespace rs
         auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
         
         mCurrentLoggingLevel = (RSLogginLevel)logLevelIndex;
-        
+    }
+    
+    void Model::scheduleStatsReporting()
+    {
         auto activeConf = mConfService->getActive();
-        std::cout << activeConf->statsReportingInterval << std::endl;
+    
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
@@ -181,8 +197,6 @@ namespace rs
         }
     }
     
-    static int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
-    
     void Model::reportStats()
     {
         bool hasDataToSend = true;
@@ -193,18 +207,16 @@ namespace rs
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
-                statsData = mStatsHandler->createSendTransaction(this->mConfService->getActive()->statsReportingMaxRequests);
+                int requestsCount = this->mConfService->getActive()->statsReportingMaxRequests;
+                
+                assert(requestsCount);
+                
+                statsData = mStatsHandler->createSendTransaction(requestsCount);
 #else
                 statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
 #endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
-            
-            int64 t = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
-            
-            std::cout << "\nDIFFERENCE " << t - milliseconds_since_epoch << std::endl;
-            
-            milliseconds_since_epoch = t;
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
                 std::lock_guard<std::mutex> lockGuard(mLock);
@@ -248,17 +260,17 @@ namespace rs
         }
     }
     
-    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
-    {
-        std::lock_guard<std::mutex> scopedLock(mLock);
-        auto activeConf = mConfService->getActive();
-#ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
-        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
-#endif
-        
-        mConfService->setOperationMode(aOperationMode);
-    }
+//    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
+//    {
+//        std::lock_guard<std::mutex> scopedLock(mLock);
+//        auto activeConf = mConfService->getActive();
+//#ifdef RS_ENABLE_DEBUG_LOGGING
+//        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
+//        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
+//#endif
+//        
+//        mConfService->setOperationMode(aOperationMode);
+//    }
     
     RSOperationModeInner Model::currentOperationMode()
     {
@@ -369,7 +381,8 @@ namespace rs
     
     void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
     {
-        mConfService = std::unique_ptr<IConfigurationService>(aNewService); 
+        mConfService = std::unique_ptr<IConfigurationService>(aNewService);
+        Log::info(kRSLogKey_Configuration, "Replacing configuration service on mock");
     }
     
     
@@ -377,9 +390,19 @@ namespace rs
     {
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
+        }, [this](){
+            
+            mStatsHandler->stopMonitoring();
         });
         
-        mConfService               = std::unique_ptr<ConfigurationService>(conf);
+        mConfService = std::unique_ptr<ConfigurationService>(conf);
+        mConfService->init();
+        Log::info(kRSLogKey_Configuration, "Recovering standard configuration service");
+    }
+    
+    std::shared_ptr<const Configuration> Model::getActiveConfiguration()const
+    {
+        return mConfService->getActive();
     }
     
     void Model::logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
@@ -410,6 +433,13 @@ namespace rs
             mEventTriggerCallback(aLevel, title.c_str(), aMessage);
         }
     }
+    
+    
+    bool Model::debug_isConfigurationStale()
+    {
+        return mConfService->isStale();
+    }
+    
 }
 
 

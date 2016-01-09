@@ -125,6 +125,7 @@
 		5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */; };
 		5BEBD7301C22EB95002EC0CB /* JSONUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */; };
 		5BEBD7311C22EB95002EC0CB /* JSONUtils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */; };
+		6D1348681C4131430017D07E /* ProtocolFailureMonitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D1348671C4131430017D07E /* ProtocolFailureMonitor.cpp */; };
 		6D1F86091C3A730800E48AC9 /* ProtocolSelector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F86071C3A730800E48AC9 /* ProtocolSelector.cpp */; };
 		6D1F860A1C3A730800E48AC9 /* ProtocolSelector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6D1F86081C3A730800E48AC9 /* ProtocolSelector.hpp */; };
 		6D1F860D1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F860B1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm */; };
@@ -281,6 +282,8 @@
 		5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONUtils.cpp; sourceTree = "<group>"; };
 		5BEBD72F1C22EB95002EC0CB /* JSONUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = JSONUtils.hpp; sourceTree = "<group>"; };
 		5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSPublicConsts.h; sourceTree = "<group>"; };
+		6D1348661C4131310017D07E /* ProtocolFailureMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtocolFailureMonitor.h; sourceTree = "<group>"; };
+		6D1348671C4131430017D07E /* ProtocolFailureMonitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolFailureMonitor.cpp; sourceTree = "<group>"; };
 		6D1F86071C3A730800E48AC9 /* ProtocolSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolSelector.cpp; sourceTree = "<group>"; };
 		6D1F86081C3A730800E48AC9 /* ProtocolSelector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProtocolSelector.hpp; sourceTree = "<group>"; };
 		6D1F860B1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = NativeNetworkEventsHandler.mm; path = RevSDK/Networking/NativeNetworkEventsHandler.mm; sourceTree = SOURCE_ROOT; };
@@ -540,8 +543,8 @@
 				5B54C32D1BFB700C00217971 /* Model.cpp */,
 				5BC497B51C03782B00FF0922 /* Configuration.cpp */,
 				5BC497B61C03782B00FF0922 /* Configuration.hpp */,
-				6D45447E1C33C5160020224C /* ConfigurationService.cpp */,
 				6D45447F1C33C5160020224C /* ConfigurationService.h */,
+				6D45447E1C33C5160020224C /* ConfigurationService.cpp */,
 				6D8BD9A01C3FAE07008353DB /* IConfigurationService.h */,
 			);
 			path = Model;
@@ -562,6 +565,8 @@
 				6D1F860C1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp */,
 				6D1F860F1C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm */,
 				6D1F86101C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp */,
+				6D1348661C4131310017D07E /* ProtocolFailureMonitor.h */,
+				6D1348671C4131430017D07E /* ProtocolFailureMonitor.cpp */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -863,6 +868,7 @@
 				6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */,
 				5BE3F8711C04A0DE0087BC28 /* Timer.mm in Sources */,
 				5B3096F11BFA11E50045024C /* RevSDK.mm in Sources */,
+				6D1348681C4131430017D07E /* ProtocolFailureMonitor.cpp in Sources */,
 				11F24B341C3C06B900DABAE5 /* QUICDataStream.cpp in Sources */,
 				11F24B401C3C57E500DABAE5 /* RSUDPSocket.cpp in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,

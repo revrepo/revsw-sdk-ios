@@ -9,6 +9,7 @@
 #import "RSPublicConsts.h"
 #import "RSUtils.h"
 
+#include "RSLog.h"
 #include "Request.hpp"
 #include "Response.hpp"
 #include "Data.hpp"
@@ -108,6 +109,7 @@ namespace rs
     NSString* const kRSQUICProtocolName = @"quic";
     NSString* const kRSStandardProtocolName = @"standard";
     NSString* const kRSRevProtocolName = @"rev";
+    NSString* const kRSDataSchemeName = @"data";
     
     //log levels
     NSString* const kRSLogLevelNone  = @"none";
@@ -402,14 +404,40 @@ namespace rs
         return dataVector;
     }
     
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection, NSString* aOriginalScheme)
+    Data dataFromRequestsDictionary(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, NSDictionary* aDictionary)
     {
-        assert(aConnection);
+        NSNumber* startTimestamp     = aDictionary[kRS_JKey_StartTs];
+        NSNumber* endTimestamp       = aDictionary[kRS_JKey_EndTs];
+        NSNumber* firstByteTimestamp = aDictionary[kRS_JKey_FirstByteTs];
+        
+        CFNumberRef stRef  = (__bridge CFNumberRef)startTimestamp;
+        CFNumberRef endRef = (__bridge CFNumberRef)endTimestamp;
+        CFNumberRef fbRef  = (__bridge CFNumberRef)firstByteTimestamp;
+        
+        if (CFNumberIsFloatType(stRef))
+        {
+            Log::error(kLogTagRequestsStats, "Start timestamp is not an integer");
+        }
+        
+        if (CFNumberIsFloatType(endRef))
+        {
+            Log::error(kLogTagRequestsStats, "End timestamp is not an integer");
+        }
+        
+        if (CFNumberIsFloatType(fbRef))
+        {
+            Log::error(kLogTagRequestsStats, "End timestamp is not an integer");
+        }
+        
+        if ([startTimestamp isEqualToNumber:firstByteTimestamp])
+        {
+            Log::error(kLogTagRequestsStats, "First byte timestamp is equal to start timestamp");
+        }
         
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
         NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
-        NSURL* originalURL = URL;
+        NSURL* originalURL                  = URL;
         BOOL isRedirecting                  = [URL.host isEqualToString:kRSRevRedirectHost];
         
         if (isRedirecting)
@@ -417,81 +445,19 @@ namespace rs
         
         NSString* URLString                 = [originalURL absoluteString];
         NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
+        BOOL successStatus                  = aResponse.statusCode >= 200 && aResponse.statusCode < 300;
         
         dataDictionary[kRSURLKey]           = URLString;
         dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
-        dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
+        dataDictionary[kRS_JKey_SuccessStatus] = @((int)successStatus);
         
-        //fill with defaults
+        int successStatusCheck = [dataDictionary[kRS_JKey_SuccessStatus] intValue];
+        
+        if (successStatusCheck != 0 && successStatusCheck != 1)
         {
-            NSNumber *defaultVal = [NSNumber numberWithInt:0];
-            dataDictionary[kRS_JKey_Encoding] 		= @"-";
-            dataDictionary[kRS_JKey_ContType] 		= @"-";
-            dataDictionary[kRS_JKey_EndTs] 			= defaultVal;
-            dataDictionary[kRS_JKey_FirstByteTs] 	= defaultVal;
-            dataDictionary[kRS_JKey_KeepAliveStatus]= defaultVal;
-            dataDictionary[kRS_JKey_LocCacheStatus] = @"-";
-            dataDictionary[kRS_JKey_Method] 		= @"-";
-            dataDictionary[kRS_JKey_Network] 		= @"-";
-            dataDictionary[kRS_JKey_Protocol] 		= @"-";
-            dataDictionary[kRS_JKey_RecDytes] 		= defaultVal;
-            dataDictionary[kRS_JKey_SentBytes] 		= defaultVal;
-            dataDictionary[kRS_JKey_StartTs] 		= defaultVal;  
-            dataDictionary[kRS_JKey_TransportProt] 	= @"-";
-            dataDictionary[kRS_JKey_Destination]    = @"_";
-            dataDictionary[kRS_JKey_EdgeTransport]  = @"_";
+            std::string logFormat = "success statuc is incorrect " + std::to_string(successStatusCheck);
+            Log::error(kLogTagRequestsStats, logFormat.c_str());
         }
-        // fetching data
-        {
-            dataDictionary[kRS_JKey_ConnID] 		= [NSNumber numberWithInt:aConnection->getID()];
-            dataDictionary[kRS_JKey_Method]         = [aRequest HTTPMethod];
-            
-            if (aResponse)
-            {
-                NSDictionary* headers = [aResponse allHeaderFields];
-                
-                dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
-                dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
-                dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
-                dataDictionary[kRS_JKey_TransportProt] = aOriginalScheme;
-                
-                dataDictionary[kRS_JKey_StartTs] 		= [NSNumber numberWithLongLong:aConnection->getStartTimestamp()];
-                dataDictionary[kRS_JKey_RecDytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalReceived()];
-                dataDictionary[kRS_JKey_SentBytes] 		= [NSNumber numberWithLongLong:aConnection->getTotalSent()];
-                dataDictionary[kRS_JKey_EndTs] 			= [NSNumber numberWithLongLong:aConnection->getEndTimestamp()];
-                dataDictionary[kRS_JKey_FirstByteTs] 	= [NSNumber numberWithLongLong:aConnection->getFirstByteTimestamp()];
-                
-                dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
-                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
-                dataDictionary[kRS_JKey_EdgeTransport]  = NSStringFromStdString(aConnection->edgeTransport());
-            }
-        }
-        
-        NSData* jsonData = [NSJSONSerialization dataWithJSONObject:dataDictionary
-                                                           options:NSJSONWritingPrettyPrinted
-                                                             error:nil];
-        Data data = dataFromNSData(jsonData);
-        
-        return data;
-    }
-    
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, RSURLConnectionNative* aConnection)
-    {
-        NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
-        NSDictionary* headers               = aRequest.allHTTPHeaderFields;
-        NSURL* URL                          = aRequest.URL;
-        NSURL* originalURL = URL;
-        BOOL isRedirecting                  = [URL.host isEqualToString:kRSRevRedirectHost];
-        
-        if (isRedirecting)
-            originalURL = [originalURL revURLByReplacingHostWithHost:headers[kRSRevHostHeader]];
-        
-        NSString* URLString                 = [originalURL absoluteString];
-        NSInteger statusCode                = aResponse ? aResponse.statusCode : 0;
-        
-        dataDictionary[kRSURLKey]           = URLString;
-        dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
-        dataDictionary[kRS_JKey_SuccessStatus] = @(statusCode);
         
         //fill with defaults
         {
@@ -514,8 +480,9 @@ namespace rs
         }
         // fetching data
         {
-            dataDictionary[kRS_JKey_ConnID] = aConnection.connectionId;
+            dataDictionary[kRS_JKey_ConnID] = aDictionary[kRS_JKey_ConnID];
             dataDictionary[kRS_JKey_Method] = [aRequest HTTPMethod];
+
             
             if (aResponse)
             {
@@ -524,16 +491,17 @@ namespace rs
                 dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
                 dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
                 dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
-                dataDictionary[kRS_JKey_TransportProt] = aRequest.URL.scheme;
+                dataDictionary[kRS_JKey_TransportProt] = aDictionary[kRS_JKey_TransportProt];//aRequest.URL.scheme;
                 
-                dataDictionary[kRS_JKey_StartTs] 		= aConnection.startTimestamp;
-                dataDictionary[kRS_JKey_RecDytes] 		= aConnection.totalBytesReceived;
-                dataDictionary[kRS_JKey_SentBytes] 		= [NSNumber numberWithLongLong:aRequest.HTTPBody.length];
-                dataDictionary[kRS_JKey_EndTs] 			= aConnection.endTimestamp;
-                dataDictionary[kRS_JKey_FirstByteTs] 	= aConnection.firstByteTimestamp;
+                dataDictionary[kRS_JKey_StartTs] 		= startTimestamp;
+                dataDictionary[kRS_JKey_RecDytes] 		= aDictionary[kRS_JKey_RecDytes];
+                dataDictionary[kRS_JKey_SentBytes] 		= aDictionary[kRS_JKey_SentBytes];
+                dataDictionary[kRS_JKey_EndTs] 			= endTimestamp;
+                dataDictionary[kRS_JKey_FirstByteTs] 	= firstByteTimestamp;
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
-                dataDictionary[kRS_JKey_Destination]    = @"origin";
+                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
+                dataDictionary[kRS_JKey_EdgeTransport]  = aDictionary[kRS_JKey_EdgeTransport];
             }
         }
         
@@ -543,6 +511,39 @@ namespace rs
         Data data = dataFromNSData(jsonData);
         
         return data;
+    }
+    
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection, NSString* aOriginalScheme)
+    {
+        NSDictionary* dictionary = @{
+                                     kRS_JKey_ConnID : @(aConnection->getID()),
+                                     kRS_JKey_StartTs : @(aConnection->getStartTimestamp()),
+                                     kRS_JKey_RecDytes : @(aConnection->getTotalReceived()),
+                                     kRS_JKey_SentBytes : @(aConnection->getTotalSent()),
+                                     kRS_JKey_EndTs : @(aConnection->getEndTimestamp()),
+                                     kRS_JKey_FirstByteTs : @(aConnection->getFirstByteTimestamp()),
+                                     kRS_JKey_TransportProt : aOriginalScheme,
+                                     kRS_JKey_EdgeTransport : NSStringFromStdString(aConnection->edgeTransport())
+                                     
+                                     };
+        
+        return dataFromRequestsDictionary(aRequest, aResponse, dictionary);
+    }
+    
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, RSURLConnectionNative* aConnection)
+    {
+        NSDictionary* dictionary = @{
+                                     kRS_JKey_ConnID : aConnection.connectionId,
+                                     kRS_JKey_StartTs : aConnection.startTimestamp,
+                                     kRS_JKey_RecDytes : aConnection.totalBytesReceived,
+                                     kRS_JKey_SentBytes : @(aRequest.HTTPBody.length),
+                                     kRS_JKey_EndTs : aConnection.endTimestamp,
+                                     kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp ? aConnection.firstByteTimestamp : @(0),
+                                     kRS_JKey_TransportProt : aRequest.URL.scheme,
+                                     kRS_JKey_EdgeTransport : @"_"
+                                     };
+        
+        return dataFromRequestsDictionary(aRequest, aResponse, dictionary);
     }
     
     bool _isValidURL(NSString* aURLString)

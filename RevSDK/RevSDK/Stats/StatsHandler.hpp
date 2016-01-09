@@ -42,6 +42,9 @@ namespace rs
         ReportTransactionHanle createSendTransaction(int aRequestCount);
         
         void addEvent(const Event&);
+        
+        void startMonitoring();
+        void stopMonitoring();
     };
 }
 
