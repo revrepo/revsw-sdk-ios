@@ -47,7 +47,10 @@
     }
     else
     {
-        request = [RSURLRequestProcessor proccessRequest:request isEdge:isEdgeFlag];
+        std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
+        BOOL isEdge = currentProtocolName == rs::standardProtocolName();
+        
+        request = [RSURLRequestProcessor proccessRequest:request isEdge:isEdge];
         completionHandler(request);
     }
 }

@@ -86,6 +86,11 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     for (const auto& i : aRequest->headers())
         headers[i.first] = i.second;
     
+    if (aRequest->host() == kRevRedirectHost)
+    {
+        Log::error(kLogTagRequestModification, "Request host set to Rev redirect host in QUIC");
+    }
+    
     headers["X-Rev-Host"] = aRequest->host();
     headers["X-Rev-Proto"] = aRequest->originalScheme();
 

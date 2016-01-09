@@ -67,12 +67,13 @@
             [self.delegate rsconnection:self didFailWithError:error];
         };
         
-        BOOL isEdgeFlag = rs::Model::instance()->currentProtocol()->protocolName() == rs::standardProtocolName();
+        std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
+        BOOL isEdge = currentProtocolName == rs::standardProtocolName();
         
-        NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdgeFlag];
+        NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdge];
         std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
         request->setOriginalScheme(rs::stdStringFromNSString(aRequest.URL.scheme));
-        connectionProxy = std::make_shared<rs::ConnectionProxy>(request);
+        connectionProxy = std::make_shared<rs::ConnectionProxy>(request, currentProtocolName);
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
     }
     

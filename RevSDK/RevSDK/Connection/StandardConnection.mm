@@ -66,6 +66,14 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
 
     RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
     [customDelegate setConnection:oAnchor];
+    
+    NSDictionary* headers = mutableRequest.allHTTPHeaderFields;
+    NSString* XRevHostHeader = headers[kRSRevHostHeader];
+    
+    if ([XRevHostHeader isEqualToString:kRSRevRedirectHost])
+    {
+        Log::error(kLogTagRequestModification,  "Request host set to Rev redirect host in QUIC");
+    }
         
     NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     

@@ -109,6 +109,7 @@ namespace rs
     NSString* const kRSQUICProtocolName = @"quic";
     NSString* const kRSStandardProtocolName = @"standard";
     NSString* const kRSRevProtocolName = @"rev";
+    NSString* const kRSDataSchemeName = @"data";
     
     //log levels
     NSString* const kRSLogLevelNone  = @"none";
@@ -403,10 +404,6 @@ namespace rs
         return dataVector;
     }
     
-    static const int kRSTimestampFloatErrorLogTag     = 2016;
-    static const int kRSSuccessStatusErrorLogTag      = 2015;
-    static const int kRSFirstByteTimestampErrorLogTag = 2014;
-    
     Data dataFromRequestsDictionary(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, NSDictionary* aDictionary)
     {
         NSNumber* startTimestamp     = aDictionary[kRS_JKey_StartTs];
@@ -419,22 +416,22 @@ namespace rs
         
         if (CFNumberIsFloatType(stRef))
         {
-            Log::error(kRSTimestampFloatErrorLogTag, "Start timestamp is not an integer");
+            Log::error(kLogTagRequestsStats, "Start timestamp is not an integer");
         }
         
         if (CFNumberIsFloatType(endRef))
         {
-            Log::error(kRSTimestampFloatErrorLogTag, "End timestamp is not an integer");
+            Log::error(kLogTagRequestsStats, "End timestamp is not an integer");
         }
         
         if (CFNumberIsFloatType(fbRef))
         {
-            Log::error(kRSTimestampFloatErrorLogTag, "End timestamp is not an integer");
+            Log::error(kLogTagRequestsStats, "End timestamp is not an integer");
         }
         
         if ([startTimestamp isEqualToNumber:firstByteTimestamp])
         {
-            Log::error(kRSFirstByteTimestampErrorLogTag, "First byte timestamp is equal to start timestamp");
+            Log::error(kLogTagRequestsStats, "First byte timestamp is equal to start timestamp");
         }
         
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
@@ -459,7 +456,7 @@ namespace rs
         if (successStatusCheck != 0 && successStatusCheck != 1)
         {
             std::string logFormat = "success statuc is incorrect " + std::to_string(successStatusCheck);
-            Log::error(kRSSuccessStatusErrorLogTag, logFormat.c_str());
+            Log::error(kLogTagRequestsStats, logFormat.c_str());
         }
         
         //fill with defaults

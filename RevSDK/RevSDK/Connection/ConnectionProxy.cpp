@@ -19,9 +19,9 @@
 
 namespace rs
 {
-    ConnectionProxy::ConnectionProxy(std::shared_ptr<Request> aRequest): mRequest(aRequest)
+    ConnectionProxy::ConnectionProxy(std::shared_ptr<Request> aRequest, const std::string& aCurrentProtocolName): mRequest(aRequest)
     {
-        
+        mConnection = Model::instance()->connectionForProtocolName(aCurrentProtocolName);
     }
     
     ConnectionProxy::~ConnectionProxy()
@@ -31,9 +31,8 @@ namespace rs
     
     void ConnectionProxy::start()
     {
-        std::shared_ptr<Connection> connection = Model::instance()->currentConnection();
+        mConnection.get()->startWithRequest(mRequest, this);
         ProtocolFailureMonitor::logConnection(connection->edgeTransport());
-        connection.get()->startWithRequest(mRequest, this);
     }
     
     void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback, std::function<void(Error)> aErrorCallback)
