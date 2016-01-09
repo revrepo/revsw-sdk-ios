@@ -13,6 +13,7 @@
 #include "Model.hpp"
 #include "DataStorage.hpp"
 #include "ProtocolSelector.hpp"
+#include "ProtocolFailureMonitor.h"
 
 using namespace rs;
 
@@ -21,15 +22,27 @@ ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
     auto vec = data_storage::restoreAvailableProtocols();
     mAvailableProtocols = vec;
     
-    std::string toString = "Restored protocols:: ";
+    ProtocolFailureMonitor::subscribeOnProtocolFailed(ProtocolFailureMonitor::kSubscriberKey_Selector, [this](const std::string& aFailedProtocol){
+        std::lock_guard<std::mutex> lockGuard(mLock);
+        
+        Log::info(kRSLogKey_LastMile, "Last mile protocol testing...");
+        if (mMonitoringURL != "")
+        {
+            mTester.runTests(mMonitoringURL, aFailedProtocol, [this] (std::vector<AvailabilityTestResult> aResults){
+                this->handleTestResults(aResults);
+            });
+        }
+    });
     
-    for (auto& it: vec)
-    {
-        toString += it + ", ";
-    }
-    
-    Log::info(kRSLogKey_LastMile, "ProtocolSelector was just created.");
-    Log::info(kRSLogKey_LastMile, toString.c_str());
+//    std::string toString = "Restored protocols:: ";
+//    
+//    for (auto& it: vec)
+//    {
+//        toString += it + ", ";
+//    }
+//    
+//    Log::info(kRSLogKey_LastMile, "ProtocolSelector was just created.");
+//    Log::info(kRSLogKey_LastMile, toString.c_str());
 }
 
 void ProtocolSelector::refreshTestInfo()
@@ -38,31 +51,36 @@ void ProtocolSelector::refreshTestInfo()
     if (mMonitoringURL != "")
     {
         mTester.runTests(mMonitoringURL, [this] (std::vector<AvailabilityTestResult> aResults){
-            auto confProtos = Model::instance()->getAllowedProtocolIDs();
-            
-            std::lock_guard<std::mutex> lockGuard(mLock);
-            std::vector<std::string> allowedProtocols;
-            
-            for (auto it: aResults)
-            {
-                if (it.Available)
-                {
-                    allowedProtocols.push_back(it.ProtocolID);
-                }
-            }
-            mAvailableProtocols = allowedProtocols;
-            
-            std::string toString = "ProtocolSelector:: finished testing. Available protocols:: ";
-            
-            for (auto& it: mAvailableProtocols)
-            {
-                toString += it + ", ";
-            }
-            Log::info(kRSLogKey_LastMile, toString.c_str());
-            
-            sortProtocols(confProtos);
+            this->handleTestResults(aResults);
         });
     } 
+}
+
+void ProtocolSelector::handleTestResults(std::vector<AvailabilityTestResult> aResults)
+{
+    auto confProtos = Model::instance()->getAllowedProtocolIDs();
+    
+    std::lock_guard<std::mutex> lockGuard(mLock);
+    std::vector<std::string> allowedProtocols;
+    
+    for (auto it: aResults)
+    {
+        if (it.Available)
+        {
+            allowedProtocols.push_back(it.ProtocolID);
+        }
+    }
+    mAvailableProtocols = allowedProtocols;
+    
+    std::string toString = "ProtocolSelector:: finished testing. Available protocols:: ";
+    
+    for (auto& it: mAvailableProtocols)
+    {
+        toString += it + ", ";
+    }
+    Log::info(kRSLogKey_LastMile, toString.c_str());
+    
+    sortProtocols(confProtos);
 }
 
 void ProtocolSelector::convertIDToPropocol(const std::string& aID)
@@ -88,18 +106,21 @@ void ProtocolSelector::saveAvailable()
 
 void ProtocolSelector::onCelluarStandardChanged()
 {
+    ProtocolFailureMonitor::clear();
     Log::info(kRSLogKey_LastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
 
 void ProtocolSelector::onNetworkTechnologyChanged()
 {
+    ProtocolFailureMonitor::clear();
     Log::info(kRSLogKey_LastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
 
 void ProtocolSelector::onSSIDChanged()
 {
+    ProtocolFailureMonitor::clear();
     Log::info(kRSLogKey_LastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
@@ -148,6 +169,8 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
         }
         else
         {
+            mBestProtocol = nullptr;
+            
             Log::warning(kRSLogKey_LastMile,
                          "None of allowed protocols are available");
         }
@@ -156,7 +179,8 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
     {
         mBestProtocol = nullptr;
         
-        Log::warning(kRSLogKey_LastMile, "None of allowed protocols was received");
+        Log::warning(kRSLogKey_LastMile,
+                     "None of allowed protocols found in configuration");
     }
 }
 
@@ -175,18 +199,26 @@ std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 
 void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuration> aConf)
 {
-    std::lock_guard<std::mutex> lockGuard(mLock);
-    this->mMonitoringURL = aConf->transportMonitoringURL;
+    static std::atomic<bool> _firstInit(true);
     
-    if (mEventsHandler.isInitialized() == false)
     {
-        this->convertIDToPropocol(aConf->initialTransportProtocol);
-        
-        Log::info(kRSLogKey_LastMile,
-                  std::string("ProtocolSelector:: picked initial protocol : " + aConf->initialTransportProtocol).c_str());
-        
-        mAvailableProtocols.push_back(aConf->initialTransportProtocol);
-        saveAvailable();
+        std::lock_guard<std::mutex> lockGuard(mLock);
+        this->mMonitoringURL = aConf->transportMonitoringURL;
+    }
+    
+//  if (mEventsHandler.isInitialized() == false)
+    if (_firstInit.exchange(false))
+    {
+        {
+            std::lock_guard<std::mutex> lockGuard(mLock);
+            this->convertIDToPropocol(aConf->initialTransportProtocol);
+            
+            Log::info(kRSLogKey_LastMile,
+                      std::string("ProtocolSelector:: picked initial protocol : " + aConf->initialTransportProtocol).c_str());
+            
+            mAvailableProtocols.push_back(aConf->initialTransportProtocol);
+            saveAvailable();
+        }
         this->refreshTestInfo();
     }
     else

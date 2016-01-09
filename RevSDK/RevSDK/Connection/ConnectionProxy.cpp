@@ -15,6 +15,8 @@
 #include "Response.hpp"
 #include "Error.hpp"
 
+#include "ProtocolFailureMonitor.h"
+
 namespace rs
 {
     ConnectionProxy::ConnectionProxy(std::shared_ptr<Request> aRequest): mRequest(aRequest)
@@ -30,6 +32,7 @@ namespace rs
     void ConnectionProxy::start()
     {
         std::shared_ptr<Connection> connection = Model::instance()->currentConnection();
+        ProtocolFailureMonitor::logConnection(connection->edgeTransport());
         connection.get()->startWithRequest(mRequest, this);
     }
     
@@ -58,6 +61,7 @@ namespace rs
     
     void ConnectionProxy:: connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError)
     {
+        ProtocolFailureMonitor::logFailure(aConnection->edgeTransport(), aError.code);
         mErrorCallback(aError);
     }
 }

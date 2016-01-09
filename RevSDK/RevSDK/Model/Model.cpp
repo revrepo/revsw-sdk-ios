@@ -10,6 +10,8 @@
 #include <map>
 #include <algorithm>
 
+#include "RSLog.h"
+
 #include "Model.hpp"
 #include "StandardProtocol.hpp"
 #include "QUICProtocol.hpp"
@@ -33,6 +35,7 @@ namespace rs
     Model::Model() 
     {
         Log::initialize();
+        
         mMemoryLog.reset(new LogTargetMemory());
         Log::instance()->addTarget(mMemoryLog);
         Log::info(0, "Logging on");
@@ -78,7 +81,7 @@ namespace rs
     
     void Model::debug_forceReloadConfiguration()
     {
-        //mConfService->loadConfiguration();
+        mConfService->init();
     }
     
     std::string Model::edgeHost()
@@ -157,8 +160,6 @@ namespace rs
         }
     }
     
-    static int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
-    
     void Model::reportStats()
     {
         bool hasDataToSend = true;
@@ -175,12 +176,6 @@ namespace rs
 #endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
-            
-            int64 t = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
-            
-            std::cout << "\nDIFFERENCE " << t - milliseconds_since_epoch << std::endl;
-            
-            milliseconds_since_epoch = t;
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
                 std::lock_guard<std::mutex> lockGuard(mLock);
@@ -224,17 +219,17 @@ namespace rs
         }
     }
     
-    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
-    {
-        std::lock_guard<std::mutex> scopedLock(mLock);
-        auto activeConf = mConfService->getActive();
-#ifdef RS_ENABLE_DEBUG_LOGGING
-        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
-        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
-#endif
-        
-        mConfService->setOperationMode(aOperationMode);
-    }
+//    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
+//    {
+//        std::lock_guard<std::mutex> scopedLock(mLock);
+//        auto activeConf = mConfService->getActive();
+//#ifdef RS_ENABLE_DEBUG_LOGGING
+//        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
+//        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
+//#endif
+//        
+//        mConfService->setOperationMode(aOperationMode);
+//    }
     
     RSOperationModeInner Model::currentOperationMode()
     {
@@ -359,6 +354,13 @@ namespace rs
         mConfService               = std::unique_ptr<ConfigurationService>(conf);
         Log::info(kRSLogKey_Configuration, "Recovering standard configuration service");
     }
+    
+    
+    bool Model::debug_isConfigurationStale()
+    {
+        return mConfService->isStale();
+    }
+    
 }
 
 

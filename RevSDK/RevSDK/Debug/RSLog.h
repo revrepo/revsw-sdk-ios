@@ -15,10 +15,16 @@
 #include <functional>
 #include <unordered_set>
 
+
+#define RS_LOG 1
+
 namespace rs
 {
     const int kRSLogKey_LastMile = 10;
     const int kRSLogKey_Configuration = 11;
+    
+    const int kRSLogKey_TestApp = 15;
+    const int kRSLogKey_ProtocolAvailability = 16;
     
     class Log
     {

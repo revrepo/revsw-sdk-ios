@@ -65,6 +65,34 @@ void ProtocolAvailabilityTester::runTests(std::string aMonitoringURL, std::funct
     }
 }
 
+
+void ProtocolAvailabilityTester::runTests(std::string aMonitoringURL, std::string aIgnoreProtocol, std::function<void(std::vector<AvailabilityTestResult>)> cbOnComplete)
+{
+    if (!mRunning.exchange(true))
+    {
+        /////////////////////////////////////////////
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            mCurrentResults.clear();
+            mProtocolsToTest = std::stack<std::shared_ptr<Protocol>>();
+            
+            if (quicProtocolName() != aIgnoreProtocol)
+            {
+                mProtocolsToTest.push(std::make_shared<QUICProtocol>());
+            }
+            if (standardProtocolName() != aIgnoreProtocol)
+            {
+                mProtocolsToTest.push(std::make_shared<StandardProtocol>() );
+            }
+            
+            mCompletitionCallback = cbOnComplete;
+            mCachedURL = aMonitoringURL;
+            mNetwork.performReques(mProtocolsToTest.top()->clone(), aMonitoringURL, &mConnectionEventHandler);
+        });
+        ///////////////////////////////////////////
+    }
+}
+
 void ProtocolAvailabilityTester::initTester()
 {
     mCurrentResults.clear();

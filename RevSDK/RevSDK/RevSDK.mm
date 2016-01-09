@@ -21,6 +21,7 @@
 #import "DebugUsageTracker.hpp"
 
 #include "TestConfigurationService.h"
+#include "ProtocolFailureMonitor.h"
 
 @implementation RevSDK
 
@@ -41,6 +42,8 @@ static rs::TestConfigurationService* TestConfService = nullptr;
     
     if  (!gIsInitialized)
     {
+        rs::ProtocolFailureMonitor::initialize();
+        
         [NSURLProtocol registerClass:[RSURLProtocol class]];
         rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
         
@@ -52,30 +55,30 @@ static rs::TestConfigurationService* TestConfService = nullptr;
     }
 }
 
-+ (void)debug_setOperationMode:(RSOperationMode)aOperationMode
-{
-    rs::RSOperationModeInner innerMode;
-    
-    switch (aOperationMode)
-    {
-        case kRSOperationModeOff:
-            innerMode = rs::kRSOperationModeInnerOff;
-            break;
-        case kRSOperationModeTransport:
-            innerMode = rs::kRSOperationModeInnerTransport;
-            break;
-        case kRSOperationModeReport:
-            innerMode = rs::kRSOperationModeInnerReport;
-            break;
-        case kRSOperationModeTransportAndReport:
-            innerMode = rs::kRSOperationModeInnerTransportAndReport;
-            break;
-            
-        default: break;
-    }
-    
-    rs::Model::instance()->setOperationMode(innerMode);
-}
+//+ (void)debug_setOperationMode:(RSOperationMode)aOperationMode
+//{
+//    rs::RSOperationModeInner innerMode;
+//    
+//    switch (aOperationMode)
+//    {
+//        case kRSOperationModeOff:
+//            innerMode = rs::kRSOperationModeInnerOff;
+//            break;
+//        case kRSOperationModeTransport:
+//            innerMode = rs::kRSOperationModeInnerTransport;
+//            break;
+//        case kRSOperationModeReport:
+//            innerMode = rs::kRSOperationModeInnerReport;
+//            break;
+//        case kRSOperationModeTransportAndReport:
+//            innerMode = rs::kRSOperationModeInnerTransportAndReport;
+//            break;
+//            
+//        default: break;
+//    }
+//    
+//    rs::Model::instance()->setOperationMode(innerMode);
+//}
 
 + (void)debug_enableTestMode
 {
@@ -156,7 +159,17 @@ static rs::TestConfigurationService* TestConfService = nullptr;
 
 + (NSString *)debug_getLatestConfiguration
 {
-    return @(rs::Model::instance()->debug_usageTracker()->getLatestConfiguration().c_str());
+    std::string latestConf = rs::Model::instance()->debug_usageTracker()->getLatestConfiguration();
+    
+    bool staleFlag = rs::Model::instance()->debug_isConfigurationStale();
+    
+    std::string isStale    = std::string("\n\nState::") + (staleFlag ? "Stale" : "Fresh");
+    
+    std::string currProto  = "\n\nCurrentProtocol::"
+                + ((!staleFlag) ? rs::Model::instance()->currentProtocol()->protocolName()
+                : "none/origin (stale configuration or none available)");
+    
+    return @((latestConf + isStale + currProto).c_str());
 }
 
 + (void)debug_forceConfigurationUpdate

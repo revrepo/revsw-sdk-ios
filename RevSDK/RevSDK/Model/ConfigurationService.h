@@ -50,7 +50,6 @@ namespace rs
         
         void loadConfiguration();
         
-        bool isStale() const;
         
         std::atomic<tSpan> mLastUpdated;
         
@@ -59,6 +58,8 @@ namespace rs
         virtual ~ConfigurationService();
         
         void setOperationMode(RSOperationModeInner aMode) override;
+        
+        bool isStale() const override;
         
         void init() override;
         

@@ -96,7 +96,7 @@ namespace rs
         
         RSOperationModeInner currentOperationMode();
          
-        void setOperationMode(const RSOperationModeInner& aOperationMode);
+//      void setOperationMode(const RSOperationModeInner& aOperationMode);
         
         bool canTransport();
         //void switchWhiteListOption(bool aOn);
@@ -112,6 +112,8 @@ namespace rs
         //void debug_enableDebugMode();
         void debug_disableDebugMode();
         void debug_replaceConfigurationService(IConfigurationService* aNewService);
+        
+        bool debug_isConfigurationStale();
         
         LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
     };

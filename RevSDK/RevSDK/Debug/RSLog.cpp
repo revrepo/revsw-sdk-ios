@@ -11,7 +11,6 @@
 #include <assert.h>
 #include <iomanip>
 
-#define RS_LOG 1
 
 namespace rs
 {
