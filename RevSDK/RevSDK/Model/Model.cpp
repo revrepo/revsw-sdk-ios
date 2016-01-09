@@ -40,6 +40,9 @@ namespace rs
         
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
+        }, [this](){
+        
+            mStatsHandler->stopMonitoring();
         });
         
         mConfService               = std::unique_ptr<ConfigurationService>(conf);
@@ -131,7 +134,17 @@ namespace rs
             std::lock_guard<std::mutex> lockGuard(mLock);
             //mConfiguration = aConfiguration;
             mStatsHandler->setReportingLevel(aConfiguration->statsReportingLevel);
+            
+            if (aConfiguration->operationMode == kRSOperationModeInnerReport || aConfiguration->operationMode == kRSOperationModeInnerTransportAndReport)
+            {
+                mStatsHandler->startMonitoring();
+            }
+            else
+            {
+                mStatsHandler->stopMonitoring();
+            }
         }
+        
         //setOperationMode(aConfiguration->operationMode);
         
         mProtocolSelector.onConfigurationApplied(aConfiguration);
@@ -144,6 +157,7 @@ namespace rs
         
         auto activeConf = mConfService->getActive();
         std::cout << activeConf->statsReportingInterval << std::endl;
+        
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
@@ -353,6 +367,9 @@ namespace rs
     {
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
+        }, [this](){
+            
+            mStatsHandler->stopMonitoring();
         });
         
         mConfService               = std::unique_ptr<ConfigurationService>(conf);

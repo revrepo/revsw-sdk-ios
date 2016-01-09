@@ -26,7 +26,7 @@ void TestConfigurationService::pushTestConfig(const std::string &aProtocolName, 
     mDelegate->applyConfiguration(mTestConfiguration);
 }
 
-std::shared_ptr<const Configuration> TestConfigurationService::getActive() const
+std::shared_ptr<const Configuration> TestConfigurationService::getActive()
 {
     return mTestConfiguration;
 }
