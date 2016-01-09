@@ -65,6 +65,7 @@ void ConfigurationService::resumeUpdate()
         Configuration configuration = data_storage::configuration();
         mActiveConfiguration = std::make_shared<Configuration>(configuration);
         mDelegate->applyConfiguration(getActive());
+        mDelegate->scheduleStatsReporting();
     }
 }
 
@@ -105,6 +106,7 @@ void ConfigurationService::loadConfiguration()
                 {
                     mActiveConfiguration = std::make_shared<Configuration>(configuration);
                     mDelegate->applyConfiguration(mActiveConfiguration);
+                    mDelegate->scheduleStatsReporting();
                     
                     refreshInterval = mActiveConfiguration->refreshInterval;
                 }
