@@ -17,12 +17,10 @@ using namespace rs;
 
 void TestConfigurationService::pushTestConfig(const std::string &aProtocolName, int aOperationMode)
 {
-    Configuration test;
+    mDefaultConfiguration.allowedProtocols.push_back(aProtocolName);
+    mDefaultConfiguration.operationMode = (RSOperationModeInner) aOperationMode;
     
-    test.allowedProtocols.push_back(aProtocolName);
-    test.operationMode = (RSOperationModeInner) aOperationMode;
-    
-    mTestConfiguration = std::make_shared<Configuration>(test);
+    mTestConfiguration = std::make_shared<Configuration>(mDefaultConfiguration);
     mDelegate->applyConfiguration(mTestConfiguration);
 }
 

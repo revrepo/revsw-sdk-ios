@@ -79,14 +79,19 @@ static rs::TestConfigurationService* TestConfService = nullptr;
 
 + (void)debug_enableTestMode
 {
-    TestConfService = new rs::TestConfigurationService(rs::Model::instance());
+    auto defaultConfiguration = rs::Model::instance()->getActiveConfiguration();
+    
+    TestConfService = new rs::TestConfigurationService(rs::Model::instance(), *(defaultConfiguration.get()));
     TestConfService->init();
     rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
 }
 
 + (void)debug_disableTestMode
 {
-    rs::Model::instance()->debug_disableDebugMode();
+     if(TestConfService)
+     {
+         rs::Model::instance()->debug_disableDebugMode();
+     }
     
     TestConfService = nullptr;
 }

@@ -26,6 +26,7 @@ namespace rs
     {
     public:
         virtual void applyConfiguration(std::shared_ptr<const Configuration> aNewConfiguration) = 0;
+        virtual void scheduleStatsReporting() = 0;
     };
     
     class ConfigurationService : public IConfigurationService

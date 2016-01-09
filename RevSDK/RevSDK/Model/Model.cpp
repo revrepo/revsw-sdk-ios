@@ -141,9 +141,12 @@ namespace rs
         auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
         
         mCurrentLoggingLevel = (RSLogginLevel)logLevelIndex;
-        
+    }
+    
+    void Model::scheduleStatsReporting()
+    {
         auto activeConf = mConfService->getActive();
-        std::cout << activeConf->statsReportingInterval << std::endl;
+    
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
@@ -169,7 +172,11 @@ namespace rs
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
-                statsData = mStatsHandler->createSendTransaction(this->mConfService->getActive()->statsReportingMaxRequests);
+                int requestsCount = this->mConfService->getActive()->statsReportingMaxRequests;
+                
+                assert(requestsCount);
+                
+                statsData = mStatsHandler->createSendTransaction(requestsCount);
 #else
                 statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
 #endif
@@ -355,7 +362,13 @@ namespace rs
             return !mProtocolSelector.haveAvailadleProtocols();
         });
         
-        mConfService               = std::unique_ptr<ConfigurationService>(conf);
+        mConfService = std::unique_ptr<ConfigurationService>(conf);
+        mConfService->init();
+    }
+    
+    std::shared_ptr<const Configuration> Model::getActiveConfiguration()const
+    {
+        return mConfService->getActive();
     }
 }
 

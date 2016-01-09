@@ -78,7 +78,10 @@ namespace rs
         Model();
         ~Model();
         
+        std::shared_ptr<const Configuration> getActiveConfiguration()const;
+        
         void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
+        void scheduleStatsReporting() override;
         
         std::vector<std::string> getAllowedProtocolIDs() const;
         
