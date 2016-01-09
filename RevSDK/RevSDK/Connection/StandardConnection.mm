@@ -19,8 +19,8 @@
 #include "Model.hpp"
 #include <mutex>
 #include "DebugUsageTracker.hpp"
-
 #import "RSURLSessionDelegate.h"
+#import "RSStandardSession.h"
 
 @interface RSURLSessionDataDelegate : NSObject<NSURLSessionDataDelegate>
 
@@ -82,6 +82,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
                                                                                delegateQueue:nil];
     
     NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
+
     oAnchor->onStart();
     [task resume];
 }

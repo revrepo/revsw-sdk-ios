@@ -13,14 +13,13 @@
 
 std::atomic<int> rs::Connection::gLastConnectionID(0);
 
-rs::Connection::Connection() : mConnectionID(gLastConnectionID),
+rs::Connection::Connection() : mConnectionID(gLastConnectionID++),
 mBytesSent(0),
 mBytesReceived(0),
 mStartTimestamp(0),
 mEndTimestamp(0),
 mFirstByteReceivedTimestamp(0)
 {
-    gLastConnectionID++;
 }
 
 void rs::Connection::addSentBytesCount(long long aCount)
