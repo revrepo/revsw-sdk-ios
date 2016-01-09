@@ -27,6 +27,11 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
+    if ([aRequest.URL.scheme isEqualToString:@"data"])
+    {
+        return NO;
+    }
+    
     if (rs::Model::instance()->currentOperationMode() == rs::kRSOperationModeInnerOff)
     {
         return NO;
