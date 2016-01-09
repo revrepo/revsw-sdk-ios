@@ -11,6 +11,7 @@
 #import "Model.hpp"
 #import "RSUtils.h"
 #import "Utils.hpp"
+#import "RSLog.h"
 
 #include <string>
 
@@ -32,6 +33,11 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 
 + (NSURLRequest *)proccessRequest:(NSURLRequest *)aRequest isEdge:(BOOL)aIsEdge
 {
+    if ([aRequest.URL.scheme isEqualToString:rs::kRSDataSchemeName])
+    {
+        rs::Log::warning(rs::kLogTagRequestModification, "Data scheme is being used");
+    }
+    
     NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
     NSURL* URL                          = aRequest.URL;
     NSString* host                      = URL.host;

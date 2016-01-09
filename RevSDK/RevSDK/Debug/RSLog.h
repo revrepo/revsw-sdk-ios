@@ -25,6 +25,12 @@ namespace rs
     static const int kLogTagQUICLibrary           = kLogTagQUICMIN + 1;
     static const int kLogTagQUICNetwork           = kLogTagQUICMIN + 2;
     static const int kLogTagQUICTraffic           = kLogTagQUICMIN + 3;
+    
+    static const int kLogTagAdditionalMin = 1;
+    static const int kLogTagAdditionalMax = 10;
+    
+    static const int kLogTagRequestsStats = kLogTagAdditionalMin + 0;
+    static const int kLogTagRequestModification = kLogTagAdditionalMin + 1;
 
     class Traffic
     {

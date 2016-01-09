@@ -22,7 +22,6 @@ using namespace net;
 
 static int mQUICConnectionIdCounter = 0;
 static std::mutex mQUICConnectionIdLock;
-static int kIncorrectRevHostHeaderLogTag = 2013;
 
 QUICConnection::QUICConnection():
     mDelegate(nullptr),
@@ -89,7 +88,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     
     if (aRequest->host() == kRevRedirectHost)
     {
-        Log::error(kIncorrectRevHostHeaderLogTag, "Request host set to Rev redirect host in QUIC");
+        Log::error(kLogTagRequestModification, "Request host set to Rev redirect host in QUIC");
     }
     
     headers["X-Rev-Host"] = aRequest->host();

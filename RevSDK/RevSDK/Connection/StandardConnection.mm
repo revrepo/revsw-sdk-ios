@@ -22,8 +22,6 @@
 
 #import "RSURLSessionDelegate.h"
 
-static int kIncorrectRevHostHeaderLogTag = 2013;
-
 @interface RSURLSessionDataDelegate : NSObject<NSURLSessionDataDelegate>
 
 @end
@@ -74,7 +72,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     
     if ([XRevHostHeader isEqualToString:kRSRevRedirectHost])
     {
-        Log::error(kIncorrectRevHostHeaderLogTag,  "Request host set to Rev redirect host in QUIC");
+        Log::error(kLogTagRequestModification,  "Request host set to Rev redirect host in QUIC");
     }
         
     NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
