@@ -125,7 +125,7 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
 
 std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
-//    return std::make_shared<QUICProtocol>();
+//    return std::make_shared<StandardProtocol>();
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (mBestProtocol && mAvailableProtocols.size())
     {
