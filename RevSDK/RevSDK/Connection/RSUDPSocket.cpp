@@ -185,7 +185,7 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
                 *aTimoutFlag = true;
         }
     }
-    traceSocketSpeed(res);
+    traceSocketSpeed((int)res);
 
     return res;
 }

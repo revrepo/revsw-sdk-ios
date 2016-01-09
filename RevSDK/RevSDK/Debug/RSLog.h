@@ -17,6 +17,14 @@
 
 namespace rs
 {
+    static const int kLogTagQUICMIN               = 20;
+    static const int kLogTagQUICMAX               = 29;
+
+    static const int kLogTagQUICRequest           = kLogTagQUICMIN + 0;
+    static const int kLogTagQUICLibrary           = kLogTagQUICMIN + 1;
+    static const int kLogTagQUICNetwork           = kLogTagQUICMIN + 2;
+    static const int kLogTagQUICOther             = kLogTagQUICMIN + 3;
+    
     class Log
     {
     public:
@@ -34,7 +42,7 @@ namespace rs
         public:
             Target() {}
             virtual ~Target() {}
-            virtual void print(Level aLevel, int aTag, const char* aMessage) = 0;
+            virtual void logTargetPrint(Level aLevel, int aTag, const char* aMessage) = 0;
         };
     private:
         static Log* mInstance;
@@ -148,7 +156,7 @@ namespace rs
         void filter(Entry::List& aList, const Filter* aFilter) const;
         
     protected:
-        void print(Log::Level aLevel, int aTag, const char* aMessage);
+        void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage);
     private:
         mutable std::mutex mLock;
         Entry::List mEntries;

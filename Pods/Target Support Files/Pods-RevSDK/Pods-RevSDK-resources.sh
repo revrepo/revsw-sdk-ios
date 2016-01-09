@@ -57,6 +57,26 @@ install_resource()
       ;;
   esac
 }
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerAlert.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerAlert@2x.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerFailure.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerFailure@2x.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerNotify.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerNotify@2x.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerSuccess.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerSuccess@2x.png"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerAlert.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerAlert@2x.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerFailure.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerFailure@2x.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerNotify.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerNotify@2x.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerSuccess.png"
+  install_resource "ALAlertBanner/ALAlertBanner/Images/bannerSuccess@2x.png"
+fi
 
 mkdir -p "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
