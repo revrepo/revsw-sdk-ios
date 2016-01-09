@@ -30,11 +30,6 @@ static RSIPUtils* ipUtils = [RSIPUtils new];
 
 namespace rs
 {
-    NativeStatsHandler::NativeStatsHandler()
-    {
-        [ipUtils start];
-    }
-    
     std::string NativeStatsHandler::appName()
     {
         NSBundle *bundle = [NSBundle mainBundle];
@@ -574,5 +569,15 @@ namespace rs
     void NativeStatsHandler::addEvent(const Event& aEvent)
     {
         data_storage::addEvent(aEvent);
+    }
+    
+    void NativeStatsHandler::startMonitoring()
+    {
+        [ipUtils startMonitoring];
+    }
+    
+    void NativeStatsHandler::stopMonitoring()
+    {
+        [ipUtils stopMonitoring];
     }
 }

@@ -88,6 +88,9 @@ int getdefaultgateway(in_addr_t * addr)
 #endif
 
 @interface RSIPUtils ()<STUNClientDelegate>
+{
+    BOOL mIsMonitoring;
+}
 
 @property (nonatomic, strong) RSReachability* reachability;
 @property (nonatomic, strong) NSTimer* timer;
@@ -110,16 +113,23 @@ int getdefaultgateway(in_addr_t * addr)
     
     if (self)
     {
+        mIsMonitoring = NO;
+        
         self.reachability = [RSReachability rs_reachabilityForInternetConnection];
     }
     
     return self;
 }
 
-- (void)start
+- (void)startMonitoring
 {
-    [self checkIps];
-    [self startTimer];
+    if (!mIsMonitoring)
+    {
+        mIsMonitoring = YES;
+        
+       [self checkIps];
+       [self startTimer];
+    }
 }
 
 - (void)startTimer
@@ -131,10 +141,12 @@ int getdefaultgateway(in_addr_t * addr)
                                                  repeats:YES];
 }
 
-- (void)stopTimer
+- (void)stopMonitoring
 {
+    mIsMonitoring = NO;
+    
     [self.timer invalidate];
-    self.timer = nil;
+     self.timer = nil;
 }
 
 - (void)checkIps

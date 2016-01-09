@@ -16,9 +16,11 @@ const std::string kTimestampKey = "kRS_timestamp";
 
 //todo : remove
 
-ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond) :
+ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond, std::function<void()> aStaleCallback) :
     mUpdateEnabledFlag(true),
-    mDelegate(aDelegate)
+    mDelegate(aDelegate),
+    mStaleOnFlag(false),
+    mStaleCallback(aStaleCallback)
 {
     auto secCnt = data_storage::getIntForKey(kTimestampKey);
     
@@ -69,10 +71,20 @@ void ConfigurationService::resumeUpdate()
     }
 }
 
-std::shared_ptr<const Configuration> ConfigurationService::getActive() const
+std::shared_ptr<const Configuration> ConfigurationService::getActive()
 {
     if (isStale())
     {
+        if (!mStaleOnFlag)
+        {
+            mStaleOnFlag = true;
+            
+            if (mStaleCallback)
+            {
+                mStaleCallback();
+            }
+        }
+        
         return mStaleConfiguration;
     }
     
@@ -94,6 +106,8 @@ void ConfigurationService::loadConfiguration()
             
             if (isValid)
             {
+                mStaleOnFlag = false;
+                
                 Configuration configuration = processConfigurationData(aData);
                 
                 Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);

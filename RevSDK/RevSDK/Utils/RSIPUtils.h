@@ -19,6 +19,7 @@
 @property (nonatomic, copy, readonly) NSString* dns2;
 @property (nonatomic, readonly)       NSString* gateway;
 
-- (void)start;
+- (void)startMonitoring;
+- (void)stopMonitoring;
 
 @end

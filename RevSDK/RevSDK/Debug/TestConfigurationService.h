@@ -34,7 +34,7 @@ namespace rs
         void stopUpdate() override;
         void resumeUpdate() override;
         
-        std::shared_ptr<const Configuration> getActive() const override;
+        std::shared_ptr<const Configuration> getActive() override;
     };
 }
 
