@@ -74,14 +74,15 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     {
         Log::error(kLogTagRequestModification,  "Request host set to Rev redirect host in QUIC");
     }
-        
-    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
     
-    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
-                                                                                    delegate:customDelegate
-                                                                               delegateQueue:nil];
-    
-    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
+    NSURLSessionTask* task = [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
+//    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    
+//    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
+//                                                                                    delegate:customDelegate
+//                                                                               delegateQueue:nil];
+//    
+//    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
 
     oAnchor->onStart();
     [task resume];
