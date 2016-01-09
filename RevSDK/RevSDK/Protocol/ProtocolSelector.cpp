@@ -156,14 +156,3 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
