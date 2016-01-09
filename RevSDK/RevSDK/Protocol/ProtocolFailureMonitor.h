@@ -24,7 +24,7 @@ namespace rs
         typedef std::chrono::system_clock::time_point tTimepoint;
         struct ErrorReport
         {
-            ErrorReport(long aCode)
+            ErrorReport(long aCode) : Code(aCode)
             {
                 DateReported = std::chrono::system_clock::now();
             }

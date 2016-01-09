@@ -123,13 +123,6 @@
 
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
-    if (self.directConnection.firstByteTimestamp == nil)
-    {
-        NSDate* now                              = [NSDate date];
-        NSTimeInterval interval                  = [now timeIntervalSince1970];
-        self.directConnection.firstByteTimestamp = @(interval);
-    }
-    
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
@@ -162,6 +155,14 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
 {
+    if (self.directConnection.firstByteTimestamp == nil)
+    {
+        NSDate* now                              = [NSDate date];
+        NSTimeInterval interval                  = [now timeIntervalSince1970];
+        int64_t timestamp                        = interval * 1000;
+        self.directConnection.firstByteTimestamp = @(timestamp);
+    }
+    
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
@@ -178,9 +179,10 @@
     if (rs::Model::instance()->shouldCollectRequestsData())
     {
         self.directConnection.totalBytesReceived = @(self.data.length);
-        NSDate* now = [NSDate date];
-        NSTimeInterval interval = [now timeIntervalSince1970];
-        self.directConnection.endTimestamp = @(interval);
+        NSDate* now                              = [NSDate date];
+        NSTimeInterval interval                  = [now timeIntervalSince1970];
+        int64_t timestamp                        = interval * 1000;
+        self.directConnection.endTimestamp       = @(timestamp);
         
         NSHTTPURLResponse* response = (NSHTTPURLResponse *)self.response;
         rs::Data requestData        = rs::dataFromRequestAndResponse(self.directConnection.currentRequest, response, self.directConnection);

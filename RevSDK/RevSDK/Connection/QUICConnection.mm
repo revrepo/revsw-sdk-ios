@@ -15,14 +15,23 @@
 #include "QUICSession.h"
 #include "Error.hpp"
 #include "Utils.hpp"
+#include "RSLog.h"
 
 using namespace rs;
 using namespace net;
 
+static int mQUICConnectionIdCounter = 0;
+static std::mutex mQUICConnectionIdLock;
+
 QUICConnection::QUICConnection():
     mDelegate(nullptr),
-    mDepth (0)
+    mDepth (0),
+    mId(0),
+    mTS(0)
 {
+    mQUICConnectionIdLock.lock();
+    mId = mQUICConnectionIdCounter++;
+    mQUICConnectionIdLock.unlock();
 }
 
 QUICConnection::~QUICConnection()
@@ -48,13 +57,20 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     mURL = aRequest->URL();
     
     std::string rest = aRequest->rest();
-    if (rest.find("//") != std::string::npos)
+    if (rest.find("//") == 0)
     {
-        //std::cout << "QUIC: Double slash detected!" << std::endl;
+        Log::error(kLogTagQUICRequest, "Path started with double slash:\nurl=%s\nmethod=%s",
+                   notNullString(aRequest->URL()),
+                   notNullString(aRequest->method()));
     }
     
     if (rest == "/")
+    {
+        Log::warning(kLogTagQUICRequest, "Empty path:\nurl=%s\nmethod=%s",
+                     notNullString(aRequest->URL()),
+                     notNullString(aRequest->method()));
         rest = "/";
+    }
 
     SpdyHeaderBlock headers;
     headers[":authority"] = aRequest->host();
@@ -72,13 +88,40 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     
     headers["X-Rev-Host"] = aRequest->host();
     headers["X-Rev-Proto"] = aRequest->originalScheme();
+
+    mTS = timestampMS();
     
+    std::string dump;
+    dump += "timestamp = " + longLongToStr(mTS);
+    dump += "url = " + aRequest->URL() + "\n";
+    dump += "method = " + aRequest->method() + "\n";
+    dump += "body-size = " + intToStr((int)body.size());
+    dump += "headers = \n";
+
+    for (const auto& i : headers)
+        dump += i.first + ": " + i.second + "\n";
+    
+    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
+
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
 
 void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicDataStream* aStream,
                                    const net::SpdyHeaderBlock& aHedaers, int aCode)
 {
+    std::string dump;
+    long long now = timestampMS();
+    dump += "timestamp = " + longLongToStr(now);
+    dump += "code = " + intToStr(aCode);
+    dump += "headers = \n";
+    
+    for (const auto& i : aHedaers)
+        dump += i.first + ": " + i.second + "\n";
+    
+    
+    
+    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
+
     if (mRedirect.get() == nullptr)
     {
         if (aCode == 301 || aCode == 302)
@@ -147,6 +190,9 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicD
 //        mParent->quicSessionDidReceiveData(aSession, aStream, aData, aLen);
 //        return;
 //    }
+    std::string dump;
+    dump += "data-len = " + intToStr((int)aLen);
+    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
 
     if (mRedirect.get() != nullptr)
         return;
@@ -170,6 +216,8 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataSt
 //        mParent->quicSessionDidFinish(aSession, aStream);
 //        return;
 //    }
+    Log::info(kLogTagQUICRequest, "Finished #%d\n", mId);
+
     if (mRedirect.get() != nullptr)
         return;
 
@@ -182,6 +230,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataSt
 
 void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicDataStream* aStream)
 {
+    Log::info(kLogTagQUICRequest, "Failed #%d\n", mId);
 //    if (mParent != nullptr)
 //    {
 //        if (aStream == mRedirectedStream)

@@ -18,9 +18,11 @@ const std::string kTimestampKey = "kRS_timestamp";
 
 //todo : remove
 
-ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond) :
+ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond, std::function<void()> aStaleCallback) :
     mUpdateEnabledFlag(true),
-    mDelegate(aDelegate)
+    mDelegate(aDelegate),
+    mStaleOnFlag(false),
+    mStaleCallback(aStaleCallback)
 {
     auto secCnt = data_storage::getIntForKey(kTimestampKey);
     
@@ -71,14 +73,25 @@ void ConfigurationService::resumeUpdate()
         Configuration configuration = data_storage::configuration();
         mActiveConfiguration = std::make_shared<Configuration>(configuration);
         mDelegate->applyConfiguration(getActive());
+        mDelegate->scheduleStatsReporting();
     }
 }
 
-std::shared_ptr<const Configuration> ConfigurationService::getActive() const
+std::shared_ptr<const Configuration> ConfigurationService::getActive() 
 {
     if (isStale())
     {
-        Log::info(kRSLogKey_Configuration, "Configuration is stale or no protocols available, OFF MODE");
+        if (!mStaleOnFlag)
+        {
+            Log::info(kRSLogKey_Configuration, "Configuration is stale or no protocols available, OFF MODE");
+            mStaleOnFlag = true;
+            
+            if (mStaleCallback)
+            {
+                mStaleCallback();
+            }
+        }
+        
         return mStaleConfiguration;
     }
     
@@ -97,6 +110,7 @@ void ConfigurationService::loadConfiguration()
             
             if (isValid)
             {
+                mStaleOnFlag = false;
                 Log::info(kRSLogKey_Configuration, "ConfigurationService: new conf received, valid");
                 
                 Configuration configuration = processConfigurationData(aData);
@@ -111,6 +125,7 @@ void ConfigurationService::loadConfiguration()
                 {
                     mActiveConfiguration = std::make_shared<Configuration>(configuration);
                     mDelegate->applyConfiguration(mActiveConfiguration);
+                    mDelegate->scheduleStatsReporting();
                     
                     refreshInterval = mActiveConfiguration->refreshInterval;
                 }

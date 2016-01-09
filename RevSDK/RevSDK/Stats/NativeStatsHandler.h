@@ -17,14 +17,11 @@
 namespace rs
 {
      class Data;
-     class RSIPUtils;
      class Event;
     
      class NativeStatsHandler
      {
         public:
-        
-        NativeStatsHandler();
          
         Data statsData();
         Data locationData();
@@ -38,6 +35,9 @@ namespace rs
          std::string appName();
          
         void addEvent(const Event&);
+         
+         void startMonitoring();
+         void stopMonitoring();
      };
 }
 

@@ -99,6 +99,8 @@ namespace rs
         std::shared_ptr<Connection> connection = getConnectionFromProto(aProtocol->protocolName()); 
         std::shared_ptr<rs::Request> req = mNativeNetwork->testRequestByURL(aURL, aProtocol.get());
         
+        Log::info(kRSLogKey_LastMile, ("...request processed, headers set, esnding to " + aURL).c_str());
+        
         connection->startWithRequest(req, aDelegate);
     }
 }

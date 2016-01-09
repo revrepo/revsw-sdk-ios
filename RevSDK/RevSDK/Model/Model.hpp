@@ -46,10 +46,9 @@ namespace rs
     class StatsHandler;
     class DebugUsageTracker;
     
-    class Model : public IConfvigServDelegate
+    class Model : public IConfvigServDelegate, Log::Target
     {
     private:
-        
         RSLogginLevel mCurrentLoggingLevel;
         
         std::mutex mLock;
@@ -69,16 +68,26 @@ namespace rs
         
         std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options
         
+        std::function<void(rs::Log::Level, const char*, const char*)> mEventTriggerCallback;
+        bool mEventTriggerOn;
+        
         void reportStats();
         
         Log::Target::Ref mMemoryLog;
+        Log::Target::Ref mProxy;
+
+        void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage) override;
         
       public:
         
         Model();
         ~Model();
         
+        void switchEventTrigger(bool aOn, std::function<void(rs::Log::Level, const char*, const char*)> aCallback);
+        std::shared_ptr<const Configuration> getActiveConfiguration()const;
+        
         void applyConfiguration(std::shared_ptr<const Configuration> aConfiguration) override;
+        void scheduleStatsReporting() override;
         
         std::vector<std::string> getAllowedProtocolIDs() const;
         

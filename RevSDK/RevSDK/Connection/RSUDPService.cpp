@@ -9,6 +9,7 @@
 #include "RSUDPService.h"
 #include <assert.h>
 #include <boost/date_time/posix_time/posix_time_types.hpp>
+#include "RSLog.h"
 
 using namespace rs;
 
@@ -86,6 +87,7 @@ void UDPService::run()
             delete mSocket;
             std::this_thread::sleep_for(std::chrono::milliseconds(1000));
             mSocket = new UDPSocket(mHost, mPort);
+            Log::warning(kLogTagQUICNetwork, "UDPService recreated socket");
         }
         
         if (!mSocket->connected())

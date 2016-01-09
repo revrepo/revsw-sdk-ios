@@ -86,7 +86,7 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
     
     double failPercent = vec.size() / ((float)rqVec.size());
 #if RS_LOG
-    std::string message(aProtocolID + " | Request failed; percent of failed requests in last ");
+    std::string message(aProtocolID + " | Request failed (" + std::to_string(vec.front().Code)+ "); percent of failed requests in last ");
     
     message += std::to_string(kTimeoutSec);
     

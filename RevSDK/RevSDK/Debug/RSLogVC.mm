@@ -177,12 +177,12 @@
     static NSString* const kCellID = @"cell-id";
     
     RSLogEntry* entry = self.content[indexPath.row];
-    NSString* title = [NSString stringWithFormat:@"%@|%3d\n%@",
+    NSString* title = [NSString stringWithFormat:@"%@|%3d -> %@",
                        [RSLogVC levelToString:entry.level],
                        entry.tag, entry.message];
     
-    if (title.length > 50)
-        title = [title substringToIndex:50];
+    if (title.length > 80)
+        title = [title substringToIndex:80];
     
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
     if (cell == nil)

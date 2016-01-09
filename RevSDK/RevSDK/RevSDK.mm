@@ -9,6 +9,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
+#import <ALAlertBanner.h>
 #import "RSLogVC.h"
 
 #import "RevSDK.h"
@@ -82,14 +83,19 @@ static rs::TestConfigurationService* TestConfService = nullptr;
 
 + (void)debug_enableTestMode
 {
-    TestConfService = new rs::TestConfigurationService(rs::Model::instance());
+    auto defaultConfiguration = rs::Model::instance()->getActiveConfiguration();
+    
+    TestConfService = new rs::TestConfigurationService(rs::Model::instance(), *(defaultConfiguration.get()));
     TestConfService->init();
     rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
 }
 
 + (void)debug_disableTestMode
 {
-    rs::Model::instance()->debug_disableDebugMode();
+     if(TestConfService)
+     {
+         rs::Model::instance()->debug_disableDebugMode();
+     }
     
     TestConfService = nullptr;
 }
@@ -184,6 +190,40 @@ static rs::TestConfigurationService* TestConfService = nullptr;
     
     UINavigationController* nc = [[UINavigationController alloc] initWithRootViewController:[RSLogVC createNew]];
     [aVC presentViewController:nc animated:YES completion:^{}];
+}
+
++ (void)debug_onDebugEventTriggered:(rs::Log::Level)aLevel title:(NSString*)aTitle message:(NSString*)aMessage
+{
+    UIWindow* window = [[UIApplication sharedApplication] keyWindow];
+    
+    ALAlertBannerStyle style = ALAlertBannerStyleNotify;
+    if (aLevel == rs::Log::Level::Warning)
+        style = ALAlertBannerStyleWarning;
+    if (aLevel == rs::Log::Level::Error)
+        style = ALAlertBannerStyleFailure;
+    
+    ALAlertBanner *banner = [ALAlertBanner alertBannerForView:window
+                                                        style:style
+                                                     position:ALAlertBannerPositionTop
+                                                        title:aTitle
+                                                     subtitle:aMessage];
+    
+    [banner show];
+}
+
++ (void)debug_turnOnDebugBanners
+{
+    rs::Model::instance()->switchEventTrigger(true, [](rs::Log::Level aLevel, const char* aTitle, const char* aMessage)
+    {
+        @autoreleasepool
+        {
+            NSString* title = (aTitle == nullptr) ? (nil) : ([NSString stringWithUTF8String:aTitle]);
+            NSString* message = (aMessage == nullptr) ? (nil) : ([NSString stringWithUTF8String:aMessage]);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [RevSDK debug_onDebugEventTriggered:aLevel title:title message:message];
+            });
+        }
+    });
 }
 
 @end

@@ -10,6 +10,7 @@
 #include <stack> 
 
 #include "IConfigurationService.h"
+#include "Configuration.hpp"
 
 namespace rs
 {
@@ -18,11 +19,11 @@ namespace rs
     {
     private:
         std::shared_ptr<Configuration> mTestConfiguration;
-        
+        Configuration mDefaultConfiguration;
         IConfvigServDelegate* mDelegate;
         
     public:
-        TestConfigurationService(IConfvigServDelegate* aDelegate) : mDelegate(aDelegate){};
+        TestConfigurationService(IConfvigServDelegate* aDelegate, const Configuration& aConfiguration) : mDelegate(aDelegate), mDefaultConfiguration(aConfiguration){};
         
         void pushTestConfig(const std::string& aProtocolName, int aOperationMode);
         
@@ -33,7 +34,7 @@ namespace rs
         void stopUpdate() override;
         void resumeUpdate() override;
         
-        std::shared_ptr<const Configuration> getActive() const override;
+        std::shared_ptr<const Configuration> getActive() override;
     };
 }
 

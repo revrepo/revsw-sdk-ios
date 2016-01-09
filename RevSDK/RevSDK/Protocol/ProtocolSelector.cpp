@@ -142,10 +142,6 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
     if (!mAvailableProtocols.empty() && !aProtocolNamesOrdered.empty())
     {
         std::string dbg = aProtocolNamesOrdered.front();
-        if(mBestProtocol && (mBestProtocol->protocolName() == dbg))
-        {
-            return;
-        }
         
         //delete not allowed protos
         std::remove_if(aProtocolNamesOrdered.begin(),
@@ -223,6 +219,21 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
     }
     else
     {
+        std::string toString = "ProtocolSelector:: finished testing. Available protocols:: ";
+        
+        for (auto& it: mAvailableProtocols)
+        {
+            toString += it + ", ";
+        }
+        Log::info(kRSLogKey_LastMile, toString.c_str());
+        toString = "ProtocolSelector:: configuration applied. Allowed protocols:: ";
+        
+        for (auto& it: mAvailableProtocols)
+        {
+            toString += it + ", ";
+        }
+        Log::info(kRSLogKey_LastMile, toString.c_str());
+        
         this->sortProtocols(aConf->allowedProtocols);
     }
 }

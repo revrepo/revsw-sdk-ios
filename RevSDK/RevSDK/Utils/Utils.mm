@@ -168,4 +168,50 @@ namespace rs
 
         return true;
     }
+    const char* notNullString(const std::string& aString)
+    {
+        if (aString.c_str() != nullptr)
+            return aString.c_str();
+        return "\0";
+    }
+    std::string intToStr(int x)
+    {
+        char buff[12];
+        sprintf(buff, "%d", x);
+        return std::string(buff);
+    }
+
+    std::string longLongToStr(long long x)
+    {
+        char buff[24];
+        sprintf(buff, "%lld", x);
+        return std::string(buff);
+    }
+    
+    long long timestampMS()
+    {
+        CFAbsoluteTime at = CFAbsoluteTimeGetCurrent();
+        return (long long)(at * 1000);
+    }
+    
+    std::string timestampMSAsStr()
+    {
+        CFAbsoluteTime at = CFAbsoluteTimeGetCurrent();
+        long long ms = (long long)(at * 1000);
+        char buff[24];
+        sprintf(buff, "%lld", ms);
+        return std::string(buff);
+    }
+
+//    std::string stringMapToString(const std::map<std::string, std::string>& aMap)
+//    {
+//        std::string result;
+//        bool first = true;
+//        for (const auto& m : aMap)
+//        {
+//            result += ((first ? "\n" : "") + m.first + " " + m.second);
+//            first = false;
+//        }
+//        return result;
+//    }
 }
