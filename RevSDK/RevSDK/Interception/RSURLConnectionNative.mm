@@ -17,11 +17,12 @@
     
     if (self)
     {
-        NSDate* now              = [NSDate date];
-        NSTimeInterval timestamp = [now timeIntervalSince1970];
-        _startTimestamp          = @(timestamp);
-        int connectionId         = rs::Connection::getLastConnectionId();
-        _connectionId            = @(connectionId);
+        NSDate* now             = [NSDate date];
+        NSTimeInterval interval = [now timeIntervalSince1970];
+        int64_t timestamp       = interval * 1000;
+        _startTimestamp         = @(timestamp);
+        int connectionId        = rs::Connection::getLastConnectionId();
+        _connectionId           = @(connectionId);
     }
     
     return self;
