@@ -499,7 +499,7 @@ namespace rs
                                      kRS_JKey_RecDytes : aConnection.totalBytesReceived,
                                      kRS_JKey_SentBytes : @(aRequest.HTTPBody.length),
                                      kRS_JKey_EndTs : aConnection.endTimestamp,
-                                     kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp,
+                                     kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp ? aConnection.firstByteTimestamp : @(0),
                                      kRS_JKey_TransportProt : aRequest.URL.scheme,
                                      kRS_JKey_EdgeTransport : @"_"
                                      };
