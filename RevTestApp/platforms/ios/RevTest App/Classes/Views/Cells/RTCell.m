@@ -42,7 +42,7 @@
     const NSInteger kDefaultDivider = 6;
     NSInteger divider = kDefaultDivider - ((kDefaultDivider / 3) * (2 - count));
     
-    __block CGFloat constant = screenWidth / (self.isShowingReport ? divider : 2);
+    __block CGFloat constant = screenWidth / (self.isShowingReport ? divider : 2.4);
     
     divider /= (self.isShowingReport ? 2 : 1);
     
@@ -58,7 +58,7 @@
         label.text = text;
         
         CGFloat correctedDivider = divider;
-        correctedDivider *= 0.9;
+        correctedDivider *= (self.isShowingReport ? 0.9 : 0.65);
         constant += screenWidth / correctedDivider;
     }];
 }

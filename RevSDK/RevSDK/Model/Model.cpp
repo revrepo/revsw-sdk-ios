@@ -35,6 +35,7 @@ namespace rs
         Log::initialize();
         mMemoryLog.reset(new LogTargetMemory());
         Log::instance()->addTarget(mMemoryLog);
+        Log::info(0, "Logging on");
         data_storage::initDataStorage();
         
         auto conf = new ConfigurationService(this, [this](){
@@ -140,7 +141,23 @@ namespace rs
         auto logLevelIndex    = logLevelIterator == logLevels.end() ? 0 : std::distance(logLevels.begin(), logLevelIterator);
         
         mCurrentLoggingLevel = (RSLogginLevel)logLevelIndex;
+        
+        auto activeConf = mConfService->getActive();
+        std::cout << activeConf->statsReportingInterval << std::endl;
+        if (activeConf->operationMode == kRSOperationModeInnerReport ||
+            activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
+        {
+            Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
+                this->reportStats();
+            });
+        }
+        else
+        {
+            Timer::disableTimer(mStatsReportingTimer);
+        }
     }
+    
+    static int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
     
     void Model::reportStats()
     {
@@ -158,6 +175,12 @@ namespace rs
 #endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
+            
+            int64 t = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+            
+            std::cout << "\nDIFFERENCE " << t - milliseconds_since_epoch << std::endl;
+            
+            milliseconds_since_epoch = t;
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
                 std::lock_guard<std::mutex> lockGuard(mLock);
@@ -211,25 +234,6 @@ namespace rs
 #endif
         
         mConfService->setOperationMode(aOperationMode);
-        
-        std::cout << activeConf->statsReportingInterval << std::endl;
-        if (activeConf->operationMode == kRSOperationModeInnerReport ||
-            activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
-        {
-        
-
-#define RS_DEBUG_STATS_REPORT_INTERVAL -1
-            
-            int interval = RS_DEBUG_STATS_REPORT_INTERVAL > 0 ? RS_DEBUG_STATS_REPORT_INTERVAL : activeConf->statsReportingInterval;
-            
-            Timer::scheduleTimer(mStatsReportingTimer, interval, [this](){
-                this->reportStats();
-            });
-        }
-        else
-        {
-            Timer::disableTimer(mStatsReportingTimer);
-        }
     }
     
     RSOperationModeInner Model::currentOperationMode()

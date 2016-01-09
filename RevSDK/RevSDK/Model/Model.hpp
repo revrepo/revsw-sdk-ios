@@ -112,6 +112,8 @@ namespace rs
         //void debug_enableDebugMode();
         void debug_disableDebugMode();
         void debug_replaceConfigurationService(IConfigurationService* aNewService);
+        
+        LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
     };
 }
 

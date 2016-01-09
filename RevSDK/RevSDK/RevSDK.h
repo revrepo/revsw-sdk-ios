@@ -26,6 +26,8 @@ typedef enum
     kRSOperationModeTransportAndReport
 }RSOperationMode;
 
+@class UIViewController;
+
 @interface RevSDK : NSObject
 
 + (void)startWithSDKKey:(NSString *)aSDKKey;
@@ -40,5 +42,6 @@ typedef enum
 + (void)debug_resetUsageStatistics;
 + (NSString *)debug_getLatestConfiguration;
 + (void)debug_forceConfigurationUpdate;
++ (void)debug_showLogInViewController:(UIViewController*)aVC;
 
 @end
