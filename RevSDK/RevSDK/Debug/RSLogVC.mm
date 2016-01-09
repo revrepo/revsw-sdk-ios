@@ -17,16 +17,28 @@
 @property (nonatomic, readwrite, assign) int tag;
 @property (nonatomic, readwrite, strong) NSString* message;
 
+
 @end
 
 @implementation RSLogEntry
 
 @end
 
-@interface RSLogVC()<UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate>
+@interface RSLogVC()<UITableViewDelegate, UITableViewDataSource, MFMailComposeViewControllerDelegate, UIActionSheetDelegate>
+{
+    NSUInteger mDomain;
+    NSUInteger mLevel;
+}
 
 @property (nonatomic, readwrite, weak) UITableView* table;
+@property (nonatomic, readwrite, strong) UIBarButtonItem* domainButton;
+@property (nonatomic, readwrite, strong) UIBarButtonItem* levelButton;
 @property (nonatomic, readwrite, strong) NSArray* content;
+@property (nonatomic, readwrite, strong) NSArray* domains;
+@property (nonatomic, readwrite, strong) NSArray* levels;
+@property (nonatomic, readwrite, strong) UIActionSheet* domainPicker;
+@property (nonatomic, readwrite, strong) UIActionSheet* levelPicker;
+
 
 @end
 
@@ -78,9 +90,110 @@
     self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 }
 
+- (UIToolbar*)createToolbar
+{
+    UIToolbar* toolbar = [[UIToolbar alloc] init];
+    toolbar.frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
+    self.domainButton = [[UIBarButtonItem alloc] initWithTitle:@"Domain"
+                                                         style:UIBarButtonItemStylePlain
+                                                        target:self
+                                                        action:@selector(onDomainClicked:)];
+    self.levelButton = [[UIBarButtonItem alloc] initWithTitle:@"Level"
+                                                        style:UIBarButtonItemStylePlain
+                                                       target:self
+                                                       action:@selector(onLevelClicked:)];
+    [toolbar setItems:@[self.domainButton, self.levelButton]];
+    return toolbar;
+}
+
+- (void)applyDomainAndLevel
+{
+    NSMutableArray* c = [NSMutableArray array];
+    rs::LogTarget* lt = rs::Model::instance()->log();
+    rs::LogTarget::Entry::List entries;
+    rs::LogTarget::SimpleFilter filter;
+    rs::LogTarget::SimpleFilter::TagList tags;
+    switch (mDomain)
+    {
+        case 0: // ANY
+            break;
+        case 1: // QUIC
+            for (int i = 20; i < 30; ++i)
+                tags.insert(i);
+            break;
+        default:
+            break;
+    }
+    filter.setTags(tags);
+    // play with filter here
+
+    switch (mLevel)
+    {
+        case 0: // ALL
+            filter.setLevels(true, true, true);
+            break;
+        case 1: // I
+            filter.setLevels(false, false, true);
+            break;
+        case 2: // W
+            filter.setLevels(false, true, false);
+            break;
+        case 3: // E
+            filter.setLevels(true, false, false);
+            break;
+            
+        default:
+            break;
+    }
+    
+    lt->filter(entries, &filter);
+    for (const rs::LogTarget::Entry& e : entries)
+    {
+        RSLogEntry* entry = [[RSLogEntry alloc] init];
+        entry.level = e.level();
+        entry.tag = e.tag();
+        entry.message = [NSString stringWithUTF8String:e.message().c_str()];
+        [c addObject:entry];
+    }
+
+    self.content = c;
+    [self.table reloadData];
+    
+    self.domainButton.title = self.domains[mDomain];
+    self.levelButton.title = self.levels[mLevel];
+}
+
+- (void)onDomainClicked:(id)sender
+{
+    self.domainPicker = [[UIActionSheet alloc] init];
+    [self.domainPicker setTitle:@"Pick domain"];
+    [self.domainPicker addButtonWithTitle:@"ANY"];
+    [self.domainPicker addButtonWithTitle:@"QUIC"];
+    NSInteger cb = [self.domainPicker addButtonWithTitle:@"Cancel"];
+    self.domainPicker.cancelButtonIndex = cb;
+    self.domainPicker.delegate = self;
+    [self.domainPicker showInView:self.view];
+}
+
+- (void)onLevelClicked:(id)sender
+{
+    self.levelPicker = [[UIActionSheet alloc] init];
+    [self.levelPicker setTitle:@"Pick log level"];
+    [self.levelPicker addButtonWithTitle:@"ALL"];
+    [self.levelPicker addButtonWithTitle:@"Info"];
+    [self.levelPicker addButtonWithTitle:@"Warning"];
+    [self.levelPicker addButtonWithTitle:@"Error"];
+    NSInteger cb = [self.levelPicker addButtonWithTitle:@"Cancel"];
+    self.levelPicker.cancelButtonIndex = cb;
+    self.levelPicker.delegate = self;
+    [self.levelPicker showInView:self.view];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.levels = @[@"ALL", @"INF", @"WRN", @"ERR"];
+    self.domains = @[@"ANY", @"QUIC"];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"LOG";
     UIBarButtonItem* bbi = nil;
@@ -94,23 +207,7 @@
                                           target:self
                                           action:@selector(onFilterPressed:)];
     self.navigationItem.rightBarButtonItem = bbi;
-    
-    NSMutableArray* c = [NSMutableArray array];
-    rs::LogTarget* lt = rs::Model::instance()->log();
-    rs::LogTarget::Entry::List entries;
-    rs::LogTarget::SimpleFilter filter;
-    // play with filter here
-    
-    lt->filter(entries, &filter);
-    for (const rs::LogTarget::Entry& e : entries)
-    {
-        RSLogEntry* entry = [[RSLogEntry alloc] init];
-        entry.level = e.level();
-        entry.tag = e.tag();
-        entry.message = [NSString stringWithUTF8String:e.message().c_str()];
-        [c addObject:entry];
-    }
-    
+
     UITableView* tv = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.table = tv;
     self.table.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin |
@@ -118,10 +215,12 @@
     UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     [self.view addSubview:self.table];
 
-    self.content = c;
     self.table.delegate = self;
     self.table.dataSource = self;
     [self.table reloadData];
+    [self.view addSubview:[self createToolbar]];
+
+    [self applyDomainAndLevel];
 }
 
 - (void)onFilterPressed:(id)sender
@@ -224,6 +323,23 @@
     
     evc.message = line;
     [self.navigationController pushViewController:evc animated:YES];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == actionSheet.cancelButtonIndex)
+        return;
+    
+    if (actionSheet == self.domainPicker)
+    {
+        mDomain = buttonIndex;
+        [self applyDomainAndLevel];
+    }
+    else if (actionSheet == self.levelPicker)
+    {
+        mLevel = buttonIndex;
+        [self applyDomainAndLevel];
+    }
 }
 
 @end
