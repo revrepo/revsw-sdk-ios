@@ -68,4 +68,10 @@
                                     repeats:NO];
 }
 
+- (IBAction)onLogsButtonTapped:(id)sender
+{
+    [RevSDK debug_showLogInViewController:self];
+}
+
+
 @end
