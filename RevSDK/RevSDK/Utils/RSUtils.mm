@@ -109,6 +109,7 @@ namespace rs
     NSString* const kRSQUICProtocolName = @"quic";
     NSString* const kRSStandardProtocolName = @"standard";
     NSString* const kRSRevProtocolName = @"rev";
+    NSString* const kRSDataSchemeName = @"data";
     
     //log levels
     NSString* const kRSLogLevelNone  = @"none";

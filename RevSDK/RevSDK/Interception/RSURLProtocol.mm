@@ -27,7 +27,7 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    if ([aRequest.URL.scheme isEqualToString:@"data"])
+    if ([aRequest.URL.scheme isEqualToString:rs::kRSDataSchemeName])
     {
         return NO;
     }
