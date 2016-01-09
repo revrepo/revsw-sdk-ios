@@ -48,6 +48,7 @@ namespace rs
         mEventTriggerOn (false)
     {
         Log::initialize();
+        Traffic::initialize();
         mMemoryLog.reset(new LogTargetMemory());
         mProxy.reset(new ProxyTarget(this));
         Log::instance()->addTarget(mMemoryLog);

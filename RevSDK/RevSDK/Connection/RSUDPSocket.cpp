@@ -14,6 +14,7 @@
 
 #include "Utils.hpp"
 #include "RSUDPSocket.h"
+#include "RSLog.h"
 
 namespace rs
 {
@@ -51,7 +52,7 @@ UDPSocket::UDPSocket(const std::string& aHost, int aPort):
     }
     catch (std::exception& e)
     {
-        std::cout << "UDPSocket::UDPSocket exc: " << e.what() << std::endl;
+        Log::error(kLogTagQUICNetwork, "UDPSocket init: ", notNullString(e.what()));
         mImpl = nullptr;
     }
     
@@ -59,6 +60,7 @@ UDPSocket::UDPSocket(const std::string& aHost, int aPort):
     {
         mImpl->deadline.expires_at(boost::posix_time::pos_infin);
         p_checkDeadline();
+        Log::info(kLogTagQUICNetwork, "UDPSocket initialized");
     }
 }
 
@@ -86,7 +88,7 @@ bool UDPSocket::connect()
     }
     catch (std::exception& e)
     {
-        std::cout << "UDPSocket::UDPSocket endpoint exc: " << e.what() << std::endl;
+        Log::error(kLogTagQUICNetwork, "UDPSocket resolve: ", notNullString(e.what()));
         exc = true;
     }
     
@@ -98,7 +100,7 @@ bool UDPSocket::connect()
         }
         catch (std::exception& e)
         {
-            std::cout << "UDPSocket::UDPSocket socket exc: " << e.what() << std::endl;
+            Log::error(kLogTagQUICNetwork, "UDPSocket connect: ", notNullString(e.what()));
             exc = true;
         }
     }
@@ -110,6 +112,7 @@ bool UDPSocket::connect()
     }
 
     mImpl->connected = true;
+    Log::info(kLogTagQUICNetwork, "UDPSocket connected");
     
     return true;
 }
@@ -129,7 +132,7 @@ bool UDPSocket::send(const void* aData, size_t aSize)
     
     if (aData == nullptr || aSize == 0)
     {
-        std::cout << "UDPSocket::send error: " << "Invalid arguments" << std::endl;
+        Log::warning(kLogTagQUICNetwork, "UDPSocket send bad arguments");
         return false;
     }
     
@@ -138,7 +141,12 @@ bool UDPSocket::send(const void* aData, size_t aSize)
 
     if (ec)
     {
-        std::cout << "UDPSocket::send error: " << ec.value() << std::endl;
+        Log::error(kLogTagQUICNetwork, "UDPSocket send: %d %s", ec.value(), notNullString(ec.message()));
+    }
+    
+    if (aSize > 0)
+    {
+        Traffic::logOut(kLogTagQUICNetwork, (int)aSize);
     }
     
     return ec == 0;
@@ -151,7 +159,7 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
     
     if (aData == nullptr || aSize == 0)
     {
-        std::cout << "UDPSocket::recv error: " << "Invalid arguments" << std::endl;
+        Log::warning(kLogTagQUICNetwork, "UDPSocket recv bad arguments");
         return 0;
     }
     
@@ -162,8 +170,13 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
         res = mImpl->socket.receive_from(boost::asio::buffer(aData, aSize), mImpl->endpoint, 0, ec);
         if (ec)
         {
-            std::cout << "UDPSocket::recv error: " << ec.value() << std::endl;
+            Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
             res = 0;
+        }
+        
+        if (res > 0)
+        {
+            Traffic::logIn(kLogTagQUICNetwork, (int)res);
         }
     }
     else
@@ -181,8 +194,23 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
         
         if (aTimoutFlag != nullptr)
         {
-            if (ec.value() == 89)
+            if (ec.value() == 89) // timeout code magic number
+            {
                 *aTimoutFlag = true;
+            }
+            else if (ec)
+            {
+                Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
+            }
+            else
+            {
+                // no error
+            }
+        }
+        
+        if (res > 0)
+        {
+            Traffic::logIn(kLogTagQUICNetwork, (int)res);
         }
     }
     traceSocketSpeed((int)res);
@@ -203,10 +231,11 @@ void UDPSocket::close()
         }
         catch (std::exception& e)
         {
-            std::cout << "UDPSocket::recv close: " << e.what() << std::endl;
+            Log::error(kLogTagQUICNetwork, "UDPSocket close: %s", notNullString(e.what()));
         }
     }
 
+    Log::info(kLogTagQUICNetwork, "UDPSocket closed");
     delete mImpl;
     mImpl = nullptr;
 }
