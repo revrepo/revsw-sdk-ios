@@ -186,6 +186,8 @@ std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (mBestProtocol/* && mAvailableProtocols.size()*/)
     {
+        Log::info(1000, (mBestProtocol->protocolName() + " Protcol name is being used").c_str());
+        
         return mBestProtocol->clone();
     }
     Log::error(kRSLogKey_LastMile, "Asking for best protocol when none of them are available");
