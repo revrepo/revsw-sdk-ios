@@ -24,23 +24,32 @@ namespace rs
     const int kRSLogKey_LastMile = 10;
     const int kRSLogKey_Configuration = 11;
     const int kRSLogKey_StandardRedirects = 12;
-    
     const int kRSLogKey_TestApp = 15;
     const int kRSLogKey_ProtocolAvailability = 16;
     
-    static const int kLogTagQUICMIN               = 20;
-    static const int kLogTagQUICMAX               = 29;
+    // RANGES
+    static const int kLogTagSDKMIN      = 1;
+    static const int kLogTagSDKMAX      = 19;
 
+    static const int kLogTagSTDMIN      = 30;
+    static const int kLogTagSTDMAX      = 39;
+
+    static const int kLogTagQUICMIN     = 20;
+    static const int kLogTagQUICMAX     = 29;
+
+    // SDK
+    static const int kLogTagSDKStats = kLogTagSDKMIN + 0;
+
+    // STD
+    static const int kLogTagSTDRequest           = kLogTagSTDMIN + 0;
+
+    // QUIC
     static const int kLogTagQUICRequest           = kLogTagQUICMIN + 0;
     static const int kLogTagQUICLibrary           = kLogTagQUICMIN + 1;
     static const int kLogTagQUICNetwork           = kLogTagQUICMIN + 2;
     static const int kLogTagQUICTraffic           = kLogTagQUICMIN + 3;
     
-    static const int kLogTagAdditionalMin = 1;
-    static const int kLogTagAdditionalMax = 10;
-    
-    static const int kLogTagRequestsStats = kLogTagAdditionalMin + 0;
-    static const int kLogTagRequestModification = kLogTagAdditionalMin + 1;
+
 
     class Traffic
     {
