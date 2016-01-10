@@ -226,6 +226,12 @@ namespace rs
         NSMutableURLRequest* r =  [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL];
         if (r != nil)
             [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
+        else
+        {
+            NSString* dump = [NSString stringWithFormat:@"%@\n%@", response.URL, response.allHeaderFields];
+            std::string cDump = rs::stdStringFromNSString(dump);
+            rs::Log::warning(rs::kLogTagSTDRequest, "Failed to process redirect. Resonse dump: %s", cDump.c_str());
+        }
         completionHandler(r);
     }
 }

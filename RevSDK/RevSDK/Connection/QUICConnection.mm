@@ -57,9 +57,9 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     mURL = aRequest->URL();
     
     std::string rest = aRequest->rest();
-    if (rest.find("//") == 0)
+    if (rest == "//")
     {
-        Log::error(kLogTagQUICRequest, "Path started with double slash:\nurl=%s\nmethod=%s",
+        Log::error(kLogTagQUICRequest, "Path is double slash:\nurl=%s\nmethod=%s",
                    notNullString(aRequest->URL()),
                    notNullString(aRequest->method()));
     }
@@ -71,6 +71,11 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
                   notNullString(aRequest->method()));
         rest = "/";
     }
+    
+//    if (rest == "/ibm/main/2/i.gif")
+//    {
+//        Log::info(kLogTagQUICRequest, "Gotcha");
+//    }
 
     SpdyHeaderBlock headers;
     headers[":authority"] = aRequest->host();
@@ -81,8 +86,12 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4";
     headers["user-agent"] = "Mozilla";
     
-    base::StringPiece body(aRequest->body().toString());
     
+    //Data bData = aRequest->body();
+    const char* bodyPtr = (const char*)aRequest->body().bytes();
+    if (bodyPtr == nullptr)
+        bodyPtr = "";
+    base::StringPiece body(bodyPtr);//(bData.toString());
     for (const auto& i : aRequest->headers())
         headers[i.first] = i.second;
     
