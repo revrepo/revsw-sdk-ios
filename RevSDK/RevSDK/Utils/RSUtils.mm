@@ -100,6 +100,7 @@ namespace rs
     NSString* const kRS_JKey_TransportProt    = @"transport_protocol";
     NSString* const kRS_JKey_Destination = @"destination";
     NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
+    NSString* const kRS_JKey_RevCache = @"x-rev-cache";
     
     //field
     NSString* const kRSiOSField = @"iOS";
@@ -502,6 +503,9 @@ namespace rs
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
                 dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
                 dataDictionary[kRS_JKey_EdgeTransport]  = aDictionary[kRS_JKey_EdgeTransport];
+                
+                NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
+                dataDictionary[kRS_JKey_RevCache] = revCache ? revCache : @"_";
             }
         }
         
