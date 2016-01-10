@@ -88,7 +88,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     
     if (aRequest->host() == kRevRedirectHost)
     {
-        Log::error(kLogTagRequestModification, "Request host set to Rev redirect host in QUIC");
+        Log::error(kLogTagQUICRequest, "Request host set to %s", notNullString(kRevRedirectHost));
     }
     
     headers["X-Rev-Host"] = aRequest->host();
@@ -151,7 +151,8 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 
                 if (decomposeURL(baseURL, url, host, path, scheme))
                 {
-                    mRedirect.reset(new QUICConnection());
+                    std::shared_ptr<Connection> newConnection = Connection::create<QUICConnection>();
+                    mRedirect = std::dynamic_pointer_cast<QUICConnection>(newConnection);
                     mRedirect->p_setRedirectDepth(mDepth + 1);
                     
                     newRequest->setHost(host);

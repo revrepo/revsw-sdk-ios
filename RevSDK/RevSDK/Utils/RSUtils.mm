@@ -418,22 +418,22 @@ namespace rs
         
         if (CFNumberIsFloatType(stRef))
         {
-            Log::error(kLogTagRequestsStats, "Start timestamp is not an integer");
+            Log::error(kLogTagSDKStats, "Start timestamp is not an integer");
         }
         
         if (CFNumberIsFloatType(endRef))
         {
-            Log::error(kLogTagRequestsStats, "End timestamp is not an integer");
+            Log::error(kLogTagSDKStats, "End timestamp is not an integer");
         }
         
         if (CFNumberIsFloatType(fbRef))
         {
-            Log::error(kLogTagRequestsStats, "End timestamp is not an integer");
+            Log::error(kLogTagSDKStats, "End timestamp is not an integer");
         }
         
         if ([startTimestamp isEqualToNumber:firstByteTimestamp])
         {
-            Log::error(kLogTagRequestsStats, "First byte timestamp is equal to start timestamp");
+            Log::error(kLogTagSDKStats, "First byte timestamp is equal to start timestamp");
         }
         
         NSMutableDictionary* dataDictionary = [NSMutableDictionary dictionary];
@@ -458,7 +458,7 @@ namespace rs
         if (successStatusCheck != 0 && successStatusCheck != 1)
         {
             std::string logFormat = "success statuc is incorrect " + std::to_string(successStatusCheck);
-            Log::error(kLogTagRequestsStats, logFormat.c_str());
+            Log::error(kLogTagSDKStats, logFormat.c_str());
         }
         
         //fill with defaults

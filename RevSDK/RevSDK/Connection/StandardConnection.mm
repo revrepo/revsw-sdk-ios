@@ -72,20 +72,20 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     
     if ([XRevHostHeader isEqualToString:kRSRevRedirectHost])
     {
-        Log::error(kLogTagRequestModification,  "Request host set to Rev redirect host in QUIC");
+        Log::error(kLogTagSTDRequest,  "Request host set to %s", [kRSRevRedirectHost UTF8String]);
     }
-    
-    NSURLSessionTask* task = [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
-//    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    
-//    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
-//                                                                                    delegate:customDelegate
-//                                                                               delegateQueue:nil];
-//    
-//    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
 
-    oAnchor->onStart();
+//    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
+    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
+                                                                                    delegate:customDelegate
+                                                                               delegateQueue:nil];
+    
+    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
     [task resume];
+    
+    oAnchor->onStart();
 }
 
 std::string StandardConnection::edgeTransport()const
@@ -111,6 +111,7 @@ void StandardConnection::didReceiveResponse(void* aResponse)
 void StandardConnection::didCompleteWithError(void* aError)
 {
     onEnd();
+    
     
     NSURLRequest* request   = URLRequestFromRequest(mCurrentRequest);
     const BOOL usingRevHost = [request.URL.host isEqualToString:kRSRevRedirectHost];

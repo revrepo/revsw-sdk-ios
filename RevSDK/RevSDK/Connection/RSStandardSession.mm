@@ -17,6 +17,7 @@
 {
     std::unordered_map<int, std::shared_ptr<rs::Connection>> mConnections;
     NSLock* mLock;
+    NSMutableDictionary* md;
 }
 
 @property (nonatomic, readwrite, strong) NSURLSessionConfiguration* configuration;
@@ -59,34 +60,33 @@
                                                 delegateQueue:nil];
         
         mLock = [[NSLock alloc] init];
+        md = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
-- (NSURLSessionTask*)createTaskWithRequest:(NSURLRequest*)aRequest
+- (void)createTaskWithRequest:(NSURLRequest*)aRequest
                                 connection:(std::shared_ptr<rs::Connection>)aConnection
 {
     if (aRequest == nil || aConnection.get() == nullptr)
-        return nil;
-    
-    __block NSURLSessionTask* task = nil;
+        return;
     
     dispatch_block_t block = ^() {
         
-        task = [self.session dataTaskWithRequest:aRequest];
+        NSURLSessionTask* task = [self.session dataTaskWithRequest:aRequest];
         task.taskDescription = [NSString stringWithFormat:@"%d", aConnection->getID()];
         
         [mLock lock];
         mConnections[aConnection->getID()] = aConnection;
         [mLock unlock];
+        
+        [task resume];
     };
 
     if ([[NSThread currentThread] isMainThread])
         block();
     else
         dispatch_sync(dispatch_get_main_queue(), ^{ block(); });
-    
-    return task;
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
@@ -106,8 +106,9 @@
     }
     else
     {
-        request = [RSURLRequestProcessor proccessRequest:request isEdge:YES];
-        completionHandler(request);
+        NSMutableURLRequest* r = [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL];
+        [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
+        completionHandler(r);
     }
 }
 
@@ -125,17 +126,26 @@
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
 {
+    bool processed = false;
     [mLock lock];
     int connectionId = [dataTask.taskDescription intValue];
     std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-    assert(w != mConnections.end());
-    std::shared_ptr<rs::Connection> connection = w->second;
+    if (w == mConnections.end())
+        processed = true;
+    
+    if (processed)
+    {
+        if (completionHandler)
+            completionHandler(NSURLSessionResponseCancel);
+    }
+    else
+    {
+        std::shared_ptr<rs::Connection> connection = w->second;
+        connection->didReceiveResponse((__bridge void*)response);
+        if (completionHandler)
+            completionHandler(NSURLSessionResponseAllow);
+    }
     [mLock unlock];
-    
-    connection->didReceiveResponse((__bridge void*)response);
-    
-    if (completionHandler)
-        completionHandler(NSURLSessionResponseAllow);
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
@@ -150,7 +160,9 @@
     connection->didCompleteWithError((__bridge void*)error);
 
     [mLock lock];
-    mConnections.erase(w);
+    w = mConnections.find(connectionId);
+    if (w != mConnections.end())
+        mConnections.erase(w);
     [mLock unlock];
 }
 
