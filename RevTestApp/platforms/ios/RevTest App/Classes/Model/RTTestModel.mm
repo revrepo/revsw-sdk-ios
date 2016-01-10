@@ -12,6 +12,29 @@
 #import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
 
+@interface NSURL (Equality)
+
+@end
+
+@implementation NSURL(Equality)
+
+- (BOOL)isEquivalent:(NSURL *)aURL {
+    
+    if ([self isEqual:aURL]) return YES;
+    if ([[self scheme] caseInsensitiveCompare:[aURL scheme]] != NSOrderedSame) return NO;
+    if ([[self host] caseInsensitiveCompare:[aURL host]] != NSOrderedSame) return NO;
+    
+    if ([[self path] compare:[aURL path]] != NSOrderedSame) return NO;
+    
+    if ([self port] || [aURL port]) {
+        if (![[self port] isEqual:[aURL port]]) return NO;
+        if (![[self query] isEqual:[aURL query]]) return NO;
+    }
+    
+    return YES;
+}
+
+@end
 
 @interface RTTestModel ()
 {
@@ -71,13 +94,12 @@
     
     mCurrentDataSize += dataSize;
     
-   /* NSHTTPURLResponse* response = userInfo[kRSResponseKey];
-    NSURL* responseURL = response.URL;
+    NSURL* originalURL = userInfo[kRSOriginalURLKey];
     
-    if ([self.baseURL.absoluteString isEqualToString:[responseURL.absoluteString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]])
+    if ([self.baseURL isEquivalent:originalURL])
     {
         NSLog(@"STOPPED LOADING BASE URL %@", self.baseURL);
-    }*/
+    }
 }
 
 - (void)dealloc

@@ -16,6 +16,7 @@ extern NSString* const kRSURLProtocolStoppedLoadingNotification;
 
 //keys
 extern NSString* const kRSDataKey;
-extern NSString* const kRSResponseKey;
+extern NSString* const kRSResponseCodeKey;
+extern NSString* const kRSOriginalURLKey;
 
 #endif /* RSPublicConsts_h */

@@ -19,7 +19,7 @@
 @property (nonatomic, strong) RSURLConnection* connection;
 @property (nonatomic, strong) NSMutableData* data;
 @property (nonatomic, strong) RSURLConnectionNative* directConnection;
-@property (nonatomic, copy)   NSURLResponse* response;
+@property (nonatomic, copy)   NSHTTPURLResponse* response;
 
 @end
 
@@ -85,18 +85,21 @@
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
                          inRequest:newRequest];
-        
+    
         self.directConnection = [[RSURLConnectionNative alloc] initWithRequest:newRequest delegate:self];
     }
 }
 
 - (void)stopLoading
 {
+    NSNumber* responseCode = @(self.response.statusCode);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:kRSURLProtocolStoppedLoadingNotification
                                                         object:nil
                                                       userInfo:@{
                                                                  kRSDataKey : @([self.data length]),
-                                                                 kRSResponseKey : self.response ? [self.response copy] : [NSHTTPURLResponse new]
+                                                                 kRSResponseCodeKey : responseCode,
+                                                                 kRSOriginalURLKey : [self.request.URL copy]
                                                                  }];
 }
 
@@ -122,12 +125,9 @@
 #pragma mark -
 #pragma mark - RSURLConnectionDelegate
 
-- (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+- (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response
 {
-    NSLog(@"DID RECEIVE RESPONSE %@", response.URL);
-    
     self.response = response;
-    
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
@@ -177,12 +177,9 @@
     [self.client URLProtocol:self didLoadData:aData];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response
 {
-    NSLog(@"DID RECEIVE RESPONSE %@", response.URL);
-    
     self.response = response;
-    
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
