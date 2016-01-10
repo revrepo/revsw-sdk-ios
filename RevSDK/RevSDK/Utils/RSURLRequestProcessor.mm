@@ -35,7 +35,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 {
     if ([aRequest.URL.scheme isEqualToString:rs::kRSDataSchemeName])
     {
-        rs::Log::warning(rs::kLogTagRequestModification, "Data scheme is being used");
+        rs::Log::info(rs::kLogTagSTDRequest, "Data scheme is being used");
     }
     
     NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
