@@ -83,7 +83,7 @@ namespace rs
         if (aProcess)
         {
             bool flag = aProto->protocolName() == standardProtocolName();
-            req = [RSURLRequestProcessor proccessRequest:mreq isEdge:flag];
+            req = [RSURLRequestProcessor proccessRequest:mreq isEdge:flag baseURL:nil];
         }
         
         auto request = requestFromURLRequest(mreq);
