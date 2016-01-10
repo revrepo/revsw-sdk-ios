@@ -70,6 +70,14 @@
     NSUInteger dataSize    = number.unsignedIntegerValue;
     
     mCurrentDataSize += dataSize;
+    
+   /* NSHTTPURLResponse* response = userInfo[kRSResponseKey];
+    NSURL* responseURL = response.URL;
+    
+    if ([self.baseURL.absoluteString isEqualToString:[responseURL.absoluteString stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]]])
+    {
+        NSLog(@"STOPPED LOADING BASE URL %@", self.baseURL);
+    }*/
 }
 
 - (void)dealloc

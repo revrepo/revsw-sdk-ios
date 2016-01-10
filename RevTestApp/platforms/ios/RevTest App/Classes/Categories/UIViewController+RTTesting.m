@@ -198,4 +198,9 @@
     return aURLRequest.URL.isValid && self.testModel.shouldLoad;
 }
 
+- (void)setBaseURL:(NSURL *)aBaseURL
+{
+    self.testModel.baseURL = aBaseURL;
+}
+
 @end

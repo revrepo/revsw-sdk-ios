@@ -153,6 +153,7 @@ static const NSInteger kSuccessCode = 200;
     
     if ([URL isValid])
     {
+        [self setBaseURL:URL];
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
 //        if (0 >= self.testLeftOnThisStep)
 //        {

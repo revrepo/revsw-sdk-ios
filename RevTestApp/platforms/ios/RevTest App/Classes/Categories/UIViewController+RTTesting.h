@@ -21,6 +21,7 @@
 @property (nonatomic, copy) void (^loadFinishedBlock)();
 @property (nonatomic, copy) void (^cancelBlock)();
 
+- (void)setBaseURL:(NSURL*)aBaseURL;
 - (void)showHudWithText:(NSString *)aText;
 - (void)hideHud;
 

@@ -95,7 +95,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRSURLProtocolStoppedLoadingNotification
                                                         object:nil
                                                       userInfo:@{
-                                                                 kRSDataKey : @([self.data length])
+                                                                 kRSDataKey : @([self.data length]),
+                                                                 kRSResponseKey : self.response ? [self.response copy] : [NSHTTPURLResponse new]
                                                                  }];
 }
 
@@ -123,6 +124,10 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSLog(@"DID RECEIVE RESPONSE %@", response.URL);
+    
+    self.response = response;
+    
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
@@ -174,6 +179,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSLog(@"DID RECEIVE RESPONSE %@", response.URL);
+    
     self.response = response;
     
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];

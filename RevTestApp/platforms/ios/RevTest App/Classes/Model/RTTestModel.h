@@ -18,6 +18,7 @@
 @property (nonatomic, copy) void (^restartBlock)(void);
 @property (nonatomic, copy) void (^completionBlock)(NSArray*);
 @property (nonatomic, copy) void (^cancelBlock)();
+@property (nonatomic, copy) NSURL* baseURL;
 
 - (void)start;
 - (void)setWhiteListOption:(BOOL)aOn;

@@ -35,6 +35,7 @@ NSString* const kRSURLProtocolStoppedLoadingNotification = @"kRSURLProtocolStopp
 
 //keys
 NSString* const kRSDataKey = @"kRSDataKey";
+NSString* const kRSResponseKey = @"kRSResponseKey";
 
 namespace rs
 {
