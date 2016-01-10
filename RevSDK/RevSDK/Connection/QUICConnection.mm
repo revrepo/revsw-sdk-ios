@@ -66,9 +66,9 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     
     if (rest == "/")
     {
-        Log::warning(kLogTagQUICRequest, "Empty path:\nurl=%s\nmethod=%s",
-                     notNullString(aRequest->URL()),
-                     notNullString(aRequest->method()));
+        Log::info(kLogTagQUICRequest, "Empty path:\nurl=%s\nmethod=%s",
+                  notNullString(aRequest->URL()),
+                  notNullString(aRequest->method()));
         rest = "/";
     }
 

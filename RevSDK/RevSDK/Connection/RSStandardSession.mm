@@ -12,6 +12,8 @@
 #include "Model.hpp"
 #include <unordered_map>
 
+//#define RS_LOG_STANDARD_CONNECTIONS_GISTORY 1
+
 namespace rs
 {
     class ConnectionMap
@@ -134,6 +136,7 @@ namespace rs
 
 - (void)writeHistoryEntry:(NSString*)aEntry forTaskId:(NSString*)aTaskId
 {
+#if RS_LOG_STANDARD_CONNECTIONS_GISTORY
     if (aTaskId == nil || aEntry == nil)
         return;
     
@@ -146,6 +149,7 @@ namespace rs
     }
     [entries addObject:aEntry];
     [mLock unlock];
+#endif
 }
 
 - (void)onTimerFired:(NSTimer*)aTimer {}
@@ -209,11 +213,6 @@ namespace rs
 {
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
 
-    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-    int code = (int)[httpResponse statusCode];
-    
-    NSLog(@"Redirect with code %d", code);
-    
     if (!request)
     {
         completionHandler(nil);
@@ -224,47 +223,7 @@ namespace rs
     }
     else
     {
-        //NSMutableURLRequest* r = [request mutableCopy];
         NSMutableURLRequest* r =  [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL];
-//        NSURL* url = r.URL;
-//        if (url.host == nil)
-//        {
-//            url = [NSURL URLWithString:url.absoluteString relativeToURL:task.originalRequest.URL];
-//            if (url.host == nil)
-//            {
-//                completionHandler(nil);
-//                return;
-//            }
-//        }
-//        
-//        NSString* urlStr = [url absoluteString];
-//        
-//        [r setValue:@"0efbbd35-a131-4419-b330-00de5eb3696b.revsdk.net" forHTTPHeaderField:@"Host"];
-//        [r setValue:url.host forHTTPHeaderField:@"X-Rev-Host"];
-//        [r setValue:url.scheme forHTTPHeaderField:@"X-Rev-Proto"];
-//
-//        NSRange range = [urlStr rangeOfString:url.host];
-//        if (range.location == NSNotFound)
-//        {
-//            completionHandler(nil);
-//            return;
-//        }
-//        urlStr = [urlStr stringByReplacingCharactersInRange:range withString:rs::kRSRevRedirectHost];
-//        if ([urlStr rangeOfString:@"https"].location != 0)
-//        {
-//            range = [urlStr rangeOfString:@"http"];
-//            if (range.location != 0)
-//            {
-//                completionHandler(nil);
-//                return;
-//            }
-//            urlStr = [urlStr stringByReplacingCharactersInRange:range withString:@"https"];
-//        }
-//        
-//        
-//        url = [NSURL URLWithString:urlStr];
-//        [r setURL:url];
-        
         if (r != nil)
             [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
         completionHandler(r);
