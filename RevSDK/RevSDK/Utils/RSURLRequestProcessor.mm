@@ -39,37 +39,66 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     }
     
     NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
-    NSURL* URL                          = aRequest.URL;
-    NSString* host                      = URL.host;
-    if (host == nil)
+    NSURL* url = newRequest.URL;
+    if (url.host == nil)
     {
-        if (aBaseURL == nil)
+        url = [NSURL URLWithString:url.absoluteString relativeToURL:aBaseURL];
+        if (url.host == nil)
+        {
             return nil;
-        
-        URL = [[NSURL alloc] initFileURLWithPath:URL.absoluteString relativeToURL:aBaseURL];
-        if (URL == nil)
-            return nil;
-        
-        host = URL.host;
-        if (host == nil)
-            return nil;
+        }
     }
-    //NSLog(@"Bofore: %@", URL.absoluteString);
-    std::string  stdHost                = rs::stdStringFromNSString(host);
-    BOOL isProvisioned                  = rs::Model::instance()->isDomainNameProvisioned(stdHost);
-    NSString* transformedBaseHost       = rs::NSStringFromStdString(rs::kRSRevBaseHost);
-    NSString* scheme                    = URL.scheme;
-    NSURLComponents* originalComponents = [NSURLComponents componentsWithURL:URL resolvingAgainstBaseURL:NO];
     
-    if ([RSURLRequestProcessor isValidScheme:scheme])
-        [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
+    NSString* host = url.host;
+    NSString* sdkBaseHost = rs::NSStringFromStdString(rs::kRSRevBaseHost);
+    NSString* scheme = url.scheme;
+
+    if (![RSURLRequestProcessor isValidScheme:scheme])
+        return nil;
+
+    NSString* urlStr = [url absoluteString];
+    BOOL isProvisioned                  = rs::Model::instance()->isDomainNameProvisioned(rs::stdStringFromNSString(host));
+    NSString* sdkKey = rs::NSStringFromStdString(rs::Model::instance()->SDKKey());
+    NSString* hostHeaderValue = nil;
+
+    if (isProvisioned)
+    {
+        hostHeaderValue = sdkBaseHost;
+    }
+    else
+    {
+        hostHeaderValue = [NSString stringWithFormat:@"%@.%@", sdkKey, sdkBaseHost];
+    }
     
-    scheme                      = rs::kRSHTTPSProtocolName;
-    std::string SDKKey          = rs::Model::instance()->SDKKey();
-    NSString* transformedSDKKey = rs::NSStringFromStdString(SDKKey);
-    NSString* hostHeader        = isProvisioned ? [NSString stringWithFormat:@"%@", transformedBaseHost] : [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
-    [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
+    [newRequest setValue:hostHeaderValue forHTTPHeaderField:kRSHostHeader];
     [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
+    [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
+    
+    if (aIsEdge)
+    {
+        NSRange range = [urlStr rangeOfString:host];
+        urlStr = [urlStr stringByReplacingCharactersInRange:range withString:rs::kRSRevRedirectHost];
+    }
+    
+    if ([urlStr rangeOfString:@"https"].location != 0)
+    {
+        NSRange range = [urlStr rangeOfString:@"http"];
+        if (range.location != 0)
+        {
+            return nil;
+        }
+        urlStr = [urlStr stringByReplacingCharactersInRange:range withString:@"https"];
+    }
+    
+    url = [NSURL URLWithString:urlStr];
+    [newRequest setURL:url];
+
+    return newRequest;
+
+
+//    NSString* hostHeader        = isProvisioned ? [NSString stringWithFormat:@"%@", transformedBaseHost] : [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
+//    [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
+//    [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
     
 //    NSString* urlStr = [URL absoluteString];
 //    if (aIsEdge)
@@ -82,7 +111,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 //    }
     
     
-    NSURLComponents* URLComponents = [NSURLComponents new];
+//    NSURLComponents* URLComponents = [NSURLComponents new];
 //    if (aIsEdge)
 //    {
 //        URLComponents.host         = rs::kRSRevRedirectHost;
@@ -95,19 +124,19 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 //    URLComponents.path             = URL.path;
 //    URLComponents.queryItems       = originalComponents.queryItems;
     
-    if (aIsEdge)
-    {
-        URLComponents.host         = rs::kRSRevRedirectHost;
-    }
-    else
-    {
-        URLComponents.host         = originalComponents.host;
-    }
-    URLComponents.scheme           = scheme;
-    URLComponents.path             = URL.path;
-    URLComponents.queryItems       = originalComponents.queryItems;
-
-    NSString* urlStr = [URLComponents.URL absoluteString];
+//    if (aIsEdge)
+//    {
+//        URLComponents.host         = rs::kRSRevRedirectHost;
+//    }
+//    else
+//    {
+//        URLComponents.host         = originalComponents.host;
+//    }
+//    URLComponents.scheme           = scheme;
+//    URLComponents.path             = URL.path;
+//    URLComponents.queryItems       = originalComponents.queryItems;
+//
+//    NSString* urlStr = [URLComponents.URL absoluteString];
     //NSLog(@"After: %@", urlStr);
 //    NSMutableString* urlPath = [urlStr mutableCopy];
 //    if ([[URL absoluteString] hasSuffix:@"/"] && ![urlPath hasSuffix:@"/"])
@@ -121,13 +150,13 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 //        [urlPath appendString:@"/"];
 //    }
     
-    NSURL* newURL = [NSURL URLWithString:urlStr];
+//    NSURL* newURL = [NSURL URLWithString:urlStr];
+//    
+//    [newRequest setURL:newURL];
+//    [newRequest setHTTPBody:aRequest.HTTPBody];
+//    [newRequest setHTTPMethod:aRequest.HTTPMethod];
     
-    [newRequest setURL:newURL];
-    [newRequest setHTTPBody:aRequest.HTTPBody];
-    [newRequest setHTTPMethod:aRequest.HTTPMethod];
-    
-    return newRequest;
+//    return newRequest;
 }
 
 @end
