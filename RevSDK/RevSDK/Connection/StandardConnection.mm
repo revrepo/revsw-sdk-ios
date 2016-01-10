@@ -72,7 +72,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     
     if ([XRevHostHeader isEqualToString:kRSRevRedirectHost])
     {
-        Log::error(kLogTagRequestModification,  "Request host set to Rev redirect host in QUIC");
+        Log::error(kLogTagSTDRequest,  "Request host set to %s", [kRSRevRedirectHost UTF8String]);
     }
 
 //    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
