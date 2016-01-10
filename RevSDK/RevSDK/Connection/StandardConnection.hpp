@@ -36,7 +36,7 @@ namespace rs
         
     private:
        
-        
+       void* mHolder;
        std::shared_ptr<Request> mCurrentRequest;
        std::shared_ptr<Response> mResponse;
        ConnectionDelegate* mConnectionDelegate;

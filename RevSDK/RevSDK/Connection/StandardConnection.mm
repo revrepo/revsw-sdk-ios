@@ -21,11 +21,20 @@
 #include "DebugUsageTracker.hpp"
 #import "RSStandardSession.h"
 
-@interface RSURLSessionDataDelegate : NSObject<NSURLSessionDataDelegate>
+@interface Holder : NSObject
+{
+    @public
+    std::shared_ptr<rs::Connection> mConnection;
+}
 
 @end
 
-@implementation RSURLSessionDataDelegate
+@implementation Holder
+
+- (void)dealloc
+{
+    
+}
 
 @end
 
@@ -37,7 +46,8 @@ StandardConnection::StandardConnection()
 } 
 
 StandardConnection::~StandardConnection()
-{ 
+{
+    
 }
 
 void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate)
@@ -85,6 +95,10 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
 //    [task resume];
     
     oAnchor->onStart();
+    
+    Holder* holder = [Holder new];
+    holder->mConnection = oAnchor;
+    mHolder = ( void *)CFBridgingRetain(holder);
 }
 
 std::string StandardConnection::edgeTransport()const
@@ -146,4 +160,6 @@ void StandardConnection::didCompleteWithError(void* aError)
         Data requestData            = dataFromRequestAndResponse(request, response, mWeakThis.lock().get(), originalScheme);
         Model::instance()->addRequestData(requestData);
     }
+    
+    CFRelease(mHolder);
 }
