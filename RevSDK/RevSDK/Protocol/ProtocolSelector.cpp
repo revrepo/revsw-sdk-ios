@@ -172,17 +172,17 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
 
 std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
-    return std::make_shared<StandardProtocol>();
-//    std::lock_guard<std::mutex> lockGuard(mLock);
-//    if (mBestProtocol/* && mAvailableProtocols.size()*/)
-//    {
-//        Log::info(kLogTagSDKLastMile, (mBestProtocol->protocolName() + " Protcol name is being used").c_str());
-//        
-//        return mBestProtocol->clone();
-//    }
-//    Log::error(kLogTagSDKLastMile, "Asking for best protocol when none of them are available");
-//    
 //    return std::make_shared<StandardProtocol>();
+    std::lock_guard<std::mutex> lockGuard(mLock);
+    if (mBestProtocol/* && mAvailableProtocols.size()*/)
+    {
+        Log::info(kLogTagSDKLastMile, (mBestProtocol->protocolName() + " Protcol name is being used").c_str());
+        
+        return mBestProtocol->clone();
+    }
+    Log::error(kLogTagSDKLastMile, "Asking for best protocol when none of them are available");
+    
+    return std::make_shared<StandardProtocol>();
 }
 
 void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuration> aConf)
