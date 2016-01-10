@@ -75,15 +75,15 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
         Log::error(kLogTagSTDRequest,  "Request host set to %s", [kRSRevRedirectHost UTF8String]);
     }
 
-//    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
-    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
-                                                                                    delegate:customDelegate
-                                                                               delegateQueue:nil];
-    
-    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
-    [task resume];
+    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
+//    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    
+//    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
+//                                                                                    delegate:customDelegate
+//                                                                               delegateQueue:nil];
+//    
+//    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
+//    [task resume];
     
     oAnchor->onStart();
 }
