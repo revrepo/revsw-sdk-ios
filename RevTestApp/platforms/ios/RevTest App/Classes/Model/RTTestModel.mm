@@ -181,7 +181,6 @@
         
         mIsLoading = YES;
         
-        RTTestCase* tcase = [self.testCases objectAtIndex:0];
         mStartDate = [NSDate date];
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:45.0
