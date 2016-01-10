@@ -73,7 +73,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     }
 
     SpdyHeaderBlock headers;
-    headers[":authority"] = kRevRedirectHost;
+    headers[":authority"] = aRequest->host();
     headers[":method"] = aRequest->method();
     headers[":path"] = rest;
     headers[":scheme"] = "https";
