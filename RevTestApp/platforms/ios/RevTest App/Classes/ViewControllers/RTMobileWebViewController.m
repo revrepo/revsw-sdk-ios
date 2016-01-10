@@ -44,6 +44,7 @@ static const NSInteger kSuccessCode = 200;
     
     self.restartBlock = ^{
         
+            NSLog(@"RESTART BLOCK");
             [weakSelf performSelector:@selector(startLoading)
                        withObject:nil
                        afterDelay:1.0];
@@ -159,6 +160,8 @@ static const NSInteger kSuccessCode = 200;
 //        {
 //            [self stepStarted];
 //        }
+        
+        NSLog(@"START LOADING %@", request.URL);
         [self.webView loadRequest:request];
     }
     else
@@ -180,7 +183,17 @@ static const NSInteger kSuccessCode = 200;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    return [self shouldStartLoadingRequest:request];
+    BOOL shouldStart = [self shouldStartLoadingRequest:request];
+    
+    if (shouldStart)
+    {
+       if ([request.URL.absoluteString isEqualToString:@"http://cnn.com/"])
+       {
+           NSLog(@"SHOULD START LOAD %@", request.URL);
+       }
+    }
+    
+    return shouldStart;
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView

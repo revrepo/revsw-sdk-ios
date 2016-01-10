@@ -74,6 +74,11 @@
 {
     self.data = [NSMutableData data];
     
+    if ([self.request.URL.absoluteString isEqualToString:@"http://cnn.com/"])
+    {
+        NSLog(@"START LOADING BASE");
+    }
+    
     if ([self shouldRedirectRequest:self.request])
     {
        self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
@@ -92,6 +97,11 @@
 
 - (void)stopLoading
 {
+    if ([self.request.URL.absoluteString isEqualToString:@"http://cnn.com/"])
+    {
+        NSLog(@"STOP LOADING BASE");
+    }
+    
     NSNumber* responseCode = @(self.response.statusCode);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:kRSURLProtocolStoppedLoadingNotification

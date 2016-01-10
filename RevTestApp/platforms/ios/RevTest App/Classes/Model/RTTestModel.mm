@@ -24,7 +24,12 @@
     if ([[self scheme] caseInsensitiveCompare:[aURL scheme]] != NSOrderedSame) return NO;
     if ([[self host] caseInsensitiveCompare:[aURL host]] != NSOrderedSame) return NO;
     
-    if ([[self path] compare:[aURL path]] != NSOrderedSame) return NO;
+    NSCharacterSet* characterSet = [NSCharacterSet characterSetWithCharactersInString:@"/"];
+    
+    NSString* myTrimmedPath   = [self.path stringByTrimmingCharactersInSet:characterSet];
+    NSString* aURLTrimmedPath = [aURL.path stringByTrimmingCharactersInSet:characterSet];
+    
+    if ([myTrimmedPath compare:aURLTrimmedPath] != NSOrderedSame) return NO;
     
     if ([self port] || [aURL port]) {
         if (![[self port] isEqual:[aURL port]]) return NO;
@@ -278,7 +283,7 @@
     tres.testName = tcase.testName;
     
     [self.currentResult pushResult:tres];
-    
+
     [self toNextCase];
     
     if (self.loadFinishedBlock)

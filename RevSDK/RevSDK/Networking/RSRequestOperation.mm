@@ -52,8 +52,8 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
         request.HTTPBody = self.body;
     }
     
-    NSString* bodyString = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
-    NSLog(@"BODY %@", bodyString);
+   // NSString* bodyString = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
+    //NSLog(@"BODY %@", bodyString);
     
     if ([URL.absoluteString rangeOfString:@"stats-api.revsw.net"].location != NSNotFound)
     {
