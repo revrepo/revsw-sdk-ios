@@ -10,18 +10,88 @@
 #import "RSURLRequestProcessor.h"
 #import "RSUtils.h"
 #include "Model.hpp"
-
 #include <unordered_map>
+
+//#define RS_LOG_STANDARD_CONNECTIONS_GISTORY 1
+
+namespace rs
+{
+    class ConnectionMap
+    {
+    public:
+        typedef std::unordered_map<int, std::weak_ptr<rs::Connection>> Map;
+    public:
+        ConnectionMap() {}
+        ~ConnectionMap() {}
+        
+        void add(std::shared_ptr<rs::Connection> aConnection)
+        {
+            if (aConnection.get() == nullptr)
+                return;
+            
+            mLock.lock();
+            mMap[aConnection->getID()] = aConnection;
+            mLock.unlock();
+        }
+        void remove(rs::Connection* aConnection)
+        {
+            if (aConnection == nullptr)
+                return;
+            mLock.lock();
+            Map::iterator w = mMap.find(aConnection->getID());
+            if (w != mMap.end())
+                mMap.erase(w);
+            mLock.unlock();
+        }
+        std::shared_ptr<rs::Connection> getById(int aConnectionId)
+        {
+            std::shared_ptr<rs::Connection> res;
+            mLock.lock();
+            Map::iterator w = mMap.find(aConnectionId);
+            if (w != mMap.end())
+                res = w->second.lock();
+            mLock.unlock();
+            return res;
+        }
+        bool validById(int aConnectionId) const
+        {
+            bool ok = false;
+            mLock.lock();
+            Map::const_iterator w = mMap.find(aConnectionId);
+            if (w != mMap.end())
+                ok = !w->second.expired();
+            mLock.unlock();
+            return ok;
+        }
+        void removeById(int aConnectionId)
+        {
+            mLock.lock();
+            Map::const_iterator w = mMap.find(aConnectionId);
+            if (w != mMap.end())
+                mMap.erase(w);
+            mLock.unlock();
+        }
+    private:
+        Map mMap;
+        mutable std::mutex mLock;
+    };
+}
 
 @interface RSStandardSession()<NSURLSessionDataDelegate>
 {
-    std::unordered_map<int, std::shared_ptr<rs::Connection>> mConnections;
+    //std::unordered_map<int, std::shared_ptr<rs::Connection>> mConnections;
+    rs::ConnectionMap mConnections;
     NSLock* mLock;
-    NSMutableDictionary* md;
+    NSMutableDictionary* mHistory;
+    BOOL mInitialized;
 }
 
 @property (nonatomic, readwrite, strong) NSURLSessionConfiguration* configuration;
+@property (nonatomic, readwrite, strong) NSThread* thread;
+@property (nonatomic, readwrite, strong) NSTimer* timer;
 @property (nonatomic, readwrite, strong) NSURLSession* session;
+
+- (void)p_createTaskWithParams:(NSDictionary*)aParams;
 
 @end
 
@@ -53,49 +123,96 @@
 {
     if (self = [super init])
     {
+        mInitialized = NO;
+        self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadRun:) object:nil];
+        [self.thread start];
+        
+        
+        mLock = [[NSLock alloc] init];
+        mHistory = [[NSMutableDictionary alloc] init];
+    }
+    return self;
+}
+
+- (void)writeHistoryEntry:(NSString*)aEntry forTaskId:(NSString*)aTaskId
+{
+#if RS_LOG_STANDARD_CONNECTIONS_GISTORY
+    if (aTaskId == nil || aEntry == nil)
+        return;
+    
+    [mLock lock];
+    NSMutableArray* entries = [mHistory objectForKey:aTaskId];
+    if (entries == nil)
+    {
+        entries = [[NSMutableArray alloc] init];
+        [mHistory setObject:entries forKey:aTaskId];
+    }
+    [entries addObject:aEntry];
+    [mLock unlock];
+#endif
+}
+
+- (void)onTimerFired:(NSTimer*)aTimer {}
+
+- (void)threadRun:(id)ctx
+{
+    @autoreleasepool {
         self.configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         
         self.session = [NSURLSession sessionWithConfiguration:self.configuration
                                                      delegate:self
                                                 delegateQueue:nil];
         
-        mLock = [[NSLock alloc] init];
-        md = [[NSMutableDictionary alloc] init];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
+                                                    target:self
+                                                    selector:@selector(onTimerFired:)
+                                                    userInfo:nil
+                                                     repeats:YES];
+        mInitialized = YES;
+        [[NSRunLoop currentRunLoop] run];
     }
-    return self;
 }
 
 - (void)createTaskWithRequest:(NSURLRequest*)aRequest
-                                connection:(std::shared_ptr<rs::Connection>)aConnection
+                   connection:(std::shared_ptr<rs::Connection>)aConnection
 {
     if (aRequest == nil || aConnection.get() == nullptr)
         return;
     
-    dispatch_block_t block = ^() {
-        
-        NSURLSessionTask* task = [self.session dataTaskWithRequest:aRequest];
-        task.taskDescription = [NSString stringWithFormat:@"%d", aConnection->getID()];
-        
-        [mLock lock];
-        mConnections[aConnection->getID()] = aConnection;
-        [mLock unlock];
-        
-        [task resume];
-    };
-
-    if ([[NSThread currentThread] isMainThread])
-        block();
+    mConnections.add(aConnection);
+    NSString* connectionIdStr = [NSString stringWithFormat:@"%d", aConnection->getID()];
+    NSDictionary* params = @{@"r":aRequest, @"id":connectionIdStr};
+    
+    if ([NSThread currentThread] == self.thread)
+    {
+        [self p_createTaskWithParams:params];
+    }
     else
-        dispatch_sync(dispatch_get_main_queue(), ^{ block(); });
+    {
+        [self performSelector:@selector(p_createTaskWithParams:)
+                     onThread:self.thread
+                   withObject:params
+                waitUntilDone:NO];
+    }
+}
+
+- (void)p_createTaskWithParams:(NSDictionary *)aParams
+{
+    NSAssert([NSThread currentThread] == self.thread, @"Wrong thread!");
+    NSURLRequest* request = aParams[@"r"];
+    NSString* connectionId = aParams[@"id"];
+    NSAssert(request != nil && connectionId != nil, @"Bad parameters!");
+    
+    NSURLSessionTask* task = [self.session dataTaskWithRequest:request];
+    task.taskDescription = connectionId;
+    [task resume];
+    [self writeHistoryEntry:@"Started" forTaskId:task.taskDescription];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
-    NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-    int code = (int)[httpResponse statusCode];
-    
-    NSLog(@"Redirect with code %d", code);
-    
+    [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
+
     if (!request)
     {
         completionHandler(nil);
@@ -106,64 +223,87 @@
     }
     else
     {
-        NSMutableURLRequest* r = [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL];
-        [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
+        NSMutableURLRequest* r =  [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL];
+        if (r != nil)
+            [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
         completionHandler(r);
     }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
 {
-    [mLock lock];
-    int connectionId = [dataTask.taskDescription intValue];
-    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-    assert(w != mConnections.end());
-    std::shared_ptr<rs::Connection> connection = w->second;
-    [mLock unlock];
+    [self writeHistoryEntry:@"Recv data" forTaskId:dataTask.taskDescription];
 
-    connection->didReceiveData((__bridge void *)data);
+    int connectionId = [dataTask.taskDescription intValue];
+    std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
+    if (connection.get() != nullptr)
+        connection->didReceiveData((__bridge void *)data);
+    
+    
+//    [mLock lock];
+//    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
+//    assert(w != mConnections.end());
+//    std::shared_ptr<rs::Connection> connection = w->second;
+//    [mLock unlock];
+
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
 {
-    bool processed = false;
-    [mLock lock];
+    [self writeHistoryEntry:@"Recv responce" forTaskId:dataTask.taskDescription];
+
     int connectionId = [dataTask.taskDescription intValue];
-    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-    if (w == mConnections.end())
-        processed = true;
+    std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
     
-    if (processed)
+    
+//    bool processed = false;
+//    [mLock lock];
+//    int connectionId = [dataTask.taskDescription intValue];
+//    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
+//    if (w == mConnections.end())
+//        processed = true;
+    
+    if (connection.get() == nullptr)
     {
         if (completionHandler)
             completionHandler(NSURLSessionResponseCancel);
     }
     else
     {
-        std::shared_ptr<rs::Connection> connection = w->second;
         connection->didReceiveResponse((__bridge void*)response);
         if (completionHandler)
             completionHandler(NSURLSessionResponseAllow);
     }
-    [mLock unlock];
+//    [mLock unlock];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    [mLock lock];
-    int connectionId = [task.taskDescription intValue];
-    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-    assert(w != mConnections.end());
-    std::shared_ptr<rs::Connection> connection = w->second;
-    [mLock unlock];
-    
-    connection->didCompleteWithError((__bridge void*)error);
+    NSString* entry = [NSString stringWithFormat:@"Complete with error %@", error];
+    [self writeHistoryEntry:entry forTaskId:task.taskDescription];
 
-    [mLock lock];
-    w = mConnections.find(connectionId);
-    if (w != mConnections.end())
-        mConnections.erase(w);
-    [mLock unlock];
+    int connectionId = [task.taskDescription intValue];
+    std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
+    
+    if (connection.get() != nullptr)
+        connection->didCompleteWithError((__bridge void*)error);
+    
+    mConnections.removeById(connectionId);
+    
+    
+//    [mLock lock];
+//    int connectionId = [task.taskDescription intValue];
+//    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
+//    assert(w != mConnections.end());
+//    std::shared_ptr<rs::Connection> connection = w->second;
+//    [mLock unlock];
+//    
+//
+//    [mLock lock];
+//    w = mConnections.find(connectionId);
+//    if (w != mConnections.end())
+//        mConnections.erase(w);
+//    [mLock unlock];
 }
 
 @end

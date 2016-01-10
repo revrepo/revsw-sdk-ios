@@ -11,7 +11,7 @@
 #include <ctime>
 #include "Connection.hpp"
 
-std::atomic<int> rs::Connection::gLastConnectionID(0);
+std::atomic<int> rs::Connection::gLastConnectionID(1);
 
 rs::Connection::Connection() : mConnectionID(gLastConnectionID++),
 mBytesSent(0),

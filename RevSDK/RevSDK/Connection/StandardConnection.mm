@@ -57,6 +57,9 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
         error.domain   = "com.revsdk";
         error.userInfo = std::map <std::string, std::string>();
         error.userInfo[errorDescriptionKey()] = "URL not supported";
+        
+        Log::warning(kLogTagSTDRequest, "StandardConnection:: URL is not supported, return");
+        
         aDelegate->connectionDidFailWithError(oAnchor, error);
         return;
     }
@@ -75,15 +78,15 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
         Log::error(kLogTagSTDRequest,  "Request host set to %s", [kRSRevRedirectHost UTF8String]);
     }
 
-//    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
-    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
-                                                                                    delegate:customDelegate
-                                                                               delegateQueue:nil];
-    
-    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
-    [task resume];
+    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
+//    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    
+//    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
+//                                                                                    delegate:customDelegate
+//                                                                               delegateQueue:nil];
+//    
+//    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
+//    [task resume];
     
     oAnchor->onStart();
 }
@@ -98,6 +101,9 @@ void StandardConnection::didReceiveData(void* aData)
     NSData* data = (__bridge NSData*)aData;
     addReceivedBytesCount([data length]);
     Data rsData = rs::dataFromNSData(data);
+    
+    Log::info(kLogTagSTDStandardConnection,  "Connection recieved data, length = %d", rsData.length());
+    
     mConnectionDelegate->connectionDidReceiveData(mWeakThis.lock(), rsData);
 }
 
@@ -105,13 +111,15 @@ void StandardConnection::didReceiveResponse(void* aResponse)
 {
     NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
     mResponse                   = responseFromHTTPURLResponse(response);
+    
+    Log::info(kLogTagSTDStandardConnection,  "Connection recieved response, code = %d",[response statusCode]);
+    
     mConnectionDelegate->connectionDidReceiveResponse(mWeakThis.lock(), mResponse);
 }
 
 void StandardConnection::didCompleteWithError(void* aError)
 {
     onEnd();
-    
     
     NSURLRequest* request   = URLRequestFromRequest(mCurrentRequest);
     const BOOL usingRevHost = [request.URL.host isEqualToString:kRSRevRedirectHost];
@@ -126,6 +134,9 @@ void StandardConnection::didCompleteWithError(void* aError)
         NSError* error = (__bridge NSError*)aError;
         
         Error rsError = errorFromNSError(error);
+        
+        Log::warning(kLogTagSTDStandardConnection,  "Connection failed with an error, code = %d",rsError.code);
+        
         mConnectionDelegate->connectionDidFailWithError(mWeakThis.lock(), rsError);
         Model::instance()->debug_usageTracker()->
         trackRequestFailed(usingRevHost, mBytesReceived, rsError);

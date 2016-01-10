@@ -21,12 +21,6 @@
 
 namespace rs
 {
-    const int kRSLogKey_LastMile = 10;
-    const int kRSLogKey_Configuration = 11;
-    const int kRSLogKey_StandardRedirects = 12;
-    const int kRSLogKey_TestApp = 15;
-    const int kRSLogKey_ProtocolAvailability = 16;
-    
     // RANGES
     static const int kLogTagSDKMIN      = 1;
     static const int kLogTagSDKMAX      = 19;
@@ -38,10 +32,16 @@ namespace rs
     static const int kLogTagQUICMAX     = 29;
 
     // SDK
-    static const int kLogTagSDKStats = kLogTagSDKMIN + 0;
+    static const int kLogTagSDKStats             = kLogTagSDKMIN + 0;
+    static const int kLogTagSDKLastMile          = kLogTagSDKStats + 1;
+    static const int kLogTagSDKConfiguration     = kLogTagSDKStats + 2;
+    static const int kLogTagProtocolAvailability = kLogTagSDKStats + 3;
+    static const int kLogTagSDKInerception       = kLogTagSDKStats + 4;
 
     // STD
-    static const int kLogTagSTDRequest           = kLogTagSTDMIN + 0;
+    static const int kLogTagSTDRequest            = kLogTagSTDMIN + 0;
+    static const int kLogTagSTDStandardRedirects  = kLogTagSTDMIN + 1;
+    static const int kLogTagSTDStandardConnection = kLogTagSTDMIN + 2;
 
     // QUIC
     static const int kLogTagQUICRequest           = kLogTagQUICMIN + 0;

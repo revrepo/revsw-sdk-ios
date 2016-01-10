@@ -20,12 +20,12 @@ using namespace rs;
 ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
 {
     auto vec = data_storage::restoreAvailableProtocols();
-    mAvailableProtocols = vec;
+    mAvailableProtocols = vec; 
     
     ProtocolFailureMonitor::subscribeOnProtocolFailed(ProtocolFailureMonitor::kSubscriberKey_Selector, [this](const std::string& aFailedProtocol){
         std::lock_guard<std::mutex> lockGuard(mLock);
         
-        Log::info(kRSLogKey_LastMile, "Last mile protocol testing...");
+        Log::info(kLogTagSDKLastMile, "Last mile protocol testing...");
         if (mMonitoringURL != "")
         {
             mTester.runTests(mMonitoringURL, aFailedProtocol, [this] (std::vector<AvailabilityTestResult> aResults){
@@ -33,21 +33,11 @@ ProtocolSelector::ProtocolSelector() : mEventsHandler(this)
             });
         }
     });
-    
-//    std::string toString = "Restored protocols:: ";
-//    
-//    for (auto& it: vec)
-//    {
-//        toString += it + ", ";
-//    }
-//    
-//    Log::info(kRSLogKey_LastMile, "ProtocolSelector was just created.");
-//    Log::info(kRSLogKey_LastMile, toString.c_str());
 }
 
 void ProtocolSelector::refreshTestInfo()
 {
-    Log::info(kRSLogKey_LastMile, "Last mile protocol testing...");
+    Log::info(kLogTagSDKLastMile, "Last mile protocol testing...");
     if (mMonitoringURL != "")
     {
         mTester.runTests(mMonitoringURL, [this] (std::vector<AvailabilityTestResult> aResults){
@@ -78,7 +68,7 @@ void ProtocolSelector::handleTestResults(std::vector<AvailabilityTestResult> aRe
     {
         toString += it + ", ";
     }
-    Log::info(kRSLogKey_LastMile, toString.c_str());
+    Log::info(kLogTagSDKLastMile, toString.c_str());
     
     sortProtocols(confProtos);
 }
@@ -107,27 +97,27 @@ void ProtocolSelector::saveAvailable()
 void ProtocolSelector::onCelluarStandardChanged()
 {
     ProtocolFailureMonitor::clear();
-    Log::info(kRSLogKey_LastMile, "ProtocolSelector:: networks state changed");
+    Log::info(kLogTagSDKLastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
 
 void ProtocolSelector::onNetworkTechnologyChanged()
 {
     ProtocolFailureMonitor::clear();
-    Log::info(kRSLogKey_LastMile, "ProtocolSelector:: networks state changed");
+    Log::info(kLogTagSDKLastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
 
 void ProtocolSelector::onSSIDChanged()
 {
     ProtocolFailureMonitor::clear();
-    Log::info(kRSLogKey_LastMile, "ProtocolSelector:: networks state changed");
+    Log::info(kLogTagSDKLastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
 
 void ProtocolSelector::onFirstInit()
 {
-    Log::info(kRSLogKey_LastMile, "ProtocolSelector:: First init");
+    Log::info(kLogTagSDKLastMile, "ProtocolSelector:: First init");
     this->refreshTestInfo();
 }
 
@@ -158,7 +148,7 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
         {
             convertIDToPropocol(aProtocolNamesOrdered.front());
             
-            Log::info(kRSLogKey_LastMile,
+            Log::info(kLogTagSDKLastMile,
                       std::string("ProtocolSelector:: picked protocol : : " + aProtocolNamesOrdered.front()).c_str());
             //save
             saveAvailable();
@@ -167,7 +157,7 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
         {
             mBestProtocol = nullptr;
             
-            Log::warning(kRSLogKey_LastMile,
+            Log::warning(kLogTagSDKLastMile,
                          "None of allowed protocols are available");
         }
     }
@@ -175,7 +165,7 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
     {
         mBestProtocol = nullptr;
         
-        Log::warning(kRSLogKey_LastMile,
+        Log::warning(kLogTagSDKLastMile,
                      "None of allowed protocols found in configuration");
     }
 }
@@ -186,11 +176,11 @@ std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (mBestProtocol/* && mAvailableProtocols.size()*/)
     {
-        Log::info(1000, (mBestProtocol->protocolName() + " Protcol name is being used").c_str());
+        Log::info(kLogTagSDKLastMile, (mBestProtocol->protocolName() + " Protcol name is being used").c_str());
         
         return mBestProtocol->clone();
     }
-    Log::error(kRSLogKey_LastMile, "Asking for best protocol when none of them are available");
+    Log::error(kLogTagSDKLastMile, "Asking for best protocol when none of them are available");
     
     return std::make_shared<StandardProtocol>();
 }
@@ -211,7 +201,7 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
             std::lock_guard<std::mutex> lockGuard(mLock);
             this->convertIDToPropocol(aConf->initialTransportProtocol);
             
-            Log::info(kRSLogKey_LastMile,
+            Log::info(kLogTagSDKLastMile,
                       std::string("ProtocolSelector:: picked initial protocol : " + aConf->initialTransportProtocol).c_str());
             
             mAvailableProtocols.push_back(aConf->initialTransportProtocol);
@@ -221,20 +211,20 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
     }
     else
     {
-        std::string toString = "ProtocolSelector:: finished testing. Available protocols:: ";
+        std::string toString = "ProtocolSelector:: Configuration applied. Available protocols:: ";
         
         for (auto& it: mAvailableProtocols)
         {
             toString += it + ", ";
         }
-        Log::info(kRSLogKey_LastMile, toString.c_str());
+        Log::info(kLogTagSDKLastMile, toString.c_str());
         toString = "ProtocolSelector:: configuration applied. Allowed protocols:: ";
         
         for (auto& it: mAvailableProtocols)
         {
             toString += it + ", ";
         }
-        Log::info(kRSLogKey_LastMile, toString.c_str());
+        Log::info(kLogTagSDKLastMile, toString.c_str());
         
         this->sortProtocols(aConf->allowedProtocols);
     }

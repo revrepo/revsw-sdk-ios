@@ -61,8 +61,7 @@ mNativeTelephonyHandle(nullptr)
                                                      queue:nil
                                                 usingBlock:^(NSNotification *note)
     {
-        mDelegate->onCelluarStandardChanged();
-        NSLog(@"New Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
+        mDelegate->onCelluarStandardChanged(); 
     }];
     
     mSSID = stdStringFromNSString([RSSystemInfo ssid]);

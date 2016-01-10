@@ -358,6 +358,48 @@
 			path = Debug;
 			sourceTree = "<group>";
 		};
+		11C90BBA1C4276670002DCA1 /* quic */ = {
+			isa = PBXGroup;
+			children = (
+				11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */,
+				11F24B3E1C3C57E500DABAE5 /* RSUDPSocket.cpp */,
+				11F24B491C3D695D00DABAE5 /* RSUDPService.h */,
+				11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */,
+				11C9622B1C2D7A9300CDE34D /* QUICHeaders.h */,
+				11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */,
+				11C962281C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h */,
+				119145311C33D2D800B91C6E /* QUICThread.h */,
+				119145301C33D2D800B91C6E /* QUICThread.mm */,
+				11C962231C2D779100CDE34D /* RSNativeUDPSocketWrapper.h */,
+				11C962241C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm */,
+				11C962201C2D54CE00CDE34D /* QUICHelpers.h */,
+				11C9621F1C2D54CE00CDE34D /* QUICHelpers.mm */,
+				11C9622E1C2D820300CDE34D /* QUICSessionDelegates.h */,
+				11C9621C1C2D54C000CDE34D /* QUICSession.h */,
+				11C9621B1C2D54C000CDE34D /* QUICSession.mm */,
+				5B54C3471BFB7B8700217971 /* QUICConnection.hpp */,
+				5B54C3461BFB7B8700217971 /* QUICConnection.mm */,
+				11F24B331C3C06B900DABAE5 /* QUICDataStream.h */,
+				11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */,
+				11F24B371C3C09C100DABAE5 /* QUICClientSession.h */,
+				11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */,
+			);
+			name = quic;
+			sourceTree = "<group>";
+		};
+		11C90BBB1C4276820002DCA1 /* std */ = {
+			isa = PBXGroup;
+			children = (
+				1109F3E21C41580E00ABB160 /* RSStandardSession.h */,
+				1109F3E31C41580E00ABB160 /* RSStandardSession.mm */,
+				5B54C3431BFB7AE200217971 /* StandardConnection.hpp */,
+				5B54C3421BFB7AE200217971 /* StandardConnection.mm */,
+				6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */,
+				6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */,
+			);
+			name = std;
+			sourceTree = "<group>";
+		};
 		11C95FD61C2D462200CDE34D /* quic */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,40 +616,14 @@
 		5BDA28241BFA31AD003F55F6 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
-				11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */,
-				11F24B3E1C3C57E500DABAE5 /* RSUDPSocket.cpp */,
-				11F24B491C3D695D00DABAE5 /* RSUDPService.h */,
-				11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */,
+				11C90BBB1C4276820002DCA1 /* std */,
+				11C90BBA1C4276670002DCA1 /* quic */,
 				5BDA28261BFA31C9003F55F6 /* ConnectionProxy.h */,
 				5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */,
 				5B54C3201BFB598700217971 /* Request.hpp */,
 				5B54C31F1BFB598700217971 /* Request.cpp */,
 				5B54C33E1BFB7A9200217971 /* Connection.cpp */,
 				5B54C33F1BFB7A9200217971 /* Connection.hpp */,
-				1109F3E21C41580E00ABB160 /* RSStandardSession.h */,
-				1109F3E31C41580E00ABB160 /* RSStandardSession.mm */,
-				5B54C3431BFB7AE200217971 /* StandardConnection.hpp */,
-				5B54C3421BFB7AE200217971 /* StandardConnection.mm */,
-				6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */,
-				6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */,
-				11C9622B1C2D7A9300CDE34D /* QUICHeaders.h */,
-				11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */,
-				11C962281C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h */,
-				119145311C33D2D800B91C6E /* QUICThread.h */,
-				119145301C33D2D800B91C6E /* QUICThread.mm */,
-				11C962231C2D779100CDE34D /* RSNativeUDPSocketWrapper.h */,
-				11C962241C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm */,
-				11C962201C2D54CE00CDE34D /* QUICHelpers.h */,
-				11C9621F1C2D54CE00CDE34D /* QUICHelpers.mm */,
-				11C9622E1C2D820300CDE34D /* QUICSessionDelegates.h */,
-				11C9621C1C2D54C000CDE34D /* QUICSession.h */,
-				11C9621B1C2D54C000CDE34D /* QUICSession.mm */,
-				5B54C3471BFB7B8700217971 /* QUICConnection.hpp */,
-				5B54C3461BFB7B8700217971 /* QUICConnection.mm */,
-				11F24B331C3C06B900DABAE5 /* QUICDataStream.h */,
-				11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */,
-				11F24B371C3C09C100DABAE5 /* QUICClientSession.h */,
-				11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */,
 				5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */,
 				5B2F4BCE1BFDBAF8003DCB27 /* Response.hpp */,
 				5B2F4BD11BFDD20B003DCB27 /* Data.cpp */,

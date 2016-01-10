@@ -38,16 +38,37 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     Configuration configuration = data_storage::configuration();
     mActiveConfiguration = std::make_shared<Configuration>(configuration);
     
+    if (!isTimedOut())
+    {
+        Log::info(kLogTagSDKConfiguration, "Restored config.");
+        aDelegate->applyConfiguration(mActiveConfiguration);
+    }
+    
     mStaleConfiguration =std::make_shared<Configuration>();
     mStaleConfiguration->operationMode = RSOperationModeInner::kRSOperationModeInnerOff;
     
     Timer::scheduleTimer(mConfigurationRefreshTimer, configuration.refreshInterval, [this]{
-        Log::info(kRSLogKey_Configuration, "Trying to load configuration...");
+        Log::info(kLogTagSDKConfiguration, "Trying to load configuration...");
         this->loadConfiguration();
     });
     
     
-    Log::info(kRSLogKey_Configuration, "ConfigurationService was just created.");
+    Log::info(kLogTagSDKConfiguration, "ConfigurationService was just created.");
+}
+
+bool ConfigurationService::isTimedOut() const
+{
+    typedef std::chrono::seconds tSec;
+    typedef std::chrono::system_clock tSclock;
+    auto last = mLastUpdated.load();
+    
+    auto span = std::chrono::duration_cast<tSec>(tSclock::now() - last);
+    
+    int staleTimeout = mActiveConfiguration->staleTimeout;
+    int64_t timeSincleLastUPD = span.count();
+    
+    
+    return (staleTimeout < timeSincleLastUPD);
 }
 
 ConfigurationService::~ConfigurationService()
@@ -83,7 +104,7 @@ std::shared_ptr<const Configuration> ConfigurationService::getActive()
     {
         if (!mStaleOnFlag)
         {
-            Log::info(kRSLogKey_Configuration, "Configuration is stale or no protocols available, OFF MODE");
+            Log::info(kLogTagSDKConfiguration, "ConfigurationService::getActive() stale or no protocols available, OFF MODE");
             mStaleOnFlag = true;
             
             if (mStaleCallback)
@@ -111,7 +132,7 @@ void ConfigurationService::loadConfiguration()
             if (isValid)
             {
                 mStaleOnFlag = false;
-                Log::info(kRSLogKey_Configuration, "ConfigurationService: new conf received, valid");
+                Log::info(kLogTagSDKConfiguration, "ConfigurationService: new conf received, valid");
                 
                 Configuration configuration = processConfigurationData(aData);
                 
@@ -128,6 +149,7 @@ void ConfigurationService::loadConfiguration()
                     mDelegate->scheduleStatsReporting();
                     
                     refreshInterval = mActiveConfiguration->refreshInterval;
+                    data_storage::saveConfiguration(configuration);
                 }
                 else
                 {
@@ -148,12 +170,12 @@ void ConfigurationService::loadConfiguration()
             }
             else
             {
-                Log::error(kRSLogKey_Configuration, "Failed to load configuration.");
+                Log::error(kLogTagSDKConfiguration, "Failed to load configuration.");
             }
         }
         else
         {
-            Log::error(kRSLogKey_Configuration, "Failed to load configuration.");
+            Log::error(kLogTagSDKConfiguration, "Failed to load configuration.");
         }
     };
     
@@ -161,19 +183,10 @@ void ConfigurationService::loadConfiguration()
 }
 
 bool ConfigurationService::isStale() const
-{
-    typedef std::chrono::seconds tSec;
-    typedef std::chrono::system_clock tSclock;
-    auto last = mLastUpdated.load();
-    
-    auto span = std::chrono::duration_cast<tSec>(tSclock::now() - last);
-    
-    int staleTimeout = mActiveConfiguration->staleTimeout;
-    int64_t timeSincleLastUPD = span.count();
-    
+{ 
     bool externalFlag = cbAdditionalStaleCondition();
     
-    return (staleTimeout < timeSincleLastUPD) || externalFlag;
+    return isTimedOut() || externalFlag;
 }
 
 void ConfigurationService::setOperationMode(RSOperationModeInner aMode)
@@ -185,7 +198,7 @@ void ConfigurationService::setOperationMode(RSOperationModeInner aMode)
     else
     {
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        Log::warning(kRSLogKey_Configuration, "Can't change operation mode - stale conf is immutable.");
+        Log::warning(kLogTagSDKConfiguration, "Can't change operation mode - stale conf is immutable.");
 #endif
     }
 }
