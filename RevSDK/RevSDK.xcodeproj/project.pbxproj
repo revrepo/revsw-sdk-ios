@@ -132,8 +132,6 @@
 		6D1F860E1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6D1F860C1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp */; };
 		6D1F86111C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D1F860F1C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm */; };
 		6D1F86121C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6D1F86101C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp */; };
-		6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */; };
-		6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */; };
 		6D45447D1C32B1CA0020224C /* ReportTransaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D45447C1C32B1CA0020224C /* ReportTransaction.cpp */; };
 		6D4544801C33C5160020224C /* ConfigurationService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6D45447E1C33C5160020224C /* ConfigurationService.cpp */; };
 		6D4544811C33C5160020224C /* ConfigurationService.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D45447F1C33C5160020224C /* ConfigurationService.h */; };
@@ -290,8 +288,6 @@
 		6D1F860C1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = NativeNetworkEventsHandler.hpp; path = RevSDK/Networking/NativeNetworkEventsHandler.hpp; sourceTree = SOURCE_ROOT; };
 		6D1F860F1C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ProtocolAvailabilityTester.mm; sourceTree = "<group>"; };
 		6D1F86101C3A8B0200E48AC9 /* ProtocolAvailabilityTester.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ProtocolAvailabilityTester.hpp; sourceTree = "<group>"; };
-		6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLSessionDelegate.mm; sourceTree = "<group>"; };
-		6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLSessionDelegate.h; sourceTree = "<group>"; };
 		6D45447B1C32A2070020224C /* ReportTransaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReportTransaction.h; sourceTree = "<group>"; };
 		6D45447C1C32B1CA0020224C /* ReportTransaction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ReportTransaction.cpp; sourceTree = "<group>"; };
 		6D45447E1C33C5160020224C /* ConfigurationService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConfigurationService.cpp; sourceTree = "<group>"; };
@@ -394,8 +390,6 @@
 				1109F3E31C41580E00ABB160 /* RSStandardSession.mm */,
 				5B54C3431BFB7AE200217971 /* StandardConnection.hpp */,
 				5B54C3421BFB7AE200217971 /* StandardConnection.mm */,
-				6D379EDA1C2AD10200AAE2B3 /* RSURLSessionDelegate.h */,
-				6D379ED81C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm */,
 			);
 			name = std;
 			sourceTree = "<group>";
@@ -694,7 +688,6 @@
 				119145331C33D2D800B91C6E /* QUICThread.h in Headers */,
 				5B54C3221BFB598700217971 /* Request.hpp in Headers */,
 				5B54C3391BFB70C100217971 /* StandardProtocol.hpp in Headers */,
-				6D379EDB1C2AD10200AAE2B3 /* RSURLSessionDelegate.h in Headers */,
 				5B2035A01C3404DC00A28C01 /* RSIPUtils.h in Headers */,
 				5B54C3301BFB700C00217971 /* Model.hpp in Headers */,
 				5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */,
@@ -907,7 +900,6 @@
 				6D1F86111C3A8B0200E48AC9 /* ProtocolAvailabilityTester.mm in Sources */,
 				5B3096EF1BFA0CD30045024C /* RSURLConnection.mm in Sources */,
 				6D8BD9A71C3FC22A008353DB /* TestConfigurationService.cpp in Sources */,
-				6D379ED91C2AD0F100AAE2B3 /* RSURLSessionDelegate.mm in Sources */,
 				5B20359B1C33FF7000A28C01 /* GCDAsyncUdpSocket.m in Sources */,
 				6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */,
 				5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */,

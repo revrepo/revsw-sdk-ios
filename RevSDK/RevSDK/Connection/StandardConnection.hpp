@@ -35,6 +35,7 @@ namespace rs
         virtual void didCompleteWithError(void* );
         
     private:
+       
         
        std::shared_ptr<Request> mCurrentRequest;
        std::shared_ptr<Response> mResponse;

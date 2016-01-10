@@ -19,7 +19,6 @@
 #include "Model.hpp"
 #include <mutex>
 #include "DebugUsageTracker.hpp"
-#import "RSURLSessionDelegate.h"
 #import "RSStandardSession.h"
 
 @interface RSURLSessionDataDelegate : NSObject<NSURLSessionDataDelegate>
@@ -66,9 +65,6 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     
     oAnchor->addSentBytesCount(request.HTTPBody.length);
     [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
-
-    RSURLSessionDelegate* customDelegate = [[RSURLSessionDelegate alloc] init];
-    [customDelegate setConnection:oAnchor];
     
     NSDictionary* headers = mutableRequest.allHTTPHeaderFields;
     NSString* XRevHostHeader = headers[kRSRevHostHeader];
