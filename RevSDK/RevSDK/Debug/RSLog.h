@@ -34,13 +34,14 @@ namespace rs
     // SDK
     static const int kLogTagSDKStats             = kLogTagSDKMIN + 0;
     static const int kLogTagSDKLastMile          = kLogTagSDKStats + 1;
-    static const int kLogTagConfiguration        = kLogTagSDKStats + 2;
+    static const int kLogTagSDKConfiguration     = kLogTagSDKStats + 2;
     static const int kLogTagProtocolAvailability = kLogTagSDKStats + 3;
+    static const int kLogTagSDKInerception       = kLogTagSDKStats + 4;
 
     // STD
-    static const int kLogTagSTDRequest           = kLogTagSTDMIN + 0;
-    static const int kLogTagStandardRedirects    = kLogTagSTDMIN + 1;
-    static const int kLogTagStandardConnection    = kLogTagSTDMIN + 2;
+    static const int kLogTagSTDRequest            = kLogTagSTDMIN + 0;
+    static const int kLogTagSTDStandardRedirects  = kLogTagSTDMIN + 1;
+    static const int kLogTagSTDStandardConnection = kLogTagSTDMIN + 2;
 
     // QUIC
     static const int kLogTagQUICRequest           = kLogTagQUICMIN + 0;

@@ -35,7 +35,8 @@
     //BOOL isEdgeFlag = connection->edgeTransport() == rs::standardProtocolName();
     //NSLog(@"Redirect with code %d", code);
     
-    rs::Log::info(12, std::string("Redirect with code " + std::to_string(code)).c_str());
+    rs::Log::info(rs::kLogTagSTDStandardRedirects,
+                  std::string("Redirect with code " + std::to_string(code)).c_str());
     
     if (!request)
     {

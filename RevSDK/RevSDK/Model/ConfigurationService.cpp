@@ -40,7 +40,7 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     
     if (!isTimedOut())
     {
-        Log::info(kLogTagConfiguration, "Restored config.");
+        Log::info(kLogTagSDKConfiguration, "Restored config.");
         aDelegate->applyConfiguration(mActiveConfiguration);
     }
     
@@ -48,12 +48,12 @@ ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std:
     mStaleConfiguration->operationMode = RSOperationModeInner::kRSOperationModeInnerOff;
     
     Timer::scheduleTimer(mConfigurationRefreshTimer, configuration.refreshInterval, [this]{
-        Log::info(kLogTagConfiguration, "Trying to load configuration...");
+        Log::info(kLogTagSDKConfiguration, "Trying to load configuration...");
         this->loadConfiguration();
     });
     
     
-    Log::info(kLogTagConfiguration, "ConfigurationService was just created.");
+    Log::info(kLogTagSDKConfiguration, "ConfigurationService was just created.");
 }
 
 bool ConfigurationService::isTimedOut() const
@@ -104,7 +104,7 @@ std::shared_ptr<const Configuration> ConfigurationService::getActive()
     {
         if (!mStaleOnFlag)
         {
-            Log::info(kLogTagConfiguration, "ConfigurationService::getActive() stale or no protocols available, OFF MODE");
+            Log::info(kLogTagSDKConfiguration, "ConfigurationService::getActive() stale or no protocols available, OFF MODE");
             mStaleOnFlag = true;
             
             if (mStaleCallback)
@@ -132,7 +132,7 @@ void ConfigurationService::loadConfiguration()
             if (isValid)
             {
                 mStaleOnFlag = false;
-                Log::info(kLogTagConfiguration, "ConfigurationService: new conf received, valid");
+                Log::info(kLogTagSDKConfiguration, "ConfigurationService: new conf received, valid");
                 
                 Configuration configuration = processConfigurationData(aData);
                 
@@ -170,12 +170,12 @@ void ConfigurationService::loadConfiguration()
             }
             else
             {
-                Log::error(kLogTagConfiguration, "Failed to load configuration.");
+                Log::error(kLogTagSDKConfiguration, "Failed to load configuration.");
             }
         }
         else
         {
-            Log::error(kLogTagConfiguration, "Failed to load configuration.");
+            Log::error(kLogTagSDKConfiguration, "Failed to load configuration.");
         }
     };
     
@@ -198,7 +198,7 @@ void ConfigurationService::setOperationMode(RSOperationModeInner aMode)
     else
     {
 #ifdef RS_ENABLE_DEBUG_LOGGING
-        Log::warning(kLogTagConfiguration, "Can't change operation mode - stale conf is immutable.");
+        Log::warning(kLogTagSDKConfiguration, "Can't change operation mode - stale conf is immutable.");
 #endif
     }
 }

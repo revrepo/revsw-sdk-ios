@@ -152,7 +152,7 @@ namespace rs
     {
         if (aConfiguration.get() == nullptr)
         {
-            Log::error(kLogTagConfiguration, "Applying null(empty) configuration");
+            Log::error(kLogTagSDKConfiguration, "Applying null(empty) configuration");
             return;
         }
         //scope
@@ -388,7 +388,7 @@ namespace rs
     void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
     {
         mConfService = std::unique_ptr<IConfigurationService>(aNewService);
-        Log::info(kLogTagConfiguration, "Replacing configuration service on mock");
+        Log::info(kLogTagSDKConfiguration, "Replacing configuration service on mock");
     }
     
     
@@ -403,7 +403,7 @@ namespace rs
         
         mConfService = std::unique_ptr<ConfigurationService>(conf);
         mConfService->init();
-        Log::info(kLogTagConfiguration, "Recovering standard configuration service");
+        Log::info(kLogTagSDKConfiguration, "Recovering standard configuration service");
     }
     
     std::shared_ptr<const Configuration> Model::getActiveConfiguration()const

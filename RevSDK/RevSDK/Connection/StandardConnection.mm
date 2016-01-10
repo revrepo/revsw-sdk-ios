@@ -102,7 +102,7 @@ void StandardConnection::didReceiveData(void* aData)
     addReceivedBytesCount([data length]);
     Data rsData = rs::dataFromNSData(data);
     
-    Log::info(kLogTagStandardConnection,  "Connection recieved data, length = %d", rsData.length());
+    Log::info(kLogTagSTDStandardConnection,  "Connection recieved data, length = %d", rsData.length());
     
     mConnectionDelegate->connectionDidReceiveData(mWeakThis.lock(), rsData);
 }
@@ -112,7 +112,7 @@ void StandardConnection::didReceiveResponse(void* aResponse)
     NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
     mResponse                   = responseFromHTTPURLResponse(response);
     
-    Log::info(kLogTagStandardConnection,  "Connection recieved response, code = %d",[response statusCode]);
+    Log::info(kLogTagSTDStandardConnection,  "Connection recieved response, code = %d",[response statusCode]);
     
     mConnectionDelegate->connectionDidReceiveResponse(mWeakThis.lock(), mResponse);
 }
@@ -135,7 +135,7 @@ void StandardConnection::didCompleteWithError(void* aError)
         
         Error rsError = errorFromNSError(error);
         
-        Log::warning(kLogTagStandardConnection,  "Connection failed with an error, code = %d",rsError.code);
+        Log::warning(kLogTagSTDStandardConnection,  "Connection failed with an error, code = %d",rsError.code);
         
         mConnectionDelegate->connectionDidFailWithError(mWeakThis.lock(), rsError);
         Model::instance()->debug_usageTracker()->
