@@ -152,6 +152,7 @@ namespace rs
     {
         if (aConfiguration.get() == nullptr)
         {
+            Log::error(kLogTagConfiguration, "Applying null(empty) configuration");
             return;
         }
         //scope
@@ -188,18 +189,21 @@ namespace rs
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
+            Log::info(kLogTagSDKStats, "Sheduling stats reporting timer");
             Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
                 this->reportStats();
             });
         }
         else
         {
+            Log::warning(kLogTagSDKStats, "DISABLING stats reporting timer");
             Timer::disableTimer(mStatsReportingTimer);
         }
     }
     
     void Model::reportStats()
     {
+        Log::info(kLogTagSDKStats, "Reporting stats...");
         bool hasDataToSend = true;
         do
         {
@@ -211,6 +215,8 @@ namespace rs
                 int requestsCount = this->mConfService->getActive()->statsReportingMaxRequests;
                 
                 assert(requestsCount);
+                Log::info(kLogTagSDKStats,
+                          ("Paking reports, max at once :: " + std::to_string(requestsCount)).c_str());
                 
                 statsData = mStatsHandler->createSendTransaction(requestsCount);
 #else
@@ -221,11 +227,9 @@ namespace rs
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
                 std::lock_guard<std::mutex> lockGuard(mLock);
-    #ifdef RS_ENABLE_DEBUG_LOGGING
-                std::cout << "Stats reported" << std::endl;
-    #endif
                 if (aError.isNoError())
                 {
+                    Log::info(kLogTagSDKStats, "Stats reported with success");
                     if (statsData.cbOnSuccess)
                     {
                         statsData.cbOnSuccess();
@@ -233,6 +237,7 @@ namespace rs
                 }
                 else
                 {
+                    Log::error(kLogTagSDKStats, "Stats reported with an error");
                     if (statsData.cbOnFail)
                     {
                         statsData.cbOnFail();
@@ -383,7 +388,7 @@ namespace rs
     void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
     {
         mConfService = std::unique_ptr<IConfigurationService>(aNewService);
-        Log::info(kRSLogKey_Configuration, "Replacing configuration service on mock");
+        Log::info(kLogTagConfiguration, "Replacing configuration service on mock");
     }
     
     
@@ -398,7 +403,7 @@ namespace rs
         
         mConfService = std::unique_ptr<ConfigurationService>(conf);
         mConfService->init();
-        Log::info(kRSLogKey_Configuration, "Recovering standard configuration service");
+        Log::info(kLogTagConfiguration, "Recovering standard configuration service");
     }
     
     std::shared_ptr<const Configuration> Model::getActiveConfiguration()const

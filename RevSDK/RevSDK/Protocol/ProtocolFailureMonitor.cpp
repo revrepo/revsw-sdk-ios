@@ -94,12 +94,12 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
     
     message += std::to_string((int)(failPercent * 100));
     
-    Log::warning(kRSLogKey_ProtocolAvailability, message.c_str());
+    Log::warning(kLogTagProtocolAvailability, message.c_str());
 #endif
     
     if (failPercent > mInstanse->kMinFailPercentToSwitchProto)
     {
-        Log::error(kRSLogKey_ProtocolAvailability, "Too many failed requests using current protocol, trying to switch.");
+        Log::error(kLogTagProtocolAvailability, "Too many failed requests using current protocol, trying to switch.");
         for (auto it: cbOnProtocolFailed)
         {
             it.second(aProtocolID);
@@ -116,6 +116,7 @@ void ProtocolFailureMonitor::logConnection(const std::string &aProtocolID)
 
 void ProtocolFailureMonitor::clear()
 {
+    Log::warning(kLogTagProtocolAvailability, "Clearing requests failure records.");
     mInstanse->mReportMap[standardProtocolName()].clear();
     mInstanse->mReportMap[quicProtocolName()].clear();
 }
