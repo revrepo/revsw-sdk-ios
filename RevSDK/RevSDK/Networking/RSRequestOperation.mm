@@ -55,22 +55,6 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     NSString* bodyString = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
     NSLog(@"BODY %@", bodyString);
     
-    if ([URL.absoluteString rangeOfString:@"stats-api.revsw.net"].location != NSNotFound)
-    {
-        static BOOL sentOnce = NO;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (!sentOnce)
-            {
-                sentOnce = YES;
-                [[[UIAlertView alloc] initWithTitle:@"Stats"
-                                           message:@"sent..."
-                                          delegate:nil
-                                 cancelButtonTitle:@"ok"
-                                 otherButtonTitles:nil] show];
-            }
-        });
-    }
-    
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
