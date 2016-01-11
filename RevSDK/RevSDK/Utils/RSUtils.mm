@@ -503,7 +503,7 @@ namespace rs
                 dataDictionary[kRS_JKey_EdgeTransport]  = aDictionary[kRS_JKey_EdgeTransport];
                 
                 NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
-                dataDictionary[kRS_JKey_RevCache] = revCache ? revCache : @"_";
+                dataDictionary[kRS_JKey_RevCache] = STRVALUE_OR_DEFAULT(revCache);
             }
         }
         

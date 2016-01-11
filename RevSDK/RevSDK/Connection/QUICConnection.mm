@@ -17,6 +17,7 @@
 #include "Error.hpp"
 #include "Utils.hpp"
 #include "RSLog.h"
+#include "RSUtils.h"
 
 using namespace rs;
 using namespace net;
@@ -118,7 +119,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
         dump += i.first + ": " + i.second + "\n";
     
     Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
-
+    onStart();
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
 
@@ -196,6 +197,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 headers[h.first] = h.second;
         }
         std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
+        mResponse = response;
         mDelegate->connectionDidReceiveResponse(mWeakThis.lock(), response);
     }
 }
@@ -211,6 +213,9 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicD
     dump += "data-len = " + intToStr((int)aLen);
     Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
 
+    
+    addReceivedBytesCount(aLen);
+    
     if (mRedirect.get() != nullptr)
         return;
     
@@ -223,6 +228,8 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicD
 
 void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataStream* aStream)
 {
+    onEnd();
+    
 //    if (mParent != nullptr)
 //    {
 //        if (aStream == mRedirectedStream)
@@ -240,6 +247,15 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataSt
 
     if (mDelegate != nullptr)
     {
+        if (Model::instance()->shouldCollectRequestsData())
+        {
+            NSURLRequest* request           = URLRequestFromRequest(mRequest);
+            NSHTTPURLResponse* httpResponse = NSHTTPURLResponseFromResponse(mResponse);
+            NSString* originalScheme        = NSStringFromStdString(mRequest->originalScheme());
+            Data requestData                = dataFromRequestAndResponse(request, httpResponse, mWeakThis.lock().get(), originalScheme, YES);
+            Model::instance()->addRequestData(requestData);
+        }
+        
         mDelegate->connectionDidFinish(mWeakThis.lock());
     }
     mAnchor0.reset();
