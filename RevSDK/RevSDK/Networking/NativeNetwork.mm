@@ -76,18 +76,26 @@ namespace rs
     {
         NSURLRequest* req = [NSURLRequest requestWithURL:[NSURL URLWithString:NSStringFromStdString(aURL)]];
         
-        NSMutableURLRequest* mreq = [req mutableCopy];
+        NSMutableURLRequest* mutableReq = [req mutableCopy];
         
-        [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mreq];
+        [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableReq];
         
         if (aProcess)
         {
             bool flag = aProto->protocolName() == standardProtocolName();
-            req = [RSURLRequestProcessor proccessRequest:mreq isEdge:flag baseURL:nil];
+            req = [RSURLRequestProcessor proccessRequest:mutableReq isEdge:flag baseURL:nil];
+        }
+        else
+        {
+            req = mutableReq;
         }
         
-        auto request = requestFromURLRequest(mreq);
+        auto request = requestFromURLRequest(req);
         request->setOriginalScheme(rs::stdStringFromNSString(req.URL.scheme));
+        
+        std::string lg = rs::stdStringFromNSString([[req allHTTPHeaderFields] description]);
+        
+        Log::info(rs::kLogTagSDKLastMile, ("All http heades of request:: " + lg).c_str());
         
         return request;
     }
