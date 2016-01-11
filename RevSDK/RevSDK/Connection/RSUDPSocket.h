@@ -9,6 +9,7 @@
 #pragma once
 
 #include <string>
+#include "Error.hpp"
 
 namespace rs
 {
@@ -25,7 +26,7 @@ namespace rs
 
         bool connect();
         bool send(const void* aData, size_t aSize);
-        size_t recv(void* aData, size_t aSize, size_t aTimeoutMS = 0, bool* aTimoutFlag = nullptr);
+        size_t recv(void* aData, size_t aSize, size_t aTimeoutMS, bool& aTimeoutFlag, Error& aError);
         void close();
         
     private:

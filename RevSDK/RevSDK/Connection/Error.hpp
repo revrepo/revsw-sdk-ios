@@ -19,6 +19,9 @@ namespace rs
 {
     struct Error
     {
+        Error();
+        
+        void setDescription(std::string aDescription);
         long code;
         std::string domain;
         std::map<std::string, std::string> userInfo;

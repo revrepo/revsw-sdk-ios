@@ -11,12 +11,25 @@
 
 namespace rs
 {
+    Error::Error():
+        code(noErrorCode())
+    {
+        noErrorCode();
+    }
+
+    void Error::setDescription(std::string aDescription)
+    {
+        std::string key = errorDescriptionKey();
+        userInfo[key] = aDescription;
+    }
+    
     std::string Error::description() const
     {
         std::string key                       = errorDescriptionKey();
-        std::map<std::string, std::string> ui = userInfo;
-        std::string description               = ui[key];
-        return description;
+        std::map<std::string, std::string>::const_iterator w = userInfo.find(key);
+        if (w == userInfo.end())
+            return "";
+        return w->second;
     }
     
     Error Error::notError()

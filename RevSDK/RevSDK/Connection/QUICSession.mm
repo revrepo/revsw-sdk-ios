@@ -60,7 +60,11 @@ QUICSession* QUICSession::instance()
             
             s->setOnError([](UDPService* serv, int c, std::string d)
             {
-                mInstance->onQUICError();
+                Error error;
+                error.code = c;
+                error.domain = "revsdk.quic";
+                error.setDescription(d);
+                mInstance->onQUICError(error);
             });
             
             std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, mInstance, std::placeholders::_1);
@@ -112,7 +116,11 @@ void QUICSession::reconnect()
         
         s->setOnError([](UDPService* serv, int c, std::string d)
                       {
-                          mInstance->onQUICError();
+                          Error error;
+                          error.code = c;
+                          error.domain = "revsdk.quic";
+                          error.setDescription(d);
+                          mInstance->onQUICError(error);
                       });
         
         std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, mInstance, std::placeholders::_1);
@@ -121,8 +129,6 @@ void QUICSession::reconnect()
         mInstance->connect(serverId);
         mInstance->mConnecting = false;
     });
-
-
 }
 
 QUICSession::QUICSession():
@@ -319,7 +325,7 @@ void QUICSession::onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCod
     }
 }
 
-void QUICSession::onQUICStreamFailed(QUICDataStream* aStream)
+void QUICSession::onQUICStreamFailed(QUICDataStream* aStream, Error aError)
 {
     StreamDelegateMap::iterator w = mStreamDelegateMap.find(aStream);
     if (w == mStreamDelegateMap.end())
@@ -396,7 +402,7 @@ bool QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
     return true;
 }
 
-void QUICSession::onQUICError()
+void QUICSession::onQUICError(Error aError)
 {
     p_disconnect();
     std::vector<QUICDataStream*> streams;
@@ -404,7 +410,7 @@ void QUICSession::onQUICError()
         streams.push_back(i.first);
     
     for (auto& s : streams)
-        s->onSocketError();
+        s->onSocketError(aError);
 }
 
 void QUICSession::update(size_t aNowMS)

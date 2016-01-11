@@ -152,7 +152,7 @@ bool UDPSocket::send(const void* aData, size_t aSize)
     return ec == 0;
 }
 
-size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimoutFlag)
+size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool& aTimeoutFlag, Error& aError)
 {
     if (!valid())
         return 0;
@@ -173,6 +173,9 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
             Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
             mImpl->socket.close();
             mImpl->connected = false;
+            aError.code = ec.value();
+            aError.domain = "revsdk.quic.socket";
+            aError.setDescription(ec.message());
             res = 0;
         }
         
@@ -194,22 +197,22 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
         do mImpl->service.run_one(); while (ec == boost::asio::error::would_block);
         res = length;
         
-        if (aTimoutFlag != nullptr)
+        if (ec.value() == 89) // timeout code magic number
         {
-            if (ec.value() == 89) // timeout code magic number
-            {
-                *aTimoutFlag = true;
-            }
-            else if (ec)
-            {
-                Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
-                mImpl->socket.close();
-                mImpl->connected = false;
-            }
-            else
-            {
-                // no error
-            }
+            aTimeoutFlag = true;
+        }
+        else if (ec)
+        {
+            aError.code = ec.value();
+            aError.domain = "revsdk.quic.socket";
+            aError.setDescription(ec.message());
+            Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
+            mImpl->socket.close();
+            mImpl->connected = false;
+        }
+        else
+        {
+            // no error
         }
         
         if (res > 0)

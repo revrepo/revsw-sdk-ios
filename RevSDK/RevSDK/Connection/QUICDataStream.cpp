@@ -7,6 +7,8 @@
 //
 
 #include "QUICDataStream.h"
+#include "RSLog.h"
+#include "Utils.hpp"
 
 using namespace rs;
 
@@ -96,22 +98,22 @@ void QUICDataStream::update(size_t aNowMS)
         mFailed = true;
         mError.code = 0;
         mError.domain = "revsdk.quic";
-        mError.userInfo["description"] = "QUIC connection timeout";
+        mError.setDescription("QUIC connection timeout");
         if (mDelegate != nullptr)
-            mDelegate->onQUICStreamFailed(this);
+            mDelegate->onQUICStreamFailed(this, mError);
     }
 }
 
-void QUICDataStream::onSocketError()
+void QUICDataStream::onSocketError(Error aError)
 {
     if (mFailed)
         return;
     
     mFailed = true;
-    mError.code = 0;
-    mError.domain = "revsdk.quic";
-    mError.userInfo["description"] = "QUIC socket error";
+    mError = aError;
+    
+    Log::warning(kLogTagQUICNetwork, "Socket error %d: %s", (int)aError.code, notNullString(aError.description()));
 
     if (mDelegate != nullptr)
-        mDelegate->onQUICStreamFailed(this);
+        mDelegate->onQUICStreamFailed(this, mError);
 }

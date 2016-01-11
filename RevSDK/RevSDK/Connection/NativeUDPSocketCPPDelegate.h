@@ -9,6 +9,7 @@
 #pragma once
 
 #include "QUICHeaders.h"
+#include "Error.hpp"
 
 namespace rs
 {

@@ -101,11 +101,17 @@ void UDPService::run()
         }
         
         bool isTimeout = false;
-        size_t len = mSocket->recv(&mBuffer[0], mBuffer.size(), 1, &isTimeout);
+        Error error;
+        size_t len = mSocket->recv(&mBuffer[0], mBuffer.size(), 1, isTimeout, error);
         if (!isTimeout && len > 0)
         {
             if (mOnRecv)
                 mOnRecv(this, &mBuffer[0], len);
+        }
+        if (!error.isNoError())
+        {
+            if (mOnError)
+                mOnError(this, error.code, error.description());
         }
         
         mQueueLock.lock();

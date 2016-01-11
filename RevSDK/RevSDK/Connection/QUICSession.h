@@ -22,7 +22,7 @@
 namespace rs
 {
     class UDPService;
-    class QUICSession : public NativeUDPSocketCPPDelegate, public QUICDataStream::Delegate
+    class QUICSession : public QUICDataStream::Delegate
     {
     public:
         static QUICSession* instance();
@@ -57,7 +57,7 @@ namespace rs
         
         void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) override;
         void onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCode, const net::SpdyHeaderBlock& aHeaders) override;
-        void onQUICStreamFailed(QUICDataStream* aStream) override;
+        void onQUICStreamFailed(QUICDataStream* aStream, Error aError) override;
         void onQUICStreamCompleted(QUICDataStream* aStream) override;
 
         net::QuicConnectionId generateConnectionId();
@@ -68,8 +68,8 @@ namespace rs
                                                                net::QuicConnection *connection,
                                                                const net::QuicServerId &serverId,
                                                                net::QuicCryptoClientConfig *cryptoConfig);
-        bool onQUICPacket(const net::QuicEncryptedPacket &packet) override;
-        void onQUICError() override;
+        bool onQUICPacket(const net::QuicEncryptedPacket &packet);
+        void onQUICError(Error aError);
     private:
         static QUICSession* mInstance;
         //QUICThread mInstanceThread;

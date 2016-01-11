@@ -44,7 +44,7 @@ namespace rs
             
             virtual void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) = 0;
             virtual void onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCode, const net::SpdyHeaderBlock& aHeaders) = 0;
-            virtual void onQUICStreamFailed(QUICDataStream* aStream) = 0;
+            virtual void onQUICStreamFailed(QUICDataStream* aStream, Error aError) = 0;
             virtual void onQUICStreamCompleted(QUICDataStream* aStream) = 0;
             
         };
@@ -56,7 +56,7 @@ namespace rs
         
         void update(size_t aNowMS);
         
-        void onSocketError();
+        void onSocketError(Error aError);
         
         const Error error() const { return mError; }
         
