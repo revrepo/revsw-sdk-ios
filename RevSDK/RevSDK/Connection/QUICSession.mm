@@ -12,6 +12,7 @@
 
 #include "QUICSession.h"
 #include "RSUDPService.h"
+#include "Model.hpp"
 #include <iostream>
 
 class rs::QUICSession::ObjCImpl
@@ -44,12 +45,15 @@ QUICSession* QUICSession::instance()
     {
         mInstance = new QUICSession();
         
-        std::string address("www.revapm.com");
+        std::string address = Model::instance()->edgeHost();
+        if (address.size() == 0)
+            address = "www.revapm.com";
         int port = 443;
         mInstance->mConnecting = true;
         UDPService::dispatch(address, port, [address, port](UDPService* s)
         {
             mInstance->mService = s;
+            mInstance->mHost = address;
             QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
             
             s->setOnRecv([](UDPService* serv, const void* d, size_t l)
@@ -101,11 +105,14 @@ void QUICSession::reconnect()
     mInstance->mService = nullptr;
     mInstance->mSession = nullptr; // LEAK!
     
-    std::string address("www.revapm.com");
+    std::string address = Model::instance()->edgeHost();
+    if (address.size() == 0)
+        address = "www.revapm.com";
     int port = 443;
     UDPService::dispatch(address, port, [address, port](UDPService* s)
     {
         mInstance->mService = s;
+        mInstance->mHost = address;
         QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
         
         s->setOnRecv([](UDPService* serv, const void* d, size_t l)

@@ -117,6 +117,15 @@
     [self.testCases addObject:tcase];
     ////////////////////////////////
     
+//    // 1st case
+//    tcase = [[RTTestCase alloc] init];
+//    tcase.testName = @"Origin";
+//    tcase.protocolID = @"none";
+//    tcase.operationMode = RSOperationMode::kRSOperationModeReport;
+//    
+//    [self.testCases addObject:tcase];
+//    ////////////////////////////////
+
     tcase = [[RTTestCase alloc] init];
     tcase.testName = @"QUIC";
     tcase.protocolID = @"quic";

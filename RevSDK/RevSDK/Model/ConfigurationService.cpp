@@ -11,6 +11,7 @@
 #include "Network.hpp"
 #include "Model.hpp"
 #include "DebugUsageTracker.hpp"
+#include "QUICSession.h"
 
 using namespace rs;
 
@@ -162,6 +163,13 @@ void ConfigurationService::loadConfiguration()
                     
                     refreshInterval = configuration.refreshInterval;
                 }
+                
+                // QUIC
+                if (QUICSession::instance()->host() != Model::instance()->edgeHost())
+                {
+                    QUICSession::reconnect();
+                }
+                
                 
                 //////////////////// SCOPE ///////////////////////
                 {

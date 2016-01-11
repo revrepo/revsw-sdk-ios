@@ -12,7 +12,7 @@
 #include "RevProofVerifier.h"
 #include "RSUDPService.h"
 
-@class NativeUDPSocketWrapper;
+//@class NativeUDPSocketWrapper;
 
 namespace rs
 {

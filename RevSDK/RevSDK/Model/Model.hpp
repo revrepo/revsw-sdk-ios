@@ -83,6 +83,8 @@ namespace rs
         Model();
         ~Model();
         
+        void initializeContent();
+        
         void switchEventTrigger(bool aOn, std::function<void(rs::Log::Level, const char*, const char*)> aCallback);
         std::shared_ptr<const Configuration> getActiveConfiguration()const;
         

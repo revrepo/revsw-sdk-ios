@@ -51,6 +51,7 @@ namespace rs
     {
         Log::initialize();
         Traffic::initialize();
+
         mMemoryLog.reset(new LogTargetMemory());
         mProxy.reset(new ProxyTarget(this));
         Log::instance()->addTarget(mMemoryLog);
@@ -74,13 +75,17 @@ namespace rs
         
         //applyConfiguration(mConfService->getActive());
         
-        QUICConnection::initialize();
     }
     
     Model::~Model()
     {
     }
     
+    void Model::initializeContent()
+    {
+        QUICConnection::initialize();
+    }
+
     void Model::switchEventTrigger(bool aOn, std::function<void(rs::Log::Level, const char*, const char*)> aCallback)
     {
         mEventTriggerOn = aOn;
@@ -94,8 +99,20 @@ namespace rs
         
         if (!_instance)
         {
-            std::lock_guard<std::mutex> scopedLock(mtx);
-            _instance = new Model;
+            bool init = false;
+            {
+                std::lock_guard<std::mutex> scopedLock(mtx);
+                if (!_instance)
+                {
+                    _instance = new Model;
+                    init = true;
+                }
+            }
+            
+            if (init)
+            {
+                _instance->initializeContent();
+            }
         }
         
         return _instance;

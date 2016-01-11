@@ -45,6 +45,7 @@ namespace rs
                          std::function<void(int, QUICDataStream*)> aCallback);
         void update(size_t aNowMS);
         
+        std::string host() const { return mHost; }
         
     private:
         void p_connect(net::QuicServerId aTargetServerId);
@@ -70,10 +71,12 @@ namespace rs
                                                                net::QuicCryptoClientConfig *cryptoConfig);
         bool onQUICPacket(const net::QuicEncryptedPacket &packet);
         void onQUICError(Error aError);
+        
     private:
         static QUICSession* mInstance;
         //QUICThread mInstanceThread;
         UDPService* mService;
+        std::string mHost;
         
         void executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync = false);
         
