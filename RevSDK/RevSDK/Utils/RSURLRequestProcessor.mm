@@ -60,16 +60,16 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 
     if (isProvisioned)
     {
-        hostHeaderValue = sdkBaseHost;
+        hostHeaderValue = host;
     }
     else
     {
         hostHeaderValue = [NSString stringWithFormat:@"%@.%@", sdkKey, sdkBaseHost];
+        [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
+        [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
     }
     
     [newRequest setValue:hostHeaderValue forHTTPHeaderField:kRSHostHeader];
-    [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
-    [newRequest setValue:scheme forHTTPHeaderField:kRSRevMethodHeader];
     
     if (aIsEdge)
     {
