@@ -24,7 +24,7 @@
 - (void)setTexts:(NSArray<NSString *> *)aTexts startText:(NSString *)aStartText
 {
     NSUInteger    count       = aTexts.count;
-    const NSInteger kFontSize = 16;
+    const NSInteger kFontSize = 15;
     self.fontSize             = kFontSize + ((kFontSize / 6) * (2 - count));
    
     self.contentView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -32,19 +32,18 @@
     
     if (!label)
     {
-        label = [self addLabelWithOffsetConstant:kNumberLabelOffset tag:kStartLabelTag];
+        label = [self addLabelWithOffsetConstant:kNumberLabelOffset
+                                             tag:kStartLabelTag
+                                 offsetAttribute:NSLayoutAttributeLeading];
     }
     
     label.text = aStartText;
     
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     
-    const NSInteger kDefaultDivider = 6;
-    NSInteger divider = kDefaultDivider - ((kDefaultDivider / 3) * (2 - count));
-    
-    __block CGFloat constant = screenWidth / (self.isShowingReport ? divider : 2.4);
-    
-    divider /= (self.isShowingReport ? 2 : 1);
+    CGFloat addition = self.isShowingReport ? 0.f : 60.f;
+    CGFloat offsetValue = self.isShowingReport ? screenWidth / 3.9f : 70.f;
+    __block CGFloat constant = -offsetValue;
     
     [aTexts enumerateObjectsUsingBlock:^(NSString* text, NSUInteger index, BOOL* stop){
     
@@ -52,18 +51,18 @@
         
         if (!label)
         {
-            label = [self addLabelWithOffsetConstant:constant tag:index + 50];
+            label = [self addLabelWithOffsetConstant:constant + screenWidth  * 0.5f + addition
+                                                 tag:index + 50
+                                     offsetAttribute:NSLayoutAttributeCenterX];
         }
         
         label.text = text;
         
-        CGFloat correctedDivider = divider;
-        correctedDivider *= (self.isShowingReport ? 0.9 : 0.65);
-        constant += screenWidth / correctedDivider;
+        constant += offsetValue;
     }];
 }
 
-- (UILabel *)addLabelWithOffsetConstant:(CGFloat)aOffsetConstant tag:(NSInteger)aTag
+- (UILabel *)addLabelWithOffsetConstant:(CGFloat)aOffsetConstant tag:(NSInteger)aTag offsetAttribute:(NSLayoutAttribute)aAttribute
 {
     UILabel* label                                  = [UILabel new];
     label.translatesAutoresizingMaskIntoConstraints = NO;
@@ -71,10 +70,10 @@
     label.font                                      = [UIFont fontWithName:label.font.fontName size:self.fontSize];
     
     NSLayoutConstraint* leadingConstraint = [NSLayoutConstraint constraintWithItem:label
-                                                                         attribute:NSLayoutAttributeLeading
+                                                                         attribute:aAttribute
                                                                          relatedBy:NSLayoutRelationEqual
                                                                             toItem:self.contentView
-                                                                         attribute:NSLayoutAttributeLeading
+                                                                         attribute:aAttribute
                                                                         multiplier:1.f
                                                                           constant:aOffsetConstant];
     
