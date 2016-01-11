@@ -21,6 +21,7 @@ namespace rs
    class Request
    {
        std::string mMethod;
+       std::string mOriginalURL;
        std::string mURL;
        std::map<std::string, std::string> mHeaders;
        Data mBody;
@@ -44,6 +45,7 @@ namespace rs
        std::string path() const { return mPath; }
        std::string rest() const { return mRest; }
        std::string originalScheme() const { return mOriginalScheme; }
+       std::string originalURL() const { return mOriginalURL; }
        
        void setHost(const std::string& aHost) { mHost = aHost; }
        void setPath(const std::string& aPath) { mPath = aPath; }
@@ -52,6 +54,8 @@ namespace rs
        void setMethod(const std::string& aMethod) { mMethod = aMethod; }
        void setURL(const std::string& aURL) { mURL = aURL; }
        void setHeaders(const std::map<std::string, std::string>& aHeaders) { mHeaders = aHeaders; }
+       void setOriginalURL(const std::string& aOriginalURL) { mOriginalURL = aOriginalURL; }
+       
        
        Request* clone() const;
    };

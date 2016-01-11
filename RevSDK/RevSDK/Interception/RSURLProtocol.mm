@@ -76,8 +76,11 @@
     
     if ([self shouldRedirectRequest:self.request])
     {
-       self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
-      [self.connection start];
+        NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
+                          self.request.URL, self.request.HTTPMethod, self.request.allHTTPHeaderFields];
+        rs::Log::info(rs::kLogTagSDKInerception, "Request %s", rs::stdStringFromNSString(dump).c_str());
+        self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
+        [self.connection start];
     }
     else
     {
@@ -123,6 +126,13 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    if ([response isKindOfClass:[NSHTTPURLResponse class]])
+    {
+        NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*)response;
+        NSString* dump = [NSString stringWithFormat:@"URL=%@, SFN=%@, Headers:\n%@",
+                          response.URL, response.suggestedFilename, httpResp.allHeaderFields];
+        rs::Log::info(rs::kLogTagSDKInerception, "Response %s", rs::stdStringFromNSString(dump).c_str());
+    }
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 

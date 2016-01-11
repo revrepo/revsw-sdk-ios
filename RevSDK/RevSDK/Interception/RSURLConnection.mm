@@ -72,6 +72,7 @@
         
         NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdge baseURL:nil];
         std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
+        request->setOriginalURL(rs::stdStringFromNSString(aRequest.URL.absoluteString));
         request->setOriginalScheme(rs::stdStringFromNSString(aRequest.URL.scheme));
         connectionProxy = std::make_shared<rs::ConnectionProxy>(request, currentProtocolName);
         connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
