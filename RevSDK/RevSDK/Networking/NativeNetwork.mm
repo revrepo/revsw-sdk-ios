@@ -32,8 +32,11 @@ namespace rs
             Error error       = errorFromNSError(aError);
             
             // Debug:
+            
+            NSString* edgeHostString = NSStringFromStdString(Model::instance()->edgeHost());
+            
             const BOOL usingRevHost =
-            [aResponse.URL.host isEqualToString:kRSRevRedirectHost] ||
+            [aResponse.URL.host isEqualToString:edgeHostString] ||
             [aResponse.URL.host isEqualToString:kRSRevLoadConfigurationHost];
             Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data.length(), response, error);
             
@@ -56,8 +59,11 @@ namespace rs
             Response response = *(responseFromHTTPURLResponse((NSHTTPURLResponse *)aResponse).get());
             
             // Debug:
+            
+            NSString* edgeHostString = NSStringFromStdString(Model::instance()->edgeHost());
+            
             const BOOL usingRevHost =
-            [aResponse.URL.host isEqualToString:kRSRevRedirectHost] ||
+            [aResponse.URL.host isEqualToString:edgeHostString] ||
             [aResponse.URL.host isEqualToString:kRSRevLoadConfigurationHost];
             Model::instance()->debug_usageTracker()->trackRequest(usingRevHost, data.length(), response, error);
             

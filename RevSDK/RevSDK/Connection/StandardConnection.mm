@@ -42,6 +42,7 @@ using namespace rs;
 
 StandardConnection::StandardConnection()
 {
+    mEdgeHost = Model::instance()->edgeHost();
     mConnectionDelegate = nullptr;
 } 
 
@@ -79,20 +80,14 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     NSDictionary* headers = mutableRequest.allHTTPHeaderFields;
     NSString* XRevHostHeader = headers[kRSRevHostHeader];
     
-    if ([XRevHostHeader isEqualToString:kRSRevRedirectHost])
+    NSString* edgeHostString = NSStringFromStdString(mEdgeHost);
+    
+    if ([XRevHostHeader isEqualToString:edgeHostString])
     {
-        Log::error(kLogTagSTDRequest,  "Request host set to %s", [kRSRevRedirectHost UTF8String]);
+        Log::error(kLogTagSTDRequest,  "Request host set to %s", [edgeHostString UTF8String]);
     }
 
     [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
-//    NSURLSessionConfiguration* sessionConfiguration = [NSURLSessionConfiguration defaultSessionConfiguration];
-//    
-//    NSURLSession* session                           = [NSURLSession sessionWithConfiguration:sessionConfiguration
-//                                                                                    delegate:customDelegate
-//                                                                               delegateQueue:nil];
-//    
-//    NSURLSessionTask* task = [session dataTaskWithRequest:mutableRequest];
-//    [task resume];
     
     oAnchor->onStart();
     
@@ -131,8 +126,9 @@ void StandardConnection::didCompleteWithError(void* aError)
 {
     onEnd();
     
-    NSURLRequest* request   = URLRequestFromRequest(mCurrentRequest);
-    const BOOL usingRevHost = [request.URL.host isEqualToString:kRSRevRedirectHost];
+    NSURLRequest* request    = URLRequestFromRequest(mCurrentRequest);
+    NSString* edgeHostString = NSStringFromStdString(mEdgeHost);
+    const BOOL usingRevHost  = [request.URL.host isEqualToString:edgeHostString];
     
     if (!aError)
     {
@@ -157,7 +153,7 @@ void StandardConnection::didCompleteWithError(void* aError)
         NSURLRequest* request       = URLRequestFromRequest(mCurrentRequest);
         NSHTTPURLResponse* response = NSHTTPURLResponseFromResponse(mResponse);
         NSString* originalScheme    = NSStringFromStdString(mCurrentRequest->originalScheme());
-        Data requestData            = dataFromRequestAndResponse(request, response, mWeakThis.lock().get(), originalScheme);
+        Data requestData            = dataFromRequestAndResponse(request, response, mWeakThis.lock().get(), originalScheme, YES);
         Model::instance()->addRequestData(requestData);
     }
     

@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <string>
 
 namespace rs
 {
@@ -48,7 +49,6 @@ namespace rs
         virtual void startWithRequest(std::shared_ptr<Request>, ConnectionDelegate*) = 0;
         int          getID() { return mConnectionID;}
         
-        
         template <class T>
         static std::shared_ptr<Connection> create()
         {
@@ -79,6 +79,8 @@ namespace rs
         static int getLastConnectionId();
         
     protected:
+        
+        std::string mEdgeHost;
         
         int64_t mBytesSent;
         int64_t mBytesReceived;

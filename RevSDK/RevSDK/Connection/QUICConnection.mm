@@ -12,6 +12,7 @@
 #include "Response.hpp"
 #include "Request.hpp"
 
+#include "Model.hpp"
 #include "QUICSession.h"
 #include "Error.hpp"
 #include "Utils.hpp"
@@ -29,6 +30,7 @@ QUICConnection::QUICConnection():
     mId(0),
     mTS(0)
 {
+    mEdgeHost = Model::instance()->edgeHost();
     mQUICConnectionIdLock.lock();
     mId = mQUICConnectionIdCounter++;
     mQUICConnectionIdLock.unlock();
@@ -95,9 +97,9 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     for (const auto& i : aRequest->headers())
         headers[i.first] = i.second;
     
-    if (aRequest->host() == kRevRedirectHost)
+    if (aRequest->host() == mEdgeHost)
     {
-        Log::error(kLogTagQUICRequest, "Request host set to %s", notNullString(kRevRedirectHost));
+        Log::error(kLogTagQUICRequest, "Request host set to %s", notNullString(mEdgeHost));
     }
     
     headers["X-Rev-Host"] = aRequest->host();

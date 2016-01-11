@@ -15,9 +15,6 @@
 
 #include <string>
 
-static NSString* const kRSNonVPNURL = @"https://rev-200.revdn.net";
-static NSString* const kRSVPNURL = @"http://testsjc20-bp01.revsw.net/";
-
 static NSString* const kRSHostHeader = @"Host";
 static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 
@@ -76,8 +73,9 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     
     if (aIsEdge)
     {
+        NSString* edgeHost = rs::NSStringFromStdString(rs::Model::instance()->edgeHost());
         NSRange range = [urlStr rangeOfString:host];
-        urlStr = [urlStr stringByReplacingCharactersInRange:range withString:rs::kRSRevRedirectHost];
+        urlStr = [urlStr stringByReplacingCharactersInRange:range withString:edgeHost];
     }
     
     if ([urlStr rangeOfString:@"https"].location != 0)
