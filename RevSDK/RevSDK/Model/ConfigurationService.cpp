@@ -145,6 +145,10 @@ void ConfigurationService::loadConfiguration()
                 if (mUpdateEnabledFlag)
                 {
                     mActiveConfiguration = std::make_shared<Configuration>(configuration);
+                    
+                    Log::info(kLogTagSDKConfiguration,
+                              "ConfigurationService: new conf applied, mode_id %d", (int)configuration.operationMode);
+                    
                     mDelegate->applyConfiguration(mActiveConfiguration);
                     mDelegate->scheduleStatsReporting();
                     
@@ -153,6 +157,7 @@ void ConfigurationService::loadConfiguration()
                 }
                 else
                 {
+                    rs::Log::warning(kLogTagSDKConfiguration, "Update disabled");
                     data_storage::saveConfiguration(configuration);
                     
                     refreshInterval = configuration.refreshInterval;
