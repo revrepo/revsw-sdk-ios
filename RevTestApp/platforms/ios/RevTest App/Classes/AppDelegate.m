@@ -80,7 +80,7 @@ id setBeingRemoved(id self, SEL selector, ...)
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"];
+    [RevSDK startWithSDKKey:@"8890bf21-5d53-4977-8736-b872c0fad407"];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
