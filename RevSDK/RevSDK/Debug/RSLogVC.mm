@@ -118,7 +118,15 @@
         case 0: // ANY
             break;
         case 1: // QUIC
-            for (int i = 20; i < 30; ++i)
+            for (int i = rs::kLogTagQUICMIN; i <= rs::kLogTagQUICMAX; ++i)
+                tags.insert(i);
+            break;
+        case 2: // STD
+            for (int i = rs::kLogTagSTDMIN; i <= rs::kLogTagSTDMAX; ++i)
+                tags.insert(i);
+            break;
+        case 3: // SDK
+            for (int i = rs::kLogTagSDKMIN; i <= rs::kLogTagSDKMAX; ++i)
                 tags.insert(i);
             break;
         default:
@@ -169,6 +177,8 @@
     [self.domainPicker setTitle:@"Pick domain"];
     [self.domainPicker addButtonWithTitle:@"ANY"];
     [self.domainPicker addButtonWithTitle:@"QUIC"];
+    [self.domainPicker addButtonWithTitle:@"STD"];
+    [self.domainPicker addButtonWithTitle:@"SDK"];
     NSInteger cb = [self.domainPicker addButtonWithTitle:@"Cancel"];
     self.domainPicker.cancelButtonIndex = cb;
     self.domainPicker.delegate = self;
@@ -193,7 +203,7 @@
 {
     [super viewDidLoad];
     self.levels = @[@"ALL", @"INF", @"WRN", @"ERR"];
-    self.domains = @[@"ANY", @"QUIC"];
+    self.domains = @[@"ANY", @"QUIC", @"STD", @"SDK"];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"LOG";
     UIBarButtonItem* bbi = nil;

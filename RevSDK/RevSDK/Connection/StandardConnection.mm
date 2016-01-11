@@ -115,10 +115,16 @@ void StandardConnection::didReceiveData(void* aData)
 void StandardConnection::didReceiveResponse(void* aResponse)
 {
     NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
-    mResponse                   = responseFromHTTPURLResponse(response);
+    NSString* originalURL = NSStringFromStdString(mCurrentRequest->originalURL());
+    NSHTTPURLResponse* processedResponse = [[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:originalURL]
+                                                                       statusCode:response.statusCode
+                                                                      HTTPVersion:@"1.1"
+                                                                     headerFields:response.allHeaderFields];
+    mResponse                   = responseFromHTTPURLResponse(processedResponse);
     
-    Log::info(kLogTagSTDStandardConnection,  "Connection recieved response, code = %d",[response statusCode]);
+    Log::info(kLogTagSTDStandardConnection,  "Connection recieved response, code = %d",[processedResponse statusCode]);
     
+//    mResponse->URL() == ""
     mConnectionDelegate->connectionDidReceiveResponse(mWeakThis.lock(), mResponse);
 }
 
