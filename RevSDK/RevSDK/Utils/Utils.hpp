@@ -102,7 +102,7 @@ typedef enum
     std::string longLongToStr(long long x);
     long long timestampMS();
     std::string timestampMSAsStr();
-//    std::string stringMapToString(const std::map<std::string, std::string>& aMap);
+    bool internetConnectionAvailable();
 }
 
 #endif /* Utils_hpp */

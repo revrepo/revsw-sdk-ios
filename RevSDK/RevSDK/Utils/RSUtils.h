@@ -130,6 +130,7 @@ namespace rs
     
     bool _isValidURL(NSString* aURLString);
     bool _isValidConfiguration(const Data&, Error*);
+    bool _internetConnectionAvailable();
 }
 #endif
 

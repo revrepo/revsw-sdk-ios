@@ -258,12 +258,7 @@ namespace rs
         std::lock_guard<std::mutex> lockGuard(mLock);
         mSDKKey = aSDKKey;
         mConfService->init();
-       
-        if (mCurrentLoggingLevel >= kRSLogginLevelInfo)
-        {
-            Event initializeEvent("info", 3, "SDK Initialized", 0.0f);
-            mStatsHandler->addEvent(initializeEvent);
-        }
+        addEvent(kLogLevelInfo, 3, "SDK Initialized", 0.0f, kRSLogginLevelInfo);
     }
     
 //    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
@@ -445,7 +440,15 @@ namespace rs
     {
         return mConfService->isStale();
     }
-    
+ 
+    void Model::addEvent(const std::string& aSeverity, const int aCode, const std::string& aMessage, const float aInterval, const RSLogginLevel aLoggingLevel)
+    {
+        if (mCurrentLoggingLevel >= aLoggingLevel)
+        {
+            Event event(aSeverity, aCode, aMessage, aInterval);
+            mStatsHandler->addEvent(event);
+        }
+    }
 }
 
 

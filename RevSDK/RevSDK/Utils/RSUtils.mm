@@ -18,6 +18,7 @@
 #include "Connection.hpp"
 #import "NSURL+RevSDK.h"
 #import "RSURLConnectionNative.h"
+#import "RSReachability.h"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
@@ -769,6 +770,10 @@ namespace rs
         return true;
     }
     
-
-
+     bool _internetConnectionAvailable()
+     {
+         RSReachability* reachability = [RSReachability rs_reachabilityForInternetConnection];
+         
+         return reachability.rs_currentReachabilityStatus != kRSNotReachable;
+     }
 }

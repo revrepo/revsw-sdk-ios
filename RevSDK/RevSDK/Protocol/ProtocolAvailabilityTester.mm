@@ -10,8 +10,8 @@
 #include "ProtocolAvailabilityTester.hpp"
 #include "QUICProtocol.hpp"
 #include "StandardProtocol.hpp"
-
 #include "Model.hpp"
+#include "Utils.hpp"
 
 using namespace rs;
 
@@ -60,7 +60,7 @@ void ProtocolAvailabilityTester::runTests(std::string aMonitoringURL, std::funct
         /////////////////////////////////////////////
         
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+            Model::instance()->addEvent(kLogLevelDebug, 2, "Protocol availability tests started", 0.f, kRSLoggingLevelDebug);
             initTester();
             mCompletitionCallback = cbOnComplete;
             mCachedURL = aMonitoringURL;

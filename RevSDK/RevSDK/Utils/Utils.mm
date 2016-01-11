@@ -204,6 +204,11 @@ namespace rs
         sprintf(buff, "%lld", ms);
         return std::string(buff);
     }
+    
+    bool internetConnectionAvailable()
+    {
+        return _internetConnectionAvailable();
+    }
 
 //    std::string stringMapToString(const std::map<std::string, std::string>& aMap)
 //    {

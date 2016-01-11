@@ -14,6 +14,7 @@
 #include "DataStorage.hpp"
 #include "ProtocolSelector.hpp"
 #include "ProtocolFailureMonitor.h"
+#include "Utils.hpp"
 
 using namespace rs;
 
@@ -60,6 +61,15 @@ void ProtocolSelector::handleTestResults(std::vector<AvailabilityTestResult> aRe
             allowedProtocols.push_back(it.ProtocolID);
         }
     }
+    
+    if (allowedProtocols.size() == 0)
+    {
+        if (internetConnectionAvailable())
+        {
+            Model::instance()->addEvent(kLogLevelError, 1, "Failed to connect to Rev edge proxy service", 0.f, kRSLoggingLevelError);
+        }
+    }
+    
     mAvailableProtocols = allowedProtocols;
     
     std::string toString = "ProtocolSelector:: finished testing. Available protocols:: ";
@@ -207,6 +217,7 @@ void ProtocolSelector::onConfigurationApplied(std::shared_ptr<const Configuratio
             mAvailableProtocols.push_back(aConf->initialTransportProtocol);
             saveAvailable();
         }
+
         this->refreshTestInfo();
     }
     else

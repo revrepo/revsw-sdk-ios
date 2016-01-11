@@ -126,6 +126,8 @@ namespace rs
         bool debug_isConfigurationStale();
         
         LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
+        
+        void addEvent(const std::string&, const int, const std::string& , const float, RSLogginLevel);
     };
 }
 
