@@ -43,7 +43,6 @@ namespace rs
     
     //Rev Host
     const std::string kRSRevBaseHost   = "revsdk.net";
-    NSString* const kRSRevRedirectHost = @"rev-200.revdn.net";
     const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
     NSString* const kRSRevLoadConfigurationHost = @"iad02-api03.revsw.net";
@@ -405,7 +404,7 @@ namespace rs
         return dataVector;
     }
     
-    Data dataFromRequestsDictionary(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, NSDictionary* aDictionary)
+    Data dataFromRequestsDictionary(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, NSDictionary* aDictionary, BOOL aIsRedirecting)
     {
         NSNumber* startTimestamp     = aDictionary[kRS_JKey_StartTs];
         NSNumber* endTimestamp       = aDictionary[kRS_JKey_EndTs];
@@ -439,9 +438,8 @@ namespace rs
         NSDictionary* headers               = aRequest.allHTTPHeaderFields;
         NSURL* URL                          = aRequest.URL;
         NSURL* originalURL                  = URL;
-        BOOL isRedirecting                  = [URL.host isEqualToString:kRSRevRedirectHost];
         
-        if (isRedirecting)
+        if (aIsRedirecting)
             originalURL = [originalURL revURLByReplacingHostWithHost:headers[kRSRevHostHeader]];
         
         NSString* URLString                 = [originalURL absoluteString];
@@ -501,11 +499,11 @@ namespace rs
                 dataDictionary[kRS_JKey_FirstByteTs] 	= firstByteTimestamp;
                 
                 dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
-                dataDictionary[kRS_JKey_Destination]    = isRedirecting ? @"rev_edge" : @"origin";
+                dataDictionary[kRS_JKey_Destination]    = aIsRedirecting ? @"rev_edge" : @"origin";
                 dataDictionary[kRS_JKey_EdgeTransport]  = aDictionary[kRS_JKey_EdgeTransport];
                 
                 NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
-                dataDictionary[kRS_JKey_RevCache] = revCache ? revCache : @"_";
+                dataDictionary[kRS_JKey_RevCache] = STRVALUE_OR_DEFAULT(revCache);
             }
         }
         
@@ -517,7 +515,7 @@ namespace rs
         return data;
     }
     
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection, NSString* aOriginalScheme)
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection, NSString* aOriginalScheme, BOOL aIsRedirecting)
     {
         NSDictionary* dictionary = @{
                                      kRS_JKey_ConnID : @(aConnection->getID()),
@@ -531,10 +529,10 @@ namespace rs
                                      
                                      };
         
-        return dataFromRequestsDictionary(aRequest, aResponse, dictionary);
+        return dataFromRequestsDictionary(aRequest, aResponse, dictionary, aIsRedirecting);
     }
     
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, RSURLConnectionNative* aConnection)
+    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, RSURLConnectionNative* aConnection, BOOL aIsRedirecting)
     {
         NSDictionary* dictionary = @{
                                      kRS_JKey_ConnID : aConnection.connectionId,
@@ -547,7 +545,7 @@ namespace rs
                                      kRS_JKey_EdgeTransport : @"_"
                                      };
         
-        return dataFromRequestsDictionary(aRequest, aResponse, dictionary);
+        return dataFromRequestsDictionary(aRequest, aResponse, dictionary, aIsRedirecting);
     }
     
     bool _isValidURL(NSString* aURLString)

@@ -64,6 +64,7 @@ namespace rs
         std::shared_ptr<Connection> mAnchor0;
         std::shared_ptr<Connection> mAnchor1;
         std::shared_ptr<Request> mRequest;
+        std::shared_ptr<Response> mResponse;
         std::shared_ptr<QUICConnection> mRedirect;
         int mDepth;
     };

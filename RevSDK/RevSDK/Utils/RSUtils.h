@@ -41,7 +41,6 @@ namespace rs
     
     // Rev Host
     extern const std::string kRSRevBaseHost;
-    extern NSString* const kRSRevRedirectHost;
     extern NSString* const kRSRevHostHeader;
     extern NSString* const kRSRevLoadConfigurationHost;
     
@@ -126,8 +125,8 @@ namespace rs
     
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
-    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*, NSString*);
-    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, RSURLConnectionNative*);
+    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*, NSString*, BOOL);
+    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, RSURLConnectionNative*, BOOL);
     
     bool _isValidURL(NSString* aURLString);
     bool _isValidConfiguration(const Data&, Error*);

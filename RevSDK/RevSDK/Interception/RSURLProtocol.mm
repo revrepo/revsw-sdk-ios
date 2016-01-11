@@ -190,7 +190,7 @@
         self.directConnection.endTimestamp       = @(timestamp);
         
         NSHTTPURLResponse* response = (NSHTTPURLResponse *)self.response;
-        rs::Data requestData        = rs::dataFromRequestAndResponse(self.directConnection.currentRequest, response, self.directConnection);
+        rs::Data requestData        = rs::dataFromRequestAndResponse(self.directConnection.currentRequest, response, self.directConnection, NO);
         rs::Model::instance()->addRequestData(requestData);
     }
 
