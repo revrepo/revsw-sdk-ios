@@ -100,6 +100,8 @@
 		5B3286F91C1EAEF9009CFDB5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */; };
 		5B3286FB1C1EAFF9009CFDB5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */; };
 		5B3286FC1C1EAFF9009CFDB5 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B43F58D1C4404F900D6F33D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58C1C4404F900D6F33D /* Assets.xcassets */; };
+		5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58E1C44053200D6F33D /* Images.xcassets */; };
 		5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0E1C3D17F60051D31F /* Security.framework */; };
 		5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */; };
 		5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
@@ -277,6 +279,8 @@
 		5B25817E1C17155F00C55959 /* RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTUtils.m; sourceTree = "<group>"; };
 		5B3286F81C1EAEF9009CFDB5 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../../../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RevSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5B43F58C1C4404F900D6F33D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "RevTest App/Assets.xcassets"; sourceTree = "<group>"; };
+		5B43F58E1C44053200D6F33D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "RevTest App/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		5B70CA0E1C3D17F60051D31F /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Security.framework; sourceTree = "<group>"; };
 		5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SystemConfiguration.framework; sourceTree = "<group>"; };
 		5B70CA101C3D17F60051D31F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -382,6 +386,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				5B70CA1A1C3D1BDD0051D31F /* GoogleService-Info.plist */,
 				5B3286FA1C1EAFF9009CFDB5 /* RevSDK.framework */,
 				5B04C9041C0D88A300621B67 /* www */,
@@ -412,6 +417,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5B43F58E1C44053200D6F33D /* Images.xcassets */,
 				308D052D1370CCF300D202BF /* icons */,
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* RevTest App-Info.plist */,
@@ -974,6 +980,7 @@
 				5B04C95F1C0D88A300621B67 /* index.css in Resources */,
 				5B04C97E1C0D88A300621B67 /* screen-xhdpi-portrait.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
+				5B43F58D1C4404F900D6F33D /* Assets.xcassets in Resources */,
 				7E7966E01810823500FA85AD /* icon-50.png in Resources */,
 				7E7966E31810823500FA85AD /* icon-60@2x.png in Resources */,
 				5B04C96A1C0D88A300621B67 /* icon-48-type5.png in Resources */,
@@ -1040,6 +1047,7 @@
 				5B04C9821C0D88A300621B67 /* screen-type5.png in Resources */,
 				5B04C9911C0D88A300621B67 /* index.js in Resources */,
 				7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */,
+				5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */,
 				5B0BFEE91C0C6C2E0057715A /* RTReportCell.xib in Resources */,
 				5B04C9771C0D88A300621B67 /* screen-hdpi-landscape.png in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
@@ -1169,6 +1177,8 @@
 			baseConfigurationReference = F428827FA081FFE43E995293 /* Pods-RevTest App.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				COPY_PHASE_STRIP = NO;
@@ -1219,6 +1229,8 @@
 			baseConfigurationReference = 20BBD25748E5071B5D44919B /* Pods-RevTest App.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
 				COPY_PHASE_STRIP = YES;
