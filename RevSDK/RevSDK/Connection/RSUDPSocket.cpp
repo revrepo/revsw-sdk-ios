@@ -171,6 +171,8 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
         if (ec)
         {
             Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
+            mImpl->socket.close();
+            mImpl->connected = false;
             res = 0;
         }
         
@@ -201,6 +203,8 @@ size_t UDPSocket::recv(void* aData, size_t aSize, size_t aTimeoutMS, bool* aTimo
             else if (ec)
             {
                 Log::error(kLogTagQUICNetwork, "UDPSocket recv: %d %s", ec.value(), notNullString(ec.message()));
+                mImpl->socket.close();
+                mImpl->connected = false;
             }
             else
             {
