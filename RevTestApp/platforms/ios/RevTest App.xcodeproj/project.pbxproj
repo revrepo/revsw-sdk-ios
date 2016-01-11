@@ -172,7 +172,7 @@
 		1109F3CC1C401ED000ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* RevTest App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevTest App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevSDK Racer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		20BBD25748E5071B5D44919B /* Pods-RevTest App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevTest App.release.xcconfig"; path = "../../../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App.release.xcconfig"; sourceTree = "<group>"; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -374,7 +374,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* RevTest App.app */,
+				1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -890,7 +890,7 @@
 			);
 			name = "RevTest App";
 			productName = "RevTest App";
-			productReference = 1D6058910D05DD3D006BFB54 /* RevTest App.app */;
+			productReference = 1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1208,7 +1208,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
-				PRODUCT_NAME = "RevTest App";
+				PRODUCT_NAME = "RevSDK Racer";
 				PROVISIONING_PROFILE = "a72c76fc-5c0f-4e87-9954-e40b905984f1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1256,7 +1256,7 @@
 					"$(inherited)",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
-				PRODUCT_NAME = "RevTest App";
+				PRODUCT_NAME = "RevSDK Racer";
 				PROVISIONING_PROFILE = "8c70591b-c320-42f1-958a-a40b81b3c859";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
