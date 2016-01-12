@@ -15,6 +15,9 @@
     if (aNewHost.length == 0)
         return self;
     
+    if (self.host == nil)
+        return self;
+    
     NSString* as = self.absoluteString;
     NSRange r = [as rangeOfString:self.host];
     if (r.location == NSNotFound)
