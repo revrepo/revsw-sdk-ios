@@ -126,7 +126,7 @@ namespace rs
     std::vector<Data> dataNSArrayToStdVector(NSArray *);
     
     Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, Connection*, NSString*, BOOL);
-    Data dataFromRequestAndResponse(NSURLRequest*, NSHTTPURLResponse*, RSURLConnectionNative*, BOOL);
+    Data dataFromConnection( RSURLConnectionNative*, BOOL);
     
     bool _isValidURL(NSString* aURLString);
     bool _isValidConfiguration(const Data&, Error*);

@@ -533,20 +533,23 @@ namespace rs
         return dataFromRequestsDictionary(aRequest, aResponse, dictionary, aIsRedirecting);
     }
     
-    Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, RSURLConnectionNative* aConnection, BOOL aIsRedirecting)
+    Data dataFromConnection(RSURLConnectionNative* aConnection, BOOL aIsRedirecting)
     {
+        NSURLRequest* request       = aConnection.request;
+        NSHTTPURLResponse* response = aConnection.response;
+        
         NSDictionary* dictionary = @{
                                      kRS_JKey_ConnID : aConnection.connectionId,
                                      kRS_JKey_StartTs : aConnection.startTimestamp,
                                      kRS_JKey_RecDytes : aConnection.totalBytesReceived,
-                                     kRS_JKey_SentBytes : @(aRequest.HTTPBody.length),
+                                     kRS_JKey_SentBytes : @(request.HTTPBody.length),
                                      kRS_JKey_EndTs : aConnection.endTimestamp,
                                      kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp ? aConnection.firstByteTimestamp : @(0),
-                                     kRS_JKey_TransportProt : aRequest.URL.scheme,
+                                     kRS_JKey_TransportProt : request.URL.scheme,
                                      kRS_JKey_EdgeTransport : @"_"
                                      };
         
-        return dataFromRequestsDictionary(aRequest, aResponse, dictionary, aIsRedirecting);
+        return dataFromRequestsDictionary(request, response, dictionary, aIsRedirecting);
     }
     
     bool _isValidURL(NSString* aURLString)
