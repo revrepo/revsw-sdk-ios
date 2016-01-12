@@ -13,13 +13,11 @@
 #import "Model.hpp"
 #import "RSURLConnectionNative.h"
 
-@interface RSURLProtocol ()<RSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface RSURLProtocol ()<RSURLConnectionDelegate, RSURLConnectionNativeDelegate>
 
-@property (nonatomic, strong) NSURLConnection* nativeConnection;
 @property (nonatomic, strong) RSURLConnection* connection;
 @property (nonatomic, strong) NSMutableData* data;
 @property (nonatomic, strong) RSURLConnectionNative* directConnection;
-@property (nonatomic, copy)   NSURLResponse* response;
 
 @end
 
@@ -90,6 +88,7 @@
                          inRequest:newRequest];
         
         self.directConnection = [[RSURLConnectionNative alloc] initWithRequest:newRequest delegate:self];
+        [self.directConnection start];
     }
 }
 
@@ -157,9 +156,9 @@
 }
 
 #pragma mark - 
-#pragma mark - NSURLConnectionDelegate
+#pragma mark - RSURLConnectionNativeDelegate
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+- (void)connection:(RSURLConnectionNative *)connection didFailWithError:(NSError *)error
 {
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
@@ -168,36 +167,23 @@
     });
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
+- (void)connection:(RSURLConnectionNative *)connection didReceiveData:(NSData *)aData
 {
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+- (void)connection:(RSURLConnectionNative *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSDate* now                              = [NSDate date];
-    NSTimeInterval interval                  = [now timeIntervalSince1970];
-    int64_t timestamp                        = interval * 1000;
-    self.directConnection.firstByteTimestamp = @(timestamp);
-    
-    self.response = response;
-    
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 
-- (void)connectionDidFinishLoading:(NSURLConnection *)connection
+- (void)connectionDidFinish:(RSURLConnectionNative *)connection
 {
     if (rs::Model::instance()->shouldCollectRequestsData())
     {
         self.directConnection.totalBytesReceived = @(self.data.length);
-        NSDate* now                              = [NSDate date];
-        NSTimeInterval interval                  = [now timeIntervalSince1970];
-        int64_t timestamp                        = interval * 1000;
-        self.directConnection.endTimestamp       = @(timestamp);
-        
-        NSHTTPURLResponse* response = (NSHTTPURLResponse *)self.response;
-        rs::Data requestData        = rs::dataFromRequestAndResponse(self.directConnection.currentRequest, response, self.directConnection, NO);
+        rs::Data requestData                     = rs::dataFromConnection(self.directConnection, NO);
         rs::Model::instance()->addRequestData(requestData);
     }
 
