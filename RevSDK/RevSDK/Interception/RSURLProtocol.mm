@@ -170,20 +170,17 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
 {
-    if (self.directConnection.firstByteTimestamp == nil)
-    {
-        NSDate* now                              = [NSDate date];
-        NSTimeInterval interval                  = [now timeIntervalSince1970];
-        int64_t timestamp                        = interval * 1000;
-        self.directConnection.firstByteTimestamp = @(timestamp);
-    }
-    
     [self.data appendData:aData];
     [self.client URLProtocol:self didLoadData:aData];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSDate* now                              = [NSDate date];
+    NSTimeInterval interval                  = [now timeIntervalSince1970];
+    int64_t timestamp                        = interval * 1000;
+    self.directConnection.firstByteTimestamp = @(timestamp);
+    
     self.response = response;
     
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];

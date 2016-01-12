@@ -28,12 +28,6 @@ void rs::Connection::addSentBytesCount(long long aCount)
 }
 void rs::Connection::addReceivedBytesCount(long long aCount)
 {
-    if (0 == mBytesReceived)
-    {
-        int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
-        mFirstByteReceivedTimestamp = milliseconds_since_epoch;
-    }
-    
     mBytesReceived += aCount;
 }
 
@@ -52,6 +46,12 @@ void rs::Connection::onEnd()
     
     int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
     mEndTimestamp = milliseconds_since_epoch;
+}
+
+void rs::Connection::onResponseReceived()
+{
+    int64_t milliseconds_since_epoch = std::chrono::system_clock::now().time_since_epoch() / std::chrono::milliseconds(1);
+    mFirstByteReceivedTimestamp = milliseconds_since_epoch;
 }
 
 int rs::Connection:: getLastConnectionId()

@@ -69,6 +69,7 @@ namespace rs
         
         void onEnd();
         void onStart();
+        void onResponseReceived();
         
         virtual std::string edgeTransport()const = 0;
         
