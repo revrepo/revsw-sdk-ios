@@ -383,14 +383,14 @@ namespace rs
     
     bool rs::Model::shouldCollectRequestsData()
     {
-        auto conf = mConfService->getActive();
-        
-        RSStatsReportingLevel statsReportingLevel = conf->statsReportingLevel;
-        RSOperationModeInner operationMode        = conf->operationMode;
-        
         bool shouldCollect;
         {
             std::lock_guard<std::mutex> scopedLock(mLock);
+            auto conf = mConfService->getActive();
+            
+            RSStatsReportingLevel statsReportingLevel = conf->statsReportingLevel;
+            RSOperationModeInner operationMode        = conf->operationMode;
+            
             shouldCollect = statsReportingLevel == kRSStatsReportingLevelRelease || statsReportingLevel == kRSStatsReportingLevelDebug;
             shouldCollect = shouldCollect && (operationMode == kRSOperationModeInnerReport || operationMode == kRSOperationModeInnerTransportAndReport);
         }
@@ -407,7 +407,6 @@ namespace rs
     
     void Model::debug_disableDebugMode()
     {
-        std::lock_guard<std::mutex> scopedLock(mLock);
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
         }, [this](){
@@ -415,6 +414,7 @@ namespace rs
             mStatsHandler->stopMonitoring();
         });
         
+        std::lock_guard<std::mutex> scopedLock(mLock);
         mConfService = std::unique_ptr<ConfigurationService>(conf);
         mConfService->init();
         Log::info(kLogTagSDKConfiguration, "Recovering standard configuration service");
