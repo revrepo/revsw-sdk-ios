@@ -213,15 +213,15 @@ namespace rs
     void data_storage::saveIntForKey(const std::string& aKey, int64_t aVal)
     {
         NSString* nsKey = NSStringFromStdString(aKey);
-        
-        [[NSUserDefaults standardUserDefaults] setInteger:aVal forKey:nsKey];
+        [[NSUserDefaults standardUserDefaults] setObject:@(aVal) forKey:nsKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
     
     int64_t data_storage::getIntForKey(const std::string& aKey)
     {
-        NSString* nsKey = NSStringFromStdString(aKey);
-        
-        int64_t val = [[NSUserDefaults standardUserDefaults] integerForKey:nsKey];
+        NSString* nsKey  = NSStringFromStdString(aKey);
+        NSNumber* number = [[NSUserDefaults standardUserDefaults] objectForKey:nsKey];
+        int64_t val      = number.longLongValue;
         
         return val;
     }

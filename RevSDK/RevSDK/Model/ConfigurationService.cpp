@@ -20,7 +20,6 @@ const std::string kTimestampKey = "kRS_timestamp";
 //todo : remove
 
 ConfigurationService::ConfigurationService(IConfvigServDelegate* aDelegate, std::function<bool()> fExternalStaleCond, std::function<void()> aStaleCallback) :
-    mUpdateEnabledFlag(true),
     mDelegate(aDelegate),
     mStaleOnFlag(false),
     mStaleCallback(aStaleCallback)
@@ -85,12 +84,10 @@ void ConfigurationService::stopUpdate()
 {
     std::shared_ptr<Configuration> config = mActiveConfiguration;
     data_storage::saveConfiguration(*config);
-    mUpdateEnabledFlag.store(false);
 }
 
 void ConfigurationService::resumeUpdate()
 {
-    mUpdateEnabledFlag.store(true);
     {
         Configuration configuration = data_storage::configuration();
         mActiveConfiguration = std::make_shared<Configuration>(configuration);
@@ -143,26 +140,16 @@ void ConfigurationService::loadConfiguration()
                 mLastUpdated = std::chrono::system_clock::now();
                 data_storage::saveIntForKey(kTimestampKey, mLastUpdated.load().time_since_epoch().count());
                 
-                if (mUpdateEnabledFlag)
-                {
-                    mActiveConfiguration = std::make_shared<Configuration>(configuration);
-                    
-                    Log::info(kLogTagSDKConfiguration,
-                              "ConfigurationService: new conf applied, mode_id %d", (int)configuration.operationMode);
-                    
-                    mDelegate->applyConfiguration(mActiveConfiguration);
-                    mDelegate->scheduleStatsReporting();
-                    
-                    refreshInterval = mActiveConfiguration->refreshInterval;
-                    data_storage::saveConfiguration(configuration);
-                }
-                else
-                {
-                    rs::Log::warning(kLogTagSDKConfiguration, "Update disabled");
-                    data_storage::saveConfiguration(configuration);
-                    
-                    refreshInterval = configuration.refreshInterval;
-                }
+                mActiveConfiguration = std::make_shared<Configuration>(configuration);
+                
+                Log::info(kLogTagSDKConfiguration,
+                          "ConfigurationService: new conf applied, mode_id %d", (int)configuration.operationMode);
+                
+                mDelegate->applyConfiguration(mActiveConfiguration);
+                mDelegate->scheduleStatsReporting();
+                
+                refreshInterval = mActiveConfiguration->refreshInterval;
+                data_storage::saveConfiguration(configuration);
                 
                 // QUIC
                 if (QUICSession::instance()->host() != Model::instance()->edgeHost())

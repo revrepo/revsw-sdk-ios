@@ -43,8 +43,6 @@ namespace rs
         
         std::unique_ptr<Timer>         mConfigurationRefreshTimer;
         
-        std::atomic<bool> mUpdateEnabledFlag;
-        
         std::unique_ptr<Network> mNetwork;
         
         std::function<bool()> cbAdditionalStaleCondition;

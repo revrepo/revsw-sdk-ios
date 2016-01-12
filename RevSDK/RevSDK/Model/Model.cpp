@@ -399,6 +399,7 @@ namespace rs
     
     void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         mConfService = std::unique_ptr<IConfigurationService>(aNewService);
         Log::info(kLogTagSDKConfiguration, "Replacing configuration service on mock");
     }
@@ -406,6 +407,7 @@ namespace rs
     
     void Model::debug_disableDebugMode()
     {
+        std::lock_guard<std::mutex> scopedLock(mLock);
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
         }, [this](){

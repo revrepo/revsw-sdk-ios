@@ -85,6 +85,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     if ([XRevHostHeader isEqualToString:edgeHostString])
     {
         Log::error(kLogTagSTDRequest,  "Request host set to %s", [edgeHostString UTF8String]);
+       // abort();
     }
 
     [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
