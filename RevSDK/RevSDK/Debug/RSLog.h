@@ -31,6 +31,9 @@ namespace rs
     static const int kLogTagQUICMIN     = 20;
     static const int kLogTagQUICMAX     = 29;
 
+    static const int kLogTagPerfMIN     = 30;
+    static const int kLogTagPerfMAX     = 39;
+
     // SDK
     static const int kLogTagSDKStats             = kLogTagSDKMIN + 0;
     static const int kLogTagSDKLastMile          = kLogTagSDKStats + 1;
@@ -49,6 +52,8 @@ namespace rs
     static const int kLogTagQUICNetwork           = kLogTagQUICMIN + 2;
     static const int kLogTagQUICTraffic           = kLogTagQUICMIN + 3;
     
+    // Performance
+    static const int kLogTagPerfMemory     = kLogTagPerfMIN + 0;
 
 
     class Traffic

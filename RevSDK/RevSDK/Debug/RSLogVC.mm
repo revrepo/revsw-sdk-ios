@@ -129,6 +129,10 @@
             for (int i = rs::kLogTagSDKMIN; i <= rs::kLogTagSDKMAX; ++i)
                 tags.insert(i);
             break;
+        case 4: // Performance
+            for (int i = rs::kLogTagPerfMIN; i <= rs::kLogTagPerfMAX; ++i)
+                tags.insert(i);
+            break;
         default:
             break;
     }
@@ -179,6 +183,7 @@
     [self.domainPicker addButtonWithTitle:@"QUIC"];
     [self.domainPicker addButtonWithTitle:@"STD"];
     [self.domainPicker addButtonWithTitle:@"SDK"];
+    [self.domainPicker addButtonWithTitle:@"Performance"];
     NSInteger cb = [self.domainPicker addButtonWithTitle:@"Cancel"];
     self.domainPicker.cancelButtonIndex = cb;
     self.domainPicker.delegate = self;
@@ -203,7 +208,7 @@
 {
     [super viewDidLoad];
     self.levels = @[@"ALL", @"INF", @"WRN", @"ERR"];
-    self.domains = @[@"ANY", @"QUIC", @"STD", @"SDK"];
+    self.domains = @[@"ANY", @"QUIC", @"STD", @"SDK", @"Perf"];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"LOG";
     UIBarButtonItem* bbi = nil;

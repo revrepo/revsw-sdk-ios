@@ -120,8 +120,8 @@ namespace rs
     
     //operation mode strings
     NSString* const kRSOperationModeOffString            = @"off";
-    NSString* const kRSOperationModeTransferString       = @"transfer";
-    NSString* const kRSOperationModeReportString         = @"report";
+    NSString* const kRSOperationModeTransferString       = @"transfer_only";
+    NSString* const kRSOperationModeReportString         = @"report_only";
     NSString* const kRSOperationModeTransferReportString = @"transfer_and_report";
     
     std::vector<std::string> vectorFromNSArray(NSArray<NSString *>* aArray)

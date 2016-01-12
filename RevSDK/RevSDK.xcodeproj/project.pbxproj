@@ -18,6 +18,8 @@
 		114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 114D65861C34502C00C2D176 /* DebugUsageTracker.mm */; };
 		114D658D1C3476E400C2D176 /* NSURL+RevSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */; };
 		114D658E1C3476E400C2D176 /* NSURL+RevSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */; };
+		116C4D6A1C456FB5000CE641 /* RSSupervisor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 116C4D681C456FB5000CE641 /* RSSupervisor.cpp */; };
+		116C4D6B1C456FB5000CE641 /* RSSupervisor.h in Headers */ = {isa = PBXBuildFile; fileRef = 116C4D691C456FB5000CE641 /* RSSupervisor.h */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
 		11C1968B1C3FAF4600F28120 /* RSLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C196891C3FAF4600F28120 /* RSLog.cpp */; };
@@ -166,6 +168,8 @@
 		114D65861C34502C00C2D176 /* DebugUsageTracker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DebugUsageTracker.mm; sourceTree = "<group>"; };
 		114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RevSDK.h"; sourceTree = "<group>"; };
 		114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RevSDK.m"; sourceTree = "<group>"; };
+		116C4D681C456FB5000CE641 /* RSSupervisor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSSupervisor.cpp; sourceTree = "<group>"; };
+		116C4D691C456FB5000CE641 /* RSSupervisor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSupervisor.h; sourceTree = "<group>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
 		11C196891C3FAF4600F28120 /* RSLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSLog.cpp; sourceTree = "<group>"; };
@@ -350,6 +354,8 @@
 				1109F3C91C40091900ABB160 /* RSLogVC.mm */,
 				1109F3D41C401FD700ABB160 /* RSEntryVC.h */,
 				1109F3D51C401FD700ABB160 /* RSEntryVC.m */,
+				116C4D691C456FB5000CE641 /* RSSupervisor.h */,
+				116C4D681C456FB5000CE641 /* RSSupervisor.cpp */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -711,6 +717,7 @@
 				6D1F860E1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp in Headers */,
 				6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */,
 				5BEBD72D1C22B05C002EC0CB /* RequestStatsHandler.hpp in Headers */,
+				116C4D6B1C456FB5000CE641 /* RSSupervisor.h in Headers */,
 				1109F3E41C41580E00ABB160 /* RSStandardSession.h in Headers */,
 				5B46D1E91C217C9700A9834C /* NativeStatsHandler.h in Headers */,
 				11C9621E1C2D54C000CDE34D /* QUICSession.h in Headers */,
@@ -903,6 +910,7 @@
 				5B20359B1C33FF7000A28C01 /* GCDAsyncUdpSocket.m in Sources */,
 				6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */,
 				5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */,
+				116C4D6A1C456FB5000CE641 /* RSSupervisor.cpp in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B2035A11C3404DC00A28C01 /* RSIPUtils.m in Sources */,
 				11F24B4A1C3D695D00DABAE5 /* RSUDPService.cpp in Sources */,

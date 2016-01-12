@@ -20,8 +20,8 @@ namespace rs
     public:
         void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
         {
-            if (aLevel == Log::Level::Info && aTag != kLogTagQUICRequest)
-                return;
+            //if (aLevel == Log::Level::Info && aTag != kLogTagQUICRequest)
+            //    return;
             std::cout << Log::levelToString(aLevel) << "|" << std::setw(3) << aTag << ": " << aMessage << std::endl;
         }
     };

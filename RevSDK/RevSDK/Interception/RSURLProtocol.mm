@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) NSURLConnection* nativeConnection;
 @property (nonatomic, strong) RSURLConnection* connection;
-@property (nonatomic, strong) NSMutableData* data;
+@property (nonatomic, readwrite, assign) NSInteger dataLength;
 @property (nonatomic, strong) RSURLConnectionNative* directConnection;
 @property (nonatomic, copy)   NSURLResponse* response;
 
@@ -72,7 +72,7 @@
 
 - (void)startLoading
 {
-    self.data = [NSMutableData data];
+    self.dataLength = 0;
     
     if ([self shouldRedirectRequest:self.request])
     {
@@ -98,7 +98,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:kRSURLProtocolStoppedLoadingNotification
                                                         object:nil
                                                       userInfo:@{
-                                                                 kRSDataKey : @([self.data length])
+                                                                 kRSDataKey : @(self.dataLength)
                                                                  }];
 }
 
@@ -138,7 +138,7 @@
 
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
-    [self.data appendData:aData];
+    self.dataLength += aData.length;
     [self.client URLProtocol:self didLoadData:aData];
 }
 
@@ -170,7 +170,8 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)aData
 {
-    [self.data appendData:aData];
+    //[self.data appendData:aData];
+    self.dataLength += aData.length;
     [self.client URLProtocol:self didLoadData:aData];
 }
 
@@ -190,7 +191,7 @@
 {
     if (rs::Model::instance()->shouldCollectRequestsData())
     {
-        self.directConnection.totalBytesReceived = @(self.data.length);
+        self.directConnection.totalBytesReceived = @(self.dataLength);
         NSDate* now                              = [NSDate date];
         NSTimeInterval interval                  = [now timeIntervalSince1970];
         int64_t timestamp                        = interval * 1000;
