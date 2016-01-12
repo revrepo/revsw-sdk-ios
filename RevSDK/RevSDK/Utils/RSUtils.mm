@@ -776,4 +776,39 @@ namespace rs
          
          return reachability.rs_currentReachabilityStatus != kRSNotReachable;
      }
+    
+    bool _areDomainNamesEqual(NSString* aDomainName1, NSString* aDomainName2)
+    {
+        if (![aDomainName1 hasPrefix:@"http://"] && ![aDomainName1 hasPrefix:@"https://"])
+        {
+            aDomainName1 = [@"http://" stringByAppendingString:aDomainName1];
+        }
+        
+        if (![aDomainName2 hasPrefix:@"http://"] && ![aDomainName2 hasPrefix:@"https://"])
+        {
+            aDomainName2 = [@"http://" stringByAppendingString:aDomainName2];
+        }
+        
+        NSURL* URL1 = [NSURL URLWithString:aDomainName1];
+        NSURL* URL2 = [NSURL URLWithString:aDomainName2];
+        
+        NSString* host1 = URL1.host;
+        NSString* host2 = URL2.host;
+        
+        NSRange range = [host1 rangeOfString:@"www."];
+        
+        if (range.location == 0)
+        {
+            host1 = [host1 stringByReplacingCharactersInRange:range withString:@""];
+        }
+        
+        range = [host2 rangeOfString:@"www."];
+        
+        if (range.location == 0)
+        {
+            host2 = [host2 stringByReplacingCharactersInRange:range withString:@""];
+        }
+        
+        return [host1 isEqualToString:host2];
+    }
 }

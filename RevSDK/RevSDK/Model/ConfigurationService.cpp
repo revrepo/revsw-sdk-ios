@@ -170,7 +170,7 @@ void ConfigurationService::loadConfiguration()
             }
             else
             {
-                Log::error(kLogTagSDKConfiguration, "Failed to load configuration.");
+                Log::error(kLogTagSDKConfiguration, "Failed to validate configuration.");
             }
         }
         else

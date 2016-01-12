@@ -107,11 +107,9 @@ namespace rs
         void initialize(std::string aSDKKey);
         
         RSOperationModeInner currentOperationMode();
-         
-//      void setOperationMode(const RSOperationModeInner& aOperationMode);
         
         bool canTransport();
-        //void switchWhiteListOption(bool aOn);
+        
         bool shouldTransportDomainName(std::string aDomainName);
         bool isDomainNameProvisioned(std::string aDomainName);
         
@@ -121,7 +119,6 @@ namespace rs
         
         bool shouldCollectRequestsData();
         
-        //void debug_enableDebugMode();
         void debug_disableDebugMode();
         void debug_replaceConfigurationService(IConfigurationService* aNewService);
         

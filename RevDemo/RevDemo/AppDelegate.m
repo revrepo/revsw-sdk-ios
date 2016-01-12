@@ -39,8 +39,6 @@
     [RevSDK startWithSDKKey:@"42e276ea-1823-4945-baa4-8747f08d0abe"];
     [Fabric with:@[[Crashlytics class]]];
     
-    NSLog(@"LOG TEST");
-
     return YES;
 }
 

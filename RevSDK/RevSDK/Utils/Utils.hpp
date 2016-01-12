@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <string>
 #include <map>
+#include <vector>
 
 namespace rs
 {
@@ -103,6 +104,8 @@ typedef enum
     long long timestampMS();
     std::string timestampMSAsStr();
     bool internetConnectionAvailable();
+    bool areDomainNamesEqual(const std::string&, const std::string&);
+    bool domainsContainDomainName(const std::vector<std::string>&, const std::string&);
 }
 
 #endif /* Utils_hpp */

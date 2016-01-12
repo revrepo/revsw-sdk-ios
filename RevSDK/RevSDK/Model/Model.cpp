@@ -278,18 +278,6 @@ namespace rs
         addEvent(kLogLevelInfo, 3, "SDK Initialized", 0.0f, kRSLogginLevelInfo);
     }
     
-//    void Model::setOperationMode(const RSOperationModeInner& aOperationMode)
-//    {
-//        std::lock_guard<std::mutex> scopedLock(mLock);
-//        auto activeConf = mConfService->getActive();
-//#ifdef RS_ENABLE_DEBUG_LOGGING
-//        std::cout<<"RevSDK.Model::setOperationMode  peviousModeID::"
-//        << activeConf->operationMode<<" -> "<<" newModeID:"<<aOperationMode<<std::endl;
-//#endif
-//        
-//        mConfService->setOperationMode(aOperationMode);
-//    }
-    
     RSOperationModeInner Model::currentOperationMode()
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
@@ -308,23 +296,6 @@ namespace rs
         return flag;
     }
     
-//    void Model::switchWhiteListOption(bool aOn)
-//    {
-//        std::lock_guard<std::mutex> scopedLock(mLock);
-//        
-//        auto conf = mConfService->getActive();
-//        
-//        if (aOn)
-//        {
-//           conf->domainsWhiteList = mSpareDomainsWhiteList;
-//        }
-//        else
-//        {
-//           mSpareDomainsWhiteList = conf->domainsWhiteList;
-//           conf->domainsWhiteList.clear();
-//        }
-//    }
-    
     bool rs::Model::shouldTransportDomainName(std::string aDomainName)
     {
         if (!canTransport())
@@ -335,27 +306,18 @@ namespace rs
         std::lock_guard<std::mutex> scopedLock(mLock);
         
         auto conf = mConfService->getActive();
-        
-        auto begin = conf->domainsBlackList.begin();
-        auto end   = conf->domainsBlackList.end();
-        
-        if (std::find(begin, end, aDomainName) != end)
+
+        if (domainsContainDomainName(conf->domainsBlackList, aDomainName))
         {
             return false;
         }
         
-        begin = conf->domainsProvisionedList.begin();
-        end   = conf->domainsProvisionedList.end();
-        
-        if (std::find(begin, end, aDomainName) != end)
+        if (domainsContainDomainName(conf->domainsProvisionedList, aDomainName))
         {
             return true;
         }
         
-        begin = conf->domainsWhiteList.begin();
-        end   = conf->domainsWhiteList.end();
-        
-        if (std::find(begin, end, aDomainName) != end)
+        if (domainsContainDomainName(conf->domainsWhiteList, aDomainName))
         {
             return true;
         }

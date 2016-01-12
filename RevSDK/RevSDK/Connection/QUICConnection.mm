@@ -101,7 +101,6 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     if (aRequest->host() == mEdgeHost)
     {
         Log::error(kLogTagQUICRequest, "Request host set to %s", notNullString(mEdgeHost));
-        //abort();
     }
     
     headers["X-Rev-Host"] = aRequest->host();

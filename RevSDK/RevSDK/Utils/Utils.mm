@@ -210,15 +210,26 @@ namespace rs
         return _internetConnectionAvailable();
     }
 
-//    std::string stringMapToString(const std::map<std::string, std::string>& aMap)
-//    {
-//        std::string result;
-//        bool first = true;
-//        for (const auto& m : aMap)
-//        {
-//            result += ((first ? "\n" : "") + m.first + " " + m.second);
-//            first = false;
-//        }
-//        return result;
-//    }
+    bool areDomainNamesEqual(const std::string& aDomainName1, const std::string& aDomainName2)
+    {
+        NSString* name1 = NSStringFromStdString(aDomainName1);
+        NSString* name2 = NSStringFromStdString(aDomainName2);
+        
+        return _areDomainNamesEqual(name1, name2);
+    }
+    
+    bool domainsContainDomainName(const std::vector<std::string>& aDomains, const std::string& aDomainName)
+    {
+        for (const std::string& domain : aDomains)
+        {
+            bool areEqual = areDomainNamesEqual(domain, aDomainName);
+            
+            if (areEqual)
+            {
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

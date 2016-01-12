@@ -59,7 +59,7 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
                                                                  completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                                                    
+                                                                     
                                                                      NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                                                      
                                                                      if (httpResponse.statusCode != kRSResponseStatusCodeOk)
