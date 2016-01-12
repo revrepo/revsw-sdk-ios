@@ -126,6 +126,8 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
 void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicDataStream* aStream,
                                    const net::SpdyHeaderBlock& aHedaers, int aCode)
 {
+    onResponseReceived();
+    
     std::string dump;
     long long now = timestampMS();
     dump += "timestamp = " + longLongToStr(now);

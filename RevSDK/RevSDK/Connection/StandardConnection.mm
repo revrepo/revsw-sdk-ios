@@ -114,6 +114,8 @@ void StandardConnection::didReceiveData(void* aData)
 
 void StandardConnection::didReceiveResponse(void* aResponse)
 {
+    onResponseReceived();
+    
     NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
     NSString* originalURL = NSStringFromStdString(mCurrentRequest->originalURL());
     NSHTTPURLResponse* processedResponse = [[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:originalURL]
