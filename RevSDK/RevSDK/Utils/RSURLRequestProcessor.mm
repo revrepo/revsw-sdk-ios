@@ -37,10 +37,10 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     
     NSMutableURLRequest* newRequest     = [aRequest mutableCopy];
     NSURL* url = newRequest.URL;
-    if (url.host == nil)
+    if (url.host.length == 0)
     {
         url = [NSURL URLWithString:url.absoluteString relativeToURL:aBaseURL];
-        if (url.host == nil)
+        if (url.host.length == 0)
         {
             return nil;
         }
@@ -75,6 +75,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     {
         NSString* edgeHost = rs::NSStringFromStdString(rs::Model::instance()->edgeHost());
         NSRange range = [urlStr rangeOfString:host];
+        
         urlStr = [urlStr stringByReplacingCharactersInRange:range withString:edgeHost];
     }
     
