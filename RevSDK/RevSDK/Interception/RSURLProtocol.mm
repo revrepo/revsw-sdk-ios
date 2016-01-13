@@ -25,6 +25,8 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
+    return NO;
+    
     NSArray* forbiddenSchemes = @[rs::kRSDataSchemeName, rs::kRSMoatBridgeSchemeName];
     
     if ([forbiddenSchemes containsObject:aRequest.URL.scheme])
