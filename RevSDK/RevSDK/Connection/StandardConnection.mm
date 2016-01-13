@@ -120,11 +120,11 @@ void StandardConnection::didReceiveResponse(void* aResponse)
     
     NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
     
-    if (response.statusCode > 500)
+    if (response.statusCode > 400)
     {
         rs::Log::error(rs::kLogTagSDKInerception, (rs::stdStringFromNSString(response.URL.absoluteString) + " returned error " + std::to_string(response.statusCode)).c_str() );
         
-        NSLog(@"Response %@ Request %@", response.URL.absoluteString, URLRequestFromRequest(mCurrentRequest).URL.absoluteString);
+        NSLog(@"Response %@ %@ Request %@ %@", response.URL.absoluteString, response, URLRequestFromRequest(mCurrentRequest).URL.absoluteString, URLRequestFromRequest(mCurrentRequest).allHTTPHeaderFields);
     }
     
     NSString* originalURL = NSStringFromStdString(mCurrentRequest->originalURL());
@@ -156,7 +156,7 @@ void StandardConnection::didCompleteWithError(void* aError)
     else
     {
         NSError* error = (__bridge NSError*)aError;
-        
+        NSLog(@"ERROR %@", error);
         Error rsError = errorFromNSError(error);
         
         Log::warning(kLogTagSTDStandardConnection,  "Connection failed with an error, code = %d",rsError.code);

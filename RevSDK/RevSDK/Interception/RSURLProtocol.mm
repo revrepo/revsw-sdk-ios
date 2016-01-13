@@ -82,8 +82,6 @@
     }
     else
     {
-        
-        abort();
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
