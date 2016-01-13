@@ -179,7 +179,12 @@ void ConfigurationService::loadConfiguration()
         }
     };
     
-    mNetwork->loadConfiguration(Model::instance()->SDKKey(), completionBlock);
+    std::string configurationApiURL = mActiveConfiguration->configurationApiURL;
+    std::string SDKKey              = Model::instance()->SDKKey();
+    bool apiURLValid                = isValidURL(configurationApiURL);
+    std::string loadURL             = apiURLValid ? configurationApiURL + "/" + SDKKey : loadConfigurationURL(SDKKey);
+    
+    mNetwork->loadConfiguration(loadURL, completionBlock);
 }
 
 bool ConfigurationService::isStale() const

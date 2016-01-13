@@ -33,7 +33,7 @@ namespace rs
         Network();
         ~Network();
         
-        void loadConfiguration(const std::string &, std::function<void(const Data&, const Error&)> aCompletionBlock);
+        void loadConfiguration(const std::string&, std::function<void(const Data&, const Error&)> aCompletionBlock);
         
         void sendStats(std::string aURL, const Data&, std::function<void(const Error&)>);
         
