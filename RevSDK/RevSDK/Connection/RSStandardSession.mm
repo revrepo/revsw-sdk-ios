@@ -211,6 +211,8 @@ namespace rs
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
+    NSLog(@"REDIRECT REQUEST %@ %@", request.URL.absoluteString, request.allHTTPHeaderFields);
+    
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
 
     if (!request)

@@ -82,6 +82,8 @@
     }
     else
     {
+        
+        abort();
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
@@ -128,10 +130,19 @@
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
         NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*)response;
+        
+       /* if (httpResp.statusCode > 500)
+        {
+            rs::Log::error(rs::kLogTagSDKInerception, (rs::stdStringFromNSString(httpResp.URL.absoluteString) + " returned error " + std::to_string(httpResp.statusCode)).c_str() );
+            
+            NSLog(@"Response %@", httpResp);
+        }*/
+        
         NSString* dump = [NSString stringWithFormat:@"URL=%@, SFN=%@, Headers:\n%@",
                           response.URL, response.suggestedFilename, httpResp.allHeaderFields];
         rs::Log::info(rs::kLogTagSDKInerception, "Response %s", rs::stdStringFromNSString(dump).c_str());
     }
+    
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 

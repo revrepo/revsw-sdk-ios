@@ -30,6 +30,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
 
 + (NSMutableURLRequest *)proccessRequest:(NSURLRequest *)aRequest isEdge:(BOOL)aIsEdge baseURL:(NSURL*)aBaseURL
 {
+    // NSLog(@"PROCESS REQUEST 1 %@", aRequest);
     if ([aRequest.URL.scheme isEqualToString:rs::kRSDataSchemeName])
     {
         rs::Log::info(rs::kLogTagSTDRequest, "Data scheme is being used");
@@ -92,6 +93,8 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     url = [NSURL URLWithString:urlStr];
     [newRequest setURL:url];
 
+    // NSLog(@"PROCESS REQUEST 2 %@ %@", newRequest, newRequest.allHTTPHeaderFields);
+    
     return newRequest;
 
 

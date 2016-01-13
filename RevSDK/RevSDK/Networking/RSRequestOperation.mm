@@ -53,12 +53,16 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     }
     
     NSString* bodyString = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
-    NSLog(@"BODY %@", bodyString);
+   // NSLog(@"BODY %@", bodyString);
     
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
                                                                  completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
+                                                                     
+                                                                     NSString* string = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
+                                                                     
+                                                                    // NSLog(@"DATA %@", string);
                                                                      
                                                                      NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse *)aResponse;
                                                                      

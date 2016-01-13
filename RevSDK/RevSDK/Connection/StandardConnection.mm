@@ -86,6 +86,8 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     {
         Log::error(kLogTagSTDRequest,  "Request host set to %s", [edgeHostString UTF8String]);
     }
+    
+    //NSLog(@"REQUEST ABSOLUTE STRING %@", mutableRequest.URL.absoluteString);
 
     [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
     
@@ -117,6 +119,14 @@ void StandardConnection::didReceiveResponse(void* aResponse)
     onResponseReceived();
     
     NSHTTPURLResponse* response = (__bridge NSHTTPURLResponse *)aResponse;
+    
+    if (response.statusCode > 500)
+    {
+        rs::Log::error(rs::kLogTagSDKInerception, (rs::stdStringFromNSString(response.URL.absoluteString) + " returned error " + std::to_string(response.statusCode)).c_str() );
+        
+        //NSLog(@"Response %@ Request %@", response.URL.absoluteString, URLRequestFromRequest(mCurrentRequest).URL.absoluteString);
+    }
+    
     NSString* originalURL = NSStringFromStdString(mCurrentRequest->originalURL());
     NSHTTPURLResponse* processedResponse = [[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:originalURL]
                                                                        statusCode:response.statusCode

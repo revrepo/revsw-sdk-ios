@@ -388,11 +388,11 @@ namespace rs
     }
     
     void Model::logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
-    {
+    {return;
         if (!mEventTriggerOn || !mEventTriggerCallback)
             return;
         
-        if (aTag >= kLogTagQUICMIN && aTag <= kLogTagQUICMAX && (aLevel == Log::Level::Warning || aLevel == Log::Level::Error))
+        if (aTag >= kLogTagSDKMIN && aTag <= kLogTagSDKMAX && (aLevel == Log::Level::Warning || aLevel == Log::Level::Error))
         {
             std::string title = "QUIC";
             
