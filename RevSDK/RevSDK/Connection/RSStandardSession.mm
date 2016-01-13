@@ -211,7 +211,7 @@ namespace rs
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
-    NSLog(@"REDIRECT REQUEST %@ %@", request.URL.absoluteString, request.allHTTPHeaderFields);
+    NSLog(@"REDIRECT REQUEST %@ %@ RESPONSE %@", request.URL.absoluteString, request.allHTTPHeaderFields, response);
     
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
 
@@ -232,6 +232,7 @@ namespace rs
         NSString* nsEdgeHost   = rs::NSStringFromStdString(edgeHost);
         BOOL shouldModify      = ![request.URL.host isEqualToString:nsEdgeHost];
         NSMutableURLRequest* r = shouldModify ? [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL] : [request mutableCopy];
+        NSLog(@"MODIFIED REQUEST %@ %@", r, r.allHTTPHeaderFields);
         
         if (r != nil)
             [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];

@@ -55,7 +55,7 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
         return nil;
 
     NSString* urlStr = [url absoluteString];
-    BOOL isProvisioned                  = rs::Model::instance()->isDomainNameProvisioned(rs::stdStringFromNSString(host));
+    BOOL isProvisioned = rs::Model::instance()->isDomainNameProvisioned(rs::stdStringFromNSString(host));
     NSString* sdkKey = rs::NSStringFromStdString(rs::Model::instance()->SDKKey());
     NSString* hostHeaderValue = nil;
 

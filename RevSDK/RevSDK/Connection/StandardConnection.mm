@@ -124,7 +124,7 @@ void StandardConnection::didReceiveResponse(void* aResponse)
     {
         rs::Log::error(rs::kLogTagSDKInerception, (rs::stdStringFromNSString(response.URL.absoluteString) + " returned error " + std::to_string(response.statusCode)).c_str() );
         
-        //NSLog(@"Response %@ Request %@", response.URL.absoluteString, URLRequestFromRequest(mCurrentRequest).URL.absoluteString);
+        NSLog(@"Response %@ Request %@", response.URL.absoluteString, URLRequestFromRequest(mCurrentRequest).URL.absoluteString);
     }
     
     NSString* originalURL = NSStringFromStdString(mCurrentRequest->originalURL());

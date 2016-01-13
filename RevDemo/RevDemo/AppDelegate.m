@@ -40,6 +40,26 @@
     [RevSDK startWithSDKKey:@"6f781276-7e1b-49a9-9dea-e08436867ef2"];
     [Fabric with:@[[Crashlytics class]]];
     
+   /* dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(10 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        NSString* str = @"https://rev-200.revdn.net/load/?p=204&g=152&buid=EL-00000001008227986&j=0";
+        NSURL* URL = [NSURL URLWithString:str];
+        NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+        [request setValue:@"loadus.exelator.com" forHTTPHeaderField:@"X-Rev-Host"];
+        [request setValue:@"6f781276-7e1b-49a9-9dea-e08436867ef2.revsdk.net" forHTTPHeaderField:@"Host"];
+        [request setValue:@"https" forHTTPHeaderField:@"X-Rev-Proto"];
+        NSLog(@"REQUEST %@ %@", request, request.allHTTPHeaderFields);
+        NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
+                                                                 completionHandler:^(NSData* d, NSURLResponse* r, NSError* e){
+                                                                 
+                                                                     NSLog(@"RESPONSE %@", r);
+                                                                     
+                                                                 }];
+        
+        [task resume];
+    });
+    */
+    
     return YES;
 }
 
