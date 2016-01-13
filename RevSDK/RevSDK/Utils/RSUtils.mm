@@ -44,7 +44,7 @@ namespace rs
     
     //Rev Host
     const std::string kRSRevBaseHost   = "revsdk.net";
-    const std::string kRSLoadConfigurationEndPoint = "/sdk/config/";
+    const std::string kRSLoadConfigurationEndPoint = "/v1/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
     NSString* const kRSRevLoadConfigurationHost = @"iad02-api03.revsw.net";
     NSString* const kRSRevHostHeader = @"X-Rev-Host";
@@ -387,7 +387,7 @@ namespace rs
     
     std::string _loadConfigurationURL(const std::string& aSDKKey)
     {
-        const std::string path = "/v" + std::to_string((int)kRSSDKVersion) + kRSLoadConfigurationEndPoint + aSDKKey;
+        const std::string path = kRSLoadConfigurationEndPoint + aSDKKey;
         return URLWithComponents(kHTTPSProtocolName, stdStringFromNSString(kRSRevLoadConfigurationHost), path);
     }
     
