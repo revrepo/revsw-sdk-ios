@@ -84,6 +84,7 @@ namespace rs
     extern NSString* const kRSStandardProtocolName;
     extern NSString* const kRSRevProtocolName;
     extern NSString* const kRSDataSchemeName;
+    extern NSString* const kRSMoatBridgeSchemeName;
     
     // log levels
     extern NSString* const kRSLogLevelNone;

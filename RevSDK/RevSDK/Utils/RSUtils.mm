@@ -111,6 +111,7 @@ namespace rs
     NSString* const kRSStandardProtocolName = @"standard";
     NSString* const kRSRevProtocolName = @"rev";
     NSString* const kRSDataSchemeName = @"data";
+    NSString* const kRSMoatBridgeSchemeName = @"moat-bridge";
     
     //log levels
     NSString* const kRSLogLevelNone  = @"none";
