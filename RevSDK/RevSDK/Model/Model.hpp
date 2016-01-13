@@ -63,7 +63,7 @@ namespace rs
         Network mNetwork;
         ProtocolSelector mProtocolSelector;
         
-        std::unique_ptr<IConfigurationService> mConfService;
+        std::shared_ptr<IConfigurationService> mConfService;
         //std::unique_ptr<IConfigurationService> mCachedConfService;
         
         std::vector<std::string> mSpareDomainsWhiteList; // used for switching between white-list and non-white-list options

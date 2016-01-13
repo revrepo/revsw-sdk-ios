@@ -225,7 +225,14 @@ namespace rs
     }
     else
     {
-        NSMutableURLRequest* r =  [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL];
+        int connectionId = [task.taskDescription intValue];
+        std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
+        
+        std::string edgeHost   = connection->edgeHost();
+        NSString* nsEdgeHost   = rs::NSStringFromStdString(edgeHost);
+        BOOL shouldModify      = ![request.URL.host isEqualToString:nsEdgeHost];
+        NSMutableURLRequest* r = shouldModify ? [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL] : [request mutableCopy];
+        
         if (r != nil)
             [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
         else

@@ -68,7 +68,7 @@ namespace rs
             mStatsHandler->stopMonitoring();
         });
         
-        mConfService               = std::unique_ptr<ConfigurationService>(conf);
+        mConfService               = std::shared_ptr<ConfigurationService>(conf);
         mStatsReportingTimer       = nullptr; 
         mSpareDomainsWhiteList     = std::vector<std::string>();
         mUsageTracker              = std::make_shared<DebugUsageTracker>();
@@ -131,7 +131,8 @@ namespace rs
     std::string Model::edgeHost()
     {
         //std::lock_guard<std::mutex> scopedLock(mLock);
-        return mConfService->getActive()->edgeHost;
+        std::shared_ptr<IConfigurationService> local = mConfService;
+        return local->getActive()->edgeHost;
     }
     
     std::shared_ptr<Protocol>  Model::currentProtocol()
@@ -362,7 +363,7 @@ namespace rs
     void Model::debug_replaceConfigurationService(IConfigurationService* aNewService)
     {
         std::lock_guard<std::mutex> scopedLock(mLock);
-        mConfService = std::unique_ptr<IConfigurationService>(aNewService);
+        mConfService = std::shared_ptr<IConfigurationService>(aNewService);
         Log::info(kLogTagSDKConfiguration, "Replacing configuration service on mock");
     }
     
@@ -377,7 +378,7 @@ namespace rs
         });
         
         std::lock_guard<std::mutex> scopedLock(mLock);
-        mConfService = std::unique_ptr<ConfigurationService>(conf);
+        mConfService = std::shared_ptr<ConfigurationService>(conf);
         mConfService->init();
         Log::info(kLogTagSDKConfiguration, "Recovering standard configuration service");
     }

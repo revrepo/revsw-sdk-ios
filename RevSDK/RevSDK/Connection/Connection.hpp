@@ -71,6 +71,8 @@ namespace rs
         void onStart();
         void onResponseReceived();
         
+        std::string edgeHost() const;
+        
         virtual std::string edgeTransport()const = 0;
         
         virtual void didReceiveData(void* ) = 0;

@@ -60,3 +60,8 @@ int rs::Connection:: getLastConnectionId()
     
     return lastConnectionId;
 }
+
+std::string rs::Connection::edgeHost() const
+{
+    return mEdgeHost;
+}
