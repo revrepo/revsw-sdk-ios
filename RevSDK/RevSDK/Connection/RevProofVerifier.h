@@ -19,10 +19,13 @@
 #pragma once
 
 #include "QUICHeaders.h"
+#include "LeakDetector.h"
 // Dummy server's certificates verifier that always returns true.
 
 class RevProofVerifier : public net::ProofVerifier
 {
+    REV_LEAK_DETECTOR(RevProofVerifier);
+    
 public:
     
     virtual net::QuicAsyncStatus VerifyProof(const std::string& hostname,

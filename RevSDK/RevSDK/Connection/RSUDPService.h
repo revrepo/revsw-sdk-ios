@@ -15,11 +15,14 @@
 
 #include "RSUDPSocket.h"
 #include "Data.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
     class UDPService
     {
+        REV_LEAK_DETECTOR(UDPService);
+        
     private:
         struct Info
         {

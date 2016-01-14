@@ -13,6 +13,7 @@
 #import "UIViewController+RTUtils.h"
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
+#import "NSURLCache+ForceNoCache.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5; 
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
@@ -54,8 +55,7 @@ static const NSInteger kSuccessCode = 200;
     };
     
     self.cancelBlock = ^{
-    
-        [[weakSelf webView] stopLoading];
+        [weakSelf dismissDynamicWebView];
     };
     
      [self initializeTestModel];
@@ -97,7 +97,7 @@ static const NSInteger kSuccessCode = 200;
     
     if (!parent)
     {
-        [self.webView stopLoading];
+        [self dismissDynamicWebView];
         [self setWhiteListOption:YES];
     }
 }
@@ -136,6 +136,10 @@ static const NSInteger kSuccessCode = 200;
         [storage deleteCookie:cookie];
     }
     
+    NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    [[NSFileManager defaultManager]removeItemAtPath:cacheDir error:nil];
+    [[NSFileManager defaultManager]createDirectoryAtPath:cacheDir withIntermediateDirectories:NO attributes:nil error:nil];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -154,16 +158,61 @@ static const NSInteger kSuccessCode = 200;
     if ([URL isValid])
     {
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+        [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
+        [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        
 //        if (0 >= self.testLeftOnThisStep)
 //        {
 //            [self stepStarted];
 //        }
-        [self.webView loadRequest:request];
+        
+        [self dismissDynamicWebView];
+        [[self createDynamicWebView] loadRequest:request];
     }
     else
     {
         [self showErrorAlertWithMessage:@"Invalid URL"];
     }
+}
+
+- (UIWebView *)createDynamicWebView
+{
+    if ([self hasDynamicWebView]) {
+        [self dismissDynamicWebView];
+    }
+    
+    UIWebView *dynamicWebView  = [[UIWebView alloc] init];
+    [dynamicWebView setDelegate:self];
+    [dynamicWebView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.webViewContainer addSubview:dynamicWebView];
+    [self.webViewContainer bringSubviewToFront:dynamicWebView];
+    
+    NSDictionary *metrics = @{@"lowPriority":@(UILayoutPriorityDefaultLow)};
+    [self.webViewContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[webView]-|"
+                                                                                  options:0
+                                                                                  metrics:metrics
+                                                                                    views:@{@"webView" : dynamicWebView}]];
+    
+    [self.webViewContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[webView]-|"
+                                                                                  options:0
+                                                                                  metrics:metrics
+                                                                                    views:@{@"webView" : dynamicWebView}]];
+    
+    [self.webViewContainer updateConstraints];
+    return dynamicWebView;
+}
+
+- (void)dismissDynamicWebView
+{
+    while ([self hasDynamicWebView]) {
+        [self.webViewContainer.subviews.firstObject removeFromSuperview];
+    }
+}
+
+- (BOOL)hasDynamicWebView
+{
+    return ([self.webViewContainer.subviews count] > 0);
 }
 
 #pragma mark - UITextFieldDelegate
@@ -179,6 +228,7 @@ static const NSInteger kSuccessCode = 200;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
     return [self shouldStartLoadingRequest:request];
 }
 

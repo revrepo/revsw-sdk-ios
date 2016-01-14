@@ -12,10 +12,14 @@
 #include "Data.hpp"
 #include "Error.hpp"
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     class QUICDataStream: public net::tools::QuicSpdyClientStream
     {
+        REV_LEAK_DETECTOR(QUICDataStream);
+        
     public:
         class VisitorProxy: public net::QuicDataStream::Visitor
         {

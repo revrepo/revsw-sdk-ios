@@ -17,6 +17,7 @@
 #include <atomic>
 
 #include "ReportTransaction.h"
+#include "LeakDetector.h"
 
 namespace rs
 {
@@ -24,6 +25,8 @@ namespace rs
     
     class RequestStatsHandler
     {
+        REV_LEAK_DETECTOR(RequestStatsHandler);
+        
         void deleteRequestsData();
         std::vector<Data> mRequestsDataVector;
         

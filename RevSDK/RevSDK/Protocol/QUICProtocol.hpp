@@ -12,11 +12,14 @@
 #include <stdio.h>
 
 #include "Protocol.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
     class QUICProtocol : public Protocol
     {
+        REV_LEAK_DETECTOR(QUICProtocol);
+        
     public:
         std::shared_ptr<Protocol> clone() { return std::make_shared<QUICProtocol>(); }
         

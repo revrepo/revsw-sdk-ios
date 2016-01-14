@@ -10,11 +10,14 @@
 
 #include <string>
 #include "Error.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
     class UDPSocket
     {
+        REV_LEAK_DETECTOR(UDPSocket);
+        
     public:
         UDPSocket(const std::string& aHost, int aPort);
         UDPSocket(const UDPSocket&) = delete;

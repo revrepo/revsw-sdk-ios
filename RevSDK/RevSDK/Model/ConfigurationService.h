@@ -18,6 +18,7 @@
 #include "Timer.hpp"
 
 #include "IConfigurationService.h"
+#include "LeakDetector.h"
 
 namespace rs
 {
@@ -31,7 +32,7 @@ namespace rs
     
     class ConfigurationService : public IConfigurationService
     {
-    private:
+        REV_LEAK_DETECTOR(ConfigurationService);
         
         bool mStaleOnFlag;
         typedef std::chrono::time_point<std::chrono::system_clock> tSpan;

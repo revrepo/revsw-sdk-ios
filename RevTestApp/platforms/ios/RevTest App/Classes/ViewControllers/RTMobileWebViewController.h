@@ -13,7 +13,7 @@
 @property (nonatomic, weak) IBOutlet UITextField* URLTextField;
 @property (nonatomic, weak) IBOutlet UISlider*    slider;
 @property (nonatomic, weak) IBOutlet UILabel*     testsNumberLabel;
-@property (nonatomic, weak) IBOutlet UIWebView*   webView;
+@property (nonatomic, weak) IBOutlet UIView*      webViewContainer;
 @property (nonatomic, weak) IBOutlet UIButton*    startButton;
 @property (nonatomic, weak) IBOutlet UIButton*    schemeButton;
 

@@ -15,10 +15,14 @@
 #include <string>
 #include <map>
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     struct Error
     {
+        REV_LEAK_DETECTOR(Error);
+        
         Error();
         
         void setDescription(std::string aDescription);

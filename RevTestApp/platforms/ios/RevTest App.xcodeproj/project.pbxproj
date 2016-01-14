@@ -122,6 +122,7 @@
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
+		65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */; };
 		6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */; };
 		6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05C1C3D516500416020 /* RTIterationResult.m */; };
 		6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05F1C3D54E800416020 /* RTTestResult.m */; };
@@ -307,6 +308,8 @@
 		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
+		65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ForceNoCache.h"; sourceTree = "<group>"; };
+		65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ForceNoCache.m"; sourceTree = "<group>"; };
 		6D73CE061C27F1BA0095EA9C /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5.h"; path = "RevTest App/Classes/Categories/NSString+MD5.h"; sourceTree = SOURCE_ROOT; };
 		6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5.m"; path = "RevTest App/Classes/Categories/NSString+MD5.m"; sourceTree = SOURCE_ROOT; };
 		6D7CB05B1C3D514900416020 /* RTIterationResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTIterationResult.h; sourceTree = "<group>"; };
@@ -868,6 +871,8 @@
 				5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */,
 				5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */,
 				5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */,
+				65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */,
+				65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1148,6 +1153,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5B04C98D1C0D88A300621B67 /* README.md in Sources */,
 				6D8BD9AA1C3FCD23008353DB /* RTTestCase.m in Sources */,
+				65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */,
 				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
 				5B0BFEDA1C0C53DE0057715A /* RTReportViewController.m in Sources */,

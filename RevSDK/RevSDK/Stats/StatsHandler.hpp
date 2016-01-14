@@ -15,6 +15,7 @@
 #include "Utils.hpp"
 #include "Data.hpp"
 #include "ReportTransaction.h"
+#include "LeakDetector.h"
 
 namespace rs
 {

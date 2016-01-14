@@ -10,11 +10,14 @@
 
 #include "QUICHeaders.h"
 #include "QUICDataStream.h"
+#include "LeakDetector.h"
 
 namespace rs
 {
     class QUICClientSession: public net::tools::QuicClientSession
     {
+        REV_LEAK_DETECTOR(QUICClientSession);
+        
     public:
         QUICClientSession(const net::QuicConfig &config,
                           net::QuicConnection *connection,

@@ -14,6 +14,7 @@
 #include <string>
 
 #import "Utils.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
@@ -21,6 +22,8 @@ namespace rs
     
     struct Configuration
     {
+        REV_LEAK_DETECTOR(Configuration);
+        
         Configuration() : operationMode(RSOperationModeInner::kRSOperationModeInnerOff)
         {}
         

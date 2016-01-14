@@ -18,12 +18,14 @@
 
 #include "NativeNetworkEventsHandler.hpp"
 #include "ProtocolAvailabilityTester.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
     class ProtocolSelector : INetworkEventsDelegate
     {
-    private:
+        REV_LEAK_DETECTOR(ProtocolSelector);
+        
         NativeNetworkEventsHandler  mEventsHandler;
         ProtocolAvailabilityTester  mTester;
         

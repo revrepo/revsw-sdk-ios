@@ -13,11 +13,14 @@
 #include <string>
 #include <chrono>
 #include <ctime>
+#include "LeakDetector.h"
 
 namespace rs
 {
     struct Event
     {
+        REV_LEAK_DETECTOR(Event);
+        
         std::string severity;
         int code;
         std::string message;

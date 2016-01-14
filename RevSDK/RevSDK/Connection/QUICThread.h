@@ -14,10 +14,14 @@
 #include <functional>
 #include <thread>
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     class QUICThread
     {
+        REV_LEAK_DETECTOR(QUICThread);
+        
     public:
         QUICThread();
         ~QUICThread();

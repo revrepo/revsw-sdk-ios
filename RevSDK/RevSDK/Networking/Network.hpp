@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include "LeakDetector.h"
 
 namespace rs
 {
@@ -22,7 +23,8 @@ namespace rs
     
     class Network
     {
-    private:
+        REV_LEAK_DETECTOR(Network);
+        
         static NativeNetwork* mNativeNetwork;
         
         void performRequest(std::string aURL, std::function<void(const Data&, const Error&)> aCompletionBlock);

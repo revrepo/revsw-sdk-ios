@@ -16,7 +16,7 @@ using namespace rs;
 using namespace net;
 using namespace net::tools;
 
-CocoaQuicPacketWriter::CocoaQuicPacketWriter(UDPService *cocoaUDPSocketDelegate) :
+CocoaQuicPacketWriter::CocoaQuicPacketWriter(NativeUDPSocketWrapper *cocoaUDPSocketDelegate) :
 socketOwner(cocoaUDPSocketDelegate)
 {
     
@@ -26,14 +26,16 @@ net::WriteResult CocoaQuicPacketWriter::WritePacket(const char* buffer, size_t b
                                                     const net::IPAddressNumber &self_address,
                                                     const net::IPEndPoint &peer_address)
 {
-    if (!socketOwner->connected())
+    if (this->socketOwner->blocked)
     {
         return net::WriteResult(WRITE_STATUS_BLOCKED, 0);
     }
     
-    bool ok = socketOwner->send(buffer, buf_len);
+    [this->socketOwner->udpSocket sendData:[NSData dataWithBytes:buffer length:buf_len]
+                               withTimeout:0
+                                       tag:0];
     
-    return WriteResult(ok ? WRITE_STATUS_OK : WRITE_STATUS_ERROR, buf_len);
+    return WriteResult(WRITE_STATUS_OK, buf_len);
 }
 
 bool CocoaQuicPacketWriter::IsWriteBlockedDataBuffered() const
@@ -43,10 +45,10 @@ bool CocoaQuicPacketWriter::IsWriteBlockedDataBuffered() const
 
 bool CocoaQuicPacketWriter::IsWriteBlocked() const
 {
-    return !socketOwner->connected();
+    return this->socketOwner->blocked;
 }
 
 void CocoaQuicPacketWriter::SetWritable()
 {
-    std::cout << "CocoaQuicPacketWriter::SetWritable - WTF?" << std::endl;
+    this->socketOwner->blocked = true;
 }

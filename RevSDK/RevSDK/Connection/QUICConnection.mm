@@ -106,19 +106,20 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers["X-Rev-Host"] = aRequest->host();
     headers["X-Rev-Proto"] = aRequest->originalScheme();
 
-    mTS = timestampMS();
+//    mTS = timestampMS();
+//    
+//    std::string dump;
+//    dump += "timestamp = " + longLongToStr(mTS);
+//    dump += "url = " + aRequest->URL() + "\n";
+//    dump += "method = " + aRequest->method() + "\n";
+//    dump += "body-size = " + intToStr((int)body.size());
+//    dump += "headers = \n";
+//
+//    for (const auto& i : headers)
+//        dump += i.first + ": " + i.second + "\n";
+//    
+//    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
     
-    std::string dump;
-    dump += "timestamp = " + longLongToStr(mTS);
-    dump += "url = " + aRequest->URL() + "\n";
-    dump += "method = " + aRequest->method() + "\n";
-    dump += "body-size = " + intToStr((int)body.size());
-    dump += "headers = \n";
-
-    for (const auto& i : headers)
-        dump += i.first + ": " + i.second + "\n";
-    
-    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
     onStart();
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
@@ -211,9 +212,10 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicD
 //        mParent->quicSessionDidReceiveData(aSession, aStream, aData, aLen);
 //        return;
 //    }
-    std::string dump;
-    dump += "data-len = " + intToStr((int)aLen);
-    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
+    
+//    std::string dump;
+//    dump += "data-len = " + intToStr((int)aLen);
+//    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
 
     
     addReceivedBytesCount(aLen);

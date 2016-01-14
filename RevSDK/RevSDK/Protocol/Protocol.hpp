@@ -13,11 +13,14 @@
 #include <string>
 
 #include <memory>
+#include "LeakDetector.h"
 
 namespace rs
 {
     class Protocol
     {
+        REV_LEAK_DETECTOR(Protocol);
+        
     public:
         virtual std::shared_ptr<Protocol> clone() = 0;
         

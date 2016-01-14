@@ -13,6 +13,8 @@
 #include <iostream>
 #include <string>
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     class Request;
@@ -23,6 +25,8 @@ namespace rs
     
     class ConnectionDelegate
     {
+        REV_LEAK_DETECTOR(ConnectionDelegate);
+        
     public:
         
         virtual void connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse) = 0;
@@ -33,6 +37,8 @@ namespace rs
     
     class Connection
     {
+        REV_LEAK_DETECTOR(Connection);
+        
     private:
         // excuse https://en.wikipedia.org/wiki/Fetch-and-add#x86_implementation , should be much faster than locks
         static std::atomic<int> gLastConnectionID;

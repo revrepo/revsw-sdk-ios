@@ -1,4 +1,4 @@
-//
+//  
 //  GCDAsyncUdpSocket
 //  
 //  This class is in the public domain.
@@ -8,40 +8,12 @@
 //  https://github.com/robbiehanson/CocoaAsyncSocket
 //
 
+#import "GCDAsyncUdpSocket.h"
+
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
 // For more information see: https://github.com/robbiehanson/CocoaAsyncSocket/wiki/ARC
 #endif
-
-#import <AvailabilityInternal.h>
-
-/**
- * Does ARC support support GCD objects?
- * It does if the minimum deployment target is iOS 6+ or Mac OS X 8+
-**/
-#if TARGET_OS_IPHONE
-
-  // Compiling for iOS
-
-  #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 60000 // iOS 6.0 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else                                         // iOS 5.X or earlier
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1
-  #endif
-
-#else
-
-  // Compiling for Mac OS X
-
-  #if MAC_OS_X_VERSION_MIN_REQUIRED >= 1080     // Mac OS X 10.8 or later
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 0
-  #else
-    #define NEEDS_DISPATCH_RETAIN_RELEASE 1     // Mac OS X 10.7 or earlier
-  #endif
-
-#endif
-
-#import "GCDAsyncUdpSocket.h"
 
 #if TARGET_OS_IPHONE
   #import <CFNetwork/CFNetwork.h>
@@ -67,7 +39,7 @@
 // It allows us to do a lot of logging without significantly slowing down the code.
 #import "DDLog.h"
 
-#define LogAsync   YES
+#define LogAsync   NO
 #define LogContext 65535
 
 #define LogObjc(flg, frmt, ...) LOG_OBJC_MAYBE(LogAsync, logLevel, flg, LogContext, frmt, ##__VA_ARGS__)
@@ -174,7 +146,11 @@ enum GCDAsyncUdpSocketConfig
 
 @interface GCDAsyncUdpSocket ()
 {
-	id delegate;
+#if __has_feature(objc_arc_weak)
+	__weak id delegate;
+#else
+	__unsafe_unretained id delegate;
+#endif
 	dispatch_queue_t delegateQueue;
 	
 	GCDAsyncUdpSocketReceiveFilterBlock receiveFilterBlock;
@@ -222,6 +198,8 @@ enum GCDAsyncUdpSocketConfig
 	NSString *cachedConnectedHost;
 	uint16_t  cachedConnectedPort;
 	int       cachedConnectedFamily;
+
+	void *IsOnSocketQueueOrTargetQueueKey;    
 	
 #if TARGET_OS_IPHONE
 	CFStreamClientContext streamContext;
@@ -372,14 +350,14 @@ enum GCDAsyncUdpSocketConfig
 	return [self initWithDelegate:nil delegateQueue:NULL socketQueue:sq];
 }
 
-- (id)initWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq
+- (id)initWithDelegate:(id <GCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq
 {
 	LogTrace();
 	
 	return [self initWithDelegate:aDelegate delegateQueue:dq socketQueue:NULL];
 }
 
-- (id)initWithDelegate:(id)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
+- (id)initWithDelegate:(id <GCDAsyncUdpSocketDelegate>)aDelegate delegateQueue:(dispatch_queue_t)dq socketQueue:(dispatch_queue_t)sq
 {
 	LogTrace();
 	
@@ -390,7 +368,7 @@ enum GCDAsyncUdpSocketConfig
 		if (dq)
 		{
 			delegateQueue = dq;
-			#if NEEDS_DISPATCH_RETAIN_RELEASE
+			#if !OS_OBJECT_USE_OBJC
 			dispatch_retain(delegateQueue);
 			#endif
 		}
@@ -411,7 +389,7 @@ enum GCDAsyncUdpSocketConfig
 			         @"The given socketQueue parameter must not be a concurrent queue.");
 			
 			socketQueue = sq;
-			#if NEEDS_DISPATCH_RETAIN_RELEASE
+			#if !OS_OBJECT_USE_OBJC
 			dispatch_retain(socketQueue);
 			#endif
 		}
@@ -419,6 +397,28 @@ enum GCDAsyncUdpSocketConfig
 		{
 			socketQueue = dispatch_queue_create([GCDAsyncUdpSocketQueueName UTF8String], NULL);
 		}
+
+		// The dispatch_queue_set_specific() and dispatch_get_specific() functions take a "void *key" parameter.
+		// From the documentation:
+		//
+		// > Keys are only compared as pointers and are never dereferenced.
+		// > Thus, you can use a pointer to a static variable for a specific subsystem or
+		// > any other value that allows you to identify the value uniquely.
+		//
+		// We're just going to use the memory address of an ivar.
+		// Specifically an ivar that is explicitly named for our purpose to make the code more readable.
+		//
+		// However, it feels tedious (and less readable) to include the "&" all the time:
+		// dispatch_get_specific(&IsOnSocketQueueOrTargetQueueKey)
+		//
+		// So we're going to make it so it doesn't matter if we use the '&' or not,
+		// by assigning the value of the ivar to the address of the ivar.
+		// Thus: IsOnSocketQueueOrTargetQueueKey == &IsOnSocketQueueOrTargetQueueKey;
+
+		IsOnSocketQueueOrTargetQueueKey = &IsOnSocketQueueOrTargetQueueKey;
+
+		void *nonNullUnusedPointer = (__bridge void *)self;
+		dispatch_queue_set_specific(socketQueue, IsOnSocketQueueOrTargetQueueKey, nonNullUnusedPointer, NULL);
 		
 		currentSend = nil;
 		sendQueue = [[NSMutableArray alloc] initWithCapacity:5];
@@ -441,7 +441,7 @@ enum GCDAsyncUdpSocketConfig
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 #endif
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		[self closeWithError:nil];
 	}
@@ -453,12 +453,12 @@ enum GCDAsyncUdpSocketConfig
 	}
 	
 	delegate = nil;
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	if (delegateQueue) dispatch_release(delegateQueue);
 	#endif
 	delegateQueue = NULL;
 	
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	if (socketQueue) dispatch_release(socketQueue);
 	#endif
 	socketQueue = NULL;
@@ -472,7 +472,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (id)delegate
 {
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		return delegate;
 	}
@@ -488,13 +488,13 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id)newDelegate synchronously:(BOOL)synchronously
+- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate synchronously:(BOOL)synchronously
 {
 	dispatch_block_t block = ^{
 		delegate = newDelegate;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue) {
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey)) {
 		block();
 	}
 	else {
@@ -505,19 +505,19 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id)newDelegate
+- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate
 {
 	[self setDelegate:newDelegate synchronously:NO];
 }
 
-- (void)synchronouslySetDelegate:(id)newDelegate
+- (void)synchronouslySetDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate
 {
 	[self setDelegate:newDelegate synchronously:YES];
 }
 
 - (dispatch_queue_t)delegateQueue
 {
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		return delegateQueue;
 	}
@@ -537,7 +537,7 @@ enum GCDAsyncUdpSocketConfig
 {
 	dispatch_block_t block = ^{
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		if (delegateQueue) dispatch_release(delegateQueue);
 		if (newDelegateQueue) dispatch_retain(newDelegateQueue);
 		#endif
@@ -545,7 +545,7 @@ enum GCDAsyncUdpSocketConfig
 		delegateQueue = newDelegateQueue;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue) {
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey)) {
 		block();
 	}
 	else {
@@ -566,9 +566,9 @@ enum GCDAsyncUdpSocketConfig
 	[self setDelegateQueue:newDelegateQueue synchronously:YES];
 }
 
-- (void)getDelegate:(id *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr
+- (void)getDelegate:(id <GCDAsyncUdpSocketDelegate> *)delegatePtr delegateQueue:(dispatch_queue_t *)delegateQueuePtr
 {
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		if (delegatePtr) *delegatePtr = delegate;
 		if (delegateQueuePtr) *delegateQueuePtr = delegateQueue;
@@ -588,13 +588,13 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue synchronously:(BOOL)synchronously
+- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue synchronously:(BOOL)synchronously
 {
 	dispatch_block_t block = ^{
 		
 		delegate = newDelegate;
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		if (delegateQueue) dispatch_release(delegateQueue);
 		if (newDelegateQueue) dispatch_retain(newDelegateQueue);
 		#endif
@@ -602,7 +602,7 @@ enum GCDAsyncUdpSocketConfig
 		delegateQueue = newDelegateQueue;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue) {
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey)) {
 		block();
 	}
 	else {
@@ -613,12 +613,12 @@ enum GCDAsyncUdpSocketConfig
 	}
 }
 
-- (void)setDelegate:(id)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
+- (void)setDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
 {
 	[self setDelegate:newDelegate delegateQueue:newDelegateQueue synchronously:NO];
 }
 
-- (void)synchronouslySetDelegate:(id)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
+- (void)synchronouslySetDelegate:(id <GCDAsyncUdpSocketDelegate>)newDelegate delegateQueue:(dispatch_queue_t)newDelegateQueue
 {
 	[self setDelegate:newDelegate delegateQueue:newDelegateQueue synchronously:YES];
 }
@@ -634,7 +634,7 @@ enum GCDAsyncUdpSocketConfig
 		result = ((config & kIPv4Disabled) == 0);
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -656,7 +656,7 @@ enum GCDAsyncUdpSocketConfig
 			config |= kIPv4Disabled;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -673,7 +673,7 @@ enum GCDAsyncUdpSocketConfig
 		result = ((config & kIPv6Disabled) == 0);
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -695,7 +695,7 @@ enum GCDAsyncUdpSocketConfig
 			config |= kIPv6Disabled;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -709,7 +709,7 @@ enum GCDAsyncUdpSocketConfig
 		result = (config & kPreferIPv4) ? YES : NO;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -725,7 +725,7 @@ enum GCDAsyncUdpSocketConfig
 		result = (config & kPreferIPv6) ? YES : NO;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -741,7 +741,7 @@ enum GCDAsyncUdpSocketConfig
 		result = (config & (kPreferIPv4 | kPreferIPv6)) == 0;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -760,7 +760,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -777,7 +777,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -794,7 +794,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -809,7 +809,7 @@ enum GCDAsyncUdpSocketConfig
 		result = max4ReceiveSize;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -826,7 +826,7 @@ enum GCDAsyncUdpSocketConfig
 		max4ReceiveSize = max;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -841,7 +841,7 @@ enum GCDAsyncUdpSocketConfig
 		result = max6ReceiveSize;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -858,7 +858,7 @@ enum GCDAsyncUdpSocketConfig
 		max6ReceiveSize = max;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -874,7 +874,7 @@ enum GCDAsyncUdpSocketConfig
 		result = userData;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -892,7 +892,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -906,9 +906,9 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogTrace();
 	
-	if (delegateQueue && [delegate respondsToSelector:@selector(udpSocket:didConnectToAddress:)])
+	__strong id theDelegate = delegate;
+	if (delegateQueue && [theDelegate respondsToSelector:@selector(udpSocket:didConnectToAddress:)])
 	{
-		id theDelegate = delegate;
 		NSData *address = [anAddress copy]; // In case param is NSMutableData
 		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
@@ -922,10 +922,9 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogTrace();
 	
-	if (delegateQueue && [delegate respondsToSelector:@selector(udpSocket:didNotConnect:)])
+	__strong id theDelegate = delegate;
+	if (delegateQueue && [theDelegate respondsToSelector:@selector(udpSocket:didNotConnect:)])
 	{
-		id theDelegate = delegate;
-		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
 			
 			[theDelegate udpSocket:self didNotConnect:error];
@@ -937,10 +936,9 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogTrace();
 	
-	if (delegateQueue && [delegate respondsToSelector:@selector(udpSocket:didSendDataWithTag:)])
+	__strong id theDelegate = delegate;
+	if (delegateQueue && [theDelegate respondsToSelector:@selector(udpSocket:didSendDataWithTag:)])
 	{
-		id theDelegate = delegate;
-		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
 			
 			[theDelegate udpSocket:self didSendDataWithTag:tag];
@@ -952,10 +950,9 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogTrace();
 	
-	if (delegateQueue && [delegate respondsToSelector:@selector(udpSocket:didNotSendDataWithTag:dueToError:)])
+	__strong id theDelegate = delegate;
+	if (delegateQueue && [theDelegate respondsToSelector:@selector(udpSocket:didNotSendDataWithTag:dueToError:)])
 	{
-		id theDelegate = delegate;
-		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
 			
 			[theDelegate udpSocket:self didNotSendDataWithTag:tag dueToError:error];
@@ -969,10 +966,9 @@ enum GCDAsyncUdpSocketConfig
 	
 	SEL selector = @selector(udpSocket:didReceiveData:fromAddress:withFilterContext:);
 	
-	if (delegateQueue && [delegate respondsToSelector:selector])
+	__strong id theDelegate = delegate;
+	if (delegateQueue && [theDelegate respondsToSelector:selector])
 	{
-		id theDelegate = delegate;
-		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
 			
 			[theDelegate udpSocket:self didReceiveData:data fromAddress:address withFilterContext:context];
@@ -984,10 +980,9 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogTrace();
 	
-	if (delegateQueue && [delegate respondsToSelector:@selector(udpSocketDidClose:withError:)])
+	__strong id theDelegate = delegate;
+	if (delegateQueue && [theDelegate respondsToSelector:@selector(udpSocketDidClose:withError:)])
 	{
-		id theDelegate = delegate;
-		
 		dispatch_async(delegateQueue, ^{ @autoreleasepool {
 			
 			[theDelegate udpSocketDidClose:self withError:error];
@@ -1086,7 +1081,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (BOOL)preOp:(NSError **)errPtr
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	if (delegate == nil) // Must have delegate set
 	{
@@ -1236,7 +1231,7 @@ enum GCDAsyncUdpSocketConfig
 **/
 - (int)getAddress:(NSData **)addressPtr error:(NSError **)errorPtr fromAddresses:(NSArray *)addresses
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert([addresses count] > 0, @"Expected at least one address");
 	
 	int resultAF = AF_UNSPEC;
@@ -1573,7 +1568,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (BOOL)isConnectedToAddress4:(NSData *)someAddr4
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert(flags & kDidConnect, @"Not connected");
 	NSAssert(cachedConnectedAddress, @"Expected cached connected address");
 	
@@ -1599,7 +1594,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (BOOL)isConnectedToAddress6:(NSData *)someAddr6
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert(flags & kDidConnect, @"Not connected");
 	NSAssert(cachedConnectedAddress, @"Expected cached connected address");
 	
@@ -1706,7 +1701,7 @@ enum GCDAsyncUdpSocketConfig
 - (void)setupSendAndReceiveSourcesForSocket4
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	send4Source = dispatch_source_create(DISPATCH_SOURCE_TYPE_WRITE, socket4FD, 0, socketQueue);
 	receive4Source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, socket4FD, 0, socketQueue);
@@ -1765,7 +1760,7 @@ enum GCDAsyncUdpSocketConfig
 	
 	int theSocketFD = socket4FD;
 	
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	dispatch_source_t theSendSource = send4Source;
 	dispatch_source_t theReceiveSource = receive4Source;
 	#endif
@@ -1774,7 +1769,7 @@ enum GCDAsyncUdpSocketConfig
 		
 		LogVerbose(@"send4CancelBlock");
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		LogVerbose(@"dispatch_release(send4Source)");
 		dispatch_release(theSendSource);
 		#endif
@@ -1790,7 +1785,7 @@ enum GCDAsyncUdpSocketConfig
 		
 		LogVerbose(@"receive4CancelBlock");
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		LogVerbose(@"dispatch_release(receive4Source)");
 		dispatch_release(theReceiveSource);
 		#endif
@@ -1817,7 +1812,7 @@ enum GCDAsyncUdpSocketConfig
 - (void)setupSendAndReceiveSourcesForSocket6
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	send6Source = dispatch_source_create(DISPATCH_SOURCE_TYPE_WRITE, socket6FD, 0, socketQueue);
 	receive6Source = dispatch_source_create(DISPATCH_SOURCE_TYPE_READ, socket6FD, 0, socketQueue);
@@ -1876,7 +1871,7 @@ enum GCDAsyncUdpSocketConfig
 	
 	int theSocketFD = socket6FD;
 	
-	#if NEEDS_DISPATCH_RETAIN_RELEASE
+	#if !OS_OBJECT_USE_OBJC
 	dispatch_source_t theSendSource = send6Source;
 	dispatch_source_t theReceiveSource = receive6Source;
 	#endif
@@ -1885,7 +1880,7 @@ enum GCDAsyncUdpSocketConfig
 		
 		LogVerbose(@"send6CancelBlock");
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		LogVerbose(@"dispatch_release(send6Source)");
 		dispatch_release(theSendSource);
 		#endif
@@ -1901,7 +1896,7 @@ enum GCDAsyncUdpSocketConfig
 		
 		LogVerbose(@"receive6CancelBlock");
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		LogVerbose(@"dispatch_release(receive6Source)");
 		dispatch_release(theReceiveSource);
 		#endif
@@ -1929,7 +1924,7 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert(((flags & kDidCreateSockets) == 0), @"Sockets have already been created");
 	
 	// CreateSocket Block
@@ -2243,7 +2238,7 @@ enum GCDAsyncUdpSocketConfig
 			LogWarn(@"Error in getsockname: %@", [self errnoError]);
 		}
 	}
-	else if (socketFamily == AF_INET)
+	else if (socketFamily == AF_INET6)
 	{
 		struct sockaddr_in6 sockaddr6;
 		socklen_t sockaddr6len = sizeof(sockaddr6);
@@ -2269,7 +2264,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (void)maybeUpdateCachedLocalAddress4Info
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	if ( cachedLocalAddress4 || ((flags & kDidBind) == 0) || (socket4FD == SOCKET_NULL) )
 	{
@@ -2291,7 +2286,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (void)maybeUpdateCachedLocalAddress6Info
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	if ( cachedLocalAddress6 || ((flags & kDidBind) == 0) || (socket6FD == SOCKET_NULL) )
 	{
@@ -2330,7 +2325,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2356,7 +2351,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2382,7 +2377,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2400,7 +2395,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedLocalAddress4;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2418,7 +2413,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedLocalHost4;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2436,7 +2431,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedLocalPort4;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2454,7 +2449,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedLocalAddress6;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2472,7 +2467,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedLocalHost6;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2490,7 +2485,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedLocalPort6;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2500,7 +2495,7 @@ enum GCDAsyncUdpSocketConfig
 
 - (void)maybeUpdateCachedConnectedAddressInfo
 {
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	if (cachedConnectedAddress || (flags & kDidConnect) == 0)
 	{
@@ -2564,7 +2559,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedConnectedAddress;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2582,7 +2577,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedConnectedHost;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2600,7 +2595,7 @@ enum GCDAsyncUdpSocketConfig
 		result = cachedConnectedPort;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, AutoreleasedBlock(block));
@@ -2616,7 +2611,7 @@ enum GCDAsyncUdpSocketConfig
 		result = (flags & kDidConnect) ? YES : NO;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -2633,7 +2628,7 @@ enum GCDAsyncUdpSocketConfig
 		result = (flags & kDidCreateSockets) ? NO : YES;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -2657,7 +2652,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -2681,7 +2676,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -2851,7 +2846,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -2976,7 +2971,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -3098,7 +3093,7 @@ enum GCDAsyncUdpSocketConfig
 		result = YES;
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -3165,7 +3160,7 @@ enum GCDAsyncUdpSocketConfig
 		result = YES;
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -3182,7 +3177,7 @@ enum GCDAsyncUdpSocketConfig
 - (void)maybeConnect
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	
 	BOOL sendQueueReady = [currentSend isKindOfClass:[GCDAsyncUdpSpecialPacket class]];
@@ -3247,7 +3242,7 @@ enum GCDAsyncUdpSocketConfig
 - (BOOL)connectWithAddress4:(NSData *)address4 error:(NSError **)errPtr
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	int status = connect(socket4FD, (struct sockaddr *)[address4 bytes], (socklen_t)[address4 length]);
 	if (status != 0)
@@ -3267,7 +3262,7 @@ enum GCDAsyncUdpSocketConfig
 - (BOOL)connectWithAddress6:(NSData *)address6 error:(NSError **)errPtr
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	int status = connect(socket6FD, (struct sockaddr *)[address6 bytes], (socklen_t)[address6 length]);
 	if (status != 0)
@@ -3419,7 +3414,7 @@ enum GCDAsyncUdpSocketConfig
 			imreq.ipv6mr_multiaddr = nativeGroup->sin6_addr;
 			imreq.ipv6mr_interface = [self indexOfInterfaceAddr6:interfaceAddr6];
 			
-			int status = setsockopt(socket6FD, IPPROTO_IP, requestType, (const void *)&imreq, sizeof(imreq));
+			int status = setsockopt(socket6FD, IPPROTO_IPV6, requestType, (const void *)&imreq, sizeof(imreq));
 			if (status != 0)
 			{
 				err = [self errnoErrorWithReason:@"Error in setsockopt() function"];
@@ -3442,7 +3437,71 @@ enum GCDAsyncUdpSocketConfig
 		
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
+		block();
+	else
+		dispatch_sync(socketQueue, block);
+	
+	if (errPtr)
+		*errPtr = err;
+	
+	return result;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Reuse port
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (BOOL)enableReusePort:(BOOL)flag error:(NSError **)errPtr
+{
+	__block BOOL result = NO;
+	__block NSError *err = nil;
+	
+	dispatch_block_t block = ^{ @autoreleasepool {
+		
+		if (![self preOp:&err])
+		{
+			return_from_block;
+		}
+		
+		if ((flags & kDidCreateSockets) == 0)
+		{
+			if (![self createSockets:&err])
+			{
+				return_from_block;
+			}
+		}
+		
+		int value = flag ? 1 : 0;
+		if (socket4FD != SOCKET_NULL)
+		{
+			int error = setsockopt(socket4FD, SOL_SOCKET, SO_REUSEPORT, (const void *)&value, sizeof(value));
+			
+			if (error)
+			{
+				err = [self errnoErrorWithReason:@"Error in setsockopt() function"];
+				
+				return_from_block;
+			}
+			result = YES;
+		}
+		
+		if (socket6FD != SOCKET_NULL)
+		{
+			int error = setsockopt(socket6FD, SOL_SOCKET, SO_REUSEPORT, (const void *)&value, sizeof(value));
+			
+			if (error)
+			{
+				err = [self errnoErrorWithReason:@"Error in setsockopt() function"];
+				
+				return_from_block;
+			}
+			result = YES;
+		}
+		
+	}};
+	
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -3496,7 +3555,7 @@ enum GCDAsyncUdpSocketConfig
 		
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -3619,14 +3678,14 @@ enum GCDAsyncUdpSocketConfig
 		
 		newFilterBlock = [filterBlock copy];
 		newFilterQueue = filterQueue;
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		dispatch_retain(newFilterQueue);
 		#endif
 	}
 	
 	dispatch_block_t block = ^{
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		if (sendFilterQueue) dispatch_release(sendFilterQueue);
 		#endif
 		
@@ -3635,7 +3694,7 @@ enum GCDAsyncUdpSocketConfig
 		sendFilterAsync = isAsynchronous;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -3644,7 +3703,7 @@ enum GCDAsyncUdpSocketConfig
 - (void)maybeDequeueSend
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	// If we don't have a send operation already in progress
 	if (currentSend == nil)
@@ -3754,7 +3813,7 @@ enum GCDAsyncUdpSocketConfig
 			else
 			{
 				// Pick the proper address to use (out of possibly several resolved addresses)
-                
+				
 				NSData *address = nil;
 				int addressFamily = AF_UNSPEC;
 				
@@ -3902,7 +3961,7 @@ enum GCDAsyncUdpSocketConfig
 	else
 	{
 		// Non-Connected socket
-        
+		
 		const void *buffer = [currentSend->buffer bytes];
 		size_t length = (size_t)[currentSend->buffer length];
 		
@@ -3992,7 +4051,7 @@ enum GCDAsyncUdpSocketConfig
 	if (sendTimer)
 	{
 		dispatch_source_cancel(sendTimer);
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		dispatch_release(sendTimer);
 		#endif
 		sendTimer = NULL;
@@ -4073,7 +4132,7 @@ enum GCDAsyncUdpSocketConfig
 		result = YES;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -4119,7 +4178,7 @@ enum GCDAsyncUdpSocketConfig
 		result = YES;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -4150,7 +4209,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -4174,14 +4233,14 @@ enum GCDAsyncUdpSocketConfig
 		
 		newFilterBlock = [filterBlock copy];
 		newFilterQueue = filterQueue;
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		dispatch_retain(newFilterQueue);
 		#endif
 	}
 	
 	dispatch_block_t block = ^{
 		
-		#if NEEDS_DISPATCH_RETAIN_RELEASE
+		#if !OS_OBJECT_USE_OBJC
 		if (receiveFilterQueue) dispatch_release(receiveFilterQueue);
 		#endif
 		
@@ -4190,7 +4249,7 @@ enum GCDAsyncUdpSocketConfig
 		receiveFilterAsync = isAsynchronous;
 	};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -4293,7 +4352,9 @@ enum GCDAsyncUdpSocketConfig
 		struct sockaddr_in sockaddr4;
 		socklen_t sockaddr4len = sizeof(sockaddr4);
 		
-		size_t bufSize = MIN(max4ReceiveSize, socket4FDBytesAvailable);
+		// #222: GCD does not necessarily return the size of an entire UDP packet 
+		// from dispatch_source_get_data(), so we must use the maximum packet size.
+		size_t bufSize = max4ReceiveSize;
 		void *buf = malloc(bufSize);
 		
 		result = recvfrom(socket4FD, buf, bufSize, 0, (struct sockaddr *)&sockaddr4, &sockaddr4len);
@@ -4328,7 +4389,9 @@ enum GCDAsyncUdpSocketConfig
 		struct sockaddr_in6 sockaddr6;
 		socklen_t sockaddr6len = sizeof(sockaddr6);
 		
-		size_t bufSize = MIN(max6ReceiveSize, socket6FDBytesAvailable);
+		// #222: GCD does not necessarily return the size of an entire UDP packet 
+		// from dispatch_source_get_data(), so we must use the maximum packet size.
+		size_t bufSize = max6ReceiveSize;
 		void *buf = malloc(bufSize);
 		
 		result = recvfrom(socket6FD, buf, bufSize, 0, (struct sockaddr *)&sockaddr6, &sockaddr6len);
@@ -4520,7 +4583,7 @@ enum GCDAsyncUdpSocketConfig
 {
 	LogVerbose(@"closeWithError: %@", error);
 	
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	if (currentSend) [self endCurrentSend];
 	
@@ -4554,7 +4617,7 @@ enum GCDAsyncUdpSocketConfig
 		[self closeWithError:nil];
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -4574,7 +4637,7 @@ enum GCDAsyncUdpSocketConfig
 		}
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -4772,7 +4835,7 @@ static void CFWriteStreamCallback(CFWriteStreamRef stream, CFStreamEventType typ
 - (BOOL)createReadAndWriteStreams:(NSError **)errPtr
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	NSError *err = nil;
 	
@@ -4858,7 +4921,7 @@ Failed:
 {
 	LogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert(readStream4 || writeStream4 || readStream6 || writeStream6, @"Read/Write streams are null");
 	
 	NSError *err = nil;
@@ -4935,7 +4998,7 @@ Failed:
 {
 	LogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert(readStream4 || writeStream4 || readStream6 || writeStream6, @"Read/Write streams are null");
 	
 	if (!(flags & kAddedStreamListener))
@@ -4956,7 +5019,7 @@ Failed:
 {
 	LogTrace();
 	
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	NSAssert(readStream4 || writeStream4 || readStream6 || writeStream6, @"Read/Write streams are null");
 	
 	NSError *err = nil;
@@ -4995,7 +5058,7 @@ Failed:
 - (void)removeStreamsFromRunLoop
 {
 	LogTrace();
-	NSAssert(dispatch_get_current_queue() == socketQueue, @"Must be dispatched on socketQueue");
+	NSAssert(dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey), @"Must be dispatched on socketQueue");
 	
 	if (flags & kAddedStreamListener)
 	{
@@ -5057,7 +5120,7 @@ Failed:
 		[self resumeReceive6Source];
 	}};
 	
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_async(socketQueue, block);
@@ -5067,9 +5130,26 @@ Failed:
 #pragma mark Advanced
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/**
+ * See header file for big discussion of this method.
+ **/
+- (void)markSocketQueueTargetQueue:(dispatch_queue_t)socketNewTargetQueue
+{
+	void *nonNullUnusedPointer = (__bridge void *)self;
+	dispatch_queue_set_specific(socketNewTargetQueue, IsOnSocketQueueOrTargetQueueKey, nonNullUnusedPointer, NULL);
+}
+
+/**
+ * See header file for big discussion of this method.
+ **/
+- (void)unmarkSocketQueueTargetQueue:(dispatch_queue_t)socketOldTargetQueue
+{
+	dispatch_queue_set_specific(socketOldTargetQueue, IsOnSocketQueueOrTargetQueueKey, NULL, NULL);
+}
+
 - (void)performBlock:(dispatch_block_t)block
 {
-	if (dispatch_get_current_queue() == socketQueue)
+	if (dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 		block();
 	else
 		dispatch_sync(socketQueue, block);
@@ -5077,7 +5157,7 @@ Failed:
 
 - (int)socketFD
 {
-	if (dispatch_get_current_queue() != socketQueue)
+	if (! dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		LogWarn(@"%@: %@ - Method only available from within the context of a performBlock: invocation",
 				THIS_FILE, THIS_METHOD);
@@ -5092,7 +5172,7 @@ Failed:
 
 - (int)socket4FD
 {
-	if (dispatch_get_current_queue() != socketQueue)
+	if (! dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		LogWarn(@"%@: %@ - Method only available from within the context of a performBlock: invocation",
 				THIS_FILE, THIS_METHOD);
@@ -5104,7 +5184,7 @@ Failed:
 
 - (int)socket6FD
 {
-	if (dispatch_get_current_queue() != socketQueue)
+	if (! dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		LogWarn(@"%@: %@ - Method only available from within the context of a performBlock: invocation",
 				THIS_FILE, THIS_METHOD);
@@ -5118,7 +5198,7 @@ Failed:
 
 - (CFReadStreamRef)readStream
 {
-	if (dispatch_get_current_queue() != socketQueue)
+	if (! dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		LogWarn(@"%@: %@ - Method only available from within the context of a performBlock: invocation",
 				THIS_FILE, THIS_METHOD);
@@ -5142,7 +5222,7 @@ Failed:
 
 - (CFWriteStreamRef)writeStream
 {
-	if (dispatch_get_current_queue() != socketQueue)
+	if (! dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		LogWarn(@"%@: %@ - Method only available from within the context of a performBlock: invocation",
 				THIS_FILE, THIS_METHOD);
@@ -5164,7 +5244,7 @@ Failed:
 
 - (BOOL)enableBackgroundingOnSockets
 {
-	if (dispatch_get_current_queue() != socketQueue)
+	if (! dispatch_get_specific(IsOnSocketQueueOrTargetQueueKey))
 	{
 		LogWarn(@"%@: %@ - Method only available from within the context of a performBlock: invocation",
 				THIS_FILE, THIS_METHOD);
