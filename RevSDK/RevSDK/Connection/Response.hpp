@@ -22,7 +22,7 @@ namespace rs
 {
     class Response
     {
-        REV_LEAK_DETECTOR(Response);
+        //REV_LEAK_DETECTOR(Response);
         
     private:
         std::string mURL;

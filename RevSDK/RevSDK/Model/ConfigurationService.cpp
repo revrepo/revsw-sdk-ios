@@ -152,11 +152,11 @@ void ConfigurationService::loadConfiguration()
                 data_storage::saveConfiguration(configuration);
                 
                 // QUIC
-//                if (QUICSession::instance()->host() != Model::instance()->edgeHost() &&
-//                    QUICSession::instance()->connected())
-//                {
-//                    QUICSession::reconnect();
-//                }
+                if (QUICSession::instance()->host() != Model::instance()->edgeHost() &&
+                    QUICSession::instance()->connected())
+                {
+                    QUICSession::reconnect();
+                }
                 
                 
                 //////////////////// SCOPE ///////////////////////

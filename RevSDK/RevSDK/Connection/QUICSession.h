@@ -55,7 +55,7 @@ namespace rs
         QUICDataStream* p_sendRequest(const net::SpdyHeaderBlock &headers,
                                       base::StringPiece body,
                                       QUICStreamDelegate* aStreamDelegate);
-        void OnClose(net::QuicDataStream* stream);
+        void OnClose(net::QuicSpdyStream* stream);
         
         void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) override;
         void onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCode, const net::SpdyHeaderBlock& aHeaders) override;
@@ -70,10 +70,8 @@ namespace rs
                                                                net::QuicConnection *connection,
                                                                const net::QuicServerId &serverId,
                                                                net::QuicCryptoClientConfig *cryptoConfig);
-
-        void onUDPSocketConnected() override;
-        void onQUICPacket(const net::QuicEncryptedPacket &packet) override;
-        void onQUICError(const Error &aError) override;
+        bool onQUICPacket(const net::QuicEncryptedPacket &packet) override;
+        void onQUICError() override;
         
     private:
         static QUICSession* mInstance;

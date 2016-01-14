@@ -15,6 +15,16 @@
 
 namespace rs
 {
+    class SimpleBufferAllocator : public net::QuicBufferAllocator
+    {
+    public:
+        char* New(size_t size) override
+        { return new char[size]; }
+        
+        void Delete(char* buffer) override
+        { delete[] buffer; }
+    };
+    
     class QuicConnectionHelper : public net::QuicConnectionHelperInterface
     {
     public:
@@ -38,7 +48,11 @@ namespace rs
         virtual net::QuicAlarm *CreateAlarm(net::QuicAlarm::Delegate *delegate) override
         { return new DummyAlarm(delegate); /* deleted by the caller */ }
         
+        virtual net::QuicBufferAllocator* GetBufferAllocator() override
+        { return &this->allocator; }
+        
         net::QuicClock clock;
+        SimpleBufferAllocator allocator;
     };
     
     class CocoaQuicPacketWriter : public net::QuicPacketWriter
@@ -55,6 +69,7 @@ namespace rs
         virtual bool IsWriteBlockedDataBuffered() const override;
         virtual bool IsWriteBlocked() const override;
         virtual void SetWritable() override;
+        virtual net::QuicByteCount GetMaxPacketSize(const net::IPEndPoint& peer_address) const override;
         
     public:
         

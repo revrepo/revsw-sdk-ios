@@ -19,8 +19,7 @@ namespace rs
         NativeUDPSocketCPPDelegate() {}
         virtual ~NativeUDPSocketCPPDelegate() {}
         
-        virtual void onUDPSocketConnected() = 0;
-        virtual void onQUICPacket(const net::QuicEncryptedPacket &packet) = 0;
-        virtual void onQUICError(const Error &aError) = 0;
+        virtual bool onQUICPacket(const net::QuicEncryptedPacket &packet) = 0;
+        virtual void onQUICError() = 0;
     };
 }

@@ -124,7 +124,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
 
-void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicDataStream* aStream,
+void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicSpdyStream* aStream,
                                    const net::SpdyHeaderBlock& aHedaers, int aCode)
 {
     onResponseReceived();
@@ -158,7 +158,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 }
                 
                 std::string baseURL = mURL;
-                std::string url = w->second;
+                std::string url = w->second.as_string();
                 newRequest->setURL(url);
                 std::string host;
                 std::string path;
@@ -189,7 +189,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
 
     if (mDelegate != nullptr)
     {
-        net::SpdyHeaderBlock headers;
+        std::map<std::string, std::string> headers;
 
         for (const auto& h : aHedaers)
         {
@@ -197,7 +197,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 continue;
             
             if (h.first[0] != ':')
-                headers[h.first] = h.second;
+                headers[h.first.as_string()] = h.second.as_string();
         }
         std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
         mResponse = response;
@@ -205,7 +205,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
     }
 }
 
-void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicDataStream* aStream, const char* aData, size_t aLen)
+void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicSpdyStream* aStream, const char* aData, size_t aLen)
 {
 //    if (mParent != nullptr)
 //    {
@@ -230,7 +230,7 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicD
     }
 }
 
-void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataStream* aStream)
+void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdyStream* aStream)
 {
     onEnd();
     
@@ -265,7 +265,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataSt
     mAnchor0.reset();
 }
 
-void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicDataStream* aStream)
+void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicSpdyStream* aStream)
 {
     Log::info(kLogTagQUICRequest, "Failed #%d\n", mId);
 //    if (mParent != nullptr)

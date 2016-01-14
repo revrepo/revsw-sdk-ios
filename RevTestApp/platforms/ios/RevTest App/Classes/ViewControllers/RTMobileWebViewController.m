@@ -14,12 +14,13 @@
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
 #import "NSURLCache+ForceNoCache.h"
+#import <WebKit/WebKit.h>
 
 static const NSUInteger kDefaultNumberOfTests = 5; 
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
 static const NSInteger kSuccessCode = 200;
 
-@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate>
+@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate /*, WKNavigationDelegate*/>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
@@ -175,14 +176,19 @@ static const NSInteger kSuccessCode = 200;
     }
 }
 
-- (UIWebView *)createDynamicWebView
+- (WKWebView *)createDynamicWebView
 {
     if ([self hasDynamicWebView]) {
         [self dismissDynamicWebView];
     }
     
-    UIWebView *dynamicWebView  = [[UIWebView alloc] init];
+//    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
+//    WKWebView *dynamicWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+//    [dynamicWebView setNavigationDelegate:self];
+    
+    UIWebView *dynamicWebView = [[UIWebView alloc] initWithFrame:self.view.frame];
     [dynamicWebView setDelegate:self];
+    
     [dynamicWebView setTranslatesAutoresizingMaskIntoConstraints:NO];
     
     [self.webViewContainer addSubview:dynamicWebView];
@@ -261,5 +267,30 @@ static const NSInteger kSuccessCode = 200;
         [self didFinishLoadWithCode:aError.code];
     }
 }
+
+//#pragma mark - WKNavigationDelegate
+//
+//- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation
+//{
+//    [self loadStarted];
+//}
+//
+//- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
+//{
+//    if (!webView.isLoading)
+//    {
+//        [self didFinishLoadWithCode:kSuccessCode];
+//    }
+//}
+//
+//- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
+//{
+//    if (error.code == NSURLErrorCancelled) return;
+//    if (!webView.isLoading)
+//    {
+//        NSLog(@"Webview error %@ loading %d", error, webView.isLoading);
+//        [self didFinishLoadWithCode:error.code];
+//    }
+//}
 
 @end

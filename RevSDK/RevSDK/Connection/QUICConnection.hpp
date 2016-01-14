@@ -35,16 +35,16 @@ namespace rs
         void p_setRedirectDepth(int aDepth) { mDepth = aDepth; }
         void p_startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate, bool aRedirect);
         void quicSessionDidReceiveResponse(QUICSession* aSession,
-                                           net::QuicDataStream* aStream,
+                                           net::QuicSpdyStream* aStream,
                                            const net::SpdyHeaderBlock& aHedaers,
                                            int aCode);
         void quicSessionDidReceiveData(QUICSession* aSession,
-                                       net::QuicDataStream* aStream,
+                                       net::QuicSpdyStream* aStream,
                                        const char* aData, size_t aLen);
         void quicSessionDidFinish(QUICSession* aSession,
-                                  net::QuicDataStream* aStream);
+                                  net::QuicSpdyStream* aStream);
         void quicSessionDidFail(QUICSession* aSession,
-                                net::QuicDataStream* aStream);
+                                net::QuicSpdyStream* aStream);
         void quicSessionDidChangeState(QUICSession* aSession, bool aConnected);
 
         void didReceiveData(void* ) {}

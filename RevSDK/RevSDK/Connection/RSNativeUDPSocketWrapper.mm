@@ -7,7 +7,6 @@
 //
 
 #import "RSNativeUDPSocketWrapper.h"
-#import "RSUtils.h"
 
 @implementation NativeUDPSocketWrapper
 
@@ -22,10 +21,9 @@
         return nil;
     }
     
-    self->blocked = true;
+    self->blocked = false;
     self->mDelegate = aDelegate;
-    self->udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self
-                                                    delegateQueue:dispatch_get_main_queue()];
+    self->udpSocket = [[RevAsyncUdpSocket alloc] initWithDelegate:self];
     
     NSError *error = nil;
     
@@ -35,71 +33,64 @@
         return nil;
     }
     
-    if (! [self->udpSocket beginReceiving:&error])
-    {
-        NSLog(@"Error beginReceiving: %@", error);
-        return nil;
-    }
+    [self->udpSocket receiveWithTimeout:-1 tag:0];
     
-    NSLog(@"NativeUDPSocketWrapper ready");
+    NSLog(@"Ready");
     return self;
 }
 
-#pragma mark - GCDAsyncUdpSocketDelegate
+#pragma mark - AsyncUdpSocketDelegate
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didConnectToAddress:(NSData *)address
-{
-    NSLog(@">>> didConnectToAddress ok");
-    self->blocked = false;
-    
-    if (self->mDelegate)
-    {
-        self->mDelegate->onUDPSocketConnected();
-    }
-}
-
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotConnect:(NSError *)error
-{
-    NSLog(@">>> didNotConnect");
-
-    if (self->mDelegate)
-    {
-        const rs::Error aError = rs::errorFromNSError(error);
-        self->mDelegate->onQUICError(aError);
-    }
-}
-
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didSendDataWithTag:(long)tag
+- (void)onUdpSocket:(RevAsyncUdpSocket *)sock
+ didSendDataWithTag:(long)tag
 {
     self->blocked = false;
     //NSLog(@">>> outgoing ok");
 }
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didNotSendDataWithTag:(long)tag dueToError:(NSError *)error
+- (void)onUdpSocket:(RevAsyncUdpSocket *)sock
+didNotSendDataWithTag:(long)tag
+         dueToError:(NSError *)error
 {
     self->blocked = false;
     NSLog(@"!! outgoing error %@", error);
 }
 
-- (void)udpSocket:(GCDAsyncUdpSocket *)sock didReceiveData:(NSData *)data
-      fromAddress:(NSData *)address
-withFilterContext:(id)filterContext;
+- (BOOL)onUdpSocket:(RevAsyncUdpSocket *)sock
+     didReceiveData:(NSData *)data
+            withTag:(long)tag
+           fromHost:(NSString *)host
+               port:(UInt16)port
 {
-    if (self->mDelegate)
+    if (! self->mDelegate)
     {
-        net::QuicEncryptedPacket packet((const char *)data.bytes, data.length);
-        mDelegate->onQUICPacket(packet);
+        return NO;
     }
+    
+    net::QuicEncryptedPacket packet((const char *)data.bytes, data.length);
+    if (!mDelegate->onQUICPacket(packet))
+    {
+        return NO;
+    }
+    
+    [udpSocket receiveWithTimeout:-1 tag:0];
+    return YES;
 }
 
-- (void)udpSocketDidClose:(GCDAsyncUdpSocket *)sock withError:(NSError *)error;
+- (void)onUdpSocket:(RevAsyncUdpSocket *)sock
+didNotReceiveDataWithTag:(long)tag
+         dueToError:(NSError *)error
 {
-    self->blocked = true;
+    NSLog(@"didNotReceiveDataWithTag dueToError %@", error);
+}
+
+- (void)onUdpSocketDidClose:(RevAsyncUdpSocket *)sock
+{
+    self->blocked = false;
     
     if (self->mDelegate)
     {
-        const rs::Error aError = rs::errorFromNSError(error);
-        self->mDelegate->onQUICError(aError);
+        self->mDelegate->onQUICError();
     }
 }
 

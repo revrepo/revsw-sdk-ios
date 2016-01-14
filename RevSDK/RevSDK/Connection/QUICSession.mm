@@ -33,7 +33,6 @@ QUICSession* QUICSession::mInstance = nullptr;
 
 void QUICSession::executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync)
 {
-    //aFunction();
     mInstanceThread.perform(aFunction);
 }
 
@@ -55,11 +54,14 @@ void QUICSession::reconnect()
         address = "rev-200.revdn.net";
     }
     
-    QuicServerId serverId(address, port, true, PRIVACY_MODE_DISABLED);
+    QuicServerId serverId(address, port, PRIVACY_MODE_DISABLED);
     mInstance->connect(serverId);
 }
 
 QUICSession::QUICSession():
+    mAtExitManager(),
+    mCryptoConfig(new RevProofVerifier()),
+    mConnectionHelper(new QuicConnectionHelper()),
     mSessionDelegate (nullptr),
     mObjC(new ObjCImpl()),
     mClientAddress({0, 0, 0, 0}, 443)
@@ -133,6 +135,33 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
     mObjC->mNativeUDPSocket = [[NativeUDPSocketWrapper alloc] initWithHost:address
                                                                        onPort:port
                                                                     delegate:this];
+    
+    if (mObjC->mNativeUDPSocket == nil)
+    {
+        return;
+    }
+    
+    mWriter.reset(createQuicPacketWriter());
+
+    if (!mSession)
+    {
+        // Will be owned by the session.
+        QuicConnection *connection = new QuicConnection(generateConnectionId(),
+                                                        mServerAddress,
+                                                        mConnectionHelper.get(),
+                                                        CocoaWriterFactory(mWriter.get()),
+                                                        /* owns_writer= */ false,
+                                                        Perspective::IS_CLIENT,
+                                                        QuicSupportedVersions());
+        
+        mSession.reset(new QUICClientSession(mConfig,
+                                             connection,
+                                             mServerId,
+                                             &mCryptoConfig));
+    }
+    
+    mSession->Initialize();
+    mSession->CryptoConnect();
 }
 
 void QUICSession::p_disconnect()
@@ -194,7 +223,7 @@ QUICDataStream* QUICSession::p_sendRequest(const net::SpdyHeaderBlock &headers,
     return stream;
 }
 
-void QUICSession::OnClose(QuicDataStream* aStream)
+void QUICSession::OnClose(QuicSpdyStream* aStream)
 {
     assert(false);
 }
@@ -281,43 +310,16 @@ QUICDataStream *QUICSession::createReliableClientStream()
     if (!p_connected())
         return nullptr;
     
-    return mSession->rsCreateOutgoingDynamicStream();
+    // FIXME prioritization is critical
+    const int highestPriority = 0; // 7 is the lowest
+    return mSession->rsCreateOutgoingDynamicStream(highestPriority);
 }
 
-void QUICSession::onUDPSocketConnected()
-{
-    mConnectionHelper.reset(new QuicConnectionHelper());
-    mCryptoConfig.SetProofVerifier(new RevProofVerifier());
-    
-    mWriter.reset(createQuicPacketWriter());
-    
-    if (!mSession)
-    {
-        // Will be owned by the session.
-        QuicConnection *connection = new QuicConnection(generateConnectionId(),
-                                                        mServerAddress,
-                                                        mConnectionHelper.get(),
-                                                        CocoaWriterFactory(mWriter.get()),
-                                                        /* owns_writer= */ false,
-                                                        Perspective::IS_CLIENT,
-                                                        mServerId.is_https(),
-                                                        QuicSupportedVersions());
-        
-        mSession.reset(new QUICClientSession(mConfig,
-                                             connection,
-                                             mServerId,
-                                             &mCryptoConfig));
-    }
-    
-    mSession->Initialize();
-    mSession->CryptoConnect();
-}
-
-void QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
+bool QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
 {
     if (!mSession.get())
     {
-        return;
+        return false;
     }
     
     //NSLog(@"<< incoming %zu", aPacket.length());
@@ -325,11 +327,13 @@ void QUICSession::onQUICPacket(const net::QuicEncryptedPacket& aPacket)
     
     if (!mSession->connection()->connected())
     {
-        reconnect(); // TODO test
+        return false;
     }
+    
+    return true;
 }
 
-void QUICSession::onQUICError(const Error &aError)
+void QUICSession::onQUICError()
 {
     p_disconnect();
     
@@ -337,6 +341,7 @@ void QUICSession::onQUICError(const Error &aError)
     for (auto& i : mStreamDelegateMap)
         streams.push_back(i.first);
     
+    Error aError; // FIXME
     for (auto& s : streams)
         s->onSocketError(aError);
 }

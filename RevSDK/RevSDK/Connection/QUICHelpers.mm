@@ -52,3 +52,11 @@ void CocoaQuicPacketWriter::SetWritable()
 {
     this->socketOwner->blocked = true;
 }
+
+QuicByteCount CocoaQuicPacketWriter::GetMaxPacketSize(const IPEndPoint& peer_address) const
+{
+    // 576 the maximum IP packet size which IPv4 guarantees will be supported
+    // For IPv6, the guaranteed size is 1280
+    // The theoretical limit for the maximum size of a UDP packet is 65507
+    return 65507;
+}

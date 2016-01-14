@@ -9,17 +9,17 @@
 #import <Foundation/Foundation.h>
 
 #include "RevProofVerifier.h"
-#include "GCDAsyncUdpSocket.h"
+#include "RevAsyncUdpSocket.h"
 #include "NativeUDPSocketCPPDelegate.h"
 
-@interface NativeUDPSocketWrapper : NSObject <GCDAsyncUdpSocketDelegate>
+@interface NativeUDPSocketWrapper : NSObject <RevAsyncUdpSocketDelegate>
 {
 @public
     
     bool blocked;
     
     // Socket itself, owned by the wrapper.
-    GCDAsyncUdpSocket *udpSocket;
+    RevAsyncUdpSocket *udpSocket;
     
     // Client reference, a C++ object, not managed by ARC and acting as a weakref.
     rs::NativeUDPSocketCPPDelegate *mDelegate;

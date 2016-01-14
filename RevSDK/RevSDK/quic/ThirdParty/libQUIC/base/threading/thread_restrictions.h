@@ -6,7 +6,7 @@
 #define BASE_THREADING_THREAD_RESTRICTIONS_H_
 
 #include "base/base_export.h"
-#include "base/basictypes.h"
+#include "base/macros.h"
 
 // See comment at top of thread_checker.h
 #if (!defined(NDEBUG) || defined(DCHECK_ALWAYS_ON))
@@ -22,7 +22,7 @@ class ScopedAllowWaitForLegacyWebViewApi;
 
 namespace cc {
 class CompletionEvent;
-class TaskGraphRunner;
+class SingleThreadTaskGraphRunner;
 }
 namespace chromeos {
 class BlockingMethodCaller;
@@ -40,10 +40,11 @@ class BrowserShutdownProfileDumper;
 class BrowserTestBase;
 class GpuChannelHost;
 class NestedMessagePumpAndroid;
-class RenderWidgetResizeHelper;
 class ScopedAllowWaitForAndroidLayoutTests;
 class ScopedAllowWaitForDebugURL;
+class SoftwareOutputDeviceMus;
 class TextInputClientMac;
+class RasterWorkerPool;
 }  // namespace content
 namespace dbus {
 class Bus;
@@ -52,10 +53,8 @@ namespace disk_cache {
 class BackendImpl;
 class InFlightIO;
 }
-namespace mojo {
-namespace common {
-class WatcherThreadManager;
-}
+namespace gles2 {
+class CommandBufferClientImpl;
 }
 namespace net {
 class NetworkChangeNotifierMac;
@@ -66,6 +65,14 @@ class AddressTrackerLinux;
 
 namespace remoting {
 class AutoThread;
+}
+
+namespace ui {
+class WindowResizeHelperMac;
+}
+
+namespace views {
+class WindowManagerConnection;
 }
 
 namespace base {
@@ -175,15 +182,15 @@ class BASE_EXPORT ThreadRestrictions {
   friend class content::BrowserShutdownProfileDumper;
   friend class content::BrowserTestBase;
   friend class content::NestedMessagePumpAndroid;
-  friend class content::RenderWidgetResizeHelper;
   friend class content::ScopedAllowWaitForAndroidLayoutTests;
   friend class content::ScopedAllowWaitForDebugURL;
   friend class ::HistogramSynchronizer;
   friend class ::ScopedAllowWaitForLegacyWebViewApi;
   friend class cc::CompletionEvent;
-  friend class cc::TaskGraphRunner;
-  friend class mojo::common::WatcherThreadManager;
+  friend class cc::SingleThreadTaskGraphRunner;
+  friend class content::RasterWorkerPool;
   friend class remoting::AutoThread;
+  friend class ui::WindowResizeHelperMac;
   friend class MessagePumpDefault;
   friend class SequencedWorkerPool;
   friend class SimpleThread;
@@ -191,6 +198,7 @@ class BASE_EXPORT ThreadRestrictions {
   friend class ThreadTestHelper;
   friend class PlatformThread;
   friend class android::JavaHandlerThread;
+  friend class gles2::CommandBufferClientImpl;
 
   // END ALLOWED USAGE.
   // BEGIN USAGE THAT NEEDS TO BE FIXED.
@@ -207,10 +215,14 @@ class BASE_EXPORT ThreadRestrictions {
   friend class disk_cache::BackendImpl;           // http://crbug.com/74623
   friend class disk_cache::InFlightIO;            // http://crbug.com/74623
   friend class net::internal::AddressTrackerLinux;  // http://crbug.com/125097
-  friend class net::NetworkChangeNotifierMac;     // http://crbug.com/502005
+  friend class net::NetworkChangeNotifierMac;     // http://crbug.com/125097
   friend class ::BrowserProcessImpl;              // http://crbug.com/125207
   friend class ::NativeBackendKWallet;            // http://crbug.com/125331
-  // END USAGE THAT NEEDS TO BE FIXED.
+#if !defined(OFFICIAL_BUILD)
+  friend class content::SoftwareOutputDeviceMus;  // Interim non-production code
+#endif
+  friend class views::WindowManagerConnection;
+// END USAGE THAT NEEDS TO BE FIXED.
 
 #if ENABLE_THREAD_RESTRICTIONS
   static bool SetWaitAllowed(bool allowed);

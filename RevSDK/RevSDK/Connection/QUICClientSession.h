@@ -26,7 +26,7 @@ namespace rs
         
         ~QUICClientSession() override;
         
-        QUICDataStream* rsCreateOutgoingDynamicStream();
+        QUICDataStream* rsCreateOutgoingDynamicStream(net::SpdyPriority priority);
         QUICDataStream* rsCreateClientStream();
 
     };

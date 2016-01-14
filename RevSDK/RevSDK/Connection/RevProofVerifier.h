@@ -29,13 +29,14 @@ class RevProofVerifier : public net::ProofVerifier
 public:
     
     virtual net::QuicAsyncStatus VerifyProof(const std::string& hostname,
-                                        const std::string& server_config,
-                                        const std::vector<std::string>& certs,
-                                        const std::string& signature,
-                                        const net::ProofVerifyContext* context,
-                                        std::string* error_details,
-                                        scoped_ptr<net::ProofVerifyDetails>* details,
-                                        net::ProofVerifierCallback* callback) override
+                                             const std::string& server_config,
+                                             const std::vector<std::string>& certs,
+                                             const std::string& cert_sct,
+                                             const std::string& signature,
+                                             const net::ProofVerifyContext* context,
+                                             std::string* error_details,
+                                             scoped_ptr<net::ProofVerifyDetails>* details,
+                                             net::ProofVerifierCallback* callback) override
     {
         return net::QUIC_SUCCESS;
     }
