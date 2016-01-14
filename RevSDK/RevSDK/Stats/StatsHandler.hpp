@@ -23,7 +23,9 @@ namespace rs
     class Event;
     
     class StatsHandler
-    {        
+    {
+        std::string mSDKKey;
+        
         std::unique_ptr<RequestStatsHandler> mRequestStatsHandler;
         std::unique_ptr<NativeStatsHandler> mStatsHandler;
         
@@ -45,6 +47,8 @@ namespace rs
         
         void startMonitoring();
         void stopMonitoring();
+        
+        void setSDKKey(const std::string&);
     };
 }
 

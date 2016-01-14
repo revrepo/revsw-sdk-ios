@@ -33,6 +33,7 @@ namespace rs
         Data allData(const Data& aRequestsData, const std::map<std::string, std::string>& aParams);
          
          std::string appName();
+         std::string appVersion();
          
         void addEvent(const Event&);
          

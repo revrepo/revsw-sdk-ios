@@ -21,6 +21,7 @@ namespace rs
 {
     StatsHandler::StatsHandler()
     {
+        mSDKKey              = "";
         mStatsHandler        = std::unique_ptr<NativeStatsHandler>(new NativeStatsHandler);
         mRequestStatsHandler = std::unique_ptr<RequestStatsHandler>(new RequestStatsHandler());
     }
@@ -42,15 +43,12 @@ namespace rs
         
         std::map<std::string, std::string> stringMap;
         
-        stringMap["version"] = "1.0";
-        stringMap["sdk_version"] = "1.0";
-        stringMap["sdk_key"] = "0efbbd35-a131-4419-b330-00de5eb3696b";
-        stringMap["app_name"] = mStatsHandler->appName();
+        stringMap[kAppVersionKey] = mStatsHandler->appVersion();
+        stringMap[kSDKVersionKey] = std::to_string(kSDKVersionNumber);
+        stringMap[kSDKKeyKey]     = mSDKKey;
+        stringMap[kAppNameKey]    = mStatsHandler->appName();
         
-//        Data wholeData = jsonDataFromDataMap(map, stringMap);
-//        return wholeData;
-        auto data = mStatsHandler->allData(requestsData.Buffer, stringMap);
-        
+        auto data           = mStatsHandler->allData(requestsData.Buffer, stringMap);
         requestsData.Buffer = data;
         
         return requestsData;
@@ -79,5 +77,10 @@ namespace rs
     void StatsHandler::stopMonitoring()
     {
         mStatsHandler->stopMonitoring();
+    }
+    
+    void StatsHandler::setSDKKey(const std::string& aSDKKey)
+    {
+        mSDKKey = aSDKKey;
     }
 }

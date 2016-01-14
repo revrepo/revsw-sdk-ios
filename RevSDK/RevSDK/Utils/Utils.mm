@@ -35,6 +35,9 @@ namespace rs
     const std::string kDeviceStatsKey                  = "stats";
     const std::string kRequestsStatsKey                = "requests";
     const std::string kLoggingLevelKey                 = stdStringFromNSString(kRSLoggingLevelKey);
+    const std::string kSDKKeyKey                       = "sdk_key";
+    const std::string kSDKVersionKey                   = "sdk_version";
+    const std::string kAppVersionKey                   = "version";
     
     const std::string kHTTPSProtocolName    = stdStringFromNSString(kRSHTTPSProtocolName);
     const std::string kStandardProtocolName = stdStringFromNSString(kRSStandardProtocolName);

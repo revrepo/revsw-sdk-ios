@@ -67,6 +67,9 @@ typedef enum
     extern const std::string kDeviceStatsKey;
     extern const std::string kRequestsStatsKey;
     extern const std::string kLoggingLevelKey;
+    extern const std::string kSDKKeyKey;
+    extern const std::string kSDKVersionKey;
+    extern const std::string kAppVersionKey;
     
     extern const std::string kHTTPSProtocolName;
     extern const std::string kStandardProtocolName;

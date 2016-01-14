@@ -59,7 +59,7 @@ namespace rs
         Log::info(0, "Logging on");
         data_storage::initDataStorage();
         
-        mStatsHandler              = std::unique_ptr<StatsHandler>(new StatsHandler());
+        mStatsHandler = std::unique_ptr<StatsHandler>(new StatsHandler());
         
         auto conf = new ConfigurationService(this, [this](){
             return !mProtocolSelector.haveAvailadleProtocols();
@@ -277,6 +277,7 @@ namespace rs
         mSDKKey = aSDKKey;
         mConfService->init();
         addEvent(kLogLevelInfo, 3, "SDK Initialized", 0.0f, kRSLogginLevelInfo);
+        mStatsHandler->setSDKKey(mSDKKey);
     }
     
     RSOperationModeInner Model::currentOperationMode()

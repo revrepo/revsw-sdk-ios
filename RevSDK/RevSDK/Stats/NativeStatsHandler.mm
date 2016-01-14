@@ -32,11 +32,17 @@ namespace rs
 {
     std::string NativeStatsHandler::appName()
     {
-        NSBundle *bundle = [NSBundle mainBundle];
+        NSBundle *bundle   = [NSBundle mainBundle];
         NSDictionary *info = [bundle infoDictionary];
         NSString *prodName = [info objectForKey:@"CFBundleDisplayName"];
         
         return stdStringFromNSString(prodName);
+    }
+    
+    std::string NativeStatsHandler::appVersion()
+    {
+        NSString * appVersionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+        return stdStringFromNSString(appVersionString);
     }
     
     NSString* deviceName()
