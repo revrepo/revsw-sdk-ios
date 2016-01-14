@@ -52,9 +52,6 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
         request.HTTPBody = self.body;
     }
     
-    NSString* bodyString = [[NSString alloc] initWithData:self.body encoding:NSUTF8StringEncoding];
-    NSLog(@"BODY %@", bodyString);
-    
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     
     NSURLSessionDataTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request

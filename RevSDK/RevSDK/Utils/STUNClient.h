@@ -34,7 +34,7 @@
 #define publicPortKey @"publicPortKey"
 #define isPortRandomization @"isPortRandomization"
 
-#define log 1
+#define log 0
 #define STUNLog(...) if (log) NSLog(__VA_ARGS__)
 
 

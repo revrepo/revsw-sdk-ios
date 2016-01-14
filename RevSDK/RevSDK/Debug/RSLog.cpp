@@ -20,9 +20,11 @@ namespace rs
     public:
         void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage)
         {
+#if DEBUG
             if (aLevel == Log::Level::Info)
                 return;
             std::cout << Log::levelToString(aLevel) << "|" << std::setw(3) << aTag << ": " << aMessage << std::endl;
+#endif
         }
     };
 }

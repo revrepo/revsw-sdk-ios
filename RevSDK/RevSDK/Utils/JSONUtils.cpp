@@ -84,7 +84,7 @@ namespace rs
         
         if (!parseResult)
         {
-            std::cout << "Parsing configuration failed: " << reader.getFormatedErrorMessages() << std::endl;
+            std::cout << "Parsing configuration failed: " << reader.getFormattedErrorMessages() << std::endl;
         }
         else
         {
