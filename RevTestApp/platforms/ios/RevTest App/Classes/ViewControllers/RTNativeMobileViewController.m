@@ -78,7 +78,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSString* lastSearch = [ud objectForKey:kTextFieldNativeAppKey];
     
     if (lastSearch == nil)
-        lastSearch = @"http://httpbin.org/get";
+        lastSearch = @"https://monitor.revsw.net/100KB.jpg";
     
     self.URLTextField.text = lastSearch;
 }
@@ -91,7 +91,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSString* lastSearch = self.URLTextField.text;
 
     if (lastSearch == nil)
-        lastSearch = @"http://httpbin.org/get";
+        lastSearch = @"https://monitor.revsw.net/100KB.jpg";
 
     [ud setObject:lastSearch forKey:kTextFieldNativeAppKey];
     [ud synchronize];
@@ -240,7 +240,12 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                             
                                             NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse; 
                                             
-                                            [self loadFinished:[httpResponse statusCode]];
+                                            //quick fix
+                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                        
+                                                [self loadFinished:[httpResponse statusCode]];
+                                                
+                                            });
                                         }];
     [task resume];
 }

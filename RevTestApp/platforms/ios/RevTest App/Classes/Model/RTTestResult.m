@@ -30,4 +30,9 @@
     return [NSString stringWithFormat:@"%@(KB)", _testName];
 }
 
+- (NSString *)description
+{
+    return self.dataLengthString;
+}
+
 @end

@@ -47,6 +47,12 @@
     
     return true;
 }
+
+- (NSString *)description
+{
+    return self.testResults.description;
+}
+
 @end
 
 
