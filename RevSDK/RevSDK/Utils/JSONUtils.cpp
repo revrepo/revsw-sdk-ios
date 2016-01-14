@@ -84,7 +84,7 @@ namespace rs
         
         if (!parseResult)
         {
-            std::cout << "Parsing configuration failed: " << reader.getFormatedErrorMessages() << std::endl;
+            std::cout << "Parsing configuration failed: " << reader.getFormattedErrorMessages() << std::endl;
         }
         else
         {
@@ -114,6 +114,8 @@ namespace rs
             configuration.domainsWhiteList          = vectorFromValue(configs[kDomainsWhiteListKey]);
             configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);
             configuration.loggingLevel              = configs[kLoggingLevelKey].asString();
+            
+            std::cout << "CONFIGURATION PARSED " << configuration.statsReportingURL;
         }
         
         return configuration;

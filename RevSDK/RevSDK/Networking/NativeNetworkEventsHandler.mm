@@ -53,9 +53,6 @@ mNativeTelephonyHandle(nullptr)
     
     mNativeHandle = (void*)CFBridgingRetain(observer);
     
-    CTTelephonyNetworkInfo *telephonyInfo = [CTTelephonyNetworkInfo new];
-    NSLog(@"Current Radio Access Technology: %@", telephonyInfo.currentRadioAccessTechnology);
-    
     id telObserver = [NSNotificationCenter.defaultCenter addObserverForName:CTRadioAccessTechnologyDidChangeNotification
                                                     object:nil
                                                      queue:nil
