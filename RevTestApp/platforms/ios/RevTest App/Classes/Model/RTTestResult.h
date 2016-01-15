@@ -9,6 +9,8 @@
 
 @interface RTTestResult : NSObject
 
++ (void)setShouldReportDataInMB:(BOOL)aShouldReportDataInMB;
+
 @property (nonatomic, readwrite, strong) NSString* testName;
 @property (nonatomic, readwrite, assign) NSInteger errorCode;
 @property (nonatomic, readwrite, assign) CGFloat dataLength;

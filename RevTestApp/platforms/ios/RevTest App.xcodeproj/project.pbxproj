@@ -1204,6 +1204,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "~/revsdk-ios/RevSDK/RevSDK/";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,
@@ -1299,7 +1300,7 @@
 					"\"$(BUILT_PRODUCTS_DIR)\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
 					"-weak_framework",
 					CoreFoundation,

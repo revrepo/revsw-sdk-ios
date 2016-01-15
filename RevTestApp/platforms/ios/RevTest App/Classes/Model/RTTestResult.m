@@ -8,7 +8,14 @@
 
 #import "RTTestResult.h"
 
+static BOOL shouldReportDataInMB = NO;
+
 @implementation RTTestResult
+
++ (void)setShouldReportDataInMB:(BOOL)aShouldReportDataInMB
+{
+    shouldReportDataInMB = aShouldReportDataInMB;
+}
 
 - (NSString *)durationString
 {
@@ -17,7 +24,9 @@
 
 - (NSString *)dataLengthString
 {
-    return [NSString stringWithFormat:@"%.1f", _dataLength];
+    CGFloat dataLength = shouldReportDataInMB ? _dataLength / 1024.0 / 1024.0 : _dataLength / 1024.0;
+    
+    return [NSString stringWithFormat:@"%.1f", dataLength];
 }
 
 - (NSString *)wholeString
@@ -27,7 +36,9 @@
 
 - (NSString *)nameString
 {
-    return [NSString stringWithFormat:@"%@(KB)", _testName];
+    NSString* dataSizeNotation = shouldReportDataInMB ? @"MB" : @"KB";
+    
+    return [NSString stringWithFormat:@"%@(%@)", _testName, dataSizeNotation];
 }
 
 - (NSString *)description

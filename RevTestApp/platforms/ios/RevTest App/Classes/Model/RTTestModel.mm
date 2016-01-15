@@ -41,18 +41,14 @@
     
     if (self)
     {
+         [RTTestResult setShouldReportDataInMB:NO];
+        
          mTestsCounter           = 0;
          mNumberOfTestsToPerform = 0;
          mCurrentDataSize        = 0;
          mIsLoading              = NO;
          self.shouldLoad         = NO;
          self.testResults        = [NSMutableArray array];
-//         self.sdkTestResults     = [NSMutableArray array];
-//         self.dataLengthArray    = [NSMutableArray array];
-//         self.sdkDataLengthArray = [NSMutableArray array];
-//         self.resultFlags = [NSMutableArray array];
-        
-         //[RevSDK setWhiteListOption:NO];
         
          [[NSNotificationCenter defaultCenter] addObserver:self
                                                   selector:@selector(didReceiveStopLoadingNotification:)
@@ -80,17 +76,15 @@
 
 - (void)start
 {
-    mCurrentDataSize = 0;
-    self.shouldLoad  = YES;
-    mTestsCounter    = 0;
+    [RTTestResult setShouldReportDataInMB:NO];
+    
+    mCurrentDataSize   = 0;
+    self.shouldLoad    = YES;
+    mTestsCounter      = 0;
     
     self.currentResult = [[RTIterationResult alloc ]init];
     
     [self.testResults removeAllObjects];
-//    [self.sdkTestResults removeAllObjects];
-//    [self.dataLengthArray removeAllObjects];
-//    [self.sdkDataLengthArray removeAllObjects];
-//    [self.resultFlags removeAllObjects];
     
     [RevSDK debug_enableTestMode];
     [self stepStarted];
@@ -117,29 +111,12 @@
     [self.testCases addObject:tcase];
     ////////////////////////////////
     
-//    // 1st case
-//    tcase = [[RTTestCase alloc] init];
-//    tcase.testName = @"Origin";
-//    tcase.protocolID = @"none";
-//    tcase.operationMode = RSOperationMode::kRSOperationModeReport;
-//    
-//    [self.testCases addObject:tcase];
-//    ////////////////////////////////
-
     tcase = [[RTTestCase alloc] init];
     tcase.testName = @"QUIC";
     tcase.protocolID = @"quic";
     tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
     
     [self.testCases addObject:tcase];
-    ////////////////////////////////
-    
-//    tcase = [[RTTestCase init] alloc];
-//    tcase.testName = @"Origin";
-//    tcase.protocolID = @"standard";
-//    tcase.operationMode = RSOperationMode::kRSOperationModeOff;
-//    
-//    [self.testCases addObject:tcase];
     ////////////////////////////////
 }
 
@@ -245,7 +222,14 @@
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
     
-    tres.dataLength  = mCurrentDataSize / 1024.0;
+    const NSUInteger dataSizeLimit = 1024.0 * 300;
+    
+    if (mCurrentDataSize > dataSizeLimit)
+    {
+        [RTTestResult setShouldReportDataInMB:YES];
+    }
+    
+    tres.dataLength  = mCurrentDataSize;
     tres.errorCode   = aResult;
     tres.duration    = interval;
     mCurrentDataSize = 0;
@@ -263,8 +247,6 @@
     {
         self.loadFinishedBlock();
     }
-    //mMode = kRSOperationModeTransport;
-    //[RevSDK debug_setOperationMode:mMode];
     
     if (mTestsCounter < mNumberOfTestsToPerform ||
         ([self.testCases count] > 0))
