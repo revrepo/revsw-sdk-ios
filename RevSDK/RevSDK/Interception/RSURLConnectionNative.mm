@@ -18,6 +18,7 @@
 
 #import "RSURLConnectionNative.h"
 #import "Connection.hpp"
+#import "RSOriginSession.h"
 
 @implementation RSURLConnectionNative
 
@@ -43,13 +44,16 @@
     int64_t timestamp       = interval * 1000;
     self.startTimestamp     = @(timestamp);
     
-    NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration
-                                                                             delegate:self
-                                                                        delegateQueue:[NSOperationQueue currentQueue]];
+//    NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration
+//                                                                             delegate:self
+//                                                                        delegateQueue:[NSOperationQueue currentQueue]];
+//    
+//    NSURLSessionTask* task = [session dataTaskWithRequest:self.request];
+//    [task resume];
     
-    NSURLSessionTask* task = [session dataTaskWithRequest:self.request];
-    [task resume];
+    [[RSOriginSession instance] createTaskWithRequest:self.request
+                                             delegate:self];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
@@ -67,8 +71,7 @@
     {
         [self.delegate connectionDidFinish:self];
     }
-    
-    [session invalidateAndCancel];
+//    [session invalidateAndCancel];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data

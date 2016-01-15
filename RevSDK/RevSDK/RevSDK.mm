@@ -31,6 +31,7 @@
 #import "NSURLSessionConfiguration+RSUtils.h"
 #import "DebugUsageTracker.hpp"
 #import "RSStandardSession.h"
+#import "RSOriginSession.h"
 
 #include "TestConfigurationService.h"
 #include "ProtocolFailureMonitor.h"
@@ -59,6 +60,7 @@ static rs::TestConfigurationService* TestConfService = nullptr;
         [NSURLProtocol registerClass:[RSURLProtocol class]];
         rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
         [RSStandardSession instance];
+        [RSOriginSession instance];
         
         gIsInitialized = true;
     }

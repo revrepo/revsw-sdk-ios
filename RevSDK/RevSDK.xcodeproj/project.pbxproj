@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1103818C1C492B92001F60E9 /* RSOriginSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1103818A1C492B92001F60E9 /* RSOriginSession.h */; };
+		1103818D1C492B92001F60E9 /* RSOriginSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1103818B1C492B92001F60E9 /* RSOriginSession.m */; };
 		1109F3CA1C40091900ABB160 /* RSLogVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 1109F3C81C40091900ABB160 /* RSLogVC.h */; };
 		1109F3CB1C40091900ABB160 /* RSLogVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1109F3C91C40091900ABB160 /* RSLogVC.mm */; };
 		1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1109F3CE1C401EEE00ABB160 /* MessageUI.framework */; };
@@ -157,6 +159,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1103818A1C492B92001F60E9 /* RSOriginSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOriginSession.h; sourceTree = "<group>"; };
+		1103818B1C492B92001F60E9 /* RSOriginSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOriginSession.m; sourceTree = "<group>"; };
 		1109F3C81C40091900ABB160 /* RSLogVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLogVC.h; sourceTree = "<group>"; };
 		1109F3C91C40091900ABB160 /* RSLogVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSLogVC.mm; sourceTree = "<group>"; };
 		1109F3CE1C401EEE00ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -506,6 +510,8 @@
 		5B3096E71BFA0CA70045024C /* Interception */ = {
 			isa = PBXGroup;
 			children = (
+				1103818A1C492B92001F60E9 /* RSOriginSession.h */,
+				1103818B1C492B92001F60E9 /* RSOriginSession.m */,
 				5B3096E81BFA0CB70045024C /* RSURLProtocol.h */,
 				5B3096E91BFA0CB70045024C /* RSURLProtocol.mm */,
 				5B3096EC1BFA0CD30045024C /* RSURLConnection.h */,
@@ -715,6 +721,7 @@
 				5B54C3351BFB705B00217971 /* Protocol.hpp in Headers */,
 				5B20359A1C33FF7000A28C01 /* GCDAsyncUdpSocket.h in Headers */,
 				5B3096BA1BFA02770045024C /* RevSDK.h in Headers */,
+				1103818C1C492B92001F60E9 /* RSOriginSession.h in Headers */,
 				11F24B411C3C57E500DABAE5 /* RSUDPSocket.h in Headers */,
 				6D1F860E1C3A83F300E48AC9 /* NativeNetworkEventsHandler.hpp in Headers */,
 				6DEAB1CC1C2D803C0078CE65 /* RSLocationService.h in Headers */,
@@ -936,6 +943,7 @@
 				5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */,
 				5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */,
 				6D1F860D1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm in Sources */,
+				1103818D1C492B92001F60E9 /* RSOriginSession.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

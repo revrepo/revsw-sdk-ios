@@ -23,6 +23,6 @@
 
 + (RSStandardSession*)instance;
 - (void)createTaskWithRequest:(NSURLRequest*)aRequest
-                                connection:(std::shared_ptr<rs::Connection>)aConnection;
+                   connection:(std::shared_ptr<rs::Connection>)aConnection;
 
 @end
