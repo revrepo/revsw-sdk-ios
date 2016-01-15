@@ -4,7 +4,6 @@ xcodeproj 'RevTestApp/platforms/ios/RevTest App.xcodeproj'
 
 target 'RevSDK' do
 pod 'jsoncpp', '>= 0.6.beta.0'
-pod 'ALAlertBanner'
 xcodeproj 'RevSDK/RevSDK.xcodeproj'
 end
 

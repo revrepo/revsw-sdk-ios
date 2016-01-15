@@ -51,8 +51,6 @@
 
 - (void)onLogPressed:(id)sender
 {
-   // [RevSDK debug_showLogInViewController:self];
-    
     if ([RevSDK respondsToSelector:@selector(debug_showLogInViewController:)])
     {
         [[RevSDK class] performSelector:@selector(debug_showLogInViewController:) withObject:self];

@@ -1,15 +1,12 @@
 PODS:
-  - ALAlertBanner (0.3.1)
   - jsoncpp (1.6.5)
   - MBProgressHUD (0.9.2)
 
 DEPENDENCIES:
-  - ALAlertBanner
   - jsoncpp (>= 0.6.beta.0)
   - MBProgressHUD (~> 0.9.1)
 
 SPEC CHECKSUMS:
-  ALAlertBanner: 08d82be509cd9b70c4ac0ee1e7ac250003a8b34b
   jsoncpp: 3510f0cba58d822016d511a61ae8e98f49eb4836
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
 

@@ -19,7 +19,6 @@
 #import <QuartzCore/QuartzCore.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
-#import <ALAlertBanner.h>
 #import "RSLogVC.h"
 
 #import "RevSDK.h"
@@ -182,21 +181,7 @@ static rs::TestConfigurationService* TestConfService = nullptr;
 
 + (void)debug_onDebugEventTriggered:(rs::Log::Level)aLevel title:(NSString*)aTitle message:(NSString*)aMessage
 {
-    UIWindow* window = [[UIApplication sharedApplication] keyWindow];
     
-    ALAlertBannerStyle style = ALAlertBannerStyleNotify;
-    if (aLevel == rs::Log::Level::Warning)
-        style = ALAlertBannerStyleWarning;
-    if (aLevel == rs::Log::Level::Error)
-        style = ALAlertBannerStyleFailure;
-    
-    ALAlertBanner *banner = [ALAlertBanner alertBannerForView:window
-                                                        style:style
-                                                     position:ALAlertBannerPositionTop
-                                                        title:aTitle
-                                                     subtitle:aMessage];
-    
-    [banner show];
 }
 
 + (void)debug_turnOnDebugBanners
