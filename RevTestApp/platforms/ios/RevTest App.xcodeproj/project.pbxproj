@@ -122,6 +122,11 @@
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
+		65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */; };
+		65C1EE571C4794D30095537E /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C1EE541C4794D30095537E /* HTMLNode.m */; };
+		65C1EE581C4794D30095537E /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C1EE561C4794D30095537E /* HTMLParser.m */; };
+		65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C1EE591C4795460095537E /* libxml2.tbd */; };
+		65C1EE5D1C4796520095537E /* RTHTMLGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */; };
 		6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */; };
 		6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05C1C3D516500416020 /* RTIterationResult.m */; };
 		6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D7CB05F1C3D54E800416020 /* RTTestResult.m */; };
@@ -307,6 +312,15 @@
 		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
+		65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ForceNoCache.h"; sourceTree = "<group>"; };
+		65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ForceNoCache.m"; sourceTree = "<group>"; };
+		65C1EE531C4794D30095537E /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
+		65C1EE541C4794D30095537E /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
+		65C1EE551C4794D30095537E /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
+		65C1EE561C4794D30095537E /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
+		65C1EE591C4795460095537E /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		65C1EE5B1C4796520095537E /* RTHTMLGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTHTMLGrabber.h; sourceTree = "<group>"; };
+		65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTHTMLGrabber.m; sourceTree = "<group>"; };
 		6D73CE061C27F1BA0095EA9C /* NSString+MD5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+MD5.h"; path = "RevTest App/Classes/Categories/NSString+MD5.h"; sourceTree = SOURCE_ROOT; };
 		6D73CE071C27F1BA0095EA9C /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+MD5.m"; path = "RevTest App/Classes/Categories/NSString+MD5.m"; sourceTree = SOURCE_ROOT; };
 		6D7CB05B1C3D514900416020 /* RTIterationResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTIterationResult.h; sourceTree = "<group>"; };
@@ -338,6 +352,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
 				5B3286F91C1EAEF9009CFDB5 /* RevSDK.framework in Frameworks */,
@@ -396,6 +411,7 @@
 				080E96DDFE201D6D7F000001 /* Classes */,
 				307C750510C5A3420062BCA9 /* Plugins */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				65C1EE511C4794D30095537E /* ThirdParty */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -430,6 +446,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65C1EE591C4795460095537E /* libxml2.tbd */,
 				1109F3CC1C401ED000ABB160 /* MessageUI.framework */,
 				5B70CA181C3D19E80051D31F /* libc++.tbd */,
 				5B70CA161C3D19E00051D31F /* libz.tbd */,
@@ -818,6 +835,8 @@
 				6D7CB05F1C3D54E800416020 /* RTTestResult.m */,
 				6D8BD9AB1C3FCD31008353DB /* RTTestCase.h */,
 				6D8BD9A91C3FCD23008353DB /* RTTestCase.m */,
+				65C1EE5B1C4796520095537E /* RTHTMLGrabber.h */,
+				65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -868,8 +887,29 @@
 				5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */,
 				5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */,
 				5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */,
+				65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */,
+				65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */,
 			);
 			path = Categories;
+			sourceTree = "<group>";
+		};
+		65C1EE511C4794D30095537E /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				65C1EE521C4794D30095537E /* HTMLParser */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		65C1EE521C4794D30095537E /* HTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				65C1EE531C4794D30095537E /* HTMLNode.h */,
+				65C1EE541C4794D30095537E /* HTMLNode.m */,
+				65C1EE551C4794D30095537E /* HTMLParser.h */,
+				65C1EE561C4794D30095537E /* HTMLParser.m */,
+			);
+			path = HTMLParser;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1138,16 +1178,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D7CB0601C3D54E800416020 /* RTTestResult.m in Sources */,
+				65C1EE581C4794D30095537E /* HTMLParser.m in Sources */,
 				5B0BFEE71C0C6C1B0057715A /* RTReportCell.m in Sources */,
 				6D7CB05D1C3D516500416020 /* RTIterationResult.m in Sources */,
 				5B10397A1C11763C003CA9A1 /* RTTestModel.mm in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
+				65C1EE571C4794D30095537E /* HTMLNode.m in Sources */,
 				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
+				65C1EE5D1C4796520095537E /* RTHTMLGrabber.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				5B04C98D1C0D88A300621B67 /* README.md in Sources */,
 				6D8BD9AA1C3FCD23008353DB /* RTTestCase.m in Sources */,
+				65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */,
 				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
 				5B0BFEDA1C0C53DE0057715A /* RTReportViewController.m in Sources */,
@@ -1199,6 +1243,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
 					"../revsdk-ios/RevSDK/",
+					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "RevTest App/RevTest App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1250,6 +1295,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
 					"~/revsdk-ios/RevSDK/RevSDK/",
+					/usr/include/libxml2,
 				);
 				INFOPLIST_FILE = "RevTest App/RevTest App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

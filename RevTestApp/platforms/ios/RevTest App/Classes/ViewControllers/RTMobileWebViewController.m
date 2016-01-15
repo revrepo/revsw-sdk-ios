@@ -13,16 +13,21 @@
 #import "UIViewController+RTUtils.h"
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
+#import "NSURLCache+ForceNoCache.h"
+
+#import "RTHTMLGrabber.h"
+#import <WebKit/WebKit.h>
 
 static const NSUInteger kDefaultNumberOfTests = 5; 
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
 static const NSInteger kSuccessCode = 200;
 
-@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate>
+@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate, RTHTMLGrabberDelegate /*, WKNavigationDelegate*/>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
+@property (nonatomic, strong) RTHTMLGrabber* simpleGrabber;
 
 @end
 
@@ -35,6 +40,9 @@ static const NSInteger kSuccessCode = 200;
     [super viewDidLoad];
     
     self.navigationItem.title = @"Mobile Web";
+    
+    self.simpleGrabber = [RTHTMLGrabber new];
+    [self.simpleGrabber setDelegate:self];
     
     __weak RTMobileWebViewController* weakSelf = self;
     
@@ -54,8 +62,7 @@ static const NSInteger kSuccessCode = 200;
     };
     
     self.cancelBlock = ^{
-    
-        [[weakSelf webView] stopLoading];
+        [weakSelf dismissDynamicWebView];
     };
     
      [self initializeTestModel];
@@ -97,7 +104,7 @@ static const NSInteger kSuccessCode = 200;
     
     if (!parent)
     {
-        [self.webView stopLoading];
+        [self dismissDynamicWebView];
         [self setWhiteListOption:YES];
     }
 }
@@ -136,6 +143,10 @@ static const NSInteger kSuccessCode = 200;
         [storage deleteCookie:cookie];
     }
     
+    NSString *cacheDir = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    [[NSFileManager defaultManager]removeItemAtPath:cacheDir error:nil];
+    [[NSFileManager defaultManager]createDirectoryAtPath:cacheDir withIntermediateDirectories:NO attributes:nil error:nil];
+    
     [[NSUserDefaults standardUserDefaults] synchronize];
     
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
@@ -154,16 +165,68 @@ static const NSInteger kSuccessCode = 200;
     if ([URL isValid])
     {
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+        [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
+        [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        
 //        if (0 >= self.testLeftOnThisStep)
 //        {
 //            [self stepStarted];
 //        }
-        [self.webView loadRequest:request];
+        
+        //[self dismissDynamicWebView];
+        //[[self createDynamicWebView] loadRequest:request];
+        
+        [self.simpleGrabber loadRequest:request];
     }
     else
     {
         [self showErrorAlertWithMessage:@"Invalid URL"];
     }
+}
+
+- (WKWebView *)createDynamicWebView
+{
+    if ([self hasDynamicWebView]) {
+        [self dismissDynamicWebView];
+    }
+    
+//    WKWebViewConfiguration *theConfiguration = [[WKWebViewConfiguration alloc] init];
+//    WKWebView *dynamicWebView = [[WKWebView alloc] initWithFrame:self.view.frame configuration:theConfiguration];
+//    [dynamicWebView setNavigationDelegate:self];
+    
+    UIWebView *dynamicWebView = [[UIWebView alloc] initWithFrame:self.view.frame];
+    [dynamicWebView setDelegate:self];
+    
+    [dynamicWebView setTranslatesAutoresizingMaskIntoConstraints:NO];
+    
+    [self.webViewContainer addSubview:dynamicWebView];
+    [self.webViewContainer bringSubviewToFront:dynamicWebView];
+    
+    NSDictionary *metrics = @{@"lowPriority":@(UILayoutPriorityDefaultLow)};
+    [self.webViewContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-[webView]-|"
+                                                                                  options:0
+                                                                                  metrics:metrics
+                                                                                    views:@{@"webView" : dynamicWebView}]];
+    
+    [self.webViewContainer addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|-[webView]-|"
+                                                                                  options:0
+                                                                                  metrics:metrics
+                                                                                    views:@{@"webView" : dynamicWebView}]];
+    
+    [self.webViewContainer updateConstraints];
+    return dynamicWebView;
+}
+
+- (void)dismissDynamicWebView
+{
+    while ([self hasDynamicWebView]) {
+        [self.webViewContainer.subviews.firstObject removeFromSuperview];
+    }
+}
+
+- (BOOL)hasDynamicWebView
+{
+    return ([self.webViewContainer.subviews count] > 0);
 }
 
 #pragma mark - UITextFieldDelegate
@@ -179,6 +242,7 @@ static const NSInteger kSuccessCode = 200;
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
     return [self shouldStartLoadingRequest:request];
 }
 
@@ -208,6 +272,48 @@ static const NSInteger kSuccessCode = 200;
         NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
         [self didFinishLoadWithCode:aError.code];
     }
+}
+
+//#pragma mark - WKNavigationDelegate
+//
+//- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation
+//{
+//    [self loadStarted];
+//}
+//
+//- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
+//{
+//    if (!webView.isLoading)
+//    {
+//        [self didFinishLoadWithCode:kSuccessCode];
+//    }
+//}
+//
+//- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
+//{
+//    if (error.code == NSURLErrorCancelled) return;
+//    if (!webView.isLoading)
+//    {
+//        NSLog(@"Webview error %@ loading %d", error, webView.isLoading);
+//        [self didFinishLoadWithCode:error.code];
+//    }
+//}
+
+#pragma mark - RTHTMLGrabberDelegate
+
+- (void)grabberDidStartLoad:(RTHTMLGrabber *)grabber
+{
+    [self loadStarted];
+}
+
+- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber
+{
+    [self didFinishLoadWithCode:kSuccessCode];
+}
+
+- (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error
+{
+    [self didFinishLoadWithCode:error.code];
 }
 
 @end

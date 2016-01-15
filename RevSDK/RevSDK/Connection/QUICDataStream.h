@@ -22,12 +22,16 @@
 #include "Data.hpp"
 #include "Error.hpp"
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     class QUICDataStream: public net::tools::QuicSpdyClientStream
     {
+        REV_LEAK_DETECTOR(QUICDataStream);
+        
     public:
-        class VisitorProxy: public net::QuicDataStream::Visitor
+        class VisitorProxy: public net::QuicSpdyStream::Visitor
         {
         public:
             VisitorProxy():mOwner(nullptr) {}
@@ -35,7 +39,7 @@ namespace rs
             
             void setOwner(QUICDataStream* aOwner) { mOwner = aOwner; }
             
-            void OnClose(QuicDataStream* stream) override
+            void OnClose(QuicSpdyStream* stream) override
             {
                 if (mOwner != nullptr)
                     mOwner->onVisitorSentClose();
@@ -72,8 +76,9 @@ namespace rs
         
     protected:
         
-        uint32 ProcessData(const char* data, uint32 data_len) override;
-        void OnStreamHeadersComplete(bool fin, size_t frame_len) override;
+        void OnStreamFrame(const net::QuicStreamFrame& frame) override;
+        void OnInitialHeadersComplete(bool fin, size_t frame_len) override;
+        void OnTrailingHeadersComplete(bool fin, size_t frame_len) override;
         void onVisitorSentClose();
         
     private:

@@ -26,10 +26,14 @@
 #include <string>
 #include <map>
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     class Response
     {
+        //REV_LEAK_DETECTOR(Response);
+        
     private:
         std::string mURL;
         std::map<std::string, std::string> mHeaderFields;

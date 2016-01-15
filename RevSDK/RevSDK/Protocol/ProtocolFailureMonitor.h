@@ -25,12 +25,14 @@
 #include <functional>
 
 #include "Utils.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
     class ProtocolFailureMonitor
     {
-    private:
+        REV_LEAK_DETECTOR(ProtocolFailureMonitor);
+
         typedef std::chrono::system_clock::time_point tTimepoint;
         struct ErrorReport
         {

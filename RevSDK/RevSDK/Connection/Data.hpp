@@ -24,10 +24,14 @@
 #include <memory>
 #include <vector>
 
+#include "LeakDetector.h"
+
 namespace rs
 {
     class Data
     {
+        REV_LEAK_DETECTOR(Data);
+        
     public:
         class Content
         {

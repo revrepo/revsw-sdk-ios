@@ -7,7 +7,6 @@
 #define NET_TOOLS_QUIC_QUIC_CLIENT_SESSION_H_
 
 #include <string>
-#include "base/basictypes.h"
 #include "net/quic/quic_client_session_base.h"
 #include "net/quic/quic_crypto_client_stream.h"
 #include "net/quic/quic_protocol.h"
@@ -32,7 +31,7 @@ namespace net
             ~QuicClientSession() override;
             
             // QuicSession methods:
-            QuicSpdyClientStream *CreateOutgoingDynamicStream() override;
+            QuicSpdyClientStream* CreateOutgoingDynamicStream(SpdyPriority priority) override;
             QuicCryptoClientStream *GetCryptoStream() override;
             
             // QuicClientSessionBase methods:
@@ -53,7 +52,7 @@ namespace net
             
         protected:
             // QuicSession methods:
-            QuicDataStream* CreateIncomingDynamicStream(QuicStreamId id) override;
+            QuicSpdyStream* CreateIncomingDynamicStream(QuicStreamId id) override;
             // Unlike CreateOutgoingDynamicStream, which applies a bunch of sanity checks,
             // this simply returns a new QuicSpdyClientStream. This may be used by
             // subclasses which want to use a subclass of QuicSpdyClientStream for streams

@@ -96,9 +96,14 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers[":path"] = rest;
     headers[":scheme"] = "https";
     headers["accept"] = "txt/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-    headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4";
-    headers["user-agent"] = "Mozilla";
+    headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2,th;q=0.2,uk;q=0.2,de;q=0.2,fr;q=0.2";
+    //headers["accept-encoding"] = "gzip, deflate, sdch";
+    //headers["user-agent"] = "Mozilla";
+    headers["user-agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
     
+    //headers["cache-control"] = "max-age=0";
+    //headers["upgrade-insecure-requests"] = "1";
+    //headers["x-compress"] = "null";
     
     //Data bData = aRequest->body();
     const char* bodyPtr = (const char*)aRequest->body().bytes();
@@ -116,40 +121,39 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers["X-Rev-Host"] = aRequest->host();
     headers["X-Rev-Proto"] = aRequest->originalScheme();
 
-    mTS = timestampMS();
+//    mTS = timestampMS();
+//    
+//    std::string dump;
+//    dump += "timestamp = " + longLongToStr(mTS);
+//    dump += "url = " + aRequest->URL() + "\n";
+//    dump += "method = " + aRequest->method() + "\n";
+//    dump += "body-size = " + intToStr((int)body.size());
+//    dump += "headers = \n";
+//
+//    for (const auto& i : headers)
+//        dump += i.first + ": " + i.second + "\n";
+//    
+//    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
     
-    std::string dump;
-    dump += "timestamp = " + longLongToStr(mTS);
-    dump += "url = " + aRequest->URL() + "\n";
-    dump += "method = " + aRequest->method() + "\n";
-    dump += "body-size = " + intToStr((int)body.size());
-    dump += "headers = \n";
-
-    for (const auto& i : headers)
-        dump += i.first + ": " + i.second + "\n";
-    
-    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
     onStart();
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
 
-void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicDataStream* aStream,
+void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicSpdyStream* aStream,
                                    const net::SpdyHeaderBlock& aHedaers, int aCode)
 {
     onResponseReceived();
     
-    std::string dump;
-    long long now = timestampMS();
-    dump += "timestamp = " + longLongToStr(now);
-    dump += "code = " + intToStr(aCode);
-    dump += "headers = \n";
-    
-    for (const auto& i : aHedaers)
-        dump += i.first + ": " + i.second + "\n";
-    
-    
-    
-    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
+//    std::string dump;
+//    long long now = timestampMS();
+//    dump += "timestamp = " + longLongToStr(now);
+//    dump += "code = " + intToStr(aCode);
+//    dump += "headers = \n";
+//    
+//    for (const auto& i : aHedaers)
+//        dump += i.first.as_string() + ": " + i.second.as_string() + "\n";
+//    
+//    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
 
     if (mRedirect.get() == nullptr)
     {
@@ -167,7 +171,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 }
                 
                 std::string baseURL = mURL;
-                std::string url = w->second;
+                std::string url = w->second.as_string();
                 newRequest->setURL(url);
                 std::string host;
                 std::string path;
@@ -198,7 +202,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
 
     if (mDelegate != nullptr)
     {
-        net::SpdyHeaderBlock headers;
+        std::map<std::string, std::string> headers;
 
         for (const auto& h : aHedaers)
         {
@@ -206,7 +210,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 continue;
             
             if (h.first[0] != ':')
-                headers[h.first] = h.second;
+                headers[h.first.as_string()] = h.second.as_string();
         }
         std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
         mResponse = response;
@@ -214,16 +218,17 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
     }
 }
 
-void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicDataStream* aStream, const char* aData, size_t aLen)
+void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicSpdyStream* aStream, const char* aData, size_t aLen)
 {
 //    if (mParent != nullptr)
 //    {
 //        mParent->quicSessionDidReceiveData(aSession, aStream, aData, aLen);
 //        return;
 //    }
-    std::string dump;
-    dump += "data-len = " + intToStr((int)aLen);
-    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
+    
+//    std::string dump;
+//    dump += "data-len = " + intToStr((int)aLen);
+//    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
 
     
     addReceivedBytesCount(aLen);
@@ -238,7 +243,7 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicD
     }
 }
 
-void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataStream* aStream)
+void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdyStream* aStream)
 {
     onEnd();
     
@@ -273,7 +278,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicDataSt
     mAnchor0.reset();
 }
 
-void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicDataStream* aStream)
+void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicSpdyStream* aStream)
 {
     Log::info(kLogTagQUICRequest, "Failed #%d\n", mId);
 //    if (mParent != nullptr)

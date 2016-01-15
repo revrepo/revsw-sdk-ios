@@ -23,6 +23,7 @@
 #include <memory>
 
 #include "Connection.hpp"
+#include "LeakDetector.h"
 
 namespace rs
 {
@@ -32,8 +33,10 @@ namespace rs
    class Data;
    class Error;
     
-    class ConnectionProxy : public ConnectionDelegate
+   class ConnectionProxy : public ConnectionDelegate
    {
+       REV_LEAK_DETECTOR(ConnectionProxy);
+       
        std::shared_ptr<Request> mRequest;
        std::shared_ptr<Connection> mConnection;
        

@@ -42,15 +42,15 @@ namespace net
             return crypto_stream_->encryption_established();
         }
 
-        QuicSpdyClientStream* QuicClientSession::CreateOutgoingDynamicStream()
+        QuicSpdyClientStream* QuicClientSession::CreateOutgoingDynamicStream(SpdyPriority priority)
         {
             if (!crypto_stream_->encryption_established()) {
                 DVLOG(1) << "Encryption not active so no outgoing stream created.";
                 return nullptr;
             }
-            if (GetNumOpenStreams() >= get_max_open_streams()) {
+            if (GetNumOpenOutgoingStreams() >= get_max_open_streams()) {
                 DVLOG(1) << "Failed to create a new outgoing stream. "
-                << "Already " << GetNumOpenStreams() << " open.";
+                << "Already " << GetNumOpenOutgoingStreams() << " open.";
                 return nullptr;
             }
             if (goaway_received() && respect_goaway_) {
@@ -59,13 +59,14 @@ namespace net
                 return nullptr;
             }
             QuicSpdyClientStream* stream = CreateClientStream();
+            stream->SetPriority(priority);
             ActivateStream(stream);
             return stream;
         }
         
         QuicSpdyClientStream* QuicClientSession::CreateClientStream()
         {
-            return new QuicSpdyClientStream(this->GetNextStreamId(), this);
+            return new QuicSpdyClientStream(this->GetNextOutgoingStreamId(), this);
         }
         
         QuicCryptoClientStream* QuicClientSession::GetCryptoStream()
@@ -84,7 +85,7 @@ namespace net
             return crypto_stream_->num_sent_client_hellos();
         }
         
-        QuicDataStream* QuicClientSession::CreateIncomingDynamicStream(QuicStreamId id)
+        QuicSpdyStream* QuicClientSession::CreateIncomingDynamicStream(QuicStreamId id)
         {
             DLOG(ERROR) << "Server push not supported";
             return nullptr;

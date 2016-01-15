@@ -24,12 +24,15 @@
 #include <string>
 #include <map>
 
+#include "LeakDetector.h"
 #include "Data.hpp"
 
 namespace rs
 {
    class Request
    {
+       REV_LEAK_DETECTOR(Request);
+
        std::string mMethod;
        std::string mOriginalURL;
        std::string mURL;

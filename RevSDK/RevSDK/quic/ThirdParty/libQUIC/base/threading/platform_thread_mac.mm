@@ -8,6 +8,7 @@
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <mach/thread_policy.h>
+#include <stddef.h>
 #include <sys/resource.h>
 
 #include <algorithm>
@@ -19,6 +20,7 @@
 #if 0
 #include "base/tracked_objects.h"
 #endif
+#include "build/build_config.h"
 
 namespace base {
 
@@ -159,10 +161,10 @@ void SetPriorityRealtimeAudio(mach_port_t mach_thread_id) {
 }  // anonymous namespace
 
 // static
-void PlatformThread::SetThreadPriority(PlatformThreadHandle handle,
-                                       ThreadPriority priority) {
+void PlatformThread::SetCurrentThreadPriority(ThreadPriority priority) {
   // Convert from pthread_t to mach thread identifier.
-  mach_port_t mach_thread_id = pthread_mach_thread_np(handle.platform_handle());
+  mach_port_t mach_thread_id =
+      pthread_mach_thread_np(PlatformThread::CurrentHandle().platform_handle());
 
   switch (priority) {
     case ThreadPriority::NORMAL:
@@ -178,7 +180,7 @@ void PlatformThread::SetThreadPriority(PlatformThreadHandle handle,
 }
 
 // static
-ThreadPriority PlatformThread::GetThreadPriority(PlatformThreadHandle handle) {
+ThreadPriority PlatformThread::GetCurrentThreadPriority() {
   NOTIMPLEMENTED();
   return ThreadPriority::NORMAL;
 }

@@ -18,21 +18,22 @@
 
 #pragma once
 
-#include "QUICHelpers.h"
 #include "NativeUDPSocketCPPDelegate.h"
 #include "RevProofVerifier.h"
 #include "QUICSessionDelegates.h"
 #include "QUICThread.h"
 #include "QUICClientSession.h"
 
-#include <map>
+#include <unordered_map>
 #include <thread>
 #include <mutex>
 
 namespace rs
 {
     class UDPService;
-    class QUICSession : public QUICDataStream::Delegate
+    class QuicConnectionHelper;
+    
+    class QUICSession : public NativeUDPSocketCPPDelegate, public QUICDataStream::Delegate
     {
     public:
         static QUICSession* instance();
@@ -64,7 +65,7 @@ namespace rs
         QUICDataStream* p_sendRequest(const net::SpdyHeaderBlock &headers,
                                       base::StringPiece body,
                                       QUICStreamDelegate* aStreamDelegate);
-        void OnClose(net::QuicDataStream* stream);
+        void OnClose(net::QuicSpdyStream* stream);
         
         void onQUICStreamReceivedData(QUICDataStream* aStream, const char* aData, size_t aDataLen) override;
         void onQUICStreamReceivedResponse(QUICDataStream* aStream, int aCode, const net::SpdyHeaderBlock& aHeaders) override;
@@ -79,13 +80,13 @@ namespace rs
                                                                net::QuicConnection *connection,
                                                                const net::QuicServerId &serverId,
                                                                net::QuicCryptoClientConfig *cryptoConfig);
-        bool onQUICPacket(const net::QuicEncryptedPacket &packet);
-        void onQUICError(Error aError);
+        bool onQUICPacket(const net::QuicEncryptedPacket &packet) override;
+        void onQUICError() override;
         
     private:
         static QUICSession* mInstance;
-        //QUICThread mInstanceThread;
-        UDPService* mService;
+        QUICThread mInstanceThread;
+        //UDPService* mService;
         std::string mHost;
         
         void executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync = false);
@@ -97,7 +98,7 @@ namespace rs
         base::AtExitManager mAtExitManager;
         
         // Obj-C object that manages the udp socket, needs to outlive writer.
-        //ObjCImpl* mObjC;
+        ObjCImpl* mObjC;
         
         // Writer used to send packets to the wire.
         // Wraps around the cocoaUDPSocketWrapper.
@@ -116,7 +117,7 @@ namespace rs
         net::IPEndPoint mServerAddress;
         net::QuicServerId mServerId;
         
-        typedef std::map<QUICDataStream*, QUICStreamDelegate*> StreamDelegateMap;
+        typedef std::unordered_map<QUICDataStream*, QUICStreamDelegate*> StreamDelegateMap;
         StreamDelegateMap mStreamDelegateMap;
         
         bool mConnecting;

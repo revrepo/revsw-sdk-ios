@@ -36,15 +36,15 @@ QUICClientSession::~QUICClientSession()
     
 }
 
-QUICDataStream* QUICClientSession::rsCreateOutgoingDynamicStream()
+QUICDataStream* QUICClientSession::rsCreateOutgoingDynamicStream(SpdyPriority priority)
 {
     if (!crypto_stream_->encryption_established()) {
         DVLOG(1) << "Encryption not active so no outgoing stream created.";
         return nullptr;
     }
-    if (GetNumOpenStreams() >= get_max_open_streams()) {
+    if (GetNumOpenOutgoingStreams() >= get_max_open_streams()) {
         DVLOG(1) << "Failed to create a new outgoing stream. "
-        << "Already " << GetNumOpenStreams() << " open.";
+        << "Already " << GetNumOpenOutgoingStreams() << " open.";
         return nullptr;
     }
     if (goaway_received() && respect_goaway_) {
@@ -53,11 +53,12 @@ QUICDataStream* QUICClientSession::rsCreateOutgoingDynamicStream()
         return nullptr;
     }
     QUICDataStream* stream = rsCreateClientStream();
+    stream->SetPriority(priority);
     ActivateStream(stream);
     return stream;
 }
 
 QUICDataStream* QUICClientSession::rsCreateClientStream()
 {
-    return new QUICDataStream(this->GetNextStreamId(), this);
+    return new QUICDataStream(this->GetNextOutgoingStreamId(), this);
 }

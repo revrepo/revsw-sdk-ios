@@ -142,7 +142,11 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     }
     
     NSUInteger payloadSize       = self.payloadSizeSlider.value * kBytesInKB;
+
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
+    [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
+    [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    
     request.HTTPMethod           = self.method;
     
     if (![request.HTTPMethod isEqualToString:@"GET"])

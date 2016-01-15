@@ -27,13 +27,6 @@
   TypeName(const TypeName&);               \
   void operator=(const TypeName&)
 
-// An older, deprecated, politically incorrect name for the above.
-// NOTE: The usage of this macro was banned from our code base, but some
-// third_party libraries are yet using it.
-// TODO(tfarina): Figure out how to fix the usage of this macro in the
-// third_party libraries and get rid of it.
-#define DISALLOW_EVIL_CONSTRUCTORS(TypeName) DISALLOW_COPY_AND_ASSIGN(TypeName)
-
 // A macro to disallow all the implicit constructors, namely the
 // default constructor, copy constructor and operator= functions.
 //
@@ -41,13 +34,14 @@
 // that wants to prevent anyone from instantiating it. This is
 // especially useful for classes containing only static methods.
 #define DISALLOW_IMPLICIT_CONSTRUCTORS(TypeName) \
-  TypeName();                                    \
+  TypeName() = delete;                           \
   DISALLOW_COPY_AND_ASSIGN(TypeName)
 
-// The arraysize(arr) macro returns the # of elements in an array arr.
-// The expression is a compile-time constant, and therefore can be
-// used in defining new arrays, for example.  If you use arraysize on
-// a pointer by mistake, you will get a compile-time error.
+// The arraysize(arr) macro returns the # of elements in an array arr.  The
+// expression is a compile-time constant, and therefore can be used in defining
+// new arrays, for example.  If you use arraysize on a pointer by mistake, you
+// will get a compile-time error.  For the technical details, refer to
+// http://blogs.msdn.com/b/the1/archive/2004/05/07/128242.aspx.
 
 // This template function declaration is used in defining arraysize.
 // Note that the function doesn't need an implementation, as we only
@@ -55,54 +49,13 @@
 template <typename T, size_t N> char (&ArraySizeHelper(T (&array)[N]))[N];
 #define arraysize(array) (sizeof(ArraySizeHelper(array)))
 
-
-// Use implicit_cast as a safe version of static_cast or const_cast
-// for upcasting in the type hierarchy (i.e. casting a pointer to Foo
-// to a pointer to SuperclassOfFoo or casting a pointer to Foo to
-// a const pointer to Foo).
-// When you use implicit_cast, the compiler checks that the cast is safe.
-// Such explicit implicit_casts are necessary in surprisingly many
-// situations where C++ demands an exact type match instead of an
-// argument type convertible to a target type.
-//
-// The From type can be inferred, so the preferred syntax for using
-// implicit_cast is the same as for static_cast etc.:
-//
-//   implicit_cast<ToType>(expr)
-//
-// implicit_cast would have been part of the C++ standard library,
-// but the proposal was submitted too late.  It will probably make
-// its way into the language in the future.
-template<typename To, typename From>
-inline To implicit_cast(From const &f) {
-  return f;
-}
-
-// The COMPILE_ASSERT macro can be used to verify that a compile time
-// expression is true. For example, you could use it to verify the
-// size of a static array:
-//
-//   COMPILE_ASSERT(arraysize(content_type_names) == CONTENT_NUM_TYPES,
-//                  content_type_names_incorrect_size);
-//
-// or to make sure a struct is smaller than a certain size:
-//
-//   COMPILE_ASSERT(sizeof(foo) < 128, foo_too_large);
-//
-// The second argument to the macro is the name of the variable. If
-// the expression is false, most compilers will issue a warning/error
-// containing the name of the variable.
-
-#undef COMPILE_ASSERT
-#define COMPILE_ASSERT(expr, msg) static_assert(expr, #msg)
-
 // bit_cast<Dest,Source> is a template function that implements the
 // equivalent of "*reinterpret_cast<Dest*>(&source)".  We need this in
 // very low-level functions like the protobuf library and fast math
 // support.
 //
 //   float f = 3.14159265358979;
-//   int i = bit_cast<int32>(f);
+//   int i = bit_cast<int32_t>(f);
 //   // i = 0x40490fdb
 //
 // The classical address-casting method is:
@@ -152,7 +105,8 @@ inline To implicit_cast(From const &f) {
 
 template <class Dest, class Source>
 inline Dest bit_cast(const Source& source) {
-  COMPILE_ASSERT(sizeof(Dest) == sizeof(Source), VerifySizesAreEqual);
+  static_assert(sizeof(Dest) == sizeof(Source),
+                "bit_cast requires source and destination to be the same size");
 
   Dest dest;
   memcpy(&dest, &source, sizeof(dest));

@@ -5,10 +5,13 @@
 #ifndef NET_BASE_IP_ADDRESS_NUMBER_H_
 #define NET_BASE_IP_ADDRESS_NUMBER_H_
 
+#include <stddef.h>
+#include <stdint.h>
+
 #include <string>
 #include <vector>
 
-#include "base/basictypes.h"
+#include "base/strings/string_piece.h"
 #include "net/base/net_export.h"
 
 namespace net {
@@ -18,8 +21,11 @@ namespace net {
 // network byte ordering.
 //
 // IPv4 addresses will have length 4, whereas IPv6 address will have length 16.
-typedef std::vector<unsigned char>
-    IPAddressNumber;  // This is also duplicated in net_util.h
+//
+// TODO(Martijnc): Remove the IPAddressNumber typedef. New code should use
+// IPAddress instead and existing code should be switched over.
+// https://crbug.com/496258
+typedef std::vector<unsigned char> IPAddressNumber;
 typedef std::vector<IPAddressNumber> IPAddressList;
 
 static const size_t kIPv4AddressSize = 4;
@@ -58,7 +64,7 @@ NET_EXPORT bool ParseURLHostnameToNumber(const std::string& hostname,
 
 // Parses an IP address literal (either IPv4 or IPv6) to its numeric value.
 // Returns true on success and fills |ip_number| with the numeric value.
-NET_EXPORT bool ParseIPLiteralToNumber(const std::string& ip_literal,
+NET_EXPORT bool ParseIPLiteralToNumber(const base::StringPiece& ip_literal,
                                        IPAddressNumber* ip_number);
 
 // Converts an IPv4 address to an IPv4-mapped IPv6 address.

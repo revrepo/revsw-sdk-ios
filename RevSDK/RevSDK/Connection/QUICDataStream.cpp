@@ -39,29 +39,29 @@ QUICDataStream::~QUICDataStream()
     
 }
 
-uint32 QUICDataStream::ProcessData(const char* data, uint32 data_len)
+void QUICDataStream::OnStreamFrame(const net::QuicStreamFrame& frame)
 {
-    uint32 result = QuicSpdyClientStream::ProcessData(data, data_len);
-
+    QuicSpdyClientStream::OnStreamFrame(frame);
+    
     if (!mFailed && mDelegate != nullptr)
     {
-//        if (mHeadersDelivered)
-//        {
-//            mDelegate->onQUICStreamReceivedData(this, data, data_len);
-//        }
-//        else
-//        {
-//            mCache = mCache.byAppendingData((const void*)data, data_len);
-//        }
         mInitialMS = 0;
     }
-    
-    return result;
 }
 
-void QUICDataStream::OnStreamHeadersComplete(bool fin, size_t frame_len)
+void QUICDataStream::OnInitialHeadersComplete(bool fin, size_t frame_len)
 {
-    QuicSpdyClientStream::OnStreamHeadersComplete(fin, frame_len);
+    QuicSpdyClientStream::OnInitialHeadersComplete(fin, frame_len);
+    
+//    if (!mFailed && mDelegate != nullptr)
+//    {
+//        mDelegate->onQUICStreamReceivedResponse(this, response_code(), headers());
+//    }
+}
+
+void QUICDataStream::OnTrailingHeadersComplete(bool fin, size_t frame_len)
+{
+    QuicSpdyClientStream::OnTrailingHeadersComplete(fin, frame_len);
     
     if (!mFailed && mDelegate != nullptr)
     {
