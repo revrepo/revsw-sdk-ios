@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		1103818C1C492B92001F60E9 /* RSOriginSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1103818A1C492B92001F60E9 /* RSOriginSession.h */; };
 		1103818D1C492B92001F60E9 /* RSOriginSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1103818B1C492B92001F60E9 /* RSOriginSession.m */; };
+		110381931C496C8E001F60E9 /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 110381901C496C8E001F60E9 /* json-forwards.h */; };
+		110381941C496C8E001F60E9 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 110381911C496C8E001F60E9 /* json.h */; };
+		110381951C496C8E001F60E9 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 110381921C496C8E001F60E9 /* jsoncpp.cpp */; };
 		1109F3CA1C40091900ABB160 /* RSLogVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 1109F3C81C40091900ABB160 /* RSLogVC.h */; };
 		1109F3CB1C40091900ABB160 /* RSLogVC.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1109F3C91C40091900ABB160 /* RSLogVC.mm */; };
 		1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1109F3CE1C401EEE00ABB160 /* MessageUI.framework */; };
@@ -161,6 +164,9 @@
 /* Begin PBXFileReference section */
 		1103818A1C492B92001F60E9 /* RSOriginSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOriginSession.h; sourceTree = "<group>"; };
 		1103818B1C492B92001F60E9 /* RSOriginSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOriginSession.m; sourceTree = "<group>"; };
+		110381901C496C8E001F60E9 /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
+		110381911C496C8E001F60E9 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
+		110381921C496C8E001F60E9 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
 		1109F3C81C40091900ABB160 /* RSLogVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLogVC.h; sourceTree = "<group>"; };
 		1109F3C91C40091900ABB160 /* RSLogVC.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSLogVC.mm; sourceTree = "<group>"; };
 		1109F3CE1C401EEE00ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -346,6 +352,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		1103818F1C496C8E001F60E9 /* json */ = {
+			isa = PBXGroup;
+			children = (
+				110381901C496C8E001F60E9 /* json-forwards.h */,
+				110381911C496C8E001F60E9 /* json.h */,
+				110381921C496C8E001F60E9 /* jsoncpp.cpp */,
+			);
+			name = json;
+			path = libs/json;
+			sourceTree = "<group>";
+		};
 		114D65841C34502C00C2D176 /* Debug */ = {
 			isa = PBXGroup;
 			children = (
@@ -477,6 +494,7 @@
 		5B3096B81BFA02770045024C /* RevSDK */ = {
 			isa = PBXGroup;
 			children = (
+				1103818F1C496C8E001F60E9 /* json */,
 				11F24B421C3C5FBA00DABAE5 /* libboost.a */,
 				114D65841C34502C00C2D176 /* Debug */,
 				11C95FD61C2D462200CDE34D /* quic */,
@@ -678,6 +696,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				110381931C496C8E001F60E9 /* json-forwards.h in Headers */,
 				6DEAB1CF1C2D8D2B0078CE65 /* RSStaticStatsProvider.h in Headers */,
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
 				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
@@ -686,6 +705,7 @@
 				5B46D1E61C217BC100A9834C /* StatsHandler.hpp in Headers */,
 				11C961111C2D469300CDE34D /* RevAsyncUdpSocket.h in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
+				110381941C496C8E001F60E9 /* json.h in Headers */,
 				5B2035AA1C3453FC00A28C01 /* Event.hpp in Headers */,
 				11C961101C2D469300CDE34D /* quic_spdy_client_stream.h in Headers */,
 				114D65871C34502C00C2D176 /* DebugUsageTracker.hpp in Headers */,
@@ -930,6 +950,7 @@
 				114D658E1C3476E400C2D176 /* NSURL+RevSDK.m in Sources */,
 				6D1F86091C3A730800E48AC9 /* ProtocolSelector.cpp in Sources */,
 				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
+				110381951C496C8E001F60E9 /* jsoncpp.cpp in Sources */,
 				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,
 				5B54C3481BFB7B8700217971 /* QUICConnection.mm in Sources */,

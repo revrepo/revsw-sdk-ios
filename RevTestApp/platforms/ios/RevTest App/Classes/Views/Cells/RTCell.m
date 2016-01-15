@@ -38,6 +38,7 @@
     }
     
     label.text = aStartText;
+    //label.numberOfLines = 2;
     
     CGFloat screenWidth = [UIScreen mainScreen].bounds.size.width;
     
@@ -57,6 +58,7 @@
         }
         
         label.text = text;
+        label.numberOfLines = 2;
         
         constant += offsetValue;
     }];

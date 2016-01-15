@@ -18,7 +18,7 @@
 
 #include <iostream>
 
-#include <json/json.h>
+#include "json.h"
 
 #include "JSONUtils.hpp"
 #include "Data.hpp"

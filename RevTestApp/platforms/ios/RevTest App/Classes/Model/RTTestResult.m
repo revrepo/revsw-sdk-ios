@@ -24,14 +24,14 @@ static BOOL shouldReportDataInMB = NO;
 
 - (NSString *)dataLengthString
 {
-    CGFloat dataLength = shouldReportDataInMB ? _dataLength / 1024.0 / 1024.0 : _dataLength / 1024.0;
+    CGFloat dataLength = shouldReportDataInMB ? _dataLength / 1024.0 : _dataLength / 1024.0;
     
     return [NSString stringWithFormat:@"%.1f", dataLength];
 }
 
 - (NSString *)wholeString
 {
-    return [NSString stringWithFormat:@"%@ (%@)", self.durationString, self.dataLengthString];
+    return [NSString stringWithFormat:@"%@\n(%@)", self.durationString, self.dataLengthString];
 }
 
 - (NSString *)nameString
