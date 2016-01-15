@@ -52,7 +52,7 @@
 		11F24B4A1C3D695D00DABAE5 /* RSUDPService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */; };
 		11F24B4B1C3D695D00DABAE5 /* RSUDPService.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B491C3D695D00DABAE5 /* RSUDPService.h */; };
 		45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */; };
-		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
 		5B2035851C33DBB400A28C01 /* RSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RSReachability.m */; };
 		5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035921C33E85E00A28C01 /* RSSystemInfo.h */; };
@@ -672,11 +672,11 @@
 			files = (
 				6DEAB1CF1C2D8D2B0078CE65 /* RSStaticStatsProvider.h in Headers */,
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
+				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
 				6D8BD9A21C3FAE07008353DB /* IConfigurationService.h in Headers */,
 				5BC497B81C03782B00FF0922 /* Configuration.hpp in Headers */,
 				5B46D1E61C217BC100A9834C /* StatsHandler.hpp in Headers */,
 				11C961111C2D469300CDE34D /* RevAsyncUdpSocket.h in Headers */,
-				5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
 				5B2035AA1C3453FC00A28C01 /* Event.hpp in Headers */,
 				11C961101C2D469300CDE34D /* quic_spdy_client_stream.h in Headers */,
