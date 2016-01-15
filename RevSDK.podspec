@@ -41,8 +41,8 @@ s.source = { :git => "https://github.com/Andrey-C/RevSDK.git", :tag => "#{s.vers
 
 s.framework = "MessageUI"
 s.dependency 'jsoncpp', '>= 0.6.beta.0'
-s.dependency 'ALALertBanner'
+#s.dependency 'ALALertBanner'
 
-s.source_files = "RevSDK.{h,m}"
+s.source_files = "RevSDK/**/*.{h, hpp, mm, m, cpp}"
 
 end
