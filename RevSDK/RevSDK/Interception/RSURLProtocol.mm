@@ -163,10 +163,6 @@
 - (void)connection:(RSURLConnectionNative *)connection didFailWithError:(NSError *)error
 {
     [self.client URLProtocol:self didFailWithError:error];
-    __block BOOL flag = NO;
-    dispatch_sync(dispatch_get_main_queue(), ^{
-        flag = YES;
-    });
 }
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveData:(NSData *)aData

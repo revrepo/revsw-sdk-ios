@@ -33,16 +33,16 @@ namespace rs
             mMap[aConnection->getID()] = aConnection;
             mLock.unlock();
         }
-        void remove(rs::Connection* aConnection)
-        {
-            if (aConnection == nullptr)
-                return;
-            mLock.lock();
-            Map::iterator w = mMap.find(aConnection->getID());
-            if (w != mMap.end())
-                mMap.erase(w);
-            mLock.unlock();
-        }
+//        void remove(rs::Connection* aConnection)
+//        {
+//            if (aConnection == nullptr)
+//                return;
+//            mLock.lock();
+//            Map::iterator w = mMap.find(aConnection->getID());
+//            if (w != mMap.end())
+//                mMap.erase(w);
+//            mLock.unlock();
+//        }
         std::shared_ptr<rs::Connection> getById(int aConnectionId)
         {
             std::shared_ptr<rs::Connection> res;
@@ -53,16 +53,16 @@ namespace rs
             mLock.unlock();
             return res;
         }
-        bool validById(int aConnectionId) const
-        {
-            bool ok = false;
-            mLock.lock();
-            Map::const_iterator w = mMap.find(aConnectionId);
-            if (w != mMap.end())
-                ok = !w->second.expired();
-            mLock.unlock();
-            return ok;
-        }
+//        bool validById(int aConnectionId) const
+//        {
+//            bool ok = false;
+//            mLock.lock();
+//            Map::const_iterator w = mMap.find(aConnectionId);
+//            if (w != mMap.end())
+//                ok = !w->second.expired();
+//            mLock.unlock();
+//            return ok;
+//        }
         void removeById(int aConnectionId)
         {
             mLock.lock();
