@@ -12,6 +12,14 @@
 #import <RevSDK/RevSDK.h>
 #import "RTUtils.h"
 
+typedef enum
+{
+    kRSOperationModeOff,
+    kRSOperationModeTransport,
+    kRSOperationModeReport,
+    kRSOperationModeTransportAndReport
+}RSOperationMode;
+
 
 @interface RTTestModel ()
 {
@@ -71,7 +79,13 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [RevSDK debug_disableTestMode];
+    
+    SEL selector = @selector(debug_disableTestMode);
+    
+    if ([RevSDK respondsToSelector:selector])
+    {
+        [RevSDK performSelector:selector];
+    }
 }
 
 - (void)start
@@ -86,7 +100,13 @@
     
     [self.testResults removeAllObjects];
     
-    [RevSDK debug_enableTestMode];
+    SEL selector = @selector(debug_enableTestMode);
+    
+    if ([RevSDK respondsToSelector:selector])
+    {
+        [RevSDK performSelector:selector];
+    }
+    
     [self stepStarted];
 }
 
@@ -129,8 +149,7 @@
         
         RSOperationMode mode = (RSOperationMode) tcase.operationMode;
         
-        [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
-        
+        [self pushTestConfiguration:tcase.protocolID mode:mode];
         NSString* type = tcase.testName;
         
         NSLog(@"-test: %ld mode: %@", (unsigned long)mTestsCounter, type);
@@ -179,7 +198,31 @@
 
 - (void)didFinishedTests
 {
-    [RevSDK debug_disableTestMode];
+    SEL selector = @selector(debug_disableTestMode);
+    
+    if ([RevSDK respondsToSelector:selector])
+    {
+        [RevSDK performSelector:selector];
+    }
+}
+
+- (void)pushTestConfiguration:(NSString *)aProtocolId mode:(RSOperationMode)mode
+{
+    SEL selector = @selector(debug_pushTestConfiguration: mode:);
+    
+    if ([RevSDK respondsToSelector:selector])
+    {
+        NSMethodSignature* methodSignature = [RevSDK methodSignatureForSelector:selector];
+        NSInvocation* invocation           = [NSInvocation invocationWithMethodSignature:methodSignature];
+        
+        [invocation setSelector:selector];
+        [invocation setTarget:[RevSDK class]];
+        
+        [invocation setArgument:&(aProtocolId) atIndex:2];
+        [invocation setArgument:&mode atIndex:3];
+        
+        [invocation invoke];
+    }
 }
 
 - (void)stepStarted
@@ -191,8 +234,9 @@
         
         [self createCases];
         RTTestCase* tcase = [self.testCases objectAtIndex:0];
-        RSOperationMode mode = (RSOperationMode) tcase.operationMode; 
-        [RevSDK debug_pushTestConifguration:tcase.protocolID mode:mode];
+        RSOperationMode mode = (RSOperationMode) tcase.operationMode;
+        
+        [self pushTestConfiguration:tcase.protocolID mode:mode];
         
         NSString* proto = tcase.testName;
         

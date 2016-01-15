@@ -268,6 +268,7 @@
 		5B7C91B01C08A9D200676ADC /* RSURLRequestProcessor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLRequestProcessor.mm; sourceTree = "<group>"; };
 		5B8FEAF21C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLSessionConfiguration+RSUtils.h"; sourceTree = "<group>"; };
 		5B8FEAF31C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLSessionConfiguration+RSUtils.m"; sourceTree = "<group>"; };
+		5B95A4151C494D8100708E84 /* RevSDKPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RevSDKPrivate.h; sourceTree = "<group>"; };
 		5BC497B51C03782B00FF0922 /* Configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Configuration.cpp; path = ../Utils/Configuration.cpp; sourceTree = "<group>"; };
 		5BC497B61C03782B00FF0922 /* Configuration.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Configuration.hpp; path = ../Utils/Configuration.hpp; sourceTree = "<group>"; };
 		5BDA28251BFA31C9003F55F6 /* ConnectionProxy.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectionProxy.cpp; sourceTree = "<group>"; };
@@ -484,8 +485,9 @@
 				5B54C3231BFB5C3300217971 /* Utils */,
 				5BDA28241BFA31AD003F55F6 /* Connection */,
 				5B3096E71BFA0CA70045024C /* Interception */,
-				5B3096B91BFA02770045024C /* RevSDK.h */,
+				5B95A4151C494D8100708E84 /* RevSDKPrivate.h */,
 				5B3096F01BFA11E50045024C /* RevSDK.mm */,
+				5B3096B91BFA02770045024C /* RevSDK.h */,
 				5B3096BB1BFA02770045024C /* Info.plist */,
 				5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */,
 			);

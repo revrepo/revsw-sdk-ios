@@ -10,9 +10,9 @@
 
 @interface RTTestCase : NSObject
 
-@property (nonatomic, readwrite, strong) NSString* testName;
+@property (nonatomic, readwrite, copy) NSString* testName;
 
-@property (nonatomic, readwrite, assign) NSString* protocolID;
+@property (nonatomic, readwrite, copy) NSString* protocolID;
 
 @property (nonatomic, readwrite, assign) NSInteger operationMode;
 

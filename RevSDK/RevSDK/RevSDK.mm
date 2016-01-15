@@ -23,6 +23,7 @@
 #import "RSLogVC.h"
 
 #import "RevSDK.h"
+#import "RevSDKPrivate.h"
 #import "RSURLProtocol.h"
 
 #import "Model.hpp"

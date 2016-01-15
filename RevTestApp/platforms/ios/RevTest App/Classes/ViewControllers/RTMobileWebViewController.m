@@ -189,8 +189,6 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)didFinishLoadWithCode:(NSInteger)aCode
 {
-    RSOperationMode mode = [RevSDK operationMode];
-    
     [self loadFinished:aCode];
 }
 

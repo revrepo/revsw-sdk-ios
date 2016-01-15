@@ -7,7 +7,6 @@
 //
 
 #import "UIViewController+RTUtils.h"
-//#import "RTPhoneGapViewController.h"
 #import "RTStartViewController.h"
 #import "RTMobileWebViewController.h"
 #import "RTNativeMobileViewController.h"
@@ -19,7 +18,10 @@
 {
     [super viewDidLoad];
     
-    [RevSDK debug_turnOnDebugBanners];
+    if ([RevSDK respondsToSelector:@selector(debug_turnOnDebugBanners)])
+    {
+        [[RevSDK class] performSelector:@selector(debug_turnOnDebugBanners)];
+    }
     
     self.navigationItem.title = @"Select";
     
@@ -49,7 +51,12 @@
 
 - (void)onLogPressed:(id)sender
 {
-    [RevSDK debug_showLogInViewController:self];
+   // [RevSDK debug_showLogInViewController:self];
+    
+    if ([RevSDK respondsToSelector:@selector(debug_showLogInViewController:)])
+    {
+        [[RevSDK class] performSelector:@selector(debug_showLogInViewController:) withObject:self];
+    }
 }
 
 - (BOOL)shouldAutorotate
