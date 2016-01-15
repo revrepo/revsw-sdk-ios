@@ -222,9 +222,11 @@
     NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:mStartDate];
     mStartDate              = nil;
     
-    const NSUInteger dataSizeLimit = 1024.0 * 300;
+    const CGFloat kCylobyte          = 1024.0;
+    const NSUInteger kCylobytesLimit = 300;
+    const NSUInteger kDataSizeLimit  = kCylobytesLimit * kCylobyte;
     
-    if (mCurrentDataSize > dataSizeLimit)
+    if (mCurrentDataSize > kDataSizeLimit)
     {
         [RTTestResult setShouldReportDataInMB:YES];
     }
