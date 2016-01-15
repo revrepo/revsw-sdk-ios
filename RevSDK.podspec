@@ -45,11 +45,4 @@ s.dependency 'jsoncpp', '>= 0.6.beta.0'
 
 s.source_files = "RevSDK/**/*.{h, hpp, mm, m, cpp}"
 
-other_ldflags = '$(inherited) -framework ' +
-' -lz -lstdc++'
-
-s.xcconfig     = {
-'VALID_ARCHS' => ['armv7', 'armv7s', 'arm64']
-}
-
 end
