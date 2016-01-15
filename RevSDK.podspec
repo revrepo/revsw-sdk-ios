@@ -49,7 +49,7 @@ other_ldflags = '$(inherited) -framework ' +
 ' -lz -lstdc++'
 
 s.xcconfig     = {
-'VALID_ARCHS' = {'armv7', 'armv7s', 'arm64'
+'VALID_ARCHS' = {'armv7', 'armv7s', 'arm64'}
 }
 
 end
