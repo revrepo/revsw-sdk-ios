@@ -28,7 +28,7 @@
 
 @implementation RTHTMLGrabber
 
-- (void)loadRequest:(NSURLRequest  * _Nonnull)request
+- (void)loadRequest:(NSURLRequest *)request
 {
     NSURLSession* session = [NSURLSession sharedSession];
     

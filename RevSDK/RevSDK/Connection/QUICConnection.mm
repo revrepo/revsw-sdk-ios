@@ -86,9 +86,14 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers[":path"] = rest;
     headers[":scheme"] = "https";
     headers["accept"] = "txt/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-    headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4";
-    headers["user-agent"] = "Mozilla";
+    headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2,th;q=0.2,uk;q=0.2,de;q=0.2,fr;q=0.2";
+    //headers["accept-encoding"] = "gzip, deflate, sdch";
+    //headers["user-agent"] = "Mozilla";
+    headers["user-agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
     
+    //headers["cache-control"] = "max-age=0";
+    //headers["upgrade-insecure-requests"] = "1";
+    //headers["x-compress"] = "null";
     
     //Data bData = aRequest->body();
     const char* bodyPtr = (const char*)aRequest->body().bytes();
@@ -129,18 +134,16 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
 {
     onResponseReceived();
     
-    std::string dump;
-    long long now = timestampMS();
-    dump += "timestamp = " + longLongToStr(now);
-    dump += "code = " + intToStr(aCode);
-    dump += "headers = \n";
-    
-    for (const auto& i : aHedaers)
-        dump += i.first + ": " + i.second + "\n";
-    
-    
-    
-    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
+//    std::string dump;
+//    long long now = timestampMS();
+//    dump += "timestamp = " + longLongToStr(now);
+//    dump += "code = " + intToStr(aCode);
+//    dump += "headers = \n";
+//    
+//    for (const auto& i : aHedaers)
+//        dump += i.first.as_string() + ": " + i.second.as_string() + "\n";
+//    
+//    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
 
     if (mRedirect.get() == nullptr)
     {

@@ -22,7 +22,7 @@
 
 @interface RTHTMLGrabber : NSObject
 
-- (void)loadRequest:(NSURLRequest  * _Nonnull)request;
+- (void)loadRequest:(NSURLRequest *)request;
 @property (nullable, nonatomic, assign) id <RTHTMLGrabberDelegate> delegate;
 
 @end
@@ -30,8 +30,8 @@
 @protocol RTHTMLGrabberDelegate <NSObject>
 
 @optional
-- (void)grabberDidStartLoad:(RTHTMLGrabber * _Nonnull)grabber;
-- (void)grabberDidFinishLoad:(RTHTMLGrabber * _Nonnull)grabber;
-- (void)grabber:(RTHTMLGrabber * _Nonnull)grabber didFailLoadWithError:(nullable NSError *)error;
+- (void)grabberDidStartLoad:(RTHTMLGrabber *)grabber;
+- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber;
+- (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error;
 
 @end

@@ -24,6 +24,8 @@
     self->blocked = false;
     self->mDelegate = aDelegate;
     self->udpSocket = [[RevAsyncUdpSocket alloc] initWithDelegate:self];
+    [self->udpSocket setMaxReceiveBufferSize:256000];
+    [self->udpSocket setRunLoopModes:@[NSRunLoopCommonModes]];
     
     NSError *error = nil;
     

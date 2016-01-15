@@ -234,6 +234,11 @@
 
 - (void)loadFinished:(NSInteger) aResult
 {
+    if ([self.testCases count] == 0)
+    {
+        return;
+    }
+    
     if (self.timer)
     {
         [self.timer invalidate];
@@ -249,8 +254,6 @@
     tres.errorCode   = aResult;
     tres.duration    = interval;
     mCurrentDataSize = 0;
-    
-    assert([self.testCases count]);
     
     RTTestCase* tcase = [self.testCases objectAtIndex:0];
     tres.testName = tcase.testName;

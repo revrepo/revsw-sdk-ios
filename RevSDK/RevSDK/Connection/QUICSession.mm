@@ -16,6 +16,9 @@
 #include "Model.hpp"
 #include <iostream>
 
+// The initial receive window size for both streams and sessions.
+const size_t kInitialReceiveWindowSize = 10 * 1024 * 1024;  // 10MB
+
 class rs::QUICSession::ObjCImpl
 {
 public:
@@ -33,6 +36,9 @@ QUICSession* QUICSession::mInstance = nullptr;
 
 void QUICSession::executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync)
 {
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        aFunction();
+//    });
     mInstanceThread.perform(aFunction);
 }
 
@@ -51,7 +57,7 @@ void QUICSession::reconnect()
     int port = 443;
     std::string address = Model::instance()->edgeHost();
     if (address.size() == 0) {
-        address = "rev-200.revdn.net";
+        address = "www.revapm.com";
     }
     
     QuicServerId serverId(address, port, PRIVACY_MODE_DISABLED);
@@ -141,8 +147,20 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
         return;
     }
     
+    
+    
     mWriter.reset(createQuicPacketWriter());
-
+    
+    mConfig.SetInitialSessionFlowControlWindowToSend(kInitialReceiveWindowSize);
+    mConfig.SetInitialStreamFlowControlWindowToSend(kInitialReceiveWindowSize);
+    mConfig.SetInitialStreamFlowControlWindowToSend(kInitialReceiveWindowSize);
+    mConfig.SetSocketReceiveBufferToSend(256000);
+    mConfig.SetInitialRoundTripTimeUsToSend(10 * base::Time::kMicrosecondsPerMillisecond);
+    
+//    static const int kDefaultTimeoutSecs = 30;
+//    mConfig.SetIdleConnectionStateLifetime(QuicTime::Delta::FromSeconds(2 * kDefaultTimeoutSecs),
+//                                           QuicTime::Delta::FromSeconds(kDefaultTimeoutSecs));
+    
     if (!mSession)
     {
         // Will be owned by the session.
@@ -153,6 +171,7 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
                                                         /* owns_writer= */ false,
                                                         Perspective::IS_CLIENT,
                                                         QuicSupportedVersions());
+        connection->SetMaxPacketLength(UINT64_MAX);
         
         mSession.reset(new QUICClientSession(mConfig,
                                              connection,

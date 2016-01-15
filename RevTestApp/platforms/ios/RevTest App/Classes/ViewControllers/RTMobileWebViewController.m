@@ -303,17 +303,17 @@ static const NSInteger kSuccessCode = 200;
 
 #pragma mark - RTHTMLGrabberDelegate
 
-- (void)grabberDidStartLoad:(RTHTMLGrabber * _Nonnull)grabber
+- (void)grabberDidStartLoad:(RTHTMLGrabber *)grabber
 {
     [self loadStarted];
 }
 
-- (void)grabberDidFinishLoad:(RTHTMLGrabber * _Nonnull)grabber
+- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber
 {
     [self didFinishLoadWithCode:kSuccessCode];
 }
 
-- (void)grabber:(RTHTMLGrabber * _Nonnull)grabber didFailLoadWithError:(nullable NSError *)error
+- (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error
 {
     [self didFinishLoadWithCode:error.code];
 }
