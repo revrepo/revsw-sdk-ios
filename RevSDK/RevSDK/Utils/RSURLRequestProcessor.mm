@@ -1,10 +1,20 @@
-//
-//  RSURLRequestProcessor.m
-//  RevSDK
-//
-//  Created by Andrey Chernukha on 11/27/15.
-//  Copyright © 2015 TundraMobile. All rights reserved.
-//
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2016] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
 
 #import "RSURLRequestProcessor.h"
 
@@ -93,69 +103,6 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     [newRequest setURL:url];
 
     return newRequest;
-
-
-//    NSString* hostHeader        = isProvisioned ? [NSString stringWithFormat:@"%@", transformedBaseHost] : [NSString stringWithFormat:@"%@.%@", transformedSDKKey, transformedBaseHost];
-//    [newRequest setValue:hostHeader forHTTPHeaderField:kRSHostHeader];
-//    [newRequest setValue:host forHTTPHeaderField:rs::kRSRevHostHeader];
-    
-//    NSString* urlStr = [URL absoluteString];
-//    if (aIsEdge)
-//    {
-//        NSRange r = [[URL absoluteString] rangeOfString:host];
-//
-//        assert(r.location != NSNotFound);
-//        urlStr = [[URL absoluteString] stringByReplacingCharactersInRange:r
-//                                                                         withString:rs::kRSRevRedirectHost];
-//    }
-    
-    
-//    NSURLComponents* URLComponents = [NSURLComponents new];
-//    if (aIsEdge)
-//    {
-//        URLComponents.host         = rs::kRSRevRedirectHost;
-//    }
-//    else
-//    {
-//        URLComponents.host         = originalComponents.host;
-//    }
-//    URLComponents.scheme           = scheme;
-//    URLComponents.path             = URL.path;
-//    URLComponents.queryItems       = originalComponents.queryItems;
-    
-//    if (aIsEdge)
-//    {
-//        URLComponents.host         = rs::kRSRevRedirectHost;
-//    }
-//    else
-//    {
-//        URLComponents.host         = originalComponents.host;
-//    }
-//    URLComponents.scheme           = scheme;
-//    URLComponents.path             = URL.path;
-//    URLComponents.queryItems       = originalComponents.queryItems;
-//
-//    NSString* urlStr = [URLComponents.URL absoluteString];
-    //NSLog(@"After: %@", urlStr);
-//    NSMutableString* urlPath = [urlStr mutableCopy];
-//    if ([[URL absoluteString] hasSuffix:@"/"] && ![urlPath hasSuffix:@"/"])
-//    {
-//        [urlPath appendString:@"/"];
-//    }
-
-//    NSMutableString* urlPath = [urlStr mutableCopy];
-//    if ([[URL absoluteString] hasSuffix:@"/"] && ![urlPath hasSuffix:@"/"])
-//    {
-//        [urlPath appendString:@"/"];
-//    }
-    
-//    NSURL* newURL = [NSURL URLWithString:urlStr];
-//    
-//    [newRequest setURL:newURL];
-//    [newRequest setHTTPBody:aRequest.HTTPBody];
-//    [newRequest setHTTPMethod:aRequest.HTTPMethod];
-    
-//    return newRequest;
 }
 
 @end

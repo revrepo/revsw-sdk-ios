@@ -1,10 +1,20 @@
-//
-//  RevSDK.m
-//  RevSDK
-//
-//  Created by Andrey Chernukha on 11/16/15.
-//  Copyright © 2015 TundraMobile. All rights reserved.
-//
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2016] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
 
 #import <QuartzCore/QuartzCore.h>
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
@@ -57,31 +67,6 @@ static rs::TestConfigurationService* TestConfService = nullptr;
         NSLog(@"SDK is already initialized.");
     }
 }
-
-//+ (void)debug_setOperationMode:(RSOperationMode)aOperationMode
-//{
-//    rs::RSOperationModeInner innerMode;
-//    
-//    switch (aOperationMode)
-//    {
-//        case kRSOperationModeOff:
-//            innerMode = rs::kRSOperationModeInnerOff;
-//            break;
-//        case kRSOperationModeTransport:
-//            innerMode = rs::kRSOperationModeInnerTransport;
-//            break;
-//        case kRSOperationModeReport:
-//            innerMode = rs::kRSOperationModeInnerReport;
-//            break;
-//        case kRSOperationModeTransportAndReport:
-//            innerMode = rs::kRSOperationModeInnerTransportAndReport;
-//            break;
-//            
-//        default: break;
-//    }
-//    
-//    rs::Model::instance()->setOperationMode(innerMode);
-//}
 
 + (void)debug_enableTestMode
 {

@@ -1,18 +1,26 @@
-//
-//  StandardSession.m
-//  RevSDK
-//
-//  Created by Oleksander Mamchych on 1/9/16.
-//  Copyright © 2016 TundraMobile. All rights reserved.
-//
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2016] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
 
 #import "RSStandardSession.h"
 #import "RSURLRequestProcessor.h"
 #import "RSUtils.h"
 #include "Model.hpp"
 #include <unordered_map>
-
-//#define RS_LOG_STANDARD_CONNECTIONS_GISTORY 1
 
 namespace rs
 {
@@ -79,7 +87,6 @@ namespace rs
 
 @interface RSStandardSession()<NSURLSessionDataDelegate>
 {
-    //std::unordered_map<int, std::shared_ptr<rs::Connection>> mConnections;
     rs::ConnectionMap mConnections;
     NSLock* mLock;
     NSMutableDictionary* mHistory;
@@ -251,14 +258,6 @@ namespace rs
     std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
     if (connection.get() != nullptr)
         connection->didReceiveData((__bridge void *)data);
-    
-    
-//    [mLock lock];
-//    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-//    assert(w != mConnections.end());
-//    std::shared_ptr<rs::Connection> connection = w->second;
-//    [mLock unlock];
-
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
@@ -267,14 +266,6 @@ namespace rs
 
     int connectionId = [dataTask.taskDescription intValue];
     std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
-    
-    
-//    bool processed = false;
-//    [mLock lock];
-//    int connectionId = [dataTask.taskDescription intValue];
-//    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-//    if (w == mConnections.end())
-//        processed = true;
     
     if (connection.get() == nullptr)
     {
@@ -287,7 +278,6 @@ namespace rs
         if (completionHandler)
             completionHandler(NSURLSessionResponseAllow);
     }
-//    [mLock unlock];
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
@@ -302,21 +292,6 @@ namespace rs
         connection->didCompleteWithError((__bridge void*)error);
     
     mConnections.removeById(connectionId);
-    
-    
-//    [mLock lock];
-//    int connectionId = [task.taskDescription intValue];
-//    std::unordered_map<int, std::shared_ptr<rs::Connection>>::iterator w = mConnections.find(connectionId);
-//    assert(w != mConnections.end());
-//    std::shared_ptr<rs::Connection> connection = w->second;
-//    [mLock unlock];
-//    
-//
-//    [mLock lock];
-//    w = mConnections.find(connectionId);
-//    if (w != mConnections.end())
-//        mConnections.erase(w);
-//    [mLock unlock];
 }
 
 @end

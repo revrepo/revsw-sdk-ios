@@ -1,10 +1,20 @@
-//
-//  Model.cpp
-//  RevSDK
-//
-//  Created by Andrey Chernukha on 11/17/15.
-//  Copyright © 2015 TundraMobile. All rights reserved.
-//
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2016] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
 
 #include <mutex>
 #include <map>
@@ -68,13 +78,9 @@ namespace rs
             mStatsHandler->stopMonitoring();
         });
         
-        mConfService               = std::shared_ptr<ConfigurationService>(conf);
-        mStatsReportingTimer       = nullptr; 
-        mSpareDomainsWhiteList     = std::vector<std::string>();
-        mUsageTracker              = std::make_shared<DebugUsageTracker>();
-        
-        //applyConfiguration(mConfService->getActive());
-        
+        mConfService         = std::shared_ptr<ConfigurationService>(conf);
+        mStatsReportingTimer = nullptr;
+        mUsageTracker        = std::make_shared<DebugUsageTracker>();
     }
     
     Model::~Model()
