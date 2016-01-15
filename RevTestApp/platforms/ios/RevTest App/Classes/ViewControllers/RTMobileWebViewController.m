@@ -14,17 +14,20 @@
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
 #import "NSURLCache+ForceNoCache.h"
+
+#import "RTHTMLGrabber.h"
 #import <WebKit/WebKit.h>
 
 static const NSUInteger kDefaultNumberOfTests = 5; 
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
 static const NSInteger kSuccessCode = 200;
 
-@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate /*, WKNavigationDelegate*/>
+@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate, RTHTMLGrabberDelegate /*, WKNavigationDelegate*/>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
+@property (nonatomic, strong) RTHTMLGrabber* simpleGrabber;
 
 @end
 
@@ -37,6 +40,9 @@ static const NSInteger kSuccessCode = 200;
     [super viewDidLoad];
     
     self.navigationItem.title = @"Mobile Web";
+    
+    self.simpleGrabber = [RTHTMLGrabber new];
+    [self.simpleGrabber setDelegate:self];
     
     __weak RTMobileWebViewController* weakSelf = self;
     
@@ -167,8 +173,10 @@ static const NSInteger kSuccessCode = 200;
 //            [self stepStarted];
 //        }
         
-        [self dismissDynamicWebView];
-        [[self createDynamicWebView] loadRequest:request];
+        //[self dismissDynamicWebView];
+        //[[self createDynamicWebView] loadRequest:request];
+        
+        [self.simpleGrabber loadRequest:request];
     }
     else
     {
@@ -292,5 +300,22 @@ static const NSInteger kSuccessCode = 200;
 //        [self didFinishLoadWithCode:error.code];
 //    }
 //}
+
+#pragma mark - RTHTMLGrabberDelegate
+
+- (void)grabberDidStartLoad:(RTHTMLGrabber * _Nonnull)grabber
+{
+    [self loadStarted];
+}
+
+- (void)grabberDidFinishLoad:(RTHTMLGrabber * _Nonnull)grabber
+{
+    [self didFinishLoadWithCode:kSuccessCode];
+}
+
+- (void)grabber:(RTHTMLGrabber * _Nonnull)grabber didFailLoadWithError:(nullable NSError *)error
+{
+    [self didFinishLoadWithCode:error.code];
+}
 
 @end
