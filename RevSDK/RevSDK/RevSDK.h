@@ -36,7 +36,6 @@ typedef enum
 + (void)debug_enableTestMode;
 + (void)debug_disableTestMode;
 + (RSOperationMode)operationMode;
-//+ (void)setWhiteListOption:(BOOL)aOn;
 
 + (NSDictionary *)debug_getUsageStatistics;
 + (void)debug_resetUsageStatistics;
