@@ -208,7 +208,7 @@ typedef enum
 
 - (void)pushTestConfiguration:(NSString *)aProtocolId mode:(RSOperationMode)mode
 {
-    SEL selector = @selector(debug_pushTestConfiguration: mode:);
+    SEL selector = @selector(debug_pushTestConifguration: mode:);
     
     if ([RevSDK respondsToSelector:selector])
     {
