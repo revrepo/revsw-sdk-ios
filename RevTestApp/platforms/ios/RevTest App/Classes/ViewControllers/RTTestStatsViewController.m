@@ -45,7 +45,17 @@
         
         for (RTIterationResult* itResult in weakSelf.testResults)
         {
-            RTTestResult* tr = itResult.testResults[i];
+            RTTestResult* tr;
+            
+            if (itResult.testResults.count > i)
+            {
+               tr = itResult.testResults[i];
+            }
+            else
+            {
+                tr = [RTTestResult new];
+            }
+            
             [tests addObject:@(tr.duration)];
         }
         

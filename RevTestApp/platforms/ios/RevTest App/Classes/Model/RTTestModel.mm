@@ -296,7 +296,7 @@ typedef enum
     mCurrentDataSize = 0;
     
     RTTestCase* tcase = [self.testCases objectAtIndex:0];
-    tres.testName = tcase.testName;
+    tres.testName     = tcase.testName;
     
     [self.currentResult pushResult:tres];
     
@@ -334,6 +334,7 @@ typedef enum
         {
             self.completionBlock(self.testResults);
         }
+        
         [self didFinishedTests];
     }
     NSLog(@"Finish %ld", (unsigned long)mTestsCounter);
