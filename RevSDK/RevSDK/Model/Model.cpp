@@ -213,10 +213,13 @@ namespace rs
         if (activeConf->operationMode == kRSOperationModeInnerReport ||
             activeConf->operationMode == kRSOperationModeInnerTransportAndReport)
         {
-            Log::info(kLogTagSDKStats, "Sheduling stats reporting timer");
-            Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
-                this->reportStats();
-            });
+            if (mStatsReportingTimer == nullptr || mStatsReportingTimer->interval() != activeConf->statsReportingInterval)
+            {
+                Log::info(kLogTagSDKStats, "Sheduling stats reporting timer");
+                Timer::scheduleTimer(mStatsReportingTimer, activeConf->statsReportingInterval, [this](){
+                    this->reportStats();
+                });
+            }
         }
         else
         {

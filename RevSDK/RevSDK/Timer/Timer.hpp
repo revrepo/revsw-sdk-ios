@@ -42,6 +42,8 @@ namespace rs
         void invalidate();
         
         bool isValid()const;
+        
+        float interval()const;
     };
 }
 

@@ -86,4 +86,9 @@ namespace rs
     {
         return [(__bridge NSTimer *)mTimer isValid];
     }
+    
+    float Timer::interval()const
+    {
+        return mInterval;
+    }
 }
