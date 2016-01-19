@@ -1241,7 +1241,6 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
 					"../revsdk-ios/RevSDK/",
 					/usr/include/libxml2,
 				);
@@ -1293,7 +1292,6 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
 					"~/revsdk-ios/RevSDK/RevSDK/",
 					/usr/include/libxml2,
 				);

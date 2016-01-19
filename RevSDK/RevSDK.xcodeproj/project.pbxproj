@@ -787,7 +787,6 @@
 				5B3096B21BFA02770045024C /* Frameworks */,
 				5B3096B31BFA02770045024C /* Headers */,
 				5B3096B41BFA02770045024C /* Resources */,
-				7BCE71C1F8A65CCAC49E5FD2 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -882,21 +881,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		7BCE71C1F8A65CCAC49E5FD2 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1103,7 +1087,6 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
 					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
@@ -1121,7 +1104,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"jsoncpp\"",
 					"-lresolv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
@@ -1154,7 +1136,6 @@
 					"$(inherited)",
 					"\"${PODS_ROOT}/Headers/Public\"",
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
-					"\"${PODS_ROOT}/Headers/Public/jsoncpp\"",
 					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
@@ -1171,7 +1152,6 @@
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
-					"-l\"jsoncpp\"",
 					"-lresolv",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
