@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		1CB66467DF46B65FD3BCD8B164478D99 /* Pods-RevTest App-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 580FC7DCB7E712C91763DB753F84FB55 /* Pods-RevTest App-dummy.m */; };
 		2989492A1A182744E36FD61DF1746D94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093D627869B650AB8D6411D2DE6B7A /* Foundation.framework */; };
-		5EB4F27B76513AE918BA5AE0868E87C8 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E67CBBACD85CE50C19C6320AAD17088 /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5EB4F27B76513AE918BA5AE0868E87C8 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 56ED85E7DEFC5DA749E991990E29F95C /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		70D801E0B95C23BCC270E4EC8659D463 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1264325C4220C1BDC3C73E5D496129FD /* CoreGraphics.framework */; };
 		76024D31306A871F25E75AC079A68A8A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E093D627869B650AB8D6411D2DE6B7A /* Foundation.framework */; };
-		82FC12F67E83874B93592218E9FB4CA0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 30858F8F84BD7A73D99478028C4C0E9A /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		FC214077677D4F02E03C6C85F774E028 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9895137673E5059F732A42A1E2A66E0B /* MBProgressHUD-dummy.m */; };
+		82FC12F67E83874B93592218E9FB4CA0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 68C62EE0DCE927F25DA85F5B5CDC766D /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		FC214077677D4F02E03C6C85F774E028 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6DCAC9C20CA9169CC9E10708E74C1B /* MBProgressHUD-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,21 +29,22 @@
 /* Begin PBXFileReference section */
 		1264325C4220C1BDC3C73E5D496129FD /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		1BA7CEF406D1FC96AFA70C0904DBA552 /* Pods-RevTest App-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RevTest App-resources.sh"; sourceTree = "<group>"; };
-		1E67CBBACD85CE50C19C6320AAD17088 /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		28C80A5CF75B9371D217A8A4B8A0E4C2 /* Pods-RevTest App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RevTest App.release.xcconfig"; sourceTree = "<group>"; };
-		30858F8F84BD7A73D99478028C4C0E9A /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		5270B4777DAE621CCD9F15F43CF0018D /* Pods-RevTest App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-RevTest App.debug.xcconfig"; sourceTree = "<group>"; };
 		52AE7ABEC47505226E1D082C1C948B68 /* Pods-RevTest App-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-RevTest App-acknowledgements.markdown"; sourceTree = "<group>"; };
+		56ED85E7DEFC5DA749E991990E29F95C /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		580FC7DCB7E712C91763DB753F84FB55 /* Pods-RevTest App-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-RevTest App-dummy.m"; sourceTree = "<group>"; };
+		68C62EE0DCE927F25DA85F5B5CDC766D /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		6CBD1B024FA23723BDACA5EA20401CC0 /* libPods-RevTest App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevTest App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E093D627869B650AB8D6411D2DE6B7A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		80DB6C08B9B312D2B623E23F6515C0A5 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
+		75A6B1BA64AA2BCC7CABCAE7310EFCDC /* NewRelicAgent.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NewRelicAgent.framework; path = NewRelic_iOS_Agent_5.3.5/NewRelicAgent.framework; sourceTree = "<group>"; };
 		90116B295E338F394AE7226D161C128C /* libMBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		972B2A589DAA8532762014706E92CDB6 /* Pods-RevTest App-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-RevTest App-acknowledgements.plist"; sourceTree = "<group>"; };
-		9895137673E5059F732A42A1E2A66E0B /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
-		AABE45081325970398177350B3365B5A /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		9F6DCAC9C20CA9169CC9E10708E74C1B /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
 		AC7980ED4F87C2CA96DA6ABC111A732C /* Pods-RevTest App-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-RevTest App-frameworks.sh"; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C0071D9AAD9A853E892F0331BE0A0CD9 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
+		E960AC04853861D19AF70AAE2ED128BD /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,16 +68,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		077EB30DB6AD0F301EC92B8EAEA22722 /* MBProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				1E67CBBACD85CE50C19C6320AAD17088 /* MBProgressHUD.h */,
-				30858F8F84BD7A73D99478028C4C0E9A /* MBProgressHUD.m */,
-				2848C0E8056CB6EE547CD6E0C1780766 /* Support Files */,
-			);
-			path = MBProgressHUD;
-			sourceTree = "<group>";
-		};
 		1DECDB6FB998C8892E79CF0C5B9DB0F0 /* Pods-RevTest App */ = {
 			isa = PBXGroup;
 			children = (
@@ -92,15 +83,14 @@
 			path = "Target Support Files/Pods-RevTest App";
 			sourceTree = "<group>";
 		};
-		2848C0E8056CB6EE547CD6E0C1780766 /* Support Files */ = {
+		2070B7D0A2B015AF41488598AC5A9ADE /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				80DB6C08B9B312D2B623E23F6515C0A5 /* MBProgressHUD.xcconfig */,
-				9895137673E5059F732A42A1E2A66E0B /* MBProgressHUD-dummy.m */,
-				AABE45081325970398177350B3365B5A /* MBProgressHUD-prefix.pch */,
+				56ED85E7DEFC5DA749E991990E29F95C /* MBProgressHUD.h */,
+				68C62EE0DCE927F25DA85F5B5CDC766D /* MBProgressHUD.m */,
+				B2DB3BF37F8BBEEFD2218EC9D9527E0E /* Support Files */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/MBProgressHUD";
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		36C06A02A00144C64CD7282BA31846BD /* iOS */ = {
@@ -120,12 +110,12 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5836A44A75C427EBF4739C55E2315758 /* Pods */ = {
+		64D975F9E42234A432AEE548A75A9321 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				077EB30DB6AD0F301EC92B8EAEA22722 /* MBProgressHUD */,
+				75A6B1BA64AA2BCC7CABCAE7310EFCDC /* NewRelicAgent.framework */,
 			);
-			name = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -133,7 +123,7 @@
 			children = (
 				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
 				433CD3331B6C3787F473C941B61FC68F /* Frameworks */,
-				5836A44A75C427EBF4739C55E2315758 /* Pods */,
+				ACFC8C5E16DA45B383E50A88D5ED4081 /* Pods */,
 				9C292749E94B84AE890317F8771FFFE0 /* Products */,
 				DC18A5DF852B6A610CFDA71F69CEC1CC /* Targets Support Files */,
 			);
@@ -148,12 +138,40 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		ACFC8C5E16DA45B383E50A88D5ED4081 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2070B7D0A2B015AF41488598AC5A9ADE /* MBProgressHUD */,
+				EF618069380DF347BA41163627B0C3EF /* NewRelicAgent */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B2DB3BF37F8BBEEFD2218EC9D9527E0E /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				C0071D9AAD9A853E892F0331BE0A0CD9 /* MBProgressHUD.xcconfig */,
+				9F6DCAC9C20CA9169CC9E10708E74C1B /* MBProgressHUD-dummy.m */,
+				E960AC04853861D19AF70AAE2ED128BD /* MBProgressHUD-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/MBProgressHUD";
+			sourceTree = "<group>";
+		};
 		DC18A5DF852B6A610CFDA71F69CEC1CC /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
 				1DECDB6FB998C8892E79CF0C5B9DB0F0 /* Pods-RevTest App */,
 			);
 			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		EF618069380DF347BA41163627B0C3EF /* NewRelicAgent */ = {
+			isa = PBXGroup;
+			children = (
+				64D975F9E42234A432AEE548A75A9321 /* Frameworks */,
+			);
+			path = NewRelicAgent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -280,7 +298,7 @@
 		};
 		2EB7464BFC4B881299B5657C95CD0AF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80DB6C08B9B312D2B623E23F6515C0A5 /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = C0071D9AAD9A853E892F0331BE0A0CD9 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
@@ -315,7 +333,7 @@
 		};
 		919FAA2929EE9C5D42F4E864F99B6175 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80DB6C08B9B312D2B623E23F6515C0A5 /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = C0071D9AAD9A853E892F0331BE0A0CD9 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";

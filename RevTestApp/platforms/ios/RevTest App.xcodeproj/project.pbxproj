@@ -928,6 +928,7 @@
 				5C96B74CB3B997516D0ED1E3 /* Embed Pods Frameworks */,
 				82C4D0D12F137246DFBD27DA /* Copy Pods Resources */,
 				5BC4E24A1C3C1D1700530846 /* ShellScript */,
+				5B8767B31C4E4FFC00363906 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1111,6 +1112,19 @@
 			shellPath = /bin/sh;
 			shellScript = "NODEJS_PATH=/usr/local/bin; NVM_NODE_PATH=~/.nvm/versions/node/`nvm version 2>/dev/null`/bin; N_NODE_PATH=`find /usr/local/n/versions/node/* -maxdepth 0 -type d 2>/dev/null | tail -1`/bin; XCODE_NODE_PATH=`xcode-select --print-path`/usr/share/xcs/Node/bin; PATH=$NODEJS_PATH:$NVM_NODE_PATH:$N_NODE_PATH:$XCODE_NODE_PATH:$PATH && node cordova/lib/copy-www-build-step.js";
 			showEnvVarsInLog = 0;
+		};
+		5B8767B31C4E4FFC00363906 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "SCRIPT=`/usr/bin/find \"${SRCROOT}\" -name newrelic_postbuild.sh | head -n 1`\n\n/bin/sh \"${SCRIPT}\" \"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb\"";
 		};
 		5BC4E24A1C3C1D1700530846 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
