@@ -21,6 +21,7 @@
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
 #import <RevSDK/RevSDK.h>
+#import <RevSDK/RevSDKPrivate.h>
 
 
 @interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate>

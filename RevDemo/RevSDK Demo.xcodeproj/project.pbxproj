@@ -421,6 +421,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/RevDemo",
 				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../RevSDK/";
 				INFOPLIST_FILE = RevDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -441,6 +442,7 @@
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/RevDemo",
 				);
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../RevSDK/";
 				INFOPLIST_FILE = RevDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

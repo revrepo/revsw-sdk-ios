@@ -36,7 +36,7 @@ static BOOL shouldReportDataInMB = NO;
 
 - (NSString *)nameString
 {
-    NSString* dataSizeNotation = shouldReportDataInMB ? @"MB" : @"KB";
+    NSString* dataSizeNotation = shouldReportDataInMB ? @"KB" : @"KB";
     
     return [NSString stringWithFormat:@"%@(%@)", _testName, dataSizeNotation];
 }

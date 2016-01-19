@@ -18,6 +18,7 @@
 
 #import "RevConfigurationViewController.h"
 #import <RevSDK/RevSDK.h>
+#import <RevSDK/RevSDKPrivate.h>
 
 @interface RevConfigurationViewController ()
 

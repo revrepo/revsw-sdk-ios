@@ -19,6 +19,7 @@
 #import "RevStatisticsViewController.h"
 #import "RevStatisticsTableViewCell.h"
 #import <RevSDK/RevSDK.h>
+#import <RevSDK/RevSDKPrivate.h>
 
 @interface RevStatisticsViewController () <UITableViewDataSource, UITableViewDelegate>
 

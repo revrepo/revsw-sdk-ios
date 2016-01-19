@@ -16,4 +16,7 @@
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:RevEtalon/RevEtalon.xcodeproj">
+   </FileRef>
 </Workspace>
