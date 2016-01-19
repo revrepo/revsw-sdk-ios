@@ -54,7 +54,6 @@
 		11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F24B421C3C5FBA00DABAE5 /* libboost.a */; };
 		11F24B4A1C3D695D00DABAE5 /* RSUDPService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */; };
 		11F24B4B1C3D695D00DABAE5 /* RSUDPService.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B491C3D695D00DABAE5 /* RSUDPService.h */; };
-		45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
 		5B2035851C33DBB400A28C01 /* RSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RSReachability.m */; };
@@ -315,7 +314,6 @@
 		6DEAB1D01C2D8D5E0078CE65 /* RSStaticStatsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSStaticStatsProvider.m; sourceTree = "<group>"; };
 		88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 		B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevSDK.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -325,7 +323,6 @@
 			files = (
 				1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */,
 				11C961161C2D469300CDE34D /* libcrypto.a in Frameworks */,
-				45EDDE3E9DF84726DC9F118E /* libPods-RevSDK.a in Frameworks */,
 				11C9619E1C2D469300CDE34D /* libquic.a in Frameworks */,
 				65B3A7D91C46641D003C9426 /* libprotobuf.a in Frameworks */,
 				11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */,
@@ -347,7 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				1109F3CE1C401EEE00ABB160 /* MessageUI.framework */,
-				DB7E106636834980B48DE5C8 /* libPods-RevSDK.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1016,7 +1012,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1057,6 +1053,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -1084,9 +1081,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/RevSDK/libs/boost/include",
 					"$(SRCROOT)/RevSDK/quic/ThirdParty/libQUIC",
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
@@ -1100,11 +1094,15 @@
 					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
 				);
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-isystem",
+					"-isystem",
+				);
 				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
+					"-l\"c++\"",
 					"-lresolv",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1133,9 +1131,6 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/RevSDK/libs/boost/include",
 					"$(SRCROOT)/RevSDK/quic/ThirdParty/libQUIC",
-					"$(inherited)",
-					"\"${PODS_ROOT}/Headers/Public\"",
-					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
@@ -1149,10 +1144,15 @@
 					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
 				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = (
+					"-isystem",
+					"-isystem",
+				);
 				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"-ObjC",
+					"-l\"c++\"",
 					"-lresolv",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.RevSDK;
 				PRODUCT_NAME = "$(TARGET_NAME)";
