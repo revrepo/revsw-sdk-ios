@@ -111,6 +111,7 @@
 		5B70CA1B1C3D1BDD0051D31F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B70CA1A1C3D1BDD0051D31F /* GoogleService-Info.plist */; };
 		5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */; };
 		5B7804E11C15E241003AD4F5 /* RTNativeMobileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */; };
+		5B8767B51C4E55DC00363906 /* newrelic_postbuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
@@ -296,6 +297,7 @@
 		5B7804DD1C15E241003AD4F5 /* RTNativeMobileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTNativeMobileViewController.h; sourceTree = "<group>"; };
 		5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTNativeMobileViewController.m; sourceTree = "<group>"; };
 		5B7804DF1C15E241003AD4F5 /* RTNativeMobileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RTNativeMobileViewController.xib; sourceTree = "<group>"; };
+		5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = newrelic_postbuild.sh; sourceTree = "<group>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
 		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				308D05311370CCF300D202BF /* splash */,
 				8D1107310486CEB800E47090 /* RevTest App-Info.plist */,
 				5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */,
+				5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */,
 			);
 			name = Resources;
 			path = "RevTest App/Resources";
@@ -1041,6 +1044,7 @@
 				5B04C9801C0D88A300621B67 /* screen-type3.png in Resources */,
 				5B04C96F1C0D88A300621B67 /* icon-57.png in Resources */,
 				5B04C96E1C0D88A300621B67 /* icon-57-2x.png in Resources */,
+				5B8767B51C4E55DC00363906 /* newrelic_postbuild.sh in Resources */,
 				5B04C98C1C0D88A300621B67 /* screen-iphone-portrait.png in Resources */,
 				5B04C9701C0D88A300621B67 /* icon-72-2x.png in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
@@ -1115,7 +1119,7 @@
 		};
 		5B8767B31C4E4FFC00363906 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
