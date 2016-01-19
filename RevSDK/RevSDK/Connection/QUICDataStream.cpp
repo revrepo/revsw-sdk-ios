@@ -43,6 +43,8 @@ void QUICDataStream::OnStreamFrame(const net::QuicStreamFrame& frame)
 {
     QuicSpdyClientStream::OnStreamFrame(frame);
     
+//    mCache = mCache.byAppendingData(Data(<#const void *aBytes#>, <#size_t aLength#>))
+    
     if (!mFailed && mDelegate != nullptr)
     {
         mInitialMS = 0;

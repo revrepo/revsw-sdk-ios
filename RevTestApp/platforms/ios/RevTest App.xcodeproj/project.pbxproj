@@ -1261,6 +1261,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"../revsdk-ios/RevSDK/",
 					/usr/include/libxml2,
+					"$(SRCROOT)/../RevSDK/",
 				);
 				INFOPLIST_FILE = "RevTest App/RevTest App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1312,6 +1313,7 @@
 					"\"${PODS_ROOT}/Headers/Public/MBProgressHUD\"",
 					"~/revsdk-ios/RevSDK/RevSDK/",
 					/usr/include/libxml2,
+					"$(SRCROOT)/../RevSDK/",
 				);
 				INFOPLIST_FILE = "RevTest App/RevTest App-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

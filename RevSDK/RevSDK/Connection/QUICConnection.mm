@@ -97,8 +97,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers[":scheme"] = "https";
     headers["accept"] = "txt/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
     headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2,th;q=0.2,uk;q=0.2,de;q=0.2,fr;q=0.2";
-    headers["accept-encoding"] = "gzip, deflate, sdch";
-    //headers["accept-encoding"] = "gzip, deflate, sdch";
+    //headers["accept-encoding"] = "gzip";
     //headers["user-agent"] = "Mozilla";
     headers["user-agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
     
