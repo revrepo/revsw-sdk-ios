@@ -30,13 +30,33 @@
 
 - (NSNumber *)median
 {
-     NSArray* operationArray = OPERATION_ARRAY;
+    if (self.count == 0)
+    {
+        return @0;
+    }
+    
+    if (self.count == 1)
+    {
+        return self.firstObject;
+    }
+    
+    NSArray* operationArray = OPERATION_ARRAY;
+    
+    if (operationArray.count == 0)
+    {
+        return @0;
+    }
     
     return [[operationArray sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:[operationArray count] / 2];
 }
 
 - (NSNumber *)meanValue
 {
+    if (self.count == 0)
+    {
+        return @0;
+    }
+    
     double runningTotal = 0.0;
     
     for (NSNumber *number in self)
@@ -49,9 +69,12 @@
 
 - (NSNumber *)standardDeviation
 {
-    NSArray* operationArray = OPERATION_ARRAY;
+    if (self.count == 0 || self.count == 1)
+    {
+        return @0;
+    }
     
-    if(![operationArray count]) return nil;
+    NSArray* operationArray = OPERATION_ARRAY;
     
     double mean = [[operationArray meanValue] doubleValue];
     double sumOfSquaredDifferences = 0.0;
@@ -68,6 +91,16 @@
 
 - (NSNumber *)expectedValue
 {
+    if (self.count == 0)
+    {
+        return @0;
+    }
+    
+    if (self.count == 1)
+    {
+        return self.firstObject;
+    }
+    
      NSArray* operationArray = OPERATION_ARRAY;
      CGFloat  ratio          = 1.0f / operationArray.count;
      CGFloat expectedValue   = 0.0f;
