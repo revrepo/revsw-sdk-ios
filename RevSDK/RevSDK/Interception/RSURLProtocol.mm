@@ -84,7 +84,7 @@
 {
     self.dataLength = 0;
     
-    if ([self shouldRedirectRequest:self.request])
+   /* if ([self shouldRedirectRequest:self.request])
     {
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
                           self.request.URL, self.request.HTTPMethod, self.request.allHTTPHeaderFields];
@@ -92,7 +92,7 @@
         self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
         [self.connection start];
     }
-    else
+    else*/
     {
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
