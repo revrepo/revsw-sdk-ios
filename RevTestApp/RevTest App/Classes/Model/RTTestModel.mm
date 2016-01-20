@@ -126,7 +126,7 @@ typedef enum
     
     RTTestCase* tcase = [[RTTestCase alloc] init];
     // 1st case
-    tcase.testName = @"Origin";
+    tcase.testName = @"Current";
     tcase.protocolID = @"none";
     tcase.operationMode = RSOperationMode::kRSOperationModeReport;
     
@@ -134,7 +134,7 @@ typedef enum
     ////////////////////////////////
     
     tcase = [[RTTestCase alloc] init];
-    tcase.testName = @"Standard";
+    tcase.testName = @"DOTS";
     tcase.protocolID = @"standard";
     tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
     
@@ -142,7 +142,7 @@ typedef enum
     ////////////////////////////////
     
     tcase = [[RTTestCase alloc] init];
-    tcase.testName = @"QUIC";
+    tcase.testName = @"RevSDK";
     tcase.protocolID = @"quic";
     tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
     
