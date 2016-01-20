@@ -209,7 +209,6 @@
 		11F24B421C3C5FBA00DABAE5 /* libboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost.a; path = libs/boost/ios/libboost.a; sourceTree = "<group>"; };
 		11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSUDPService.cpp; sourceTree = "<group>"; };
 		11F24B491C3D695D00DABAE5 /* RSUDPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUDPService.h; sourceTree = "<group>"; };
-		31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
 		5B2035821C33DBB400A28C01 /* RSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReachability.h; sourceTree = "<group>"; };
 		5B2035831C33DBB400A28C01 /* RSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReachability.m; sourceTree = "<group>"; };
 		5B2035921C33E85E00A28C01 /* RSSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSystemInfo.h; sourceTree = "<group>"; };
@@ -283,7 +282,6 @@
 		5BE3F8671C0455CC0087BC28 /* DataStorage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataStorage.mm; sourceTree = "<group>"; };
 		5BE3F86C1C04A0C50087BC28 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Timer.hpp; sourceTree = "<group>"; };
 		5BE3F86F1C04A0DE0087BC28 /* Timer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Timer.mm; sourceTree = "<group>"; };
-		5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.release.xcconfig"; sourceTree = "<group>"; };
 		5BEBD72A1C22B05C002EC0CB /* RequestStatsHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RequestStatsHandler.cpp; sourceTree = "<group>"; };
 		5BEBD72B1C22B05C002EC0CB /* RequestStatsHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RequestStatsHandler.hpp; sourceTree = "<group>"; };
 		5BEBD72E1C22EB95002EC0CB /* JSONUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSONUtils.cpp; sourceTree = "<group>"; };
@@ -312,8 +310,6 @@
 		6DEAB1CB1C2D803C0078CE65 /* RSLocationService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSLocationService.m; sourceTree = "<group>"; };
 		6DEAB1CE1C2D8D2B0078CE65 /* RSStaticStatsProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSStaticStatsProvider.h; sourceTree = "<group>"; };
 		6DEAB1D01C2D8D5E0078CE65 /* RSStaticStatsProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSStaticStatsProvider.m; sourceTree = "<group>"; };
-		88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
-		B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevSDK.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevSDK/Pods-RevSDK.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -475,7 +471,6 @@
 				5B3096B81BFA02770045024C /* RevSDK */,
 				5B3096C41BFA02770045024C /* RevSDKTests */,
 				5B3096B71BFA02770045024C /* Products */,
-				C7F03090FE25ABD6ED6ED8FC /* Pods */,
 				0C970DE8623DE2851A075105 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -682,17 +677,6 @@
 			path = libProtobuf;
 			sourceTree = "<group>";
 		};
-		C7F03090FE25ABD6ED6ED8FC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				88BD4EF0A95B6A0CAA0E1C98 /* Pods-RevSDK.debug.xcconfig */,
-				31946DA78F6006B589FDD586 /* Pods-RevSDK.release.xcconfig */,
-				B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */,
-				5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -778,7 +762,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5B3096CA1BFA02770045024C /* Build configuration list for PBXNativeTarget "RevSDK" */;
 			buildPhases = (
-				0D42053D203D8DBB478E78D6 /* Check Pods Manifest.lock */,
 				5B3096B11BFA02770045024C /* Sources */,
 				5B3096B21BFA02770045024C /* Frameworks */,
 				5B3096B31BFA02770045024C /* Headers */,
@@ -862,24 +845,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		0D42053D203D8DBB478E78D6 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5B3096B11BFA02770045024C /* Sources */ = {
@@ -1064,7 +1029,6 @@
 		};
 		5B3096CB1BFA02770045024C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B811203A676747BE7B8BD872 /* Pods-RevSDK.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEFINES_MODULE = YES;
@@ -1114,7 +1078,6 @@
 		};
 		5B3096CC1BFA02770045024C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5BE5633F76EA336B450CA15F /* Pods-RevSDK.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEFINES_MODULE = YES;
