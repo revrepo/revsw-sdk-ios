@@ -106,10 +106,10 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    /*if (navigationType == UIWebViewNavigationTypeReload)
+    if (navigationType == UIWebViewNavigationTypeReload)
     {
         return NO;
-    }*/
+    }
     
     return YES;
 }
