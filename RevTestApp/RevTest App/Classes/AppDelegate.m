@@ -30,8 +30,6 @@
 #import "AppDelegate.h"
 #import "RTStartViewController.h"
 
-//#import <Cordova/CDVPlugin.h>
-
 #import <RevSDK/RevSDK.h>
 
 #import <Fabric/Fabric.h>
@@ -52,29 +50,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 @implementation AppDelegate
 
 @synthesize window;
-- (id)init
-{
-    /** If you need to do any extra app-specific initialization, you can do it here
-     *  -jm
-     **/
-    NSHTTPCookieStorage* cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
 
-    [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
-
-    int cacheSizeMemory = 0;//8 * 1024 * 1024; // 8MB
-    int cacheSizeDisk = 0;//32 * 1024 * 1024; // 32MB
-#if __has_feature(objc_arc)
-        NSURLCache* sharedCache = [[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"];
-#else
-        NSURLCache* sharedCache = [[[NSURLCache alloc] initWithMemoryCapacity:cacheSizeMemory diskCapacity:cacheSizeDisk diskPath:@"nsurlcache"] autorelease];
-#endif
-    [NSURLCache setSharedURLCache:sharedCache];
-
-    self = [super init];
-    return self;
-}
-
-#pragma mark UIApplicationDelegate implementation
 
 /**
  * This is main kick off after the app inits, the views and Settings are setup here. (preferred - iOS4 and up)
@@ -125,7 +101,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     class_addMethod(class, @selector(superview), setBeingRemoved, NULL);
     class_addMethod(class, @selector(setNode:), setBeingRemoved, NULL);
     class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), setBeingRemoved, NULL);
-#pragma clang diagnostic pop
+#pragma clang diagnostic pop*/
 
     return YES;
 }
