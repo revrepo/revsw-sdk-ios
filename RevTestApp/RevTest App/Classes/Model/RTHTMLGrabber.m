@@ -52,13 +52,14 @@
                                 withinSession:(NSURLSession *)session
 {
     //NSLog(@"RTHTMLGrabber loading URL: %@", request.URL.absoluteString);
-    NSLog(@"Request started");
+    NSLog(@"Request started %@", request.URL);
     
     return
     [session dataTaskWithRequest:request
-               completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError) {
-                   
-                   if (aError != nil) {
+               completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError)
+    {
+                   if (aError != nil)
+                   {
                        [self.activeTasks removeObjectForKey:request];
                        return;
                    }
@@ -68,7 +69,7 @@
                    }
                    
                    //NSLog(@"RTHTMLGrabber done URL: %@", request.URL.absoluteString);
-                   NSLog(@"Request done");
+                   NSLog(@"Request done %@", request.URL);
                    NSString *rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
                    
                    NSMutableArray *newTasks = [NSMutableArray new];
@@ -80,10 +81,13 @@
                        HTMLNode *bodyNode = [parser body];
                        
                        NSArray *links = [bodyNode findChildTags:@"link"];
-                       for (HTMLNode *linkNode in links) {
+                       for (HTMLNode *linkNode in links)
+                       {
                            NSString *linkString = [linkNode getAttributeNamed:@"href"];
                            NSURLRequest *subRequest = [self subRequestFrom:request withRelativePath:linkString];
-                           if (subRequest != nil) {
+                           
+                           if (subRequest != nil)
+                           {
                                NSURLSessionTask *subTask = [self recursiveTaskForRequest:subRequest withinSession:session];
                                [self.activeTasks setObject:subTask forKey:subRequest];
                                [newTasks addObject:subTask];
@@ -95,10 +99,13 @@
                        [resources addObjectsFromArray:[bodyNode findChildTags:@"img"]];
                        [resources addObjectsFromArray:[bodyNode findChildTags:@"iframe"]];
                        
-                       for (HTMLNode *resourceNode in resources) {
+                       for (HTMLNode *resourceNode in resources)
+                       {
                            NSString *resourceString = [resourceNode getAttributeNamed:@"src"];
                            NSURLRequest *subRequest = [self subRequestFrom:request withRelativePath:resourceString];
-                           if (subRequest != nil) {
+                           
+                           if (subRequest != nil)
+                           {
                                NSURLSessionTask *subTask = [self recursiveTaskForRequest:subRequest withinSession:session];
                                [self.activeTasks setObject:subTask forKey:subRequest];
                                [newTasks addObject:subTask];
@@ -108,12 +115,17 @@
                    
                    [self.activeTasks removeObjectForKey:request];
                    
-                   for (NSURLSessionTask *task in newTasks) {
+                   for (NSURLSessionTask *task in newTasks)
+                   {
                        [task resume];
                    }
-                   
-                   if (self.activeTasks.count == 0) {
-                       if (self.delegate) {
+        
+                   NSLog(@"ACTIVE TASKS %@", self.activeTasks);
+        
+                   if (self.activeTasks.count == 0)
+                   {
+                       if (self.delegate)
+                       {
                            [self.delegate grabberDidFinishLoad:self];
                        }
                    }

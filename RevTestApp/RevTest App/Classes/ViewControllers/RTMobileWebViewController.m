@@ -146,6 +146,8 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)startLoading
 {
+    NSLog(@"START LOADING!!!!!!");
+    
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     
     for (NSHTTPCookie *cookie in [storage cookies])
