@@ -305,7 +305,7 @@ typedef enum
     tres.testName     = tcase.testName;
     
     [self.currentResult pushResult:tres];
-    
+
     [self toNextCase];
     
     if (self.loadFinishedBlock)
@@ -325,6 +325,7 @@ typedef enum
     {
         [self stepFinished];
     }
+    
 }
 
 - (void)stepFinished
