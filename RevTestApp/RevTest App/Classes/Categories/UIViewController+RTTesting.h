@@ -45,4 +45,6 @@
 - (void)stepStarted;
 - (void)stepFinished:(bool)result;
 
+- (void)stopTimer;
+
 @end

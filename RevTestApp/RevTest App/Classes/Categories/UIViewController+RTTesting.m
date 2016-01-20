@@ -190,6 +190,11 @@
     [self.testModel stepStarted];
 }
 
+- (void)stopTimer
+{
+    [self.testModel invalidateTimer];
+}
+
 //- (void)stepFinished:(bool)result
 //{
 //    [self.testModel stepFinished:result];

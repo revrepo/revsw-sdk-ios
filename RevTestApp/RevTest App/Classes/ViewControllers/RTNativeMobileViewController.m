@@ -55,7 +55,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     self.format  = self.formats.firstObject;
     
     self.navigationItem.title = @"Native Mobile";
-    self.fakeTextField        = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    self.fakeTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     
     [self.view addSubview:self.fakeTextField];
     
@@ -113,6 +113,8 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     
     if (!parent)
     {
+        [self stopTimer];
+        self.testModel = nil;
         [self setWhiteListOption:YES];
     }
 }

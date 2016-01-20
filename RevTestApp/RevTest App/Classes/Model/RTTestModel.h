@@ -39,4 +39,6 @@
 - (void)stepStarted;
 - (void)stepFinished;
 
+- (void)invalidateTimer;
+
 @end
