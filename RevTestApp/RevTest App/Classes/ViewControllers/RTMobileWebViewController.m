@@ -98,6 +98,9 @@ static const NSInteger kSuccessCode = 200;
 {
     [super viewWillDisappear:animated];
     
+    self.simpleGrabber = nil;
+    self.simpleGrabber.delegate = nil;
+    
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSString* lastSearch = self.URLTextField.text;
     
