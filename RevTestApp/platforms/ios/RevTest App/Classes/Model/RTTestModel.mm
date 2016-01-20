@@ -176,6 +176,12 @@ typedef enum
     mNumberOfTestsToPerform = aNumberOfTests;
 }
 
+- (void)invalidateTimer
+{
+    [self.timer invalidate];
+    self.timer = nil;
+}
+
 - (void)timerFired
 {
     [self.timer invalidate];

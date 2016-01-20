@@ -114,6 +114,8 @@ static const NSInteger kSuccessCode = 200;
     
     if (!parent)
     {
+        [self stopTimer];
+        self.testModel = nil;
         [self dismissDynamicWebView];
         [self setWhiteListOption:YES];
     }
