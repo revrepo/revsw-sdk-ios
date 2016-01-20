@@ -35,8 +35,6 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    NSLog(@"CAN INIT WITH REQUEST");
-    
     NSArray* forbiddenSchemes = @[rs::kRSDataSchemeName, rs::kRSMoatBridgeSchemeName];
     
     if ([forbiddenSchemes containsObject:aRequest.URL.scheme])
@@ -84,8 +82,6 @@
 
 - (void)startLoading
 {
-    NSLog(@"START LOADING %@", self.request);
-    
     self.dataLength = 0;
     
     if ([self shouldRedirectRequest:self.request])
