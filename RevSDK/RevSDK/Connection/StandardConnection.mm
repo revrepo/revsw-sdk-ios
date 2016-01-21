@@ -66,8 +66,9 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     mCurrentRequest                     = aRequest;
     mConnectionDelegate                 = aDelegate;
     std::shared_ptr<Connection> oAnchor = mWeakThis.lock();
-    NSURLRequest* request               = URLRequestFromRequest(aRequest);
-    NSMutableURLRequest* mutableRequest = request.mutableCopy;
+    NSMutableURLRequest* request        = URLRequestFromRequest(aRequest);
+    request.cachePolicy = NSURLRequestReloadIgnoringCacheData;
+    //NSMutableURLRequest* mutableRequest = request.mutableCopy;
     NSString* targetHost                = request.URL.host;
     
     if (!targetHost)
@@ -85,9 +86,9 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     }
     
     oAnchor->addSentBytesCount(request.HTTPBody.length);
-    [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:mutableRequest];
+    [NSURLProtocol setProperty:@YES forKey:kRSURLProtocolHandledKey inRequest:request];
     
-    NSDictionary* headers = mutableRequest.allHTTPHeaderFields;
+    NSDictionary* headers = request.allHTTPHeaderFields;
     NSString* XRevHostHeader = headers[kRSRevHostHeader];
     
     NSString* edgeHostString = NSStringFromStdString(mEdgeHost);
@@ -97,7 +98,7 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
         Log::error(kLogTagSTDRequest,  "Request host set to %s", [edgeHostString UTF8String]);
     }
 
-    [[RSStandardSession instance] createTaskWithRequest:mutableRequest connection:oAnchor];
+    [[RSStandardSession instance] createTaskWithRequest:request connection:oAnchor];
     
     oAnchor->onStart();
     
