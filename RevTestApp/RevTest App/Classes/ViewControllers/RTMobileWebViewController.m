@@ -98,9 +98,6 @@ static const NSInteger kSuccessCode = 200;
 {
     [super viewWillDisappear:animated];
     
-    self.simpleGrabber = nil;
-    self.simpleGrabber.delegate = nil;
-    
     NSUserDefaults* ud = [NSUserDefaults standardUserDefaults];
     NSString* lastSearch = self.URLTextField.text;
     
@@ -117,6 +114,9 @@ static const NSInteger kSuccessCode = 200;
     
     if (!parent)
     {
+        self.simpleGrabber.delegate = nil;
+        self.simpleGrabber          = nil;
+        
         [self stopTimer];
         self.testModel = nil;
         [self dismissDynamicWebView];
