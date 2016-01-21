@@ -16,13 +16,16 @@
  * from Rev Software, Inc.
  */
 
+#import <MessageUI/MessageUI.h>
+
 #import "UIViewController+RTUtils.h"
 
 #import "RTContainerViewController.h"
 #import "RTReportViewController.h"
 #import "RTTestStatsViewController.h"
+#import "RTUtils.h"
 
-@interface RTContainerViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface RTContainerViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController* pageViewController;
 @property (nonatomic, strong) RTReportViewController* reportViewController;
@@ -65,6 +68,53 @@
     
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
+    
+    UIBarButtonItem* emailItem = [[UIBarButtonItem alloc] initWithTitle:@"Email"
+                                                                  style:UIBarButtonItemStylePlain
+                                                                 target:self
+                                                                 action:@selector(showEmail)];
+    self.navigationItem.rightBarButtonItem = emailItem;
+}
+
+- (void)showEmail
+{
+    if ([MFMailComposeViewController canSendMail])
+    {
+        NSString* formattedString = [RTUtils formattedStringFromTestResults:self.testResults];
+        
+        MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
+        mail.mailComposeDelegate = self;
+        [mail setSubject:@"Tests Report"];
+        [mail setMessageBody:formattedString isHTML:NO];
+        
+        [self presentViewController:mail animated:YES completion:NULL];
+    }
+    else
+    {
+        [self showErrorAlertWithMessage:@"Unable to send mail. Enable at least one mail account on the device"];
+    }
+}
+
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    switch (result) {
+        case MFMailComposeResultSent:
+            break;
+        case MFMailComposeResultSaved:
+            NSLog(@"You saved a draft of this email");
+            break;
+        case MFMailComposeResultCancelled:
+            NSLog(@"You cancelled sending this email.");
+            break;
+        case MFMailComposeResultFailed:
+            [self showErrorAlertWithMessage:@"Failed to send email"];
+            break;
+        default:
+            NSLog(@"An error occurred when trying to compose this email");
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController

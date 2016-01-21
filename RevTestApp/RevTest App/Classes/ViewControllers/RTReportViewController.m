@@ -20,6 +20,7 @@
 #import "RTCell.h"
 #import "RTUtils.h"
 #import "RTIterationResult.h"
+#import "UIViewController+RTUtils.h"
 
 @interface RTReportViewController ()<UITableViewDataSource, UITableViewDelegate>
 

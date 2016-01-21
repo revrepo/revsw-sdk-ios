@@ -18,6 +18,7 @@
 @property (nonatomic, readonly) NSString* durationString;
 @property (nonatomic, readonly) NSString* dataLengthString;
 @property (nonatomic, readonly) NSString* wholeString;
+@property (nonnull, readonly) NSString* plainWholeString;
 @property (nonatomic, readonly) NSString* nameString;
 
 @end

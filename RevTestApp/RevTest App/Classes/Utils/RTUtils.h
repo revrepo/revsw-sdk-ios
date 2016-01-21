@@ -37,5 +37,6 @@ extern NSString* const kRTSDKLabelTextKey;
 
 + (NSData *)jsonDataOfSize:(NSUInteger)aSize;
 + (NSData *)xmlDataOfSize:(NSUInteger)aSize;
++ (NSString*)formattedStringFromTestResults:(NSArray *)aTestResults;
 
 @end

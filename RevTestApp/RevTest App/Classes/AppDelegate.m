@@ -60,12 +60,6 @@ id setBeingRemoved(id self, SEL selector, ...)
     [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"]; // Racer key for 65apps
     [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
     
-    NSURLSessionConfiguration* sc = [NSURLSessionConfiguration defaultSessionConfiguration];
-    
-    NSArray* protocols = [sc protocolClasses];
-    
-
-    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
 #if __has_feature(objc_arc)

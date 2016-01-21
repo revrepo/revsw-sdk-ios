@@ -34,6 +34,7 @@
 		5B0BFEF11C0C86ED0057715A /* RTTestStatsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEEF1C0C86ED0057715A /* RTTestStatsViewController.xib */; };
 		5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFEF41C0CA0890057715A /* NSArray+Stats.m */; };
 		5B0BFEFC1C0CACC90057715A /* RTReportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEFB1C0CACC90057715A /* RTReportViewController.xib */; };
+		5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1109F3CC1C401ED000ABB160 /* MessageUI.framework */; };
 		5B10397A1C11763C003CA9A1 /* RTTestModel.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B1039791C11763C003CA9A1 /* RTTestModel.mm */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		5B25817F1C17155F00C55959 /* RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25817E1C17155F00C55959 /* RTUtils.m */; };
@@ -207,6 +208,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
 				5BB713F91C4FDAD400D16893 /* RevSDK.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,

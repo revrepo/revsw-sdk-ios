@@ -17,7 +17,8 @@
  */
 
 #import "RTUtils.h"
-
+#import "RTIterationResult.h"
+#import "RTTestResult.h"
 
 const CGFloat kRTRowHeight = 50.f;
 NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
@@ -57,6 +58,72 @@ NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
                                                               options:0
                                                                 error:nil];
     return data;
+}
+
++ (NSString *)formattedStringFromTestResults:(NSArray *)aTestResults
+{
+    assert(aTestResults);
+    assert(aTestResults.count);
+    
+    NSString* startString = [@" " stringByPaddingToLength:5
+                                               withString:@" "
+                                          startingAtIndex:0];
+    
+    NSMutableString* formattedString = [NSMutableString stringWithString:startString];
+    
+    RTIterationResult* iterationResult = aTestResults.firstObject;
+    NSArray* iterationTestResults  = iterationResult.testResults;
+    
+    for (RTTestResult* testResult in iterationTestResults)
+    {
+        NSString* paddedString = [testResult.nameString stringByPaddingToLength:15
+                                                                   withString:@" "
+                                  
+                                                              startingAtIndex:0];
+        [formattedString appendString:paddedString];
+    }
+
+    [formattedString appendString:@"\n"];
+    
+    [aTestResults enumerateObjectsUsingBlock:^(RTIterationResult* iterationResult, NSUInteger index, BOOL* stop){
+    
+        NSArray* iterationTestResults  = iterationResult.testResults;
+       
+        NSString* numberString  = [NSString stringWithFormat:@"%ld.", index + 1];
+        NSString* newLineString = [numberString stringByPaddingToLength:5
+                                                             withString:@" "
+                                                        startingAtIndex:0];
+        [formattedString appendString:newLineString];
+        
+        [iterationTestResults enumerateObjectsUsingBlock:^(RTTestResult* testResult, NSUInteger index, BOOL* stop){
+        
+            NSString* paddedString = [testResult.durationString stringByPaddingToLength:20 + index
+                                                                             withString:@" "
+                                                                        startingAtIndex:0];
+            [formattedString appendString:paddedString];
+            
+        }];
+        
+        [formattedString appendString:@"\n"];
+        
+        newLineString = [@"  " stringByPaddingToLength:6
+                                            withString:@" "
+                                       startingAtIndex:0];
+        
+        [formattedString appendString:newLineString];
+        
+        [iterationTestResults enumerateObjectsUsingBlock:^(RTTestResult* testResult, NSUInteger index, BOOL* stop){
+        
+            NSString* paddedString = [testResult.dataLengthString stringByPaddingToLength:19 + index
+                                                                               withString:@" "
+                                                                          startingAtIndex:0];
+            [formattedString appendString:paddedString];
+        }];
+        
+        [formattedString appendString:@"\n"];
+    }];
+    
+    return formattedString;
 }
 
 @end
