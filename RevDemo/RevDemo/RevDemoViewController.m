@@ -129,8 +129,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
-    NSLog(@"DID FINISH");
-    
     [self.backButton setEnabled:[webView canGoBack]];
     self.urlTextField.text = webView.request.URL.absoluteString;
     
@@ -141,7 +139,6 @@
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error
 {
-    NSLog(@"ERROR");
     [self performSelector:@selector(hideHUD)
                withObject:nil
                afterDelay:2.0];
