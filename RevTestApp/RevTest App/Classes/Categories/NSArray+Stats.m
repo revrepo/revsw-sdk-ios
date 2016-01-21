@@ -23,7 +23,7 @@
 #if SHOULD_CONSIDER_MIN_AND_MAX_VALUES
 #define OPERATION_ARRAY self
 #else
-#define OPERATION_ARRAY [[self sortedArrayUsingSelector:@selector(compare:)] subarrayWithRange:NSMakeRange(1, [self count] - 2)]
+#define OPERATION_ARRAY (self.count < 5 ? self : [[self sortedArrayUsingSelector:@selector(compare:)] subarrayWithRange:NSMakeRange(1, [self count] - 2)])
 #endif
 
 @implementation NSArray (Statistics)
