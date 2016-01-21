@@ -23,12 +23,14 @@
 #import <RevSDK/RevSDK.h>
 #import <RevSDK/RevSDKPrivate.h>
 
+#import "MBProgressHUD.h"
 
 @interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *urlTextField;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
+@property (nonatomic, strong) MBProgressHUD* hud;
 
 @end
 
@@ -116,18 +118,39 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    if (!self.hud)
+    {
+       self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+       self.hud.labelText = @"Loading...";
+    }
     
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
+    NSLog(@"DID FINISH");
+    
     [self.backButton setEnabled:[webView canGoBack]];
     self.urlTextField.text = webView.request.URL.absoluteString;
+    
+    [self performSelector:@selector(hideHUD)
+               withObject:nil
+               afterDelay:2.0];
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error
 {
-    
+    NSLog(@"ERROR");
+    [self performSelector:@selector(hideHUD)
+               withObject:nil
+               afterDelay:2.0];
+}
+
+- (void)hideHUD
+{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    self.hud = nil;
 }
 
 @end
