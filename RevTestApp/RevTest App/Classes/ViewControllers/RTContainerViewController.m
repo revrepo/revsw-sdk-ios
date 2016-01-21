@@ -42,9 +42,11 @@
     self.navigationItem.title = @"Report";
     
     self.reportViewController             = [RTReportViewController viewControllerFromXib];
+    self.reportViewController.urlString = self.urlString;
     self.reportViewController.testResults = self.testResults;
     
     self.testStatsViewController = [RTTestStatsViewController viewControllerFromXib];
+    self.testStatsViewController.urlString = self.urlString;
     self.testStatsViewController.testResults = self.testResults;
     [self.testStatsViewController prepare];
     

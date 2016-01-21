@@ -30,6 +30,7 @@
 @property (nonatomic, copy) void (^completionBlock)();
 @property (nonatomic, copy) void (^loadFinishedBlock)();
 @property (nonatomic, copy) void (^cancelBlock)();
+@property (nonatomic, copy) NSString* urlString;
 
 - (void)showHudWithText:(NSString *)aText;
 - (void)hideHud;
@@ -39,7 +40,7 @@
 - (void)setWhiteListOption:(BOOL)aOn;
 - (void)startTesting;
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest;
-- (void)loadStarted;
+- (void)loadStarted:(NSString*) aUrlString;
 - (void)loadFinished:(NSInteger) aCode;
 
 - (void)stepStarted;

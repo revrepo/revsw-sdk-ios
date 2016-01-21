@@ -40,13 +40,11 @@ typedef enum
     NSUInteger mCurrentDataSize;
     
     RSOperationMode mMode;
-    
-    NSUInteger mCounter;
 }
 
 @property (nonatomic, strong) NSMutableArray* testResults;
 @property (nonatomic, strong) NSMutableArray* testCases;
-
+@property (nonatomic, strong) NSString* urlString;
 @property (nonatomic, strong) RTIterationResult* currentResult;
 
 @property (nonatomic, strong) NSTimer* timer;
@@ -69,7 +67,6 @@ typedef enum
          mIsLoading              = NO;
          self.shouldLoad         = NO;
          self.testResults        = [NSMutableArray array];
-        mCounter = 0;
          [[NSNotificationCenter defaultCenter] addObserver:self
                                                   selector:@selector(didReceiveStopLoadingNotification:)
                                                       name:@"kRSURLProtocolStoppedLoadingNotification"
@@ -307,13 +304,6 @@ typedef enum
     tres.testName     = tcase.testName;
     
     [self.currentResult pushResult:tres];
-    
-    if(self.currentResult.testResults.count == 3)
-    {
-        mCounter++;
-        NSLog(@"Counter= %lu", (unsigned long)mCounter);
-    }
-    
     
     [self toNextCase];
     

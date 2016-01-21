@@ -27,5 +27,6 @@
 @property (nonatomic, strong) NSArray* resultSuccessFlags;*/
 @property (nonatomic, strong) NSArray* testResults;
 @property (nonatomic, strong) NSDictionary* userInfo;
+@property (nonatomic, strong) NSString* urlString;
 
 @end
