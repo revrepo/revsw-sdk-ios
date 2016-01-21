@@ -24,4 +24,6 @@
 @property (nonatomic, strong) NSArray* testResults;
 @property (nonatomic, strong) NSString* urlString;
 
+- (void)calculateAverage;
+
 @end

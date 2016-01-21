@@ -23,6 +23,8 @@
 
 @interface RTReportViewController ()<UITableViewDataSource, UITableViewDelegate>
 
+@property (nonatomic, strong) NSMutableArray* dataLengths;
+
 @end
 
 @implementation RTReportViewController
@@ -30,6 +32,21 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+}
+
+- (void)calculateAverage
+{
+    self.dataLengths =  [NSMutableArray arrayWithArray:@[@0.0, @0.0, @0.0]];
+    
+    for (RTIterationResult* iterationResult in self.testResults)
+    {
+        [iterationResult.testResults enumerateObjectsUsingBlock:^(RTTestResult* testResult, NSUInteger index, BOOL* stop){
+            
+            CGFloat dataLengthSum = [self.dataLengths[index] floatValue];
+            dataLengthSum += testResult.dataLength;
+            self.dataLengths[index] = @(dataLengthSum);
+        }];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -43,7 +60,6 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    [[UILabel appearanceWhenContainedIn:[UITableViewHeaderFooterView class], nil] setTextAlignment:NSTextAlignmentCenter];
     return self.urlString;
 }
 
@@ -76,9 +92,25 @@
     NSString* propertyString           = indexPath.row == 0 ? @"nameString" : @"wholeString";
     NSString* keyPath                  = [NSString stringWithFormat:@"@unionOfObjects.%@", propertyString];
     NSArray* texts                     = [iterationResult.testResults valueForKeyPath:keyPath];
-    NSString* startString              = indexPath.row == 0 ? @"" : [NSString stringWithFormat:@"%ld.", indexPath.row];
-    [cell setTexts:texts startText:startString];
     
+    NSMutableArray* tmpArray = [[NSMutableArray alloc] init];
+    
+    if (indexPath.row == 0)
+    {
+        [texts enumerateObjectsUsingBlock:^(NSString* text, NSUInteger index, BOOL* stop){
+        
+            NSUInteger averDataSize     = [self.dataLengths[index] unsignedIntegerValue] / self.testResults.count;
+            NSString* averageSizeString = @"Average:";
+            NSString* tmpString         = [NSString stringWithFormat:@"%@\n%@ %lu", text, averageSizeString, averDataSize / 1024];
+            [tmpArray addObject:tmpString];
+        }];
+
+        texts = tmpArray;
+    }
+
+    
+    NSString* startString = indexPath.row == 0 ? @"" : [NSString stringWithFormat:@"%ld.", indexPath.row];
+    [cell setTexts:texts startText:startString];
     
     cell.contentView.backgroundColor = iterationResult.valid || indexPath.row == 0 ? [UIColor whiteColor] : [UIColor redColor];
     
