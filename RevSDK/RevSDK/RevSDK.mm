@@ -61,7 +61,6 @@ static rs::TestConfigurationService* TestConfService = nullptr;
         rs::Model::instance()->initialize(rs::stdStringFromNSString(aSDKKey));
         [RSStandardSession instance];
         [RSOriginSession instance];
-        
         gIsInitialized = true;
     }
     else
