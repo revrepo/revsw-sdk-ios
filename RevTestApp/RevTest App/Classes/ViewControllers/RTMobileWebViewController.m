@@ -38,6 +38,7 @@ static const NSInteger kSuccessCode = 200;
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UITextField* fakeTextField;
 @property (nonatomic, strong) RTHTMLGrabber* simpleGrabber;
+@property (nonatomic, copy) NSString* urlString;
 
 @end
 
@@ -263,7 +264,7 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)webViewDidStartLoad:(UIWebView *)aWebView
 {
-    [self loadStarted];
+    [self loadStarted:self.URLTextField.text];
 }
 
 - (void)didFinishLoadWithCode:(NSInteger)aCode
@@ -318,7 +319,7 @@ static const NSInteger kSuccessCode = 200;
 
 - (void)grabberDidStartLoad:(RTHTMLGrabber *)grabber
 {
-    [self loadStarted];
+    [self loadStarted:self.URLTextField.text];
 }
 
 - (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber

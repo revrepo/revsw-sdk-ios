@@ -95,6 +95,17 @@
     objc_setAssociatedObject(self, @selector(progressHUD), aProgressHUD, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (void)setUrlString:(NSString *)urlString
+{
+    objc_setAssociatedObject(self, @selector(urlString), urlString, OBJC_ASSOCIATION_COPY);
+}
+
+- (NSString*)urlString
+{
+    return objc_getAssociatedObject(self, @selector(urlString));
+}
+
+
 - (void)setNumberOfTests:(NSUInteger)aNumberOfTests
 {
     [self.testModel setNumberOfTests:aNumberOfTests];
@@ -143,6 +154,7 @@
         
         RTContainerViewController* containerViewController = [RTContainerViewController new];
         containerViewController.testResults                = aTestResults;
+        containerViewController.urlString                  = self.urlString;
         
         [self.navigationController pushViewController:containerViewController animated:YES];
     });
@@ -175,8 +187,9 @@
     [self.testModel start];
 }
 
-- (void)loadStarted
+- (void)loadStarted:(NSString*)aUrl
 {
+    self.urlString = aUrl;
     [self.testModel loadStarted];
 }
 

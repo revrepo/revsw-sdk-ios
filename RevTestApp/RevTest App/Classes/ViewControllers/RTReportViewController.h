@@ -22,5 +22,6 @@
 
 @property (nonatomic, weak) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) NSArray* testResults;
+@property (nonatomic, strong) NSString* urlString;
 
 @end

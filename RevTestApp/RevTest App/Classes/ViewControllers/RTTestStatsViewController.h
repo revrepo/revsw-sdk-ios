@@ -21,6 +21,7 @@
 @interface RTTestStatsViewController : UIViewController
 
 @property (nonatomic, strong) NSArray* testResults;
+@property (nonatomic, strong) NSString* urlString;
 
 - (void)prepare;
 

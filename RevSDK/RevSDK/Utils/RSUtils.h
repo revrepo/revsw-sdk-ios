@@ -124,7 +124,7 @@ namespace rs
     NSData* NSDataFromData(Data aData);
     
     std::shared_ptr<Request> requestFromURLRequest(NSURLRequest* aURLRequest);
-    NSURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest);
+    NSMutableURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest);
     
     std::shared_ptr<Response> responseFromHTTPURLResponse(NSHTTPURLResponse* aHTTPURLResponse);
     NSHTTPURLResponse* NSHTTPURLResponseFromResponse(std::shared_ptr<Response>);

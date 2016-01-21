@@ -26,6 +26,7 @@
 #import "RTUtils.h"
 #import "RTContainerViewController.h"
 
+
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kMethodPickerTag = 1;
 static const NSInteger kFormatPickerTag = 2;
@@ -39,6 +40,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, copy) NSString* method;
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
+@property (nonatomic, copy) NSString* urlString;
 
 @end
 
@@ -235,7 +237,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 //    
 //    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
     
-    [self loadStarted];
+    [self loadStarted:self.URLTextField.text];
     
     NSURLSessionTask* task = [session dataTaskWithRequest:aRequest
                                         completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
