@@ -63,7 +63,6 @@
 		650840AB1C2A75BF00B72CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		650840B01C2A75BF00B72CAF /* RevSDK Demo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RevSDK Demo.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		650840B41C2A75BF00B72CAF /* RevDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevDemoUITests.m; sourceTree = "<group>"; };
-		650840B61C2A75BF00B72CAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		650840BF1C2A762000B72CAF /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RevSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		650840C61C2A7D3700B72CAF /* RevConfigurationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevConfigurationViewController.h; sourceTree = "<group>"; };
 		650840C71C2A7D3700B72CAF /* RevConfigurationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevConfigurationViewController.m; sourceTree = "<group>"; };
@@ -162,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				650840B41C2A75BF00B72CAF /* RevDemoUITests.m */,
-				650840B61C2A75BF00B72CAF /* Info.plist */,
 			);
 			path = RevDemoUITests;
 			sourceTree = "<group>";

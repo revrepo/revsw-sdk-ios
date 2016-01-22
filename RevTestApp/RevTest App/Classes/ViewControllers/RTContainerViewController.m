@@ -34,6 +34,7 @@
 @property (nonatomic, strong) RTTestStatsViewController* testStatsViewController;
 @property (nonatomic, copy) NSString* dateString;
 @property (nonatomic, strong) NSArray* bigArray;
+@property (nonatomic, strong) NSArray* averageSizes;
 
 @end
 
@@ -89,10 +90,14 @@
     RTIterationResult* result = self.testResults.firstObject;
     NSUInteger count = result.testResults.count;
     NSMutableArray* bigArray = [NSMutableArray array];
+    NSMutableArray* averageSizes = [NSMutableArray array];
     
     for (int i = 0; i < count; i++)
     {
         NSMutableArray* tests = [NSMutableArray array];
+        
+        float averageSize = 0.0f;
+        int cnt = 0;
         
         for (RTIterationResult* itResult in self.testResults)
         {
@@ -108,12 +113,18 @@
             }
             
             [tests addObject:@(tr.duration)];
+            averageSize += tr.dataLength;
+            cnt++;
         }
         
+        averageSize /= cnt;
+        
         [bigArray addObject:tests];
+        [averageSizes addObject:@(averageSize)];
     }
     
     self.bigArray = bigArray;
+    self.averageSizes = averageSizes;
     
     NSArray* cellProcessBlocks = @[
                                    
@@ -211,28 +222,28 @@
                                     
                                     return @{
                                              kRTTextsKey : texsts,
-                                             kRTTextsKey : @"Exp. value:"
+                                             kRTTitleKey : @"Exp. value:"
                                              };
                                     } copy],
                                 [^NSDictionary*{
                                     
                                     NSMutableArray* texsts = [NSMutableArray array];
                                     
-                                    for (NSArray* results in self.bigArray)
+                                    for (NSNumber* result in self.averageSizes)
                                     {
-                                        float sum = 0;
-                                        for (NSNumber* value in results)
-                                        {
-                                            sum += [value floatValue];
-                                        }
-                                        sum /= [results count];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", sum];
+//                                        float sum = 0;
+//                                        for (NSNumber* value in results)
+//                                        {
+//                                            sum += [value floatValue];
+//                                        }
+//                                        sum /= [results count];
+                                        NSString* text = [NSString stringWithFormat:@"%d", (int)([result floatValue] / 1024.0f)];
                                         [texsts addObject:text];
                                     }
                                     
                                     return @{
                                              kRTTextsKey : texsts,
-                                             kRTTitleKey : @"Average data:"
+                                             kRTTitleKey : @"Avg. size:"
                                              };
                                 } copy]
                                 ];
@@ -244,7 +255,8 @@
 {
     if ([MFMailComposeViewController canSendMail])
     {
-        NSString* title               = [NSString stringWithFormat:@"%@<br>%@", self.urlString, self.dateString];
+        NSString* title               = [NSString stringWithFormat:@"Test results for %@, %@",
+                                         self.urlString, self.dateString];
         NSArray* processSummaryBlocks = [self processSummary];
         NSMutableArray* dictionaries  = [NSMutableArray array];
         
@@ -260,7 +272,8 @@
         
         MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
         mail.mailComposeDelegate = self;
-        [mail setSubject:[NSString stringWithFormat:@"%@\n%@", self.urlString, self.dateString]];
+        [mail setSubject:[NSString stringWithFormat:@"Test results for %@, %@",
+                          self.urlString, self.dateString]];
         [mail setMessageBody:messageBody isHTML:YES];
         
         [self presentViewController:mail animated:YES completion:NULL];
