@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11375B8C1C515C22008EA0C5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11375B8B1C515C22008EA0C5 /* RevSDK.framework */; };
-		11375B8D1C515C22008EA0C5 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11375B8B1C515C22008EA0C5 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -81,6 +79,8 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
+		A7FDF6AD1C523A3700078B73 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
+		A7FDF6AE1C523A3700078B73 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 /* End PBXBuildFile section */
 
@@ -91,7 +91,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11375B8D1C515C22008EA0C5 /* RevSDK.framework in Embed Frameworks */,
+				A7FDF6AE1C523A3700078B73 /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,7 +100,6 @@
 
 /* Begin PBXFileReference section */
 		1109F3CC1C401ED000ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		11375B8B1C515C22008EA0C5 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/Alexander1/Library/Developer/Xcode/DerivedData/RevSDK-evtzuhfitxmxukbtzngfldtszrym/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevSDK Racer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -212,7 +211,7 @@
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
-				11375B8C1C515C22008EA0C5 /* RevSDK.framework in Frameworks */,
+				A7FDF6AD1C523A3700078B73 /* RevSDK.framework in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
 				5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */,
 				5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */,
@@ -255,7 +254,6 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				11375B8B1C515C22008EA0C5 /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
