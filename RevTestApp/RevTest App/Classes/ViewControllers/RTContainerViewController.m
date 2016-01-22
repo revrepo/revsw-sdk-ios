@@ -75,6 +75,11 @@
     self.navigationItem.rightBarButtonItem = emailItem;
 }
 
+- (void)processSummary
+{
+    
+}
+
 - (void)showEmail
 {
     if ([MFMailComposeViewController canSendMail])

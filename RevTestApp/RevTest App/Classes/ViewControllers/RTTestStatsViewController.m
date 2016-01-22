@@ -25,8 +25,6 @@
 
 @interface RTTestStatsViewController ()<UITableViewDataSource, UITableViewDataSource>
 
-@property (nonatomic, strong) NSArray* cellProcessBlocks;
-
 @end
 
 @implementation RTTestStatsViewController

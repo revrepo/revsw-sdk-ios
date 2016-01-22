@@ -89,7 +89,7 @@ NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
     
         NSArray* iterationTestResults  = iterationResult.testResults;
        
-        NSString* numberString  = [NSString stringWithFormat:@"%ld.", index + 1];
+        NSString* numberString  = [NSString stringWithFormat:@"%u.", index + 1];
         NSString* newLineString = [numberString stringByPaddingToLength:5
                                                              withString:@" "
                                                         startingAtIndex:0];
