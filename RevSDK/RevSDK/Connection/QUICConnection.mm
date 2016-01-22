@@ -95,11 +95,11 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers[":method"] = aRequest->method();
     headers[":path"] = rest;
     headers[":scheme"] = "https";
-    headers["accept"] = "txt/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8";
-    headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2,th;q=0.2,uk;q=0.2,de;q=0.2,fr;q=0.2";
+    headers["accept"] = "txt/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"; // bug
+    headers["accept-language"] = "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4,it;q=0.2,th;q=0.2,uk;q=0.2,de;q=0.2,fr;q=0.2"; // bug
     //headers["accept-encoding"] = "gzip";
     //headers["user-agent"] = "Mozilla";
-    headers["user-agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36";
+    headers["user-agent"] = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"; // bug
     
     //headers["cache-control"] = "max-age=0";
     //headers["upgrade-insecure-requests"] = "1";
@@ -140,7 +140,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
 }
 
 void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::QuicSpdyStream* aStream,
-                                   const net::SpdyHeaderBlock& aHedaers, int aCode)
+                                   const net::SpdyHeaderBlock& aHeaders, int aCode)
 {
     onResponseReceived();
     
@@ -150,7 +150,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
 //    dump += "code = " + intToStr(aCode);
 //    dump += "headers = \n";
 //    
-//    for (const auto& i : aHedaers)
+//    for (const auto& i : aHeaders)
 //        dump += i.first.as_string() + ": " + i.second.as_string() + "\n";
 //    
 //    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
@@ -164,8 +164,8 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 mAnchor1 = mAnchor0;
                 std::shared_ptr<Request> newRequest(mRequest->clone());
                 
-                net::SpdyHeaderBlock::const_iterator w = aHedaers.find("Location");
-                if (w == aHedaers.end())
+                net::SpdyHeaderBlock::const_iterator w = aHeaders.find("Location");
+                if (w == aHeaders.end())
                 {
                     assert(false);
                 }
@@ -204,7 +204,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
     {
         std::map<std::string, std::string> headers;
 
-        for (const auto& h : aHedaers)
+        for (const auto& h : aHeaders)
         {
             if (h.first.size() == 0)
                 continue;

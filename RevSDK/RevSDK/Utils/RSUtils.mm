@@ -56,7 +56,7 @@ namespace rs
     const std::string kRSRevBaseHost   = "revsdk.net";
     const std::string kRSLoadConfigurationEndPoint = "/v1/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
-    NSString* const kRSRevLoadConfigurationHost = @"iad02-api03.revsw.net";
+    NSString* const kRSRevLoadConfigurationHost = @"sdk-config-api.revapm.net";
     NSString* const kRSRevHostHeader = @"X-Rev-Host";
     
     //codes
@@ -809,7 +809,7 @@ namespace rs
         NSString* host1 = URL1.host;
         NSString* host2 = URL2.host;
         
-        NSRange range = [host1 rangeOfString:@"www."];
+        NSRange range = [host1 rangeOfString:@"www."]; // bug
         
         if (range.location == 0)
         {

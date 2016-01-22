@@ -18,7 +18,7 @@
 
 #import "RSLogVC.h"
 #import <MessageUI/MFMailComposeViewController.h>
-#include "Model.hpp"
+#import "Model.hpp"
 #import "RSEntryVC.h"
 
 @interface RSLogEntry : NSObject
