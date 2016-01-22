@@ -270,7 +270,7 @@ namespace rs
         {
             if ([fullName rangeOfString:string].location != NSNotFound)
             {
-                return string;
+                return fullName;
             }
         }
         

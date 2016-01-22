@@ -243,7 +243,7 @@
                                     
                                     return @{
                                              kRTTextsKey : texsts,
-                                             kRTTitleKey : @"Avg. size:"
+                                             kRTTitleKey : @"Avg. size(KB):"
                                              };
                                 } copy]
                                 ];
@@ -274,6 +274,7 @@
         mail.mailComposeDelegate = self;
         [mail setSubject:[NSString stringWithFormat:@"Test results for %@, %@",
                           self.urlString, self.dateString]];
+        [mail setToRecipients:@[@"eng@revsw.com"]];
         [mail setMessageBody:messageBody isHTML:YES];
         
         [self presentViewController:mail animated:YES completion:NULL];

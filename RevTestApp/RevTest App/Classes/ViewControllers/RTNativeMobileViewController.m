@@ -160,6 +160,8 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
     [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257"
+   forHTTPHeaderField:@"User-Agent"];
     
     request.HTTPMethod           = self.method;
     
