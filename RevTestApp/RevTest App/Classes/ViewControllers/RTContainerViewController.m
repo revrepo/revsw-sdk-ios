@@ -47,7 +47,6 @@
     self.reportViewController             = [RTReportViewController viewControllerFromXib];
     self.reportViewController.urlString   = self.urlString;
     self.reportViewController.testResults = self.testResults;
-    [self.reportViewController calculateAverage];
     
     self.testStatsViewController             = [RTTestStatsViewController viewControllerFromXib];
     self.testStatsViewController.urlString   = self.urlString;

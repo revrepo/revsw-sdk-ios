@@ -153,6 +153,26 @@
                                     
                                     [cell setTexts:texsts
                                          startText:@"Expected value:"];
+                                },
+                                ^(RTCell* cell){
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+
+                                    for (NSArray* results in bigArray)
+                                    {
+                                        float sum = 0;
+                                        for (NSNumber* value in results)
+                                        {
+                                            sum += [value floatValue];
+                                        }
+                                        sum /= [results count];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", sum];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    [cell setTexts:texsts
+                                         startText:@"Average data:"];
+                                    
                                 }
                                
                                ];
@@ -165,7 +185,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    static const NSInteger kNumberOfRows = 7;
+    static const NSInteger kNumberOfRows = 8;
     
     return kNumberOfRows;
 }
