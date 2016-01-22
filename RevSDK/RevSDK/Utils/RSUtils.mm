@@ -63,6 +63,10 @@ namespace rs
     const long kRSNoErrorCode = -10000;
     const long kRSErrorCodeConfigurationNotValid = 100;
     
+    //notifications
+    NSString* const kRSURLProtocolDidReceiveDataNotification = @"kRSURLProtocolDidReceiveDataNotification";
+    NSString* const kRSURLProtocolDidReceiveResponseNotification = @"kRSURLProtocolDidReceiveResponseNotification";
+    
     //keys
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";

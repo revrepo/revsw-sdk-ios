@@ -67,10 +67,21 @@ typedef enum
          mIsLoading              = NO;
          self.shouldLoad         = NO;
          self.testResults        = [NSMutableArray array];
+        
          [[NSNotificationCenter defaultCenter] addObserver:self
                                                   selector:@selector(didReceiveStopLoadingNotification:)
                                                       name:@"kRSURLProtocolStoppedLoadingNotification"
                                                     object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(resetTimer)
+                                                     name:@"kRSURLProtocolDidReceiveResponseNotification"
+                                                   object:nil];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(resetTimer)
+                                                     name:@"kRSURLProtocolDidReceiveDataNotification"
+                                                   object:nil];
     }
     
     return self;
@@ -265,6 +276,20 @@ typedef enum
         {
             self.loadStartedBlock(text);
         }
+    }
+}
+
+- (void)resetTimer
+{
+    if (mIsLoading)
+    {
+        [self.timer invalidate];
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:45.0
+                                                      target:self
+                                                    selector:@selector(timerFired)
+                                                    userInfo:nil
+                                                     repeats:NO];
     }
 }
 

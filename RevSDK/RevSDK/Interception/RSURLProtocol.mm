@@ -137,6 +137,9 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
+                                                        object:nil];
+    
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
         NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*)response;
@@ -149,6 +152,9 @@
 
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveDataNotification
+                                                        object:nil];
+    
     self.dataLength += aData.length;
     [self.client URLProtocol:self didLoadData:aData];
 }
@@ -177,13 +183,17 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveData:(NSData *)aData
 {
-    //[self.data appendData:aData];
+    [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveDataNotification
+                                                        object:nil];
     self.dataLength += aData.length;
     [self.client URLProtocol:self didLoadData:aData];
 }
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
+                                                        object:nil];
+    
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 

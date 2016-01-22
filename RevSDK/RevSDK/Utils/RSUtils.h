@@ -58,6 +58,10 @@ namespace rs
     extern const long kRSNoErrorCode;
     extern const long kRSErrorCodeConfigurationNotValid;
     
+    //notifications
+    extern NSString* const kRSURLProtocolDidReceiveDataNotification;
+    extern NSString* const kRSURLProtocolDidReceiveResponseNotification;
+    
     //keys
     extern NSString* const kRSURLProtocolHandledKey;
     extern NSString* const kRSConfigurationStorageKey;
