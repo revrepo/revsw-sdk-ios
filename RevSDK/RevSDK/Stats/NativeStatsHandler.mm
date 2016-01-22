@@ -384,7 +384,7 @@ namespace rs
         statsDictionary[@"cpu_number"] = @"1.0";
         statsDictionary[@"cpu_sub"] = @"0";
         statsDictionary[@"device"] = deviceModel();
-        statsDictionary[@"hight"] = [NSString stringWithFormat:@"%f", screenHeight];
+        statsDictionary[@"height"] = [NSString stringWithFormat:@"%f", screenHeight];
         statsDictionary[@"iccid"] = @"_";
         statsDictionary[@"imei"] = @"_";
         statsDictionary[@"imsi"] = @"_";

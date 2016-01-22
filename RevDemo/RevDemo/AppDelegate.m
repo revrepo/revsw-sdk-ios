@@ -36,7 +36,9 @@
                                                             diskCapacity:0
                                                                 diskPath:nil];
     [NSURLCache setSharedURLCache:sharedCache];
-    [RevSDK startWithSDKKey:@"42e276ea-1823-4945-baa4-8747f08d0abe"];
+//    [RevSDK startWithSDKKey:@"42e276ea-1823-4945-baa4-8747f08d0abe"];
+    [RevSDK startWithSDKKey:@"a2e23128-4685-41d3-8e49-c8e76c1688ef"];
+    
     [Fabric with:@[[Crashlytics class]]];
     
     return YES;

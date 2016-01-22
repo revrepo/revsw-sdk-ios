@@ -488,7 +488,7 @@
 			baseConfigurationReference = BD0C16B65469B4B96DF592B6 /* Pods-RevSDK Demo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -513,7 +513,7 @@
 			baseConfigurationReference = C64B50D3DD5AEB50C1237C4F /* Pods-RevSDK Demo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -529,7 +529,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo2;
 				PRODUCT_NAME = "RevSDK Demo";
-				PROVISIONING_PROFILE = "c0c5c052-86a9-40f4-a47c-e2233e1a6bfb";
+				PROVISIONING_PROFILE = "a5f74504-a2a0-40f0-83df-eefb664d6a54";
 			};
 			name = Release;
 		};

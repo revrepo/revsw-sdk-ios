@@ -56,8 +56,8 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     
     if ([request.HTTPMethod isEqualToString:@"POST"] || [request.HTTPMethod isEqualToString:@"PUT"])
     {
-        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
-        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [request setValue:@"application/json" forHTTPHeaderField:@"Accept"]; // bug
+        [request setValue:@"application/json" forHTTPHeaderField:@"Content-Type"]; // bug
         [request setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[self.body length]] forHTTPHeaderField:@"Content-Length"];
         request.HTTPBody = self.body;
     }
