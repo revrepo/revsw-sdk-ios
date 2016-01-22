@@ -298,7 +298,9 @@ typedef enum
     }
     
     tres.dataLength  = mCurrentDataSize;
+    
     tres.errorCode   = aResult;
+    
     tres.duration    = interval;
     mCurrentDataSize = 0;
     

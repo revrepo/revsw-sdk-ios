@@ -81,7 +81,7 @@
     NSString* startString = indexPath.row == 0 ? @"" : [NSString stringWithFormat:@"%ld.", indexPath.row];
     [cell setTexts:texts startText:startString];
     
-    cell.contentView.backgroundColor = iterationResult.valid || indexPath.row == 0 ? [UIColor whiteColor] : [UIColor redColor];
+    cell.backgroundColor = iterationResult.valid || indexPath.row == 0 ? [UIColor whiteColor] : [UIColor redColor];
     
     return cell;
 }

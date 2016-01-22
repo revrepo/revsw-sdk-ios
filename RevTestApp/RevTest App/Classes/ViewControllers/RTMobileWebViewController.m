@@ -322,9 +322,9 @@ static const NSInteger kSuccessCode = 200;
     [self loadStarted:self.URLTextField.text];
 }
 
-- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber
+- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode
 {
-    [self didFinishLoadWithCode:kSuccessCode];
+    [self didFinishLoadWithCode:statusCode];
 }
 
 - (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error
