@@ -47,7 +47,7 @@ namespace rs
         mStatsReportingLevel = aReportingLevel;
     }
     
-    ReportTransactionHanle StatsHandler::createSendTransaction(int aRequestCount)
+    ReportTransactionHanle StatsHandler::createSendTransaction(int aRequestCount, const std::string& aAppName)
     {
         ReportTransactionHanle requestsData = mRequestStatsHandler->requestsData(aRequestCount);
         
@@ -56,7 +56,7 @@ namespace rs
         stringMap[kAppVersionKey] = mStatsHandler->appVersion();
         stringMap[kSDKVersionKey] = std::to_string(kSDKVersionNumber);
         stringMap[kSDKKeyKey]     = mSDKKey;
-        stringMap[kAppNameKey]    = mStatsHandler->appName();
+        stringMap[kAppNameKey]    = aAppName;
         
         auto data           = mStatsHandler->allData(requestsData.Buffer, stringMap);
         requestsData.Buffer = data;

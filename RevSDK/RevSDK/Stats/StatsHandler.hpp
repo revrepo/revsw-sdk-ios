@@ -52,7 +52,7 @@ namespace rs
         
         bool hasRequestsData() const;
         
-        ReportTransactionHanle createSendTransaction(int aRequestCount);
+        ReportTransactionHanle createSendTransaction(int aRequestCount, const std::string&);
         
         void addEvent(const Event&);
         

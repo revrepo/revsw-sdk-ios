@@ -240,12 +240,13 @@ namespace rs
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
                 int requestsCount = this->mConfService->getActive()->statsReportingMaxRequests;
+                const std::string appName = this->mConfService->getActive()->appName;
                 
                 assert(requestsCount);
                 Log::info(kLogTagSDKStats,
                           ("Paking reports, max at once :: " + std::to_string(requestsCount)).c_str());
                 
-                statsData = mStatsHandler->createSendTransaction(requestsCount);
+                statsData = mStatsHandler->createSendTransaction(requestsCount, appName);
 #else
                 statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
 #endif
