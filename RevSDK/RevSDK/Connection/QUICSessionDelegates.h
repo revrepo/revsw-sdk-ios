@@ -31,7 +31,7 @@ namespace rs
         virtual ~QUICStreamDelegate() {}
         virtual void quicSessionDidReceiveResponse(QUICSession* aSession,
                                                    net::QuicSpdyStream* aStream,
-                                                   const net::SpdyHeaderBlock& aHedaers,
+                                                   const net::SpdyHeaderBlock& aHeaders,
                                                    int aCode) = 0;
         virtual void quicSessionDidReceiveData(QUICSession* aSession,
                                                net::QuicSpdyStream* aStream,

@@ -46,7 +46,7 @@ namespace rs
         void p_startWithRequest(std::shared_ptr<Request> aRequest, ConnectionDelegate* aDelegate, bool aRedirect);
         void quicSessionDidReceiveResponse(QUICSession* aSession,
                                            net::QuicSpdyStream* aStream,
-                                           const net::SpdyHeaderBlock& aHedaers,
+                                           const net::SpdyHeaderBlock& aHeaders,
                                            int aCode);
         void quicSessionDidReceiveData(QUICSession* aSession,
                                        net::QuicSpdyStream* aStream,

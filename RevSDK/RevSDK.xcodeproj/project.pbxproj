@@ -49,10 +49,8 @@
 		11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B331C3C06B900DABAE5 /* QUICDataStream.h */; };
 		11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */; };
 		11F24B391C3C09C100DABAE5 /* QUICClientSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B371C3C09C100DABAE5 /* QUICClientSession.h */; };
-		11F24B401C3C57E500DABAE5 /* RSUDPSocket.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B3E1C3C57E500DABAE5 /* RSUDPSocket.cpp */; };
 		11F24B411C3C57E500DABAE5 /* RSUDPSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */; };
 		11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F24B421C3C5FBA00DABAE5 /* libboost.a */; };
-		11F24B4A1C3D695D00DABAE5 /* RSUDPService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */; };
 		11F24B4B1C3D695D00DABAE5 /* RSUDPService.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B491C3D695D00DABAE5 /* RSUDPService.h */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
@@ -868,7 +866,6 @@
 				5B3096F11BFA11E50045024C /* RevSDK.mm in Sources */,
 				6D1348681C4131430017D07E /* ProtocolFailureMonitor.cpp in Sources */,
 				11F24B341C3C06B900DABAE5 /* QUICDataStream.cpp in Sources */,
-				11F24B401C3C57E500DABAE5 /* RSUDPSocket.cpp in Sources */,
 				5B54C3211BFB598700217971 /* Request.cpp in Sources */,
 				11C9610F1C2D469300CDE34D /* quic_spdy_client_stream.cc in Sources */,
 				11C9621D1C2D54C000CDE34D /* QUICSession.mm in Sources */,
@@ -893,7 +890,6 @@
 				116C4D6A1C456FB5000CE641 /* RSSupervisor.cpp in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B2035A11C3404DC00A28C01 /* RSIPUtils.m in Sources */,
-				11F24B4A1C3D695D00DABAE5 /* RSUDPService.cpp in Sources */,
 				5B54C3381BFB70C100217971 /* StandardProtocol.mm in Sources */,
 				5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */,
 				5B4FCD321C0321B400C8D320 /* NativeNetwork.mm in Sources */,
