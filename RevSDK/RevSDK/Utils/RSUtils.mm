@@ -302,7 +302,7 @@ namespace rs
         return request;
     }
     
-    NSURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest)
+    NSMutableURLRequest* URLRequestFromRequest(std::shared_ptr<Request> aRequest)
     {
         NSString* URLString          = NSStringFromStdString(aRequest->URL());
         NSURL* URL                   = [NSURL URLWithString:URLString];
