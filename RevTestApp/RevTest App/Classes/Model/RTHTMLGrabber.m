@@ -155,7 +155,6 @@
                        if (self.delegate)
                        {
                            [self.set removeAllObjects];
-                           NSLog(@"STATUS CODE %ld", self.statusCode);
                            [self.delegate grabberDidFinishLoad:self withStatusCode:self.statusCode];
                        }
                    }
