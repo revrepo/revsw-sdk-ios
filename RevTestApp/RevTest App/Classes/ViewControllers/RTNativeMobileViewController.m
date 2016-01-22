@@ -90,7 +90,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSString* lastSearch = [ud objectForKey:kTextFieldNativeAppKey];
     
     if (lastSearch == nil)
-        lastSearch = @"https://monitor.revsw.net/100KB.jpg";
+        lastSearch = @"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4";
     
     self.URLTextField.text = lastSearch;
 }
@@ -103,7 +103,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSString* lastSearch = self.URLTextField.text;
 
     if (lastSearch == nil)
-        lastSearch = @"https://monitor.revsw.net/100KB.jpg";
+        lastSearch = @"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4";
 
     [ud setObject:lastSearch forKey:kTextFieldNativeAppKey];
     [ud synchronize];
