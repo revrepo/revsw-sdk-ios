@@ -24,7 +24,8 @@
 
 @property (atomic, strong) NSMutableDictionary *activeTasks;
 @property (nonatomic, strong) NSMutableSet* set;
-
+@property (nonatomic, copy) NSString* requestAbsoluteURL;
+@property (nonatomic) NSInteger statusCode;
 @end
 
 @implementation RTHTMLGrabber
@@ -42,6 +43,9 @@
 - (void)loadRequest:(NSURLRequest *)request
 {
     NSURLSession* session = [NSURLSession sharedSession];
+    
+    self.requestAbsoluteURL = request.URL.absoluteString;
+    self.statusCode = -1;
     
     for (NSURLSessionTask *task in [self.activeTasks allValues]) {
         [task cancel];
@@ -69,6 +73,11 @@
     return
     [session dataTaskWithRequest:request
                completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError) {
+                   
+                    if ([self.requestAbsoluteURL isEqualToString:request.URL.absoluteString])
+                    {
+                        self.statusCode = [(NSHTTPURLResponse *)aResponse statusCode];
+                    }
                    
                    if (aError != nil)
                    {
@@ -146,7 +155,8 @@
                        if (self.delegate)
                        {
                            [self.set removeAllObjects];
-                           [self.delegate grabberDidFinishLoad:self];
+                           NSLog(@"STATUS CODE %ld", self.statusCode);
+                           [self.delegate grabberDidFinishLoad:self withStatusCode:self.statusCode];
                        }
                    }
                }];
