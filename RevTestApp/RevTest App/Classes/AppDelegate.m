@@ -50,7 +50,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"]; // Racer key for 65apps
-    [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
+    //[NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
@@ -74,7 +74,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
 
-    [Fabric with:@[[Crashlytics class]]];
+  //  [Fabric with:@[[Crashlytics class]]];
     
     RTStartViewController* startViewController = [[RTStartViewController alloc] initWithNibName:@"RTStartViewController" bundle:[NSBundle mainBundle]];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:startViewController];

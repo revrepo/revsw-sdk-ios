@@ -40,8 +40,6 @@
 		5B25817F1C17155F00C55959 /* RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25817E1C17155F00C55959 /* RTUtils.m */; };
 		5B43F58D1C4404F900D6F33D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58C1C4404F900D6F33D /* Assets.xcassets */; };
 		5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58E1C44053200D6F33D /* Images.xcassets */; };
-		5B6C8F351C5229C4008BD428 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
-		5B6C8F361C5229C4008BD428 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0E1C3D17F60051D31F /* Security.framework */; };
 		5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */; };
 		5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
@@ -93,7 +91,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-
 				A7FDF6AE1C523A3700078B73 /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";

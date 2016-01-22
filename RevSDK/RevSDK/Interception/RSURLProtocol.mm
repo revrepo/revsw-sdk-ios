@@ -84,6 +84,8 @@
 {
     self.dataLength = 0;
     
+    NSLog(@"START LOADING %@", self.request);
+    
     if ([self shouldRedirectRequest:self.request])
     {
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
@@ -143,6 +145,7 @@
         NSString* dump = [NSString stringWithFormat:@"URL=%@, SFN=%@, Headers:\n%@",
                           response.URL, response.suggestedFilename, httpResp.allHeaderFields];
         rs::Log::info(rs::kLogTagSDKInerception, "Response %s", rs::stdStringFromNSString(dump).c_str());
+        NSLog(@"REDIRECT RESPONSE %@", httpResp);
     }
     [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
@@ -150,6 +153,7 @@
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
     self.dataLength += aData.length;
+    NSLog(@"REDIRECT RECEIVED DATA %lu", (unsigned long)self.dataLength / 1024);
     [self.client URLProtocol:self didLoadData:aData];
 }
 
@@ -160,6 +164,8 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"REDIRECT ERROR %@", error);
+    
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -172,18 +178,22 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"ORIGIN ERROR %@", error);
+    
     [self.client URLProtocol:self didFailWithError:error];
 }
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveData:(NSData *)aData
 {
-    //[self.data appendData:aData];
     self.dataLength += aData.length;
+     NSLog(@"ORIGIN RECEIVED DATA %lu", (unsigned long)self.dataLength / 1024);
     [self.client URLProtocol:self didLoadData:aData];
 }
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSLog(@"ORIGIN RESPONSE %@", response);
+    
    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageNotAllowed];
 }
 

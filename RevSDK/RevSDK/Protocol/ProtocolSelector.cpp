@@ -116,8 +116,9 @@ void ProtocolSelector::saveAvailable()
 
 void ProtocolSelector::onCelluarStandardChanged()
 {
+    return;
     ProtocolFailureMonitor::clear();
-    Log::info(kLogTagSDKLastMile, "ProtocolSelector:: networks state changed");
+    Log::warning(kLogTagSDKLastMile, "ProtocolSelector:: networks state changed");
     this->refreshTestInfo();
 }
 
