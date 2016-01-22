@@ -24,6 +24,4 @@
 @property (nonatomic, strong) NSString* urlString;
 @property (nonatomic, strong) NSArray* cellProcessBlocks;
 
-- (void)prepare;
-
 @end

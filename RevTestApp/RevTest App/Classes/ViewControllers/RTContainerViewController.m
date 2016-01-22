@@ -24,12 +24,16 @@
 #import "RTReportViewController.h"
 #import "RTTestStatsViewController.h"
 #import "RTUtils.h"
+#import "RTIterationResult.h"
+#import "NSArray+Stats.h"
 
 @interface RTContainerViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) UIPageViewController* pageViewController;
 @property (nonatomic, strong) RTReportViewController* reportViewController;
 @property (nonatomic, strong) RTTestStatsViewController* testStatsViewController;
+@property (nonatomic, copy) NSString* dateString;
+@property (nonatomic, strong) NSArray* bigArray;
 
 @end
 
@@ -44,14 +48,19 @@
     
     self.navigationItem.title = @"Report";
     
+    NSDateFormatter* dateFormatter = [NSDateFormatter new];
+    dateFormatter.dateFormat       = @"MM/DD/YYYY HH:MM:SS";
+    NSDate* date                   = [NSDate date];
+    self.dateString                = [dateFormatter stringFromDate:date];
+    
     self.reportViewController             = [RTReportViewController viewControllerFromXib];
     self.reportViewController.urlString   = self.urlString;
     self.reportViewController.testResults = self.testResults;
     
-    self.testStatsViewController             = [RTTestStatsViewController viewControllerFromXib];
-    self.testStatsViewController.urlString   = self.urlString;
-    self.testStatsViewController.testResults = self.testResults;
-    [self.testStatsViewController prepare];
+    self.testStatsViewController                   = [RTTestStatsViewController viewControllerFromXib];
+    self.testStatsViewController.urlString         = self.urlString;
+    self.testStatsViewController.testResults       = self.testResults;
+    self.testStatsViewController.cellProcessBlocks = [self processSummary];
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                                                               navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
@@ -75,21 +84,184 @@
     self.navigationItem.rightBarButtonItem = emailItem;
 }
 
-- (void)processSummary
+- (NSArray *)processSummary
 {
+    RTIterationResult* result = self.testResults.firstObject;
+    NSUInteger count = result.testResults.count;
+    NSMutableArray* bigArray = [NSMutableArray array];
     
+    for (int i = 0; i < count; i++)
+    {
+        NSMutableArray* tests = [NSMutableArray array];
+        
+        for (RTIterationResult* itResult in self.testResults)
+        {
+            RTTestResult* tr;
+            
+            if (itResult.testResults.count > i)
+            {
+                tr = itResult.testResults[i];
+            }
+            else
+            {
+                tr = [RTTestResult new];
+            }
+            
+            [tests addObject:@(tr.duration)];
+        }
+        
+        [bigArray addObject:tests];
+    }
+    
+    self.bigArray = bigArray;
+    
+    NSArray* cellProcessBlocks = @[
+                                   
+                                [^NSDictionary*{
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        NSNumber* num = [results valueForKeyPath:@"@min.doubleValue"];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTitleKey : @"Min:"
+                                             };
+                                } copy],
+                                [^NSDictionary*{
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        NSNumber* num = [results valueForKeyPath:@"@max.doubleValue"];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTitleKey : @"Max:"
+                                             };
+                                } copy],
+                                [^NSDictionary*{
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        NSNumber* num = [results valueForKeyPath:@"@avg.doubleValue"];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTitleKey : @"Average:"
+                                             };
+                                } copy],
+                                [^NSDictionary*{
+                                    
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        NSNumber* num = [results median];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTitleKey : @"Median:"
+                                             };
+                                } copy],
+                                [^NSDictionary*{
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        NSNumber* num = [results standardDeviation];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTitleKey : @"St. deviation:"
+                                             };
+                                } copy],
+                                [^NSDictionary*{
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        NSNumber* num = [results expectedValue];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTextsKey : @"Exp. value:"
+                                             };
+                                    } copy],
+                                [^NSDictionary*{
+                                    
+                                    NSMutableArray* texsts = [NSMutableArray array];
+                                    
+                                    for (NSArray* results in self.bigArray)
+                                    {
+                                        float sum = 0;
+                                        for (NSNumber* value in results)
+                                        {
+                                            sum += [value floatValue];
+                                        }
+                                        sum /= [results count];
+                                        NSString* text = [NSString stringWithFormat:@"%.3f", sum];
+                                        [texsts addObject:text];
+                                    }
+                                    
+                                    return @{
+                                             kRTTextsKey : texsts,
+                                             kRTTitleKey : @"Average data:"
+                                             };
+                                } copy]
+                                ];
+
+    return cellProcessBlocks;
 }
 
 - (void)showEmail
 {
     if ([MFMailComposeViewController canSendMail])
     {
-        NSString* formattedString = [RTUtils formattedStringFromTestResults:self.testResults];
+        NSString* title               = [NSString stringWithFormat:@"%@<br>%@", self.urlString, self.dateString];
+        NSArray* processSummaryBlocks = [self processSummary];
+        NSMutableArray* dictionaries  = [NSMutableArray array];
+        
+        for (NSDictionary* (^block)() in processSummaryBlocks)
+        {
+            NSDictionary* dictionary = block();
+            [dictionaries addObject:dictionary];
+        }
+        
+        NSString* messageBody = [RTUtils htmlStringFromTestResults:self.testResults
+                                                      dictionaries:dictionaries
+                                                             title:title];
         
         MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
         mail.mailComposeDelegate = self;
-        [mail setSubject:@"Tests Report"];
-        [mail setMessageBody:formattedString isHTML:NO];
+        [mail setSubject:[NSString stringWithFormat:@"%@\n%@", self.urlString, self.dateString]];
+        [mail setMessageBody:messageBody isHTML:YES];
         
         [self presentViewController:mail animated:YES completion:NULL];
     }
