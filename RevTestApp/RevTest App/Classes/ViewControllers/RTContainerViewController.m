@@ -211,7 +211,7 @@
                                     
                                     return @{
                                              kRTTextsKey : texsts,
-                                             kRTTextsKey : @"Exp. value:"
+                                             kRTTitleKey : @"Exp. value:"
                                              };
                                     } copy],
                                 [^NSDictionary*{
