@@ -91,6 +91,10 @@
                    }
                    
                    NSLog(@"RTHTMLGrabber done URL: %@", request.URL.absoluteString);
+                   if ([request.URL.absoluteString rangeOfString:@"http://ebay.com"].location != NSNotFound)
+                   {
+                       NSLog(@"Got it");
+                   }
                    //NSLog(@"Request done %@", aResponse);
                    NSString *rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
                    

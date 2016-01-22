@@ -73,15 +73,16 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     
     if (!targetHost)
     {
-        Error error;
-        error.code     = 404;
-        error.domain   = "com.revsdk";
-        error.userInfo = std::map <std::string, std::string>();
-        error.userInfo[errorDescriptionKey()] = "URL not supported";
-        
-        Log::warning(kLogTagSTDRequest, "StandardConnection:: URL is not supported, return");
-        
-        aDelegate->connectionDidFailWithError(oAnchor, error);
+        assert(false);
+//        Error error;
+//        error.code     = 404;
+//        error.domain   = "com.revsdk";
+//        error.userInfo = std::map <std::string, std::string>();
+//        error.userInfo[errorDescriptionKey()] = "URL not supported";
+//        
+//        Log::warning(kLogTagSTDRequest, "StandardConnection:: URL is not supported, return");
+//        
+//        aDelegate->connectionDidFailWithError(oAnchor, error);
         return;
     }
     
