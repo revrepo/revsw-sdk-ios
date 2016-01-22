@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		11375B8C1C515C22008EA0C5 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11375B8B1C515C22008EA0C5 /* RevSDK.framework */; };
-		11375B8D1C515C22008EA0C5 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11375B8B1C515C22008EA0C5 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -42,6 +40,8 @@
 		5B25817F1C17155F00C55959 /* RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25817E1C17155F00C55959 /* RTUtils.m */; };
 		5B43F58D1C4404F900D6F33D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58C1C4404F900D6F33D /* Assets.xcassets */; };
 		5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58E1C44053200D6F33D /* Images.xcassets */; };
+		5B6C8F351C5229C4008BD428 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
+		5B6C8F361C5229C4008BD428 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0E1C3D17F60051D31F /* Security.framework */; };
 		5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */; };
 		5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
@@ -85,13 +85,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		11375B8E1C515C22008EA0C5 /* Embed Frameworks */ = {
+		5B6C8F371C5229C4008BD428 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				11375B8D1C515C22008EA0C5 /* RevSDK.framework in Embed Frameworks */,
+				5B6C8F361C5229C4008BD428 /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,7 +212,7 @@
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
-				11375B8C1C515C22008EA0C5 /* RevSDK.framework in Frameworks */,
+				5B6C8F351C5229C4008BD428 /* RevSDK.framework in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
 				5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */,
 				5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */,
@@ -482,7 +482,7 @@
 				5BC4E24A1C3C1D1700530846 /* ShellScript */,
 				5B8767B31C4E4FFC00363906 /* ShellScript */,
 				A9C7C18E765F04E6D9D51351 /* Embed Pods Frameworks */,
-				11375B8E1C515C22008EA0C5 /* Embed Frameworks */,
+				5B6C8F371C5229C4008BD428 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -755,7 +755,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevSDK Racer";
-				PROVISIONING_PROFILE = "7400bae8-51a4-4a91-bd8d-4994c80b4827";
+				PROVISIONING_PROFILE = "8c70591b-c320-42f1-958a-a40b81b3c859";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
