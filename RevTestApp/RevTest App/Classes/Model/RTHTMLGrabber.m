@@ -175,7 +175,7 @@
     
     NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:newURL];
     [newRequest setCachePolicy:NSURLRequestReloadIgnoringCacheData];
-    [newRequest setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 7_1_2 like Mac OS X) AppleWebKit/537.51.2 (KHTML, like Gecko) Mobile/11D257"
+    [newRequest setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13C75"
       forHTTPHeaderField:@"User-Agent"];
     return newRequest;
 }

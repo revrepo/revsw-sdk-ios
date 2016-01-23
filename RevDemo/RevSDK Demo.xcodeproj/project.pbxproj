@@ -17,11 +17,11 @@
 		650840A71C2A75BF00B72CAF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 650840A61C2A75BF00B72CAF /* Assets.xcassets */; };
 		650840AA1C2A75BF00B72CAF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 650840A81C2A75BF00B72CAF /* LaunchScreen.storyboard */; };
 		650840B51C2A75BF00B72CAF /* RevDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840B41C2A75BF00B72CAF /* RevDemoUITests.m */; };
-		650840C01C2A762000B72CAF /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; };
-		650840C51C2A7A7700B72CAF /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		650840C81C2A7D3700B72CAF /* RevConfigurationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840C71C2A7D3700B72CAF /* RevConfigurationViewController.m */; };
 		650840CB1C2A7D4B00B72CAF /* RevStatisticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840CA1C2A7D4B00B72CAF /* RevStatisticsViewController.m */; };
 		65F05F981C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F05F971C2ACB2D00FD55B9 /* RevStatisticsTableViewCell.m */; };
+		8457517D1C53061C00BBAA3E /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; };
+		8457517E1C53061C00BBAA3E /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,13 +35,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		650840C41C2A7A6100B72CAF /* Embed Frameworks */ = {
+		8457517F1C53061C00BBAA3E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				650840C51C2A7A7700B72CAF /* RevSDK.framework in Embed Frameworks */,
+				8457517E1C53061C00BBAA3E /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -80,10 +80,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				650840C01C2A762000B72CAF /* RevSDK.framework in Frameworks */,
 				5B63439E1C3C106D002EE0BC /* Crashlytics.framework in Frameworks */,
 				5B63439D1C3C106D002EE0BC /* Fabric.framework in Frameworks */,
 				2BF91DA281506E0B3FFB5BF4 /* libPods-RevSDK Demo.a in Frameworks */,
+				8457517D1C53061C00BBAA3E /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,10 +195,10 @@
 				650840931C2A75BF00B72CAF /* Sources */,
 				650840941C2A75BF00B72CAF /* Frameworks */,
 				650840951C2A75BF00B72CAF /* Resources */,
-				650840C41C2A7A6100B72CAF /* Embed Frameworks */,
 				5B63439A1C3C1033002EE0BC /* ShellScript */,
 				17C30228B7B17FA6913FE9FC /* Embed Pods Frameworks */,
 				1278F1D2E8EC1B7047F5085A /* Copy Pods Resources */,
+				8457517F1C53061C00BBAA3E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
