@@ -261,25 +261,35 @@ namespace rs
     NSString* phoneType()
     {
         NSString* fullName    = fullDeviceName();
-        NSString* GSMPlusCDMA = @"GSM+CDMA";
-        NSString* GSM         = @"GSM";
-        NSString* CDMA        = @"CDMA";
-        NSString* wifi        = @"WiFi";
-        
-        for (NSString* string in @[GSMPlusCDMA, GSM, CDMA, wifi])
-        {
-            if ([fullName rangeOfString:string].location != NSNotFound)
-            {
-                return string;
-            }
-        }
-        
-        return @"_";
+//        NSString* GSMPlusCDMA = @"GSM+CDMA";
+//        NSString* GSM         = @"GSM";
+//        NSString* CDMA        = @"CDMA";
+//        NSString* wifi        = @"WiFi";
+//        
+//        for (NSString* string in @[GSMPlusCDMA, GSM, CDMA, wifi])
+//        {
+//            if ([fullName rangeOfString:string].location != NSNotFound)
+//            {
+//                return fullName;
+//            }
+//        }
+
+        return (fullName.length != 0) ? (fullName) : (@"_");
     }
     
     NSString* osVersion()
     {
         return [UIDevice currentDevice].systemVersion;
+    }
+    
+    NSString* osName()
+    {
+        return @"iOS";
+    }
+    
+    NSString* fullOSName()
+    {
+        return [NSString stringWithFormat:@"%@ %@", osName(), osVersion()];
     }
     
     NSString* batteryStateAsString()
@@ -390,7 +400,9 @@ namespace rs
         statsDictionary[@"imsi"] = @"_";
         statsDictionary[@"manufacture"] = @"Apple";
         statsDictionary[@"meis"] = @"_";
-        statsDictionary[@"os"] = osVersion();
+        statsDictionary[@"os"] = fullOSName();
+        statsDictionary[@"os_name"] = osName();
+        statsDictionary[@"os_version"] = osVersion();
         statsDictionary[@"phone_number"] = @"1.0";
         statsDictionary[@"radio_serial"] = @"_";
         statsDictionary[@"serial_number"] = @"_";

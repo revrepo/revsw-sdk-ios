@@ -53,7 +53,6 @@
 		5B3096981BFA02120045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B30969D1BFA02120045024C /* RevClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RevClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3096A11BFA02120045024C /* RevClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevClientTests.m; sourceTree = "<group>"; };
-		5B3096A31BFA02120045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3096D91BFA06690045024C /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +122,6 @@
 			isa = PBXGroup;
 			children = (
 				5B3096A11BFA02120045024C /* RevClientTests.m */,
-				5B3096A31BFA02120045024C /* Info.plist */,
 			);
 			path = RevClientTests;
 			sourceTree = "<group>";
@@ -370,7 +368,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = RevClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -386,7 +384,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = RevClient/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

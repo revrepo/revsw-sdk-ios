@@ -229,7 +229,6 @@
 		5B3096BB1BFA02770045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3096C01BFA02770045024C /* RevSDKTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RevSDKTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3096C51BFA02770045024C /* RevSDKTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevSDKTests.m; sourceTree = "<group>"; };
-		5B3096C71BFA02770045024C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B3096E81BFA0CB70045024C /* RSURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLProtocol.h; sourceTree = "<group>"; };
 		5B3096E91BFA0CB70045024C /* RSURLProtocol.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSURLProtocol.mm; sourceTree = "<group>"; };
 		5B3096EC1BFA0CD30045024C /* RSURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSURLConnection.h; sourceTree = "<group>"; };
@@ -511,7 +510,6 @@
 			isa = PBXGroup;
 			children = (
 				5B3096C51BFA02770045024C /* RevSDKTests.m */,
-				5B3096C71BFA02770045024C /* Info.plist */,
 			);
 			path = RevSDKTests;
 			sourceTree = "<group>";
@@ -1032,7 +1030,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1081,7 +1079,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",

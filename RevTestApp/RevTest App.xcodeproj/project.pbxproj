@@ -40,8 +40,6 @@
 		5B25817F1C17155F00C55959 /* RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B25817E1C17155F00C55959 /* RTUtils.m */; };
 		5B43F58D1C4404F900D6F33D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58C1C4404F900D6F33D /* Assets.xcassets */; };
 		5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58E1C44053200D6F33D /* Images.xcassets */; };
-		5B6C8F351C5229C4008BD428 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
-		5B6C8F361C5229C4008BD428 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B70CA121C3D17F60051D31F /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0E1C3D17F60051D31F /* Security.framework */; };
 		5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA0F1C3D17F60051D31F /* SystemConfiguration.framework */; };
 		5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
@@ -81,20 +79,19 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
-		A7FDF6AD1C523A3700078B73 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
-		A7FDF6AE1C523A3700078B73 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A7EC06C81C562D5D00542AEE /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
+		A7EC06C91C562D5D00542AEE /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5B6C8F371C5229C4008BD428 /* Embed Frameworks */ = {
+		8457517C1C53060E00BBAA3E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-
-				A7FDF6AE1C523A3700078B73 /* RevSDK.framework in Embed Frameworks */,
+				A7EC06C91C562D5D00542AEE /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -214,7 +211,7 @@
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
-				A7FDF6AD1C523A3700078B73 /* RevSDK.framework in Frameworks */,
+				A7EC06C81C562D5D00542AEE /* RevSDK.framework in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
 				5B70CA141C3D17F60051D31F /* Fabric.framework in Frameworks */,
 				5B70CA131C3D17F60051D31F /* SystemConfiguration.framework in Frameworks */,
@@ -483,7 +480,7 @@
 				5BC4E24A1C3C1D1700530846 /* ShellScript */,
 				5B8767B31C4E4FFC00363906 /* ShellScript */,
 				A9C7C18E765F04E6D9D51351 /* Embed Pods Frameworks */,
-				5B6C8F371C5229C4008BD428 /* Embed Frameworks */,
+				8457517C1C53060E00BBAA3E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -666,7 +663,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
 				COPY_PHASE_STRIP = NO;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -720,7 +717,7 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
 				COPY_PHASE_STRIP = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -756,7 +753,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevSDK Racer";
-				PROVISIONING_PROFILE = "8c70591b-c320-42f1-958a-a40b81b3c859";
+				PROVISIONING_PROFILE = "7400bae8-51a4-4a91-bd8d-4994c80b4827";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

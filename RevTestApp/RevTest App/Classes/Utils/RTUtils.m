@@ -108,6 +108,8 @@ NSString* const kRTTextsKey = @"kRTTextsKey";
         [htmlString appendString:@"</tr>"];
     }];
     
+    [htmlString appendString:@"<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>"];
+    
     for (NSDictionary* dictionary in aDictionaries)
     {
         [htmlString appendString:@"<tr>"];

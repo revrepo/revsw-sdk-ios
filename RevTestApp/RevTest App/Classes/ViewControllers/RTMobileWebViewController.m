@@ -183,6 +183,8 @@ static const NSInteger kSuccessCode = 200;
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+        [request setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13C75"
+       forHTTPHeaderField:@"User-Agent"];
         
 //        if (0 >= self.testLeftOnThisStep)
 //        {
