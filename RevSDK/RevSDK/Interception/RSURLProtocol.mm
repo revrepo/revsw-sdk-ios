@@ -35,6 +35,14 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
+    // a quick temporary fix. new relic sometimes gets messed with with the test requests.
+    // i don't think that we really need to intercept new relic
+    // requests. if indeed we do then i'll apply another solution
+    if ([aRequest.URL.host isEqualToString:@"mobile-collector.newrelic.com"])
+    {
+        return NO;
+    }
+    
     NSArray* forbiddenSchemes = @[rs::kRSDataSchemeName, rs::kRSMoatBridgeSchemeName];
     
     if ([forbiddenSchemes containsObject:aRequest.URL.scheme])
