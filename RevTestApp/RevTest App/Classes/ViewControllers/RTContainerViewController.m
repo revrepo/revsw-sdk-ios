@@ -268,7 +268,8 @@
         
         NSString* messageBody = [RTUtils htmlStringFromTestResults:self.testResults
                                                       dictionaries:dictionaries
-                                                             title:title];
+                                                             title:title
+                                                          testType:self.testType];
         
         MFMailComposeViewController *mail = [[MFMailComposeViewController alloc] init];
         mail.mailComposeDelegate = self;

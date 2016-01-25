@@ -76,7 +76,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
             weakSelf.startButton.enabled = YES;
     };
     
-    [self initializeTestModel];
+    [self initializeTestModel:@"Native Mobile"];
     [self setWhiteListOption:NO];
     [self setNumberOfTests:kDefaultNumberOfTests];
     
@@ -159,7 +159,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
         return;
     }
     
-    [self configureHistoryArray];
+    [self configureHistoryArray:URL.absoluteString];
 
     NSUInteger payloadSize       = self.payloadSizeSlider.value * kBytesInKB;
 
@@ -207,16 +207,20 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     [self loadRequest:request];
 }
 
-- (void)configureHistoryArray
+- (void)configureHistoryArray:(NSString*)urlString
 {
     NSMutableArray* tmpArray = [[NSMutableArray alloc] initWithArray:[Storage nativeMobileAppHistory]];
-    [tmpArray insertObject:self.URLTextField.text atIndex:0];
+    if ([[Storage nativeMobileAppHistory] containsObject:urlString])
+    {
+        [tmpArray removeObject:urlString];
+    }
+    [tmpArray insertObject:urlString atIndex:0];
     [Storage setNativeMobileAppHistory:tmpArray];
 }
 
 - (IBAction)history:(id)sender
 {
-    [self showHistoryPickerView];
+    [self showHistoryPickerView:[Storage nativeMobileAppHistory]];
 }
 
 //- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode

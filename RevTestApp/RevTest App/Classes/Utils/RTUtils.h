@@ -39,6 +39,6 @@ extern NSString* const kRTTextsKey;
 
 + (NSData *)jsonDataOfSize:(NSUInteger)aSize;
 + (NSData *)xmlDataOfSize:(NSUInteger)aSize;
-+ (NSString*)htmlStringFromTestResults:(NSArray *)aTestResults dictionaries:(NSArray *)aDictionaries title:(NSString *)aTitle;
++ (NSString*)htmlStringFromTestResults:(NSArray *)aTestResults dictionaries:(NSArray *)aDictionaries title:(NSString *)aTitle testType:(NSString*)aTestType;
 
 @end
