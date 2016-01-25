@@ -109,9 +109,19 @@
                             <action selector="methodButtonPressed" destination="kC6-M5-V1L" eventType="touchUpInside" id="KXI-Fb-mxb"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dzq-lA-Bpn">
+                        <rect key="frame" x="20" y="279" width="560" height="35"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                        <state key="normal" title="History"/>
+                        <connections>
+                            <action selector="history:" destination="kC6-M5-V1L" eventType="touchUpInside" id="cnF-GZ-j1v"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="Dzq-lA-Bpn" firstAttribute="leading" secondItem="ZEc-rY-ya0" secondAttribute="leadingMargin" id="0HO-Fg-uNt"/>
                     <constraint firstItem="5pC-VQ-WbM" firstAttribute="centerY" secondItem="MaV-Kg-4ZB" secondAttribute="centerY" id="3hA-ri-9wF"/>
                     <constraint firstItem="hjk-YU-FB5" firstAttribute="top" secondItem="ShG-gh-O1J" secondAttribute="bottom" constant="20" id="534-rG-d0j"/>
                     <constraint firstItem="hjk-YU-FB5" firstAttribute="trailing" secondItem="ZEc-rY-ya0" secondAttribute="trailingMargin" id="5MG-Nd-j3l"/>
@@ -126,10 +136,12 @@
                     <constraint firstItem="hjk-YU-FB5" firstAttribute="width" secondItem="Uji-Ep-5N6" secondAttribute="width" id="IQ8-mO-ihd"/>
                     <constraint firstItem="fpg-a4-EdW" firstAttribute="leading" secondItem="ZEc-rY-ya0" secondAttribute="leadingMargin" id="LjI-Z4-EGg"/>
                     <constraint firstItem="ZjV-AI-BxT" firstAttribute="leading" secondItem="Whs-lB-73d" secondAttribute="trailing" constant="8" id="MZa-81-g9d"/>
+                    <constraint firstItem="Dzq-lA-Bpn" firstAttribute="trailing" secondItem="ZEc-rY-ya0" secondAttribute="trailingMargin" id="MZr-Fw-Lan"/>
                     <constraint firstItem="MaV-Kg-4ZB" firstAttribute="leading" secondItem="Whs-lB-73d" secondAttribute="leading" id="QAV-Cv-O6d"/>
                     <constraint firstItem="Uji-Ep-5N6" firstAttribute="leading" secondItem="ZEc-rY-ya0" secondAttribute="leadingMargin" id="QSp-Oz-FrE"/>
                     <constraint firstItem="hjk-YU-FB5" firstAttribute="leading" secondItem="Uji-Ep-5N6" secondAttribute="trailing" constant="20" id="Qxe-q8-BFw"/>
                     <constraint firstItem="ShG-gh-O1J" firstAttribute="centerY" secondItem="5pC-VQ-WbM" secondAttribute="centerY" id="SZT-Q5-6qJ"/>
+                    <constraint firstItem="Dzq-lA-Bpn" firstAttribute="top" secondItem="fpg-a4-EdW" secondAttribute="bottom" constant="20" id="aSS-GH-6S2"/>
                     <constraint firstItem="MaV-Kg-4ZB" firstAttribute="top" secondItem="Whs-lB-73d" secondAttribute="bottom" constant="27" id="bG3-xc-yQE"/>
                     <constraint firstItem="ZjV-AI-BxT" firstAttribute="centerY" secondItem="Whs-lB-73d" secondAttribute="centerY" id="bZr-4J-41u"/>
                     <constraint firstItem="zLp-L1-bO7" firstAttribute="width" secondItem="ShG-gh-O1J" secondAttribute="width" id="biJ-C1-LXV"/>
@@ -147,6 +159,7 @@
             <connections>
                 <outlet property="URLTextField" destination="nfQ-VQ-Vn2" id="bow-aL-wGe"/>
                 <outlet property="formatButton" destination="hjk-YU-FB5" id="NiK-a6-7Z1"/>
+                <outlet property="historyButton" destination="Dzq-lA-Bpn" id="m4b-hJ-YTr"/>
                 <outlet property="methodButton" destination="Uji-Ep-5N6" id="6PN-xS-169"/>
                 <outlet property="payloadSizeLabel" destination="kHG-TZ-ECP" id="SZh-4b-266"/>
                 <outlet property="payloadSizeSlider" destination="5pC-VQ-WbM" id="M6a-ja-AXk"/>

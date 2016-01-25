@@ -18,6 +18,7 @@
 
 #import <UIKit/UIKit.h>
 
+@class PickerView;
 @class MBProgressHUD;
 @class RTTestModel;
 
@@ -47,5 +48,8 @@
 - (void)stepFinished:(bool)result;
 
 - (void)stopTimer;
+
+- (void)showHistoryPickerView;
+- (void)hideHistoryPickerView;
 
 @end

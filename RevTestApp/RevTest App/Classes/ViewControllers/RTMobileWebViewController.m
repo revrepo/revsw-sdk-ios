@@ -28,11 +28,14 @@
 #import "RTHTMLGrabber.h"
 #import <WebKit/WebKit.h>
 
+#import "PickerView.h"
+#import "Storage.h"
+
 static const NSUInteger kDefaultNumberOfTests = 5; 
 static NSString* const kTextFieldMobileWebKey = @"tf-mw-key";
 static const NSInteger kSuccessCode = 200;
 
-@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate, RTHTMLGrabberDelegate /*, WKNavigationDelegate*/>
+@interface RTMobileWebViewController ()<UITextFieldDelegate, UIWebViewDelegate, RTHTMLGrabberDelegate, PickerViewDelegate /*, WKNavigationDelegate*/>
 
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, strong) UIPickerView* pickerView;
@@ -79,7 +82,8 @@ static const NSInteger kSuccessCode = 200;
      [self initializeTestModel];
      [self setNumberOfTests:kDefaultNumberOfTests];
     
-     self.startButton.layer.cornerRadius = 8.f;
+    self.startButton.layer.cornerRadius = 8.f;
+    self.historyButton.layer.cornerRadius  = 8.f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -150,6 +154,18 @@ static const NSInteger kSuccessCode = 200;
     [self startLoading];
 }
 
+- (void)configureHistoryArray
+{
+    NSMutableArray* tmpArray = [[NSMutableArray alloc] initWithArray:[Storage mobileWebHistory]];
+    [tmpArray insertObject:self.URLTextField.text atIndex:0];
+    [Storage setMobileWebHistory:tmpArray];
+}
+
+- (IBAction)history:(id)sender
+{
+    [self showHistoryPickerView];
+}
+
 - (void)startLoading
 {
     NSHTTPCookieStorage *storage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
@@ -180,6 +196,7 @@ static const NSInteger kSuccessCode = 200;
     
     if ([URL isValid])
     {
+        [self configureHistoryArray];
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
@@ -332,6 +349,14 @@ static const NSInteger kSuccessCode = 200;
 - (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error
 {
     [self didFinishLoadWithCode:error.code];
+}
+
+#pragma mark - PickerViewDelegate
+
+- (void)pickerViewDidPressOK:(NSString *)urlString
+{
+    self.URLTextField.text = urlString;
+    [self hideHistoryPickerView];
 }
 
 @end

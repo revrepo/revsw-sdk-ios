@@ -26,5 +26,6 @@
 @property (nonatomic, weak) IBOutlet UIView*      webViewContainer;
 @property (nonatomic, weak) IBOutlet UIButton*    startButton;
 @property (nonatomic, weak) IBOutlet UIButton*    schemeButton;
+@property (weak, nonatomic) IBOutlet UIButton *historyButton;
 
 @end
