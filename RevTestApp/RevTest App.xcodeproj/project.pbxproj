@@ -81,6 +81,9 @@
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
 		A7EC06C81C562D5D00542AEE /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; };
 		A7EC06C91C562D5D00542AEE /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB713F81C4FDAD400D16893 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A7EC06CC1C562F8E00542AEE /* Storage.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EC06CB1C562F8E00542AEE /* Storage.m */; };
+		A7EC06D11C56384000542AEE /* PickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EC06D01C56384000542AEE /* PickerView.m */; };
+		A7EC06D61C56427300542AEE /* PickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7EC06D51C56427300542AEE /* PickerView.xib */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +203,11 @@
 		8D1107310486CEB800E47090 /* RevTest App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "RevTest App-Info.plist"; path = "../RevTest App-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevTest App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E7497F3B8E7A0C0D288F2E0 /* Pods-RevTest App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevTest App.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App.debug.xcconfig"; sourceTree = "<group>"; };
+		A7EC06CA1C562F8E00542AEE /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
+		A7EC06CB1C562F8E00542AEE /* Storage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Storage.m; sourceTree = "<group>"; };
+		A7EC06CF1C56384000542AEE /* PickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerView.h; sourceTree = "<group>"; };
+		A7EC06D01C56384000542AEE /* PickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerView.m; sourceTree = "<group>"; };
+		A7EC06D51C56427300542AEE /* PickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PickerView.xib; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +238,7 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				A7EC06CE1C562FB400542AEE /* Core */,
 				5B25817C1C17154C00C55959 /* Utils */,
 				5B1039771C1175F6003CA9A1 /* Model */,
 				5B0BFEE31C0C6BFA0057715A /* Views */,
@@ -363,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				5B0BFEE41C0C6BFA0057715A /* Cells */,
+				A7EC06D21C56384F00542AEE /* PickerView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -467,6 +477,33 @@
 			path = HTMLParser;
 			sourceTree = "<group>";
 		};
+		A7EC06CD1C562F9200542AEE /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				A7EC06CA1C562F8E00542AEE /* Storage.h */,
+				A7EC06CB1C562F8E00542AEE /* Storage.m */,
+			);
+			name = Storage;
+			sourceTree = "<group>";
+		};
+		A7EC06CE1C562FB400542AEE /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				A7EC06CD1C562F9200542AEE /* Storage */,
+			);
+			name = Core;
+			sourceTree = "<group>";
+		};
+		A7EC06D21C56384F00542AEE /* PickerView */ = {
+			isa = PBXGroup;
+			children = (
+				A7EC06CF1C56384000542AEE /* PickerView.h */,
+				A7EC06D01C56384000542AEE /* PickerView.m */,
+				A7EC06D51C56427300542AEE /* PickerView.xib */,
+			);
+			name = PickerView;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -538,6 +575,7 @@
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
 				30B4F30119D5E07200D9F7D8 /* Default-736h.png in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
+				A7EC06D61C56427300542AEE /* PickerView.xib in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
 				302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */,
 				5B43F58D1C4404F900D6F33D /* Assets.xcassets in Resources */,
@@ -630,6 +668,8 @@
 				5B10397A1C11763C003CA9A1 /* RTTestModel.mm in Sources */,
 				5B0BFEEC1C0C82C30057715A /* RTContainerViewController.m in Sources */,
 				5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */,
+				A7EC06CC1C562F8E00542AEE /* Storage.m in Sources */,
+				A7EC06D11C56384000542AEE /* PickerView.m in Sources */,
 				65C1EE571C4794D30095537E /* HTMLNode.m in Sources */,
 				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,

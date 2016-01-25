@@ -26,7 +26,8 @@
 #import "RTContainerViewController.h"
 #import "RTTestModel.h"
 #import "RTUtils.h"
-
+#import "PickerView.h"
+#import "Storage.h"
 
 @implementation UIViewController (RTTesting)
 
@@ -114,6 +115,16 @@
 - (void)setWhiteListOption:(BOOL)aOn
 {
     [self.testModel setWhiteListOption:aOn];
+}
+
+- (void)setHistoryPickerView:(PickerView *)aHistoryPickerView
+{
+    objc_setAssociatedObject(self, @selector(historyPickerView), aHistoryPickerView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (PickerView *)historyPickerView
+{
+    return objc_getAssociatedObject(self, @selector(historyPickerView));
 }
 
 - (void)initializeTestModel
@@ -216,6 +227,44 @@
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest
 {
     return aURLRequest.URL.isValid && self.testModel.shouldLoad;
+}
+
+- (void)showHistoryPickerView
+{
+    self.historyPickerView = [PickerView view];
+    self.historyPickerView.pickerData = [Storage mobileWebHistory];
+    self.historyPickerView.urlString = [[Storage mobileWebHistory] objectAtIndex:0];
+    self.historyPickerView.delegate = (id<PickerViewDelegate>)self;
+    
+    self.historyPickerView.frame = CGRectMake(0,
+                                              self.view.frame.size.height,
+                                              self.view.frame.size.width,
+                                              self.historyPickerView.frame.size.height);
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        
+        self.historyPickerView.frame = CGRectMake(0,
+                                                  self.view.frame.size.height - self.historyPickerView.frame.size.height,
+                                                  self.view.frame.size.width,
+                                                  self.historyPickerView.frame.size.height);
+    }];
+    
+    [self.view addSubview:self.historyPickerView];
+}
+
+- (void)hideHistoryPickerView
+{
+    [UIView animateWithDuration:0.25 animations:^{
+        
+        self.historyPickerView.frame = CGRectMake(0,
+                                                  self.view.frame.size.height,
+                                                  self.view.frame.size.width,
+                                                  self.historyPickerView.frame.size.height);
+    }completion:^(BOOL finished)
+     {
+         [self.historyPickerView removeFromSuperview];
+         self.historyPickerView = nil;
+     }];
 }
 
 @end

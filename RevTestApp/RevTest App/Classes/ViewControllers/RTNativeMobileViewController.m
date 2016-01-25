@@ -26,13 +26,15 @@
 #import "RTUtils.h"
 #import "RTContainerViewController.h"
 
+#import "PickerView.h"
+#import "Storage.h"
 
 static const NSUInteger kDefaultNumberOfTests = 5;
 static const NSInteger kMethodPickerTag = 1;
 static const NSInteger kFormatPickerTag = 2;
 static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 
-@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
+@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PickerViewDelegate>
 
 @property (nonatomic, strong) UITextField* fakeTextField;
 @property (nonatomic, strong) NSArray* methods;
@@ -41,6 +43,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, copy) NSString* format;
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, copy) NSString* urlString;
+@property (nonatomic, strong) PickerView* historyPickerView;
 
 @end
 
@@ -80,6 +83,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     self.methodButton.layer.cornerRadius = 8.f;
     self.formatButton.layer.cornerRadius = 8.f;
     self.startButton.layer.cornerRadius  = 8.f;
+    self.historyButton.layer.cornerRadius  = 8.f;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -155,6 +159,8 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
         return;
     }
     
+    [self configureHistoryArray];
+
     NSUInteger payloadSize       = self.payloadSizeSlider.value * kBytesInKB;
 
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
@@ -199,6 +205,18 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     
     [self startTesting];
     [self loadRequest:request];
+}
+
+- (void)configureHistoryArray
+{
+    NSMutableArray* tmpArray = [[NSMutableArray alloc] initWithArray:[Storage nativeMobileAppHistory]];
+    [tmpArray insertObject:self.URLTextField.text atIndex:0];
+    [Storage setNativeMobileAppHistory:tmpArray];
+}
+
+- (IBAction)history:(id)sender
+{
+    [self showHistoryPickerView];
 }
 
 //- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
@@ -363,6 +381,14 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     {
         return self.formats[row];
     }
+}
+
+#pragma mark - PickerViewDelegate
+
+- (void)pickerViewDidPressOK:(NSString *)urlString
+{
+    self.URLTextField.text = urlString;
+    [self hideHistoryPickerView];
 }
 
 @end

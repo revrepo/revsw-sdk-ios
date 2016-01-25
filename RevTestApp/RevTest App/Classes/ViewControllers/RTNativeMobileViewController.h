@@ -28,5 +28,6 @@
 @property (nonatomic, weak) IBOutlet UIButton* methodButton;
 @property (nonatomic, weak) IBOutlet UIButton* formatButton;
 @property (nonatomic, weak) IBOutlet UIButton* startButton;
+@property (weak, nonatomic) IBOutlet UIButton *historyButton;
 
 @end
