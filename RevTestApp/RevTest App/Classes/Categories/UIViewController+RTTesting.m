@@ -230,11 +230,11 @@
     return aURLRequest.URL.isValid && self.testModel.shouldLoad;
 }
 
-- (void)showHistoryPickerView
+- (void)showHistoryPickerView:(NSArray *)dataArray
 {
     self.historyPickerView = [PickerView view];
-    self.historyPickerView.pickerData = [Storage mobileWebHistory];
-    self.historyPickerView.urlString = [[Storage mobileWebHistory] objectAtIndex:0];
+    self.historyPickerView.pickerData = dataArray;
+    self.historyPickerView.urlString = [dataArray objectAtIndex:0];
     self.historyPickerView.delegate = (id<PickerViewDelegate>)self;
     
     self.historyPickerView.frame = CGRectMake(0,

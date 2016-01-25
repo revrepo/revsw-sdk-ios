@@ -49,7 +49,7 @@
 
 - (void)stopTimer;
 
-- (void)showHistoryPickerView;
+- (void)showHistoryPickerView:(NSArray*)dataArray;
 - (void)hideHistoryPickerView;
 
 @end

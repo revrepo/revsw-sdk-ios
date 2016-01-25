@@ -154,16 +154,20 @@ static const NSInteger kSuccessCode = 200;
     [self startLoading];
 }
 
-- (void)configureHistoryArray
+- (void)configureHistoryArray:(NSString*)urlString
 {
     NSMutableArray* tmpArray = [[NSMutableArray alloc] initWithArray:[Storage mobileWebHistory]];
-    [tmpArray insertObject:self.URLTextField.text atIndex:0];
+    if ([[Storage mobileWebHistory] containsObject:urlString])
+    {
+        [tmpArray removeObject:urlString];
+    }
+    [tmpArray insertObject:urlString atIndex:0];
     [Storage setMobileWebHistory:tmpArray];
 }
 
 - (IBAction)history:(id)sender
 {
-    [self showHistoryPickerView];
+    [self showHistoryPickerView:[Storage mobileWebHistory]];
 }
 
 - (void)startLoading
@@ -196,7 +200,7 @@ static const NSInteger kSuccessCode = 200;
     
     if ([URL isValid])
     {
-        [self configureHistoryArray];
+        [self configureHistoryArray:URL.absoluteString];
         NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
         [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
         [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
