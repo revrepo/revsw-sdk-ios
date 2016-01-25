@@ -219,10 +219,10 @@
     [self.testModel invalidateTimer];
 }
 
-//- (void)stepFinished:(bool)result
-//{
-//    [self.testModel stepFinished:result];
-//}
+/*- (void)stepFinished:(bool)result
+{
+    [self.testModel stepFinished:result];
+}*/
 
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest
 {
@@ -231,25 +231,30 @@
 
 - (void)showHistoryPickerView
 {
-    self.historyPickerView = [PickerView view];
-    self.historyPickerView.pickerData = [Storage mobileWebHistory];
-    self.historyPickerView.urlString = [[Storage mobileWebHistory] objectAtIndex:0];
-    self.historyPickerView.delegate = (id<PickerViewDelegate>)self;
+    NSArray* historyArray = [self isKindOfClass:NSClassFromString(@"RTNativeMobileViewController")] ? [Storage nativeMobileAppHistory] : [Storage mobileWebHistory];
     
-    self.historyPickerView.frame = CGRectMake(0,
-                                              self.view.frame.size.height,
-                                              self.view.frame.size.width,
-                                              self.historyPickerView.frame.size.height);
-    
-    [UIView animateWithDuration:0.25 animations:^{
+    if (historyArray.count > 0)
+    {
+        self.historyPickerView            = [PickerView view];
+        self.historyPickerView.pickerData = historyArray;
+        self.historyPickerView.urlString  = [historyArray objectAtIndex:0];
+        self.historyPickerView.delegate   = (id<PickerViewDelegate>)self;
         
         self.historyPickerView.frame = CGRectMake(0,
-                                                  self.view.frame.size.height - self.historyPickerView.frame.size.height,
+                                                  self.view.frame.size.height,
                                                   self.view.frame.size.width,
                                                   self.historyPickerView.frame.size.height);
-    }];
-    
-    [self.view addSubview:self.historyPickerView];
+        
+        [UIView animateWithDuration:0.25 animations:^{
+            
+            self.historyPickerView.frame = CGRectMake(0,
+                                                      self.view.frame.size.height - self.historyPickerView.frame.size.height,
+                                                      self.view.frame.size.width,
+                                                      self.historyPickerView.frame.size.height);
+        }];
+        
+        [self.view addSubview:self.historyPickerView];
+    }
 }
 
 - (void)hideHistoryPickerView

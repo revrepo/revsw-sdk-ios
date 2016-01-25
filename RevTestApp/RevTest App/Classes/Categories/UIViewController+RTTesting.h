@@ -45,7 +45,7 @@
 - (void)loadFinished:(NSInteger) aCode;
 
 - (void)stepStarted;
-- (void)stepFinished:(bool)result;
+//- (void)stepFinished:(bool)result;
 
 - (void)stopTimer;
 

@@ -155,6 +155,7 @@ static const NSUInteger kMaxIterations = 10;
     self.edgeEnabled = YES;
     
     NSString* urlString = self.inputURL.text;
+    
     if (urlString == nil)
         return NO;
 
