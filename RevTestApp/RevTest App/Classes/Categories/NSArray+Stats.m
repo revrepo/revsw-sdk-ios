@@ -17,6 +17,7 @@
  */
 
 #import "NSArray+Stats.h"
+#import "math.h"
 
 #define SHOULD_CONSIDER_MIN_AND_MAX_VALUES 0
 
@@ -112,6 +113,17 @@
      }
     
     return @(expectedValue);
+}
+
+- (NSArray *)arrayByRemovingNAN
+{
+    NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(NSNumber* number, NSDictionary* bindings){
+    
+        return  !isnan(number.doubleValue);
+    
+    }];
+    
+    return [self filteredArrayUsingPredicate:predicate];
 }
 
 @end

@@ -24,4 +24,6 @@
 - (NSNumber *)standardDeviation;
 - (NSNumber *)expectedValue;
 
+- (NSArray *)arrayByRemovingNAN;
+
 @end
