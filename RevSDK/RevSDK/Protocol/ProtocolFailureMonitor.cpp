@@ -60,8 +60,14 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
     typedef std::chrono::seconds tSec;
     typedef std::chrono::system_clock tSclock;
     
-    auto& vec = mInstanse->mReportMap[aProtocolID];
-    auto& rqVec = mInstanse->mLoggedConnections[aProtocolID];
+    std::vector<ErrorReport> vec;
+    std::vector<tTimepoint> rqVec;
+    
+    {
+        std::lock_guard<std::mutex> guard(mLock);
+        vec   = mInstanse->mReportMap[aProtocolID];
+        rqVec = mInstanse->mLoggedConnections[aProtocolID];
+    }
     
     //// clear old requests
     {

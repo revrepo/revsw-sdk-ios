@@ -134,8 +134,9 @@
                                     
                                     for (NSArray* results in self.bigArray)
                                     {
-                                        NSNumber* num = [results valueForKeyPath:@"@min.doubleValue"];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        NSArray* filteredResults = [results arrayByRemovingNAN];
+                                        NSNumber* num            = [filteredResults valueForKeyPath:@"@min.doubleValue"];
+                                        NSString* text           = [NSString stringWithFormat:@"%.3f", num.doubleValue];
                                         [texsts addObject:text];
                                     }
                                     
@@ -150,8 +151,9 @@
                                     
                                     for (NSArray* results in self.bigArray)
                                     {
-                                        NSNumber* num = [results valueForKeyPath:@"@max.doubleValue"];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        NSArray* filteredResults = [results arrayByRemovingNAN];
+                                        NSNumber* num            = [filteredResults valueForKeyPath:@"@max.doubleValue"];
+                                        NSString* text           = [NSString stringWithFormat:@"%.3f", num.doubleValue];
                                         [texsts addObject:text];
                                     }
                                     
@@ -166,8 +168,9 @@
                                     
                                     for (NSArray* results in self.bigArray)
                                     {
-                                        NSNumber* num = [results valueForKeyPath:@"@avg.doubleValue"];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        NSArray* filteredResults = [results arrayByRemovingNAN];
+                                        NSNumber* num            = [filteredResults valueForKeyPath:@"@avg.doubleValue"];
+                                        NSString* text           = [NSString stringWithFormat:@"%.3f", num.doubleValue];
                                         [texsts addObject:text];
                                     }
                                     
@@ -183,8 +186,9 @@
                                     
                                     for (NSArray* results in self.bigArray)
                                     {
-                                        NSNumber* num = [results median];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        NSArray* filteredResults = [results arrayByRemovingNAN];
+                                        NSNumber* num            = [filteredResults median];
+                                        NSString* text           = [NSString stringWithFormat:@"%.3f", num.doubleValue];
                                         [texsts addObject:text];
                                     }
                                     
@@ -199,8 +203,9 @@
                                     
                                     for (NSArray* results in self.bigArray)
                                     {
-                                        NSNumber* num = [results standardDeviation];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        NSArray* filteredResults = [results arrayByRemovingNAN];
+                                        NSNumber* num            = [filteredResults standardDeviation];
+                                        NSString* text           = [NSString stringWithFormat:@"%.3f", num.doubleValue];
                                         [texsts addObject:text];
                                     }
                                     
@@ -215,8 +220,9 @@
                                     
                                     for (NSArray* results in self.bigArray)
                                     {
-                                        NSNumber* num = [results expectedValue];
-                                        NSString* text = [NSString stringWithFormat:@"%.3f", num.doubleValue];
+                                        NSArray* filteredResults = [results arrayByRemovingNAN];
+                                        NSNumber* num            = [filteredResults expectedValue];
+                                        NSString* text           = [NSString stringWithFormat:@"%.3f", num.doubleValue];
                                         [texsts addObject:text];
                                     }
                                     
@@ -231,12 +237,6 @@
                                     
                                     for (NSNumber* result in self.averageSizes)
                                     {
-//                                        float sum = 0;
-//                                        for (NSNumber* value in results)
-//                                        {
-//                                            sum += [value floatValue];
-//                                        }
-//                                        sum /= [results count];
                                         NSString* text = [NSString stringWithFormat:@"%d", (int)([result floatValue] / 1024.0f)];
                                         [texsts addObject:text];
                                     }

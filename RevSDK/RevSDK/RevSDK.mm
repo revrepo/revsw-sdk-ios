@@ -86,7 +86,6 @@ static rs::TestConfigurationService* TestConfService = nullptr;
      }
     
     TestConfService = nullptr;
-    NSLog(@"TestConfService = nullptr");
 }
 
 + (void)debug_pushTestConifguration:(NSString *)aProtocolID mode:(RSOperationMode)aOperationMode
