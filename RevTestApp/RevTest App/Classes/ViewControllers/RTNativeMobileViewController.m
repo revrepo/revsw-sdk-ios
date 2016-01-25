@@ -90,7 +90,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSString* lastSearch = [ud objectForKey:kTextFieldNativeAppKey];
     
     if (lastSearch == nil)
-        lastSearch = @"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4";
+        lastSearch = @"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4";
     
     self.URLTextField.text = lastSearch;
 }
@@ -103,7 +103,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSString* lastSearch = self.URLTextField.text;
 
     if (lastSearch == nil)
-        lastSearch = @"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_10mb.mp4";
+        lastSearch = @"http://www.sample-videos.com/video/mp4/720/big_buck_bunny_720p_20mb.mp4";
 
     [ud setObject:lastSearch forKey:kTextFieldNativeAppKey];
     [ud synchronize];
@@ -160,6 +160,8 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     NSMutableURLRequest* request = [NSMutableURLRequest requestWithURL:URL];
     [[NSURLCache sharedURLCache] removeCachedResponseForRequest:request];
     [request setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [request setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13C75"
+   forHTTPHeaderField:@"User-Agent"];
     
     request.HTTPMethod           = self.method;
     

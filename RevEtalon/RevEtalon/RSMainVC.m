@@ -152,6 +152,8 @@ static const NSUInteger kMaxIterations = 10;
 
 - (BOOL)launchTest
 {
+    self.edgeEnabled = YES;
+    
     NSString* urlString = self.inputURL.text;
     if (urlString == nil)
         return NO;

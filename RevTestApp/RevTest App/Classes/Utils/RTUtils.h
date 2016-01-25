@@ -32,11 +32,13 @@ RTPerformBlockOnQueue(dispatch_get_main_queue(), block, __VA_ARGS__)
 extern const CGFloat kRTRowHeight;
 
 extern NSString* const kRTSDKLabelTextKey;
+extern NSString* const kRTTitleKey;
+extern NSString* const kRTTextsKey;
 
 @interface RTUtils : NSObject
 
 + (NSData *)jsonDataOfSize:(NSUInteger)aSize;
 + (NSData *)xmlDataOfSize:(NSUInteger)aSize;
-+ (NSString*)formattedStringFromTestResults:(NSArray *)aTestResults;
++ (NSString*)htmlStringFromTestResults:(NSArray *)aTestResults dictionaries:(NSArray *)aDictionaries title:(NSString *)aTitle;
 
 @end

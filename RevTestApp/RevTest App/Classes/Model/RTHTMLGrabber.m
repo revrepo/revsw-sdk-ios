@@ -155,7 +155,6 @@
                        if (self.delegate)
                        {
                            [self.set removeAllObjects];
-                           NSLog(@"STATUS CODE %ld", self.statusCode);
                            [self.delegate grabberDidFinishLoad:self withStatusCode:self.statusCode];
                        }
                    }
@@ -176,6 +175,8 @@
     
     NSMutableURLRequest *newRequest = [NSMutableURLRequest requestWithURL:newURL];
     [newRequest setCachePolicy:NSURLRequestReloadIgnoringCacheData];
+    [newRequest setValue:@"Mozilla/5.0 (iPhone; CPU iPhone OS 9_2 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Mobile/13C75"
+      forHTTPHeaderField:@"User-Agent"];
     return newRequest;
 }
 

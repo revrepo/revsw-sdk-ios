@@ -22,6 +22,8 @@
 
 const CGFloat kRTRowHeight = 50.f;
 NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
+NSString* const kRTTitleKey = @"kRTTitleKey";
+NSString* const kRTTextsKey = @"kRTTextsKey";
 
 @implementation RTUtils
 
@@ -60,70 +62,76 @@ NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
     return data;
 }
 
-+ (NSString *)formattedStringFromTestResults:(NSArray *)aTestResults
++ (NSString *)htmlStringFromTestResults:(NSArray *)aTestResults dictionaries:(NSArray *)aDictionaries title:(NSString *)aTitle
 {
-    assert(aTestResults);
-    assert(aTestResults.count);
-    
-    NSString* startString = [@" " stringByPaddingToLength:5
-                                               withString:@" "
-                                          startingAtIndex:0];
-    
-    NSMutableString* formattedString = [NSMutableString stringWithString:startString];
+    NSMutableString* htmlString = [NSMutableString stringWithFormat:@"<html><header><title></title></header><body>%@<table><tr><td> </td>", aTitle];
     
     RTIterationResult* iterationResult = aTestResults.firstObject;
     NSArray* iterationTestResults  = iterationResult.testResults;
     
     for (RTTestResult* testResult in iterationTestResults)
     {
-        NSString* paddedString = [testResult.nameString stringByPaddingToLength:15
-                                                                   withString:@" "
-                                  
-                                                              startingAtIndex:0];
-        [formattedString appendString:paddedString];
+        NSString* name = testResult.testName;
+        NSString* htmlName = [NSString stringWithFormat:@"<td>%@</td>", name];
+        [htmlString appendString:htmlName];
     }
-
-    [formattedString appendString:@"\n"];
+    
+    [htmlString appendString:@"</tr>"];
     
     [aTestResults enumerateObjectsUsingBlock:^(RTIterationResult* iterationResult, NSUInteger index, BOOL* stop){
-    
+        
+        [htmlString appendString:@"<tr>"];
+        
         NSArray* iterationTestResults  = iterationResult.testResults;
-       
-        NSString* numberString  = [NSString stringWithFormat:@"%ld.", index + 1];
-        NSString* newLineString = [numberString stringByPaddingToLength:5
-                                                             withString:@" "
-                                                        startingAtIndex:0];
-        [formattedString appendString:newLineString];
+        
+        NSString* numberString  = [NSString stringWithFormat:@"<td>%lu.</td>", index + 1];
+        [htmlString appendString:numberString];
         
         [iterationTestResults enumerateObjectsUsingBlock:^(RTTestResult* testResult, NSUInteger index, BOOL* stop){
-        
-            NSString* paddedString = [testResult.durationString stringByPaddingToLength:20 + index
-                                                                             withString:@" "
-                                                                        startingAtIndex:0];
-            [formattedString appendString:paddedString];
             
+            NSString* durationString = [NSString stringWithFormat:@"<td>%@</td>", testResult.durationString];
+            [htmlString appendString:durationString];
         }];
         
-        [formattedString appendString:@"\n"];
+        [htmlString appendString:@"</tr>"];
+        [htmlString appendString:@"<tr>"];
         
-        newLineString = [@"  " stringByPaddingToLength:6
-                                            withString:@" "
-                                       startingAtIndex:0];
-        
-        [formattedString appendString:newLineString];
+        NSString* nString  = [NSString stringWithFormat:@"<td>  </td>"];
+        [htmlString appendString:nString];
         
         [iterationTestResults enumerateObjectsUsingBlock:^(RTTestResult* testResult, NSUInteger index, BOOL* stop){
-        
-            NSString* paddedString = [testResult.dataLengthString stringByPaddingToLength:19 + index
-                                                                               withString:@" "
-                                                                          startingAtIndex:0];
-            [formattedString appendString:paddedString];
+            
+            NSString* dataLengthString = [NSString stringWithFormat:@"<td>%@</td>", testResult.dataLengthString];
+            [htmlString appendString:dataLengthString];
         }];
         
-        [formattedString appendString:@"\n"];
+        [htmlString appendString:@"</tr>"];
     }];
     
-    return formattedString;
+    [htmlString appendString:@"<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>"];
+    
+    for (NSDictionary* dictionary in aDictionaries)
+    {
+        [htmlString appendString:@"<tr>"];
+        
+        NSString* title = dictionary[kRTTitleKey];
+        NSString* htmlTitle = [NSString stringWithFormat:@"<td>%@</td>", title];
+        [htmlString appendString:htmlTitle];
+        
+        NSArray* texts = dictionary[kRTTextsKey];
+        
+        for (NSString* text in texts)
+        {
+            NSString* htmlText = [NSString stringWithFormat:@"<td>%@</td>", text];
+            [htmlString appendString:htmlText];
+        }
+        
+        [htmlString appendString:@"</tr>"];
+    }
+
+    [htmlString appendString:@"</table></body></html>"];
+    
+    return htmlString;
 }
 
 @end

@@ -63,6 +63,10 @@ namespace rs
     const long kRSNoErrorCode = -10000;
     const long kRSErrorCodeConfigurationNotValid = 100;
     
+    //notifications
+    NSString* const kRSURLProtocolDidReceiveDataNotification = @"kRSURLProtocolDidReceiveDataNotification";
+    NSString* const kRSURLProtocolDidReceiveResponseNotification = @"kRSURLProtocolDidReceiveResponseNotification";
+    
     //keys
     NSString* const kRSURLProtocolHandledKey           = @"kRVProtocolHandledKey";
     NSString* const kRSConfigurationStorageKey         = @"kRSConfigurationStorageKey";
@@ -809,19 +813,19 @@ namespace rs
         NSString* host1 = URL1.host;
         NSString* host2 = URL2.host;
         
-        NSRange range = [host1 rangeOfString:@"www."]; // bug
-        
-        if (range.location == 0)
-        {
-            host1 = [host1 stringByReplacingCharactersInRange:range withString:@""];
-        }
-        
-        range = [host2 rangeOfString:@"www."];
-        
-        if (range.location == 0)
-        {
-            host2 = [host2 stringByReplacingCharactersInRange:range withString:@""];
-        }
+//        NSRange range = [host1 rangeOfString:@"www."]; // bug
+//        
+//        if (range.location == 0)
+//        {
+//            host1 = [host1 stringByReplacingCharactersInRange:range withString:@""];
+//        }
+//        
+//        range = [host2 rangeOfString:@"www."];
+//        
+//        if (range.location == 0)
+//        {
+//            host2 = [host2 stringByReplacingCharactersInRange:range withString:@""];
+//        }
         
         return [host1 isEqualToString:host2];
     }
