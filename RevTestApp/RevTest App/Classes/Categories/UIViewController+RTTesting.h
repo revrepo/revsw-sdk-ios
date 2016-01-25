@@ -36,7 +36,7 @@
 - (void)showHudWithText:(NSString *)aText;
 - (void)hideHud;
 
-- (void)initializeTestModel;
+- (void)initializeTestModel:(NSString*)aTestType;
 - (void)setNumberOfTests:(NSUInteger)aNumberOfTests;
 - (void)setWhiteListOption:(BOOL)aOn;
 - (void)startTesting;

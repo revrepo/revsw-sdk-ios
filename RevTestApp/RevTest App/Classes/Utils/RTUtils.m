@@ -62,9 +62,9 @@ NSString* const kRTTextsKey = @"kRTTextsKey";
     return data;
 }
 
-+ (NSString *)htmlStringFromTestResults:(NSArray *)aTestResults dictionaries:(NSArray *)aDictionaries title:(NSString *)aTitle
++ (NSString *)htmlStringFromTestResults:(NSArray *)aTestResults dictionaries:(NSArray *)aDictionaries title:(NSString *)aTitle testType:(NSString*)aTestType
 {
-    NSMutableString* htmlString = [NSMutableString stringWithFormat:@"<html><header><title></title></header><body>%@<table><tr><td> </td>", aTitle];
+    NSMutableString* htmlString = [NSMutableString stringWithFormat:@"<html><header><title></title></header><body>Test type:%@<br/>%@<table><tr><td> </td>",aTestType, aTitle];
     
     RTIterationResult* iterationResult = aTestResults.firstObject;
     NSArray* iterationTestResults  = iterationResult.testResults;

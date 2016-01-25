@@ -22,6 +22,7 @@
 
 @property (nonatomic, strong) NSArray* testResults;
 @property (nonatomic, strong) NSDictionary* userInfo;
-@property (nonatomic, strong) NSString* urlString;
+@property (nonatomic, copy) NSString* urlString;
+@property (nonatomic, copy) NSString* testType;
 
 @end

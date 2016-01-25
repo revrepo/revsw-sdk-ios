@@ -127,7 +127,7 @@
     return objc_getAssociatedObject(self, @selector(historyPickerView));
 }
 
-- (void)initializeTestModel
+- (void)initializeTestModel:(NSString*)aTestType
 {
     __weak UIViewController* weakSelf = self;
     
@@ -149,7 +149,7 @@
     
     self.testModel.completionBlock = ^(NSArray* aTestResults){
         RTPerformBlockOnMainQueue(weakSelf.completionBlock);
-        [weakSelf goToStatsWithTestResults:aTestResults];
+        [weakSelf goToStatsWithTestResults:aTestResults testResult:aTestType];
         [weakSelf hideHud];
     };
     
@@ -159,12 +159,13 @@
     };
 }
 
-- (void)goToStatsWithTestResults:(NSArray *)aTestResults
+- (void)goToStatsWithTestResults:(NSArray *)aTestResults testResult:(NSString*)aTestType
 {
     dispatch_async(dispatch_get_main_queue(), ^{
         
         RTContainerViewController* containerViewController = [RTContainerViewController new];
         containerViewController.testResults                = aTestResults;
+        containerViewController.testType                   = aTestType;
         containerViewController.urlString                  = self.urlString;
         
         [self.navigationController pushViewController:containerViewController animated:YES];

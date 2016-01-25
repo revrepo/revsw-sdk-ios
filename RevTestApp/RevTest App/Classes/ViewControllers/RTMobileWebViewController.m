@@ -79,7 +79,7 @@ static const NSInteger kSuccessCode = 200;
         [weakSelf dismissDynamicWebView];
     };
     
-     [self initializeTestModel];
+    [self initializeTestModel:@"Mobile Web"];
      [self setNumberOfTests:kDefaultNumberOfTests];
     
     self.startButton.layer.cornerRadius = 8.f;

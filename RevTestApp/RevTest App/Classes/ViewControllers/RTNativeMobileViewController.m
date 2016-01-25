@@ -76,7 +76,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
             weakSelf.startButton.enabled = YES;
     };
     
-    [self initializeTestModel];
+    [self initializeTestModel:@"Native Mobile"];
     [self setWhiteListOption:NO];
     [self setNumberOfTests:kDefaultNumberOfTests];
     
