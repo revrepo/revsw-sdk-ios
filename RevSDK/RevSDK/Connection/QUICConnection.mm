@@ -28,6 +28,7 @@
 #include "Utils.hpp"
 #include "RSLog.h"
 #include "RSUtils.h"
+#include "DebugUsageTracker.hpp"
 
 using namespace rs;
 using namespace net;
@@ -257,6 +258,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
 //        mParent->quicSessionDidFinish(aSession, aStream);
 //        return;
 //    }
+    Model::instance()->debug_usageTracker()->QUICRequestsFinishedWithSuccess();
     Log::info(kLogTagQUICRequest, "Finished #%d\n", mId);
 
     if (mRedirect.get() != nullptr)
@@ -280,6 +282,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
 
 void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicSpdyStream* aStream)
 {
+    Model::instance()->debug_usageTracker()->QUICRequestsFinishedWithError();
     Log::info(kLogTagQUICRequest, "Failed #%d\n", mId);
 //    if (mParent != nullptr)
 //    {
