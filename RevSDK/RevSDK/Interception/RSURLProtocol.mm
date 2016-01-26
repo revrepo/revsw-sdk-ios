@@ -84,16 +84,19 @@
 {
     self.dataLength = 0;
     
-    if ([self shouldRedirectRequest:self.request])
+    /*if ([self shouldRedirectRequest:self.request])
     {
+         NSLog(@"START LOADING %@", self.request);
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
                           self.request.URL, self.request.HTTPMethod, self.request.allHTTPHeaderFields];
         rs::Log::info(rs::kLogTagSDKInerception, "Request %s", rs::stdStringFromNSString(dump).c_str());
         self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
         [self.connection start];
     }
-    else
+    else*/
     {
+        NSLog(@"START LOADING %@", self.request);
+        
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
@@ -138,6 +141,8 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    NSLog(@"RESPONSE %@", response.URL);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
                                                         object:nil];
     
@@ -153,6 +158,8 @@
 
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
+   // NSLog(@"DATA %@", [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding]);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveDataNotification
                                                         object:nil];
     
@@ -184,6 +191,8 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveData:(NSData *)aData
 {
+    NSLog(@"DATA %@", [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding]);
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveDataNotification
                                                         object:nil];
     self.dataLength += aData.length;
