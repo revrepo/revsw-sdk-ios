@@ -1,4 +1,4 @@
-/*************************************************************************
+ /*************************************************************************
  *
  * REV SOFTWARE CONFIDENTIAL
  *
@@ -88,6 +88,11 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     if (rest.size() == 0)
     {
         rest = "/";
+    }
+    
+    if (rest.size() > 0)
+    {
+        assert(rest[0] == '/');
     }
     
 //    if (rest == "/ibm/main/2/i.gif")

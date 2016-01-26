@@ -175,6 +175,13 @@ namespace rs
             r.location       = 0;
             
             NSString* path = [urlStr stringByReplacingCharactersInRange:r withString:@""];
+            if (path.length > 0)
+            {
+                if ([path characterAtIndex:0] != '/')
+                {
+                    path = [@"/" stringByAppendingString:path];
+                }
+            }
             
             aHost = stdStringFromNSString(host);
             aPath = stdStringFromNSString(path);

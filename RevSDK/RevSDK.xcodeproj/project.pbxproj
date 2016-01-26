@@ -1052,7 +1052,7 @@
 					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-isystem",
 					"-isystem",
@@ -1101,7 +1101,7 @@
 					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
 				);
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-isystem",
 					"-isystem",
