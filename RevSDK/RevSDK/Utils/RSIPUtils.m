@@ -31,7 +31,12 @@
 #import "GCDAsyncUdpSocket.h"
 #import "STUNClient.h"
 #import "RSReachability.h"
-#include "route.h"
+
+#if TARGET_IPHONE_SIMULATOR
+#include <net/route.h>
+#else
+#import "RSRoute.h"
+#endif
 
 #import "RSIPUtils.h"
 

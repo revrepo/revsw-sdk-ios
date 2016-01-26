@@ -60,14 +60,20 @@
     
     NSURLSessionTask *task = [self recursiveTaskForRequest:request withinSession:session];
     
-    [self.activeTasks setObject:task forKey:request];
-    [task resume];
+    if (task != nil)
+    {
+        [self.activeTasks setObject:task forKey:request];
+        [task resume];
+    }
 }
 
 - (NSURLSessionTask *)recursiveTaskForRequest:(NSURLRequest *)request
                                 withinSession:(NSURLSession *)session
 {
-    NSLog(@"RTHTMLGrabber loading URL: %@", request.URL.absoluteString);
+    NSString* urlStr = request.URL.absoluteString;
+//    if ([urlStr isEqualToString:@"https://:0"])
+//        return nil;
+    NSLog(@"RTHTMLGrabber loading URL: %@", urlStr);
    // NSLog(@"Request started %@", request.URL);
     
     return
@@ -119,8 +125,11 @@
                            if (subRequest != nil)
                            {
                                NSURLSessionTask *subTask = [self recursiveTaskForRequest:subRequest withinSession:session];
-                               [self.activeTasks setObject:subTask forKey:subRequest];
-                               [newTasks addObject:subTask];
+                               if (subTask != nil)
+                               {
+                                   [self.activeTasks setObject:subTask forKey:subRequest];
+                                   [newTasks addObject:subTask];
+                               }
                            }
                        }
                        
@@ -137,8 +146,11 @@
                            if (subRequest != nil)
                            {
                                NSURLSessionTask *subTask = [self recursiveTaskForRequest:subRequest withinSession:session];
-                               [self.activeTasks setObject:subTask forKey:subRequest];
-                               [newTasks addObject:subTask];
+                               if (subTask != nil)
+                               {
+                                   [self.activeTasks setObject:subTask forKey:subRequest];
+                                   [newTasks addObject:subTask];
+                               }
                            }
                        }
                    }

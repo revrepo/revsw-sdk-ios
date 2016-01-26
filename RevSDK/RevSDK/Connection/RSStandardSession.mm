@@ -170,6 +170,7 @@ namespace rs
                                                      delegate:self
                                                 delegateQueue:nil];
         
+        
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                     target:self
                                                     selector:@selector(onTimerFired:)

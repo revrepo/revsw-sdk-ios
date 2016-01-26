@@ -1,0 +1,45 @@
+How ot build framework for distribution
+
+1. Make sure you build in Release configuration
+2. Make sure that you build for all architectures
+    1) Open RevSDK Project settings
+    2) Go to RevSDK Target
+    3) Go to Build Settings tab
+    4) Search for "Build Active Architecture Only", make sure that this flag is "NO" for your architecture
+
+How to build framework for debug / adhoc
+
+1. Make sure that list of architectures of your project corresponds to RevSDK's
+    1) Open Your Project settings
+    2) Go to Your Project Main Target settings
+    3) Go to Build Settings tab
+    4) Search for "Valid Achitectures" and make sure this list contains all architectures you want
+    5) Open RevSDK Project settings
+    6) Go to RevSDK Target
+    7) Go to Build Settings tab
+    8) Search for "Valid Achitectures" and make sure this list contains all architectures you want too
+    9) Search for "Build Active Architecture Only", make sure that this flag is same in Your Project settings
+2. Make sure you have same bitcode options in framework and your project
+    1) Open Your Project settings
+    2) Go to Your Project Main Target settings
+    3) Go to Build Settings tab
+    4) Search for "Enable Bitcode"
+    5) Open RevSDK Project settings
+    6) Go to RevSDK Target
+    7) Go to Build Settings tab
+    8) Search for "Enable Bitcode" and make sure it has same value that in Your Project
+3. Make sure you've added RevSDK as Embedded binnary
+    1) Having link errors in compile time?
+    2) Open Your Project settings
+    3) Go to Your Project Main Target settings
+    4) Go to General tab
+    5) Make sure you have 'RevSDK.framework' in 'Embedded binnaries'
+    6) If no, use "+" button to add it
+4. Make sure you've added RevSDK as Framework
+    1) Having link errors in compile time?
+    2) Open Your Project settings
+    3) Go to Your Project Main Target settings
+    4) Go to General tab
+    5) Make sure you have 'RevSDK.framework' in 'Linked Frameworks and Libraries'
+    6) If no, use "+" button to add it
+

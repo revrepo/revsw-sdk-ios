@@ -24,9 +24,14 @@
 
 #import <RevSDK/RevSDK.h>
 
+#import "NSURLCache+ForceNoCache.h"
+
+#ifdef TARGET_IPHONE_SIMULATOR
+#else
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-#import "NSURLCache+ForceNoCache.h"
+#define USE_CRASHLYTICS 1
+#endif
 
 id setBeingRemoved(id self, SEL selector, ...)
 {
@@ -50,7 +55,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"]; // Racer key for 65apps
-    [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
+    //[NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
@@ -74,7 +79,9 @@ id setBeingRemoved(id self, SEL selector, ...)
     // NOTE: To customize the view's frame size (which defaults to full screen), override
     // [self.viewController viewWillAppear:] in your view controller.
 
+#if USE_CRASHLYTICS
     [Fabric with:@[[Crashlytics class]]];
+#endif
     
     RTStartViewController* startViewController = [[RTStartViewController alloc] initWithNibName:@"RTStartViewController" bundle:[NSBundle mainBundle]];
     self.navigationController = [[UINavigationController alloc] initWithRootViewController:startViewController];

@@ -27,6 +27,13 @@
 		116C4D6B1C456FB5000CE641 /* RSSupervisor.h in Headers */ = {isa = PBXBuildFile; fileRef = 116C4D691C456FB5000CE641 /* RSSupervisor.h */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
+		1198FF871C580E4300CB7FBA /* sim_libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF841C580E4300CB7FBA /* sim_libcrypto.a */; };
+		1198FF881C580E4300CB7FBA /* sim_libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF851C580E4300CB7FBA /* sim_libprotobuf.a */; };
+		1198FF891C580E4300CB7FBA /* sim_libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF861C580E4300CB7FBA /* sim_libquic.a */; };
+		1198FF8F1C5810C100CB7FBA /* sim_libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */; };
+		1198FF901C5810C100CB7FBA /* sim_libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */; };
+		1198FF911C5810C100CB7FBA /* sim_libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8D1C5810C100CB7FBA /* sim_libquic.a */; };
+		1198FF921C5810C100CB7FBA /* sim_libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8E1C5810C100CB7FBA /* sim_libssl.a */; };
 		11C1968B1C3FAF4600F28120 /* RSLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C196891C3FAF4600F28120 /* RSLog.cpp */; };
 		11C1968C1C3FAF4600F28120 /* RSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C1968A1C3FAF4600F28120 /* RSLog.h */; };
 		11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FD81C2D469300CDE34D /* quic_client_session.cc */; };
@@ -178,6 +185,14 @@
 		116C4D691C456FB5000CE641 /* RSSupervisor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSupervisor.h; sourceTree = "<group>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
+		1198FF731C57FD9F00CB7FBA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		1198FF841C580E4300CB7FBA /* sim_libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libcrypto.a; sourceTree = "<group>"; };
+		1198FF851C580E4300CB7FBA /* sim_libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libprotobuf.a; sourceTree = "<group>"; };
+		1198FF861C580E4300CB7FBA /* sim_libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libquic.a; sourceTree = "<group>"; };
+		1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libcrypto.a; sourceTree = "<group>"; };
+		1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libprotobuf.a; sourceTree = "<group>"; };
+		1198FF8D1C5810C100CB7FBA /* sim_libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libquic.a; sourceTree = "<group>"; };
+		1198FF8E1C5810C100CB7FBA /* sim_libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libssl.a; sourceTree = "<group>"; };
 		11C196891C3FAF4600F28120 /* RSLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSLog.cpp; sourceTree = "<group>"; };
 		11C1968A1C3FAF4600F28120 /* RSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLog.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
@@ -215,7 +230,7 @@
 		5B2035991C33FF7000A28C01 /* STUNClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STUNClient.m; sourceTree = "<group>"; };
 		5B20359E1C3404DC00A28C01 /* RSIPUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSIPUtils.h; sourceTree = "<group>"; };
 		5B20359F1C3404DC00A28C01 /* RSIPUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSIPUtils.m; sourceTree = "<group>"; };
-		5B2035A21C34227A00A28C01 /* route.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = route.h; sourceTree = "<group>"; };
+		5B2035A21C34227A00A28C01 /* RSRoute.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RSRoute.h; sourceTree = "<group>"; };
 		5B2035A71C3453FC00A28C01 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
 		5B2035A81C3453FC00A28C01 /* Event.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Event.hpp; sourceTree = "<group>"; };
 		5B2F4BCD1BFDBAF8003DCB27 /* Response.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Response.cpp; sourceTree = "<group>"; };
@@ -314,9 +329,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1198FF921C5810C100CB7FBA /* sim_libssl.a in Frameworks */,
 				1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */,
 				11C961161C2D469300CDE34D /* libcrypto.a in Frameworks */,
+				1198FF871C580E4300CB7FBA /* sim_libcrypto.a in Frameworks */,
+				1198FF881C580E4300CB7FBA /* sim_libprotobuf.a in Frameworks */,
 				11C9619E1C2D469300CDE34D /* libquic.a in Frameworks */,
+				1198FF8F1C5810C100CB7FBA /* sim_libcrypto.a in Frameworks */,
+				1198FF901C5810C100CB7FBA /* sim_libprotobuf.a in Frameworks */,
+				1198FF911C5810C100CB7FBA /* sim_libquic.a in Frameworks */,
+				1198FF891C580E4300CB7FBA /* sim_libquic.a in Frameworks */,
 				65B3A7D91C46641D003C9426 /* libprotobuf.a in Frameworks */,
 				11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */,
 			);
@@ -370,6 +392,28 @@
 				116C4D681C456FB5000CE641 /* RSSupervisor.cpp */,
 			);
 			path = Debug;
+			sourceTree = "<group>";
+		};
+		1198FF831C580E4300CB7FBA /* sim */ = {
+			isa = PBXGroup;
+			children = (
+				1198FF8A1C5810C100CB7FBA /* sim */,
+				1198FF841C580E4300CB7FBA /* sim_libcrypto.a */,
+				1198FF851C580E4300CB7FBA /* sim_libprotobuf.a */,
+				1198FF861C580E4300CB7FBA /* sim_libquic.a */,
+			);
+			path = sim;
+			sourceTree = "<group>";
+		};
+		1198FF8A1C5810C100CB7FBA /* sim */ = {
+			isa = PBXGroup;
+			children = (
+				1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */,
+				1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */,
+				1198FF8D1C5810C100CB7FBA /* sim_libquic.a */,
+				1198FF8E1C5810C100CB7FBA /* sim_libssl.a */,
+			);
+			name = sim;
 			sourceTree = "<group>";
 		};
 		11C90BBA1C4276670002DCA1 /* quic */ = {
@@ -439,6 +483,7 @@
 		11C95FE11C2D469300CDE34D /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				1198FF831C580E4300CB7FBA /* sim */,
 				11C95FE21C2D469300CDE34D /* libCrypto */,
 				65B3A7D71C46641D003C9426 /* libProtobuf */,
 				11C95FE41C2D469300CDE34D /* libQUIC */,
@@ -465,6 +510,7 @@
 		5B3096AC1BFA02760045024C = {
 			isa = PBXGroup;
 			children = (
+				1198FF731C57FD9F00CB7FBA /* README */,
 				5B3096B81BFA02770045024C /* RevSDK */,
 				5B3096C41BFA02770045024C /* RevSDKTests */,
 				5B3096B71BFA02770045024C /* Products */,
@@ -584,7 +630,7 @@
 				5B2035931C33E85E00A28C01 /* RSSystemInfo.m */,
 				5B20359E1C3404DC00A28C01 /* RSIPUtils.h */,
 				5B20359F1C3404DC00A28C01 /* RSIPUtils.m */,
-				5B2035A21C34227A00A28C01 /* route.h */,
+				5B2035A21C34227A00A28C01 /* RSRoute.h */,
 				114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */,
 				114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */,
 			);
@@ -1030,7 +1076,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1051,6 +1097,8 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libQUIC",
 					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
+					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sym",
+					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1079,7 +1127,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_BITCODE = NO;
+				ENABLE_BITCODE = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"COCOAPODS=1",
@@ -1100,6 +1148,8 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libQUIC",
 					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
+					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sym",
+					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (

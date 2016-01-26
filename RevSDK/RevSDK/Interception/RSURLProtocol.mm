@@ -75,6 +75,11 @@
 {
     NSURL* URL             = [aRequest URL];
     NSString* host         = [URL host];
+    
+    if (host.length == 0)
+    {
+        return NO;
+    }
     std::string domainName = rs::stdStringFromNSString(host);
     BOOL should            = rs::Model::instance()->shouldTransportDomainName(domainName);
     return should;

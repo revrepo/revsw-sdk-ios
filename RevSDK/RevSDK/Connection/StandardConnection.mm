@@ -71,10 +71,15 @@ void StandardConnection::startWithRequest(std::shared_ptr<Request> aRequest, Con
     //NSMutableURLRequest* mutableRequest = request.mutableCopy;
     NSString* targetHost                = request.URL.host;
     
+//    if (aRequest->URL().find("fls-na.amazon.com") != std::string::npos)
+//    {
+//        targetHost = nil;
+//    }
+
     if (!targetHost)
     {
         Error error;
-        error.code     = 404;
+        error.code     = -1;
         error.domain   = "com.revsdk";
         error.userInfo = std::map <std::string, std::string>();
         error.userInfo[errorDescriptionKey()] = "URL not supported";
