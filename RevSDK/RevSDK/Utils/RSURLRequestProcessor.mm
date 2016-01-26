@@ -92,11 +92,16 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     if ([urlStr rangeOfString:@"https"].location != 0)
     {
         NSRange range = [urlStr rangeOfString:@"http"];
+        
         if (range.location != 0)
         {
             return nil;
         }
-        urlStr = [urlStr stringByReplacingCharactersInRange:range withString:@"https"];
+        
+        if (!isProvisioned)
+        {
+           urlStr = [urlStr stringByReplacingCharactersInRange:range withString:@"https"];
+        }
     }
     
     url = [NSURL URLWithString:urlStr];

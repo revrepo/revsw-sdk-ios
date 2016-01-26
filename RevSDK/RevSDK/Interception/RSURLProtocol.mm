@@ -110,7 +110,7 @@
                                                         object:nil
                                                       userInfo:@{
                                                                  kRSDataKey : @(self.dataLength),
-                                                                 kRSHostKey : self.request.URL.host
+                                                                 kRSHostKey : self.request.URL.host ? self.request.URL.host : @""
                                                                  }];
 }
 

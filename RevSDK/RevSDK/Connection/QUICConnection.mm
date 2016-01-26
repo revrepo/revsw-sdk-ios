@@ -1,4 +1,4 @@
-/*************************************************************************
+ /*************************************************************************
  *
  * REV SOFTWARE CONFIDENTIAL
  *
@@ -86,6 +86,16 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
         rest = "/";
     }
     
+    if (rest.size() == 0)
+    {
+        rest = "/";
+    }
+    
+    if (rest.size() > 0)
+    {
+        assert(rest[0] == '/');
+    }
+    
 //    if (rest == "/ibm/main/2/i.gif")
 //    {
 //        Log::info(kLogTagQUICRequest, "Gotcha");
@@ -107,6 +117,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     //headers["x-compress"] = "null";
     
     //Data bData = aRequest->body();
+    assert(rest.size() != 0);
     const char* bodyPtr = (const char*)aRequest->body().bytes();
     if (bodyPtr == nullptr)
         bodyPtr = "";

@@ -49,11 +49,10 @@
         self.urlTextField.text = [NSString stringWithFormat:@"http://%@", self.urlTextField.text];
     }
     
-    NSURL *url = [NSURL URLWithString:self.urlTextField.text];
+    NSURL        *url     = [NSURL URLWithString:self.urlTextField.text];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
 }
-
 
 #pragma mark - Actions
 
@@ -109,6 +108,8 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
+    NSLog(@"SHOULD START LOAD %@", request.URL.absoluteString);
+    
     if (navigationType == UIWebViewNavigationTypeReload)
     {
         return NO;
@@ -119,6 +120,8 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
 {
+    NSLog(@"DID START LOAD %@", webView.request.URL.absoluteString);
+    
     if (!self.hud)
     {
        self.hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
