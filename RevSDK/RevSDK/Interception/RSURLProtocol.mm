@@ -199,6 +199,7 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveResponse:(NSURLResponse *)response
 {
+     NSLog(@"ORIGIN RESPONSE %@", response);
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
                                                         object:nil];
     

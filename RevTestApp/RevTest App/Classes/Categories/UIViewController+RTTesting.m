@@ -232,13 +232,11 @@
 
 - (void)showHistoryPickerView:(NSArray *)dataArray
 {
-    NSArray* historyArray = [self isKindOfClass:NSClassFromString(@"RTNativeMobileViewController")] ? [Storage nativeMobileAppHistory] : [Storage mobileWebHistory];
-    
-    if (historyArray.count > 0)
+    if (dataArray.count > 0)
     {
         self.historyPickerView            = [PickerView view];
-        self.historyPickerView.pickerData = historyArray;
-        self.historyPickerView.urlString  = [historyArray objectAtIndex:0];
+        self.historyPickerView.pickerData = dataArray;
+        self.historyPickerView.urlString  = [dataArray objectAtIndex:0];
         self.historyPickerView.delegate   = (id<PickerViewDelegate>)self;
         
         self.historyPickerView.frame = CGRectMake(0,
