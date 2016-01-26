@@ -29,7 +29,7 @@
                     </connections>
                 </pickerView>
             </subviews>
-            <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="DQG-UL-46J" secondAttribute="trailing" id="2np-ac-bP3"/>
                 <constraint firstAttribute="trailing" secondItem="Mvt-Fp-ieB" secondAttribute="trailing" id="FFA-7K-pnh"/>

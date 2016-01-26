@@ -84,6 +84,8 @@ static const NSInteger kSuccessCode = 200;
     
     self.startButton.layer.cornerRadius = 8.f;
     self.historyButton.layer.cornerRadius  = 8.f;
+    [self configureHistoryButton];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -129,6 +131,20 @@ static const NSInteger kSuccessCode = 200;
     }
 }
 
+- (void)configureHistoryButton
+{
+    if ([[Storage mobileWebHistory] count] == 0)
+    {
+        self.historyButton.enabled = NO;
+        self.historyButton.alpha = 0.7;
+    }
+    else
+    {
+        self.historyButton.enabled = YES;
+        self.historyButton.alpha = 1.0;
+    }
+}
+
 #pragma mark - Actions
 
 - (IBAction)schemeButtonPressed
@@ -162,6 +178,7 @@ static const NSInteger kSuccessCode = 200;
         [tmpArray removeObject:urlString];
     }
     [tmpArray insertObject:urlString atIndex:0];
+    [self configureHistoryButton];
     [Storage setMobileWebHistory:tmpArray];
 }
 

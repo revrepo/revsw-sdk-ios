@@ -232,30 +232,25 @@
 
 - (void)showHistoryPickerView:(NSArray *)dataArray
 {
-    NSArray* historyArray = [self isKindOfClass:NSClassFromString(@"RTNativeMobileViewController")] ? [Storage nativeMobileAppHistory] : [Storage mobileWebHistory];
+    self.historyPickerView            = [PickerView view];
+    self.historyPickerView.pickerData = dataArray;
+    self.historyPickerView.urlString  = [dataArray objectAtIndex:0];
+    self.historyPickerView.delegate   = (id<PickerViewDelegate>)self;
     
-    if (historyArray.count > 0)
-    {
-        self.historyPickerView            = [PickerView view];
-        self.historyPickerView.pickerData = historyArray;
-        self.historyPickerView.urlString  = [historyArray objectAtIndex:0];
-        self.historyPickerView.delegate   = (id<PickerViewDelegate>)self;
+    self.historyPickerView.frame = CGRectMake(0,
+                                              self.view.frame.size.height,
+                                              self.view.frame.size.width,
+                                              self.historyPickerView.frame.size.height);
+    
+    [UIView animateWithDuration:0.25 animations:^{
         
         self.historyPickerView.frame = CGRectMake(0,
-                                                  self.view.frame.size.height,
+                                                  self.view.frame.size.height - self.historyPickerView.frame.size.height,
                                                   self.view.frame.size.width,
                                                   self.historyPickerView.frame.size.height);
-        
-        [UIView animateWithDuration:0.25 animations:^{
-            
-            self.historyPickerView.frame = CGRectMake(0,
-                                                      self.view.frame.size.height - self.historyPickerView.frame.size.height,
-                                                      self.view.frame.size.width,
-                                                      self.historyPickerView.frame.size.height);
-        }];
-        
-        [self.view addSubview:self.historyPickerView];
-    }
+    }];
+    
+    [self.view addSubview:self.historyPickerView];
 }
 
 - (void)hideHistoryPickerView

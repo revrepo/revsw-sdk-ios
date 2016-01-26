@@ -84,6 +84,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     self.formatButton.layer.cornerRadius = 8.f;
     self.startButton.layer.cornerRadius  = 8.f;
     self.historyButton.layer.cornerRadius  = 8.f;
+    [self configureHistoryButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -122,6 +123,20 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
         [self stopTimer];
         self.testModel = nil;
         [self setWhiteListOption:YES];
+    }
+}
+
+- (void)configureHistoryButton
+{
+    if ([[Storage nativeMobileAppHistory] count] == 0)
+    {
+        self.historyButton.enabled = NO;
+        self.historyButton.alpha = 0.7;
+    }
+    else
+    {
+        self.historyButton.enabled = YES;
+        self.historyButton.alpha = 1.0;
     }
 }
 
@@ -215,6 +230,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
         [tmpArray removeObject:urlString];
     }
     [tmpArray insertObject:urlString atIndex:0];
+    [self configureHistoryButton];
     [Storage setNativeMobileAppHistory:tmpArray];
 }
 
