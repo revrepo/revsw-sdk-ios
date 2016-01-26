@@ -44,7 +44,7 @@
                         </connections>
                     </slider>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fgo-Xo-0WF">
-                        <rect key="frame" x="20" y="132" width="560" height="35"/>
+                        <rect key="frame" x="20" y="187" width="560" height="35"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <state key="normal" title=" Start "/>
@@ -53,7 +53,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jKp-GX-hdU">
-                        <rect key="frame" x="20" y="187" width="560" height="35"/>
+                        <rect key="frame" x="20" y="132" width="560" height="35"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                         <state key="normal" title="History"/>
@@ -64,23 +64,23 @@
                 </subviews>
                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="jKp-GX-hdU" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leadingMargin" id="0gO-o5-zLr"/>
                     <constraint firstAttribute="trailingMargin" secondItem="Vem-SG-yOv" secondAttribute="trailing" constant="11" id="2RM-3j-xcJ"/>
                     <constraint firstItem="3Yw-JT-hxH" firstAttribute="centerY" secondItem="hTX-Ma-AF1" secondAttribute="centerY" id="2fV-KK-9zH"/>
                     <constraint firstItem="Vem-SG-yOv" firstAttribute="centerY" secondItem="3Yw-JT-hxH" secondAttribute="centerY" id="598-z3-oF3"/>
                     <constraint firstAttribute="trailing" secondItem="xg6-Ww-Oll" secondAttribute="trailing" constant="15" id="BOO-FL-f0v"/>
-                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="top" secondItem="3Yw-JT-hxH" secondAttribute="bottom" constant="20" id="EzH-OL-fTa"/>
-                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="trailing" secondItem="f4z-fL-jUE" secondAttribute="trailingMargin" id="F8S-Rg-pWz"/>
                     <constraint firstItem="xg6-Ww-Oll" firstAttribute="top" secondItem="2wO-fF-3mc" secondAttribute="bottom" constant="20" id="FO5-dl-bhJ"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="top" secondItem="jKp-GX-hdU" secondAttribute="bottom" constant="20" id="J8p-c3-6vf"/>
+                    <constraint firstItem="jKp-GX-hdU" firstAttribute="trailing" secondItem="f4z-fL-jUE" secondAttribute="trailingMargin" id="K1G-k1-gSZ"/>
                     <constraint firstItem="3Yw-JT-hxH" firstAttribute="top" secondItem="xg6-Ww-Oll" secondAttribute="bottom" constant="12" id="MVE-Oz-7Ce"/>
-                    <constraint firstItem="jKp-GX-hdU" firstAttribute="top" secondItem="fgo-Xo-0WF" secondAttribute="bottom" constant="20" id="Qqb-Uz-DzO"/>
-                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leadingMargin" id="XBK-kZ-neb"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leadingMargin" id="Mcj-Qw-3Et"/>
+                    <constraint firstItem="jKp-GX-hdU" firstAttribute="top" secondItem="3Yw-JT-hxH" secondAttribute="bottom" constant="20" id="NDH-fQ-Z5b"/>
                     <constraint firstItem="xg6-Ww-Oll" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leading" constant="15" id="XVh-vU-hro"/>
                     <constraint firstItem="hTX-Ma-AF1" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leading" constant="15" id="aLC-Gz-IBQ"/>
-                    <constraint firstItem="jKp-GX-hdU" firstAttribute="trailing" secondItem="f4z-fL-jUE" secondAttribute="trailingMargin" id="cRm-Ah-RlH"/>
                     <constraint firstItem="3Yw-JT-hxH" firstAttribute="leading" secondItem="hTX-Ma-AF1" secondAttribute="trailing" constant="15" id="d22-YX-KES"/>
                     <constraint firstItem="Vem-SG-yOv" firstAttribute="leading" secondItem="3Yw-JT-hxH" secondAttribute="trailing" constant="146" id="gTC-qp-jaI"/>
+                    <constraint firstItem="fgo-Xo-0WF" firstAttribute="trailing" secondItem="f4z-fL-jUE" secondAttribute="trailingMargin" id="pgo-Gp-u9F"/>
                     <constraint firstItem="Vem-SG-yOv" firstAttribute="leading" secondItem="3Yw-JT-hxH" secondAttribute="trailing" constant="8" id="x4i-zg-Xu7"/>
-                    <constraint firstItem="jKp-GX-hdU" firstAttribute="leading" secondItem="f4z-fL-jUE" secondAttribute="leadingMargin" id="zKD-Qk-fcF"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
