@@ -92,8 +92,12 @@ typedef enum
     NSDictionary* userInfo = aNotification.userInfo;
     NSNumber* number       = userInfo[@"kRSDataKey"];
     NSUInteger dataSize    = number.unsignedIntegerValue;
+    NSString* host         = userInfo[@"kRSHostKey"];
     
-    mCurrentDataSize += dataSize;
+    if (![host isEqualToString:@"mobile-collector.newrelic.com"])
+    {
+        mCurrentDataSize += dataSize;
+    }
 }
 
 - (void)dealloc
