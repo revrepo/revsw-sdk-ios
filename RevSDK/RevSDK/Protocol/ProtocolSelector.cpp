@@ -25,6 +25,7 @@
 #include "ProtocolSelector.hpp"
 #include "ProtocolFailureMonitor.h"
 #include "Utils.hpp"
+#include "DebugUsageTracker.hpp"
 
 using namespace rs;
 
@@ -71,6 +72,8 @@ void ProtocolSelector::handleTestResults(std::vector<AvailabilityTestResult> aRe
             allowedProtocols.push_back(it.ProtocolID);
         }
     }
+    
+    Model::instance()->debug_usageTracker()->availableProtocols(aResults);
     
     if (allowedProtocols.size() == 0)
     {

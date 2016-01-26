@@ -191,6 +191,7 @@ void ConfigurationService::loadConfiguration()
         }
         else
         {
+            Model::instance()->debug_usageTracker()->configurationFinishedLoadWithError();
             Log::error(kLogTagSDKConfiguration, "Failed to load configuration.");
         }
     };

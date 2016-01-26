@@ -20,6 +20,10 @@
 #include "Error.hpp"
 #include "Response.hpp"
 #include "RSUtils.h"
+#include "ProtocolAvailabilityTester.hpp"
+
+#define STANDARTPROTOCOL "standart"
+#define QUICPROTOCOL "quic"
 
 using namespace rs;
 
@@ -32,7 +36,15 @@ mNumberOfRequestsServedViaRev(0),
 mNumberOfBytesServedViaOrigin(0),
 mNumberOfBytesServedViaRev(0),
 mNumberOfRequestsFailedViaOrigin(0),
-mNumberOfRequestsFailedViaRev(0)
+mNumberOfRequestsFailedViaRev(0),
+mNumberOfSuccessfulQUICRequests(0),
+mNumberOfFailedQUICRequests(0),
+mNumberOfSuccessfulStandartRequests(0),
+mNumberOfFailedStandartRequests(0),
+mFailedStatsUploads(0),
+mFailedConfigurationFetches(0),
+mStandartProtocolAvailable(false),
+mQUICProtocolAvailable(false)
 {
 }
 
@@ -70,10 +82,14 @@ void DebugUsageTracker::trackRequestFinished(bool usingRevHost,
                                              int64_t aDataLength,
                                              const Response& aResponse)
 {
-    if (usingRevHost) {
+    if (usingRevHost)
+    {
         mNumberOfBytesServedViaRev += aDataLength;
         mNumberOfRequestsServedViaRev++;
-    } else {
+        mNumberOfSuccessfulStandartRequests++;
+    }
+    else
+    {
         mNumberOfBytesServedViaOrigin += aDataLength;
         mNumberOfRequestsServedViaOrigin++;
     }
@@ -83,12 +99,51 @@ void DebugUsageTracker::trackRequestFailed(bool usingRevHost,
                                            int64_t aDataLength,
                                            const Error& aError)
 {
-    if (usingRevHost) {
+    if (usingRevHost)
+    {
         mNumberOfBytesServedViaRev += aDataLength;
         mNumberOfRequestsFailedViaRev++;
-    } else {
+        mNumberOfFailedStandartRequests++;
+    }
+    else
+    {
         mNumberOfBytesServedViaOrigin += aDataLength;
         mNumberOfRequestsFailedViaOrigin++;
+    }
+}
+
+void DebugUsageTracker::QUICRequestsFinishedWithSuccess()
+{
+    mNumberOfSuccessfulQUICRequests++;
+}
+
+void DebugUsageTracker::QUICRequestsFinishedWithError()
+{
+    mNumberOfFailedQUICRequests++;
+}
+
+void DebugUsageTracker::statsUploadFinishedWithError()
+{
+    mFailedStatsUploads++;
+}
+
+void DebugUsageTracker::configurationFinishedLoadWithError()
+{
+    mFailedConfigurationFetches++;
+}
+
+void DebugUsageTracker::availableProtocols(std::vector<AvailabilityTestResult> aProtocols)
+{
+    for (auto it: aProtocols)
+    {
+        if (it.ProtocolID.compare(STANDARTPROTOCOL))
+        {
+            mStandartProtocolAvailable = it.Available;
+        }
+        if (it.ProtocolID.compare(QUICPROTOCOL))
+        {
+            mQUICProtocolAvailable = it.Available;
+        }
     }
 }
 
@@ -96,17 +151,29 @@ DebugUsageTracker::Statistics DebugUsageTracker::getUsageStatistics() const
 {
     std::map<std::string, std::string> stats;
     
-    stats["Number of configuration pulls"]          = std::to_string(mNumberOfConfigurationPulls);
-    stats["Number of stat records submitted"]       = std::to_string(mNumberOfStatRecordsSubmitted);
+    stats["Number of configuration pulls"]                      = std::to_string(mNumberOfConfigurationPulls);
+    stats["Number of stat records submitted"]                   = std::to_string(mNumberOfStatRecordsSubmitted);
     
-    stats["Number of requests served via origin"]   = std::to_string(mNumberOfRequestsServedViaOrigin);
-    stats["Number of requests served via Rev"]      = std::to_string(mNumberOfRequestsServedViaRev);
+    stats["Number of requests served via origin"]               = std::to_string(mNumberOfRequestsServedViaOrigin);
+    stats["Number of requests served via Rev"]                  = std::to_string(mNumberOfRequestsServedViaRev);
 
-    stats["Number of requests failed via origin"]   = std::to_string(mNumberOfRequestsFailedViaOrigin);
-    stats["Number of requests failed via Rev"]      = std::to_string(mNumberOfRequestsFailedViaRev);
+    stats["Number of requests failed via origin"]               = std::to_string(mNumberOfRequestsFailedViaOrigin);
+    stats["Number of requests failed via Rev"]                  = std::to_string(mNumberOfRequestsFailedViaRev);
 
-    stats["Kbytes served via origin"]               = std::to_string(mNumberOfBytesServedViaOrigin / 1024);
-    stats["Kbytes served via Rev"]                  = std::to_string(mNumberOfBytesServedViaRev / 1024);
+    stats["Kbytes served via origin"]                           = std::to_string(mNumberOfBytesServedViaOrigin / 1024);
+    stats["Kbytes served via Rev"]                              = std::to_string(mNumberOfBytesServedViaRev / 1024);
+    
+    stats["Number of successful QUIC requests"]                 = std::to_string(mNumberOfSuccessfulQUICRequests);
+    stats["Number of failed QUIC requests"]                     = std::to_string(mNumberOfFailedQUICRequests);
+
+    stats["Number of successful standart requests"]             = std::to_string(mNumberOfSuccessfulStandartRequests);
+    stats["Number of failed standart requests"]                 = std::to_string(mNumberOfFailedStandartRequests);
+    
+    stats["Number of failed stats uploads"]                     = std::to_string(mFailedStatsUploads);
+    stats["Number of failed configuration fetches"]             = std::to_string(mFailedConfigurationFetches);
+
+    stats["Standart protocol status"]                           = mStandartProtocolAvailable ? "Available" : "Offline";
+    stats["QUIC protocol status"]                               = mQUICProtocolAvailable ? "Available" : "Offline";
     
     return stats;
 }
@@ -126,4 +193,10 @@ void DebugUsageTracker::reset()
     mNumberOfBytesServedViaRev = 0;
     mNumberOfRequestsFailedViaOrigin = 0;
     mNumberOfRequestsFailedViaRev = 0;
+    mNumberOfSuccessfulQUICRequests = 0;
+    mNumberOfFailedQUICRequests = 0;
+    mNumberOfSuccessfulStandartRequests = 0;
+    mNumberOfFailedStandartRequests = 0;
+    mFailedConfigurationFetches = 0;
+    mFailedStatsUploads = 0;
 }

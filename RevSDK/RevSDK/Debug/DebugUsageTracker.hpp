@@ -24,11 +24,13 @@
 #include <string>
 #include <map>
 #include "Data.hpp"
+#include <vector>
 
 namespace rs
 {
     class Response;
     class Error;
+    struct AvailabilityTestResult;
     
     class DebugUsageTracker final
     {
@@ -46,6 +48,18 @@ namespace rs
         size_t mNumberOfRequestsFailedViaOrigin;
         size_t mNumberOfRequestsFailedViaRev;
         
+        size_t mNumberOfSuccessfulQUICRequests;
+        size_t mNumberOfFailedQUICRequests;
+        
+        size_t mNumberOfSuccessfulStandartRequests;
+        size_t mNumberOfFailedStandartRequests;
+        
+        bool mStandartProtocolAvailable;
+        bool mQUICProtocolAvailable;
+        
+        size_t mFailedStatsUploads;
+        size_t mFailedConfigurationFetches;
+        
     public:
         
         using Statistics = std::map<std::string, std::string>;
@@ -58,6 +72,14 @@ namespace rs
         void trackRequest(bool usingRevHost, int64_t, const Response&, const Error&);
         void trackRequestFinished(bool usingRevHost, int64_t, const Response&);
         void trackRequestFailed(bool usingRevHost, int64_t, const Error&);
+        
+        void QUICRequestsFinishedWithSuccess();
+        void QUICRequestsFinishedWithError();
+        
+        void statsUploadFinishedWithError();
+        void configurationFinishedLoadWithError();
+        
+        void availableProtocols(std::vector<AvailabilityTestResult> aProtocols);
         
         Statistics getUsageStatistics() const;
         std::string getLatestConfiguration() const;

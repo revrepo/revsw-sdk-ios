@@ -265,6 +265,7 @@ namespace rs
                 }
                 else
                 {
+                    Model::instance()->debug_usageTracker()->statsUploadFinishedWithError();
                     Log::error(kLogTagSDKStats, "Stats reported with an error");
                     if (statsData.cbOnFail)
                     {
