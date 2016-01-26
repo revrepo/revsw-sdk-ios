@@ -275,7 +275,7 @@
             controller.mailComposeDelegate = weakSelf;
             [controller setSubject:@"RevSDK Log"];
             [controller setMessageBody:content isHTML:NO];
-            [controller setToRecipients:@[@"alex@tundramobile.com"]];
+//            [controller setToRecipients:@[]];
             [weakSelf presentViewController:controller animated:YES completion:^{}];
         });
     });
