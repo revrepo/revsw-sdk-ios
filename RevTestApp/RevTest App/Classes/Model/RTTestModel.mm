@@ -218,7 +218,7 @@ typedef enum
         
         mStartDate = [NSDate date];
         
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:45.0
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:145.0
                                                       target:self
                                                     selector:@selector(timerFired)
                                                     userInfo:nil

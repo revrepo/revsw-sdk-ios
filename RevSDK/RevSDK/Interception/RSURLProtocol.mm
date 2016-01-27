@@ -89,6 +89,8 @@
 {
     self.dataLength = 0;
     
+    NSLog(@"START LOADING %@ %@", self.request, self.request.allHTTPHeaderFields);
+    
     if ([self shouldRedirectRequest:self.request])
     {
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
@@ -149,6 +151,7 @@
     if ([response isKindOfClass:[NSHTTPURLResponse class]])
     {
         NSHTTPURLResponse* httpResp = (NSHTTPURLResponse*)response;
+         NSLog(@"REDIRECT RESPONSE %@", response);
         NSString* dump = [NSString stringWithFormat:@"URL=%@, SFN=%@, Headers:\n%@",
                           response.URL, response.suggestedFilename, httpResp.allHeaderFields];
         rs::Log::info(rs::kLogTagSDKInerception, "Response %s", rs::stdStringFromNSString(dump).c_str());
@@ -162,6 +165,7 @@
                                                         object:nil];
     
     self.dataLength += aData.length;
+     NSLog(@"REDIRECT DATA %ld", self.dataLength / 1024);
     [self.client URLProtocol:self didLoadData:aData];
 }
 
@@ -172,6 +176,8 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"REDIRECT FAILED %@", error);
+    
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -184,6 +190,7 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didFailWithError:(NSError *)error
 {
+    NSLog(@"ORIGIN FAILED %@", error);
     [self.client URLProtocol:self didFailWithError:error];
 }
 
@@ -192,6 +199,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveDataNotification
                                                         object:nil];
     self.dataLength += aData.length;
+    NSLog(@"ORIGIN DATA %ld", self.dataLength / 1024);
     [self.client URLProtocol:self didLoadData:aData];
 }
 
