@@ -62,6 +62,10 @@ namespace net {
                 allow_bidirectional_data_ = value;
             }
             bool allow_bidirectional_data() const { return allow_bidirectional_data_; }
+            
+            void add_incoming_data(const void* aData, size_t aSize);
+            virtual bool should_add_incoming_data(const void* aData, size_t aSize) { return true; }
+            size_t data_length() const { return data_length_; }
         private:
             // The parsed headers received from the server.
             SpdyHeaderBlock response_headers_;
@@ -71,6 +75,7 @@ namespace net {
             int content_length_;
             int response_code_;
             std::string data_;
+            size_t data_length_;
             size_t header_bytes_read_;
             size_t header_bytes_written_;
             // When true allows the sending of a request to continue while the response is

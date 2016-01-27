@@ -102,7 +102,7 @@ namespace net {
         response_code_(0),
         header_bytes_read_(0),
         header_bytes_written_(0),
-        allow_bidirectional_data_(false) {}
+        allow_bidirectional_data_(false), data_length_(0) {}
         QuicSpdyClientStream::~QuicSpdyClientStream() {}
         void QuicSpdyClientStream::OnStreamFrame(const QuicStreamFrame& frame) {
             if (!allow_bidirectional_data_ && !write_side_closed()) {
@@ -161,9 +161,10 @@ namespace net {
                 }
                 DVLOG(1) << "Client processed " << iov.iov_len << " bytes for stream "
                 << id();
-                data_.append(static_cast<char*>(iov.iov_base), iov.iov_len);
+                //data_.append(static_cast<char*>(iov.iov_base), iov.iov_len);
+                add_incoming_data(iov.iov_base, iov.iov_len);
                 if (content_length_ >= 0 &&
-                    static_cast<int>(data_.size()) > content_length_) {
+                    static_cast<int>(data_length()) > content_length_) {
                     Reset(QUIC_BAD_APPLICATION_PAYLOAD);
                     return;
                 }
@@ -174,6 +175,15 @@ namespace net {
             } else {
                 sequencer()->SetUnblocked();
             }
+        }
+        
+        void QuicSpdyClientStream::add_incoming_data(const void *aData, size_t aSize)
+        {
+            if (should_add_incoming_data(aData, aSize))
+            {
+                data_.append(static_cast<const char*>(aData), aSize);
+            }
+            data_length_ += aSize;
         }
         size_t QuicSpdyClientStream::SendRequest(const SpdyHeaderBlock& headers,
                                                  StringPiece body,

@@ -54,7 +54,12 @@ void QUICDataStream::OnStreamFrame(const net::QuicStreamFrame& frame)
 void QUICDataStream::OnInitialHeadersComplete(bool fin, size_t frame_len)
 {
     QuicSpdyClientStream::OnInitialHeadersComplete(fin, frame_len);
-    
+    if (!mFailed && mDelegate != nullptr)
+    {
+        mDelegate->onQUICStreamReceivedResponse(this, response_code(), headers());
+        mInitialMS = 0;
+        mHeadersDelivered = true;
+    }
 //    if (!mFailed && mDelegate != nullptr)
 //    {
 //        mDelegate->onQUICStreamReceivedResponse(this, response_code(), headers());
@@ -65,17 +70,11 @@ void QUICDataStream::OnTrailingHeadersComplete(bool fin, size_t frame_len)
 {
     QuicSpdyClientStream::OnTrailingHeadersComplete(fin, frame_len);
     
-    if (!mFailed && mDelegate != nullptr)
-    {
-        mDelegate->onQUICStreamReceivedResponse(this, response_code(), headers());
-        mInitialMS = 0;
-        mHeadersDelivered = true;
-        if (!mCache.isEmpty())
-        {
-            mDelegate->onQUICStreamReceivedData(this, (const char*)mCache.bytes(), mCache.length());
-            mCache = Data();
-        }
-    }
+//        if (!mCache.isEmpty())
+//        {
+//            mDelegate->onQUICStreamReceivedData(this, (const char*)mCache.bytes(), mCache.length());
+//            mCache = Data();
+//        }
 }
 
 void QUICDataStream::onVisitorSentClose()
@@ -85,8 +84,9 @@ void QUICDataStream::onVisitorSentClose()
         if (!mHeadersDelivered)
         {
             mDelegate->onQUICStreamReceivedResponse(this, response_code(), headers());
+            mHeadersDelivered = true;
         }
-        mDelegate->onQUICStreamReceivedData(this, data().c_str(), data().size());
+        should_add_incoming_data(0, 0);
         mDelegate->onQUICStreamCompleted(this);
         mInitialMS = 0;
     }
@@ -128,4 +128,29 @@ void QUICDataStream::onSocketError(Error aError)
 
     if (mDelegate != nullptr)
         mDelegate->onQUICStreamFailed(this, mError);
+}
+
+bool QUICDataStream::should_add_incoming_data(const void* aData, size_t aSize)
+{
+    if (mHeadersDelivered)
+    {
+        if (mDelegate)
+        {
+            if (mCacheList.size() > 0)
+            {
+                for (const Data& d : mCacheList)
+                    mDelegate->onQUICStreamReceivedData(this, (const char*)d.bytes(), d.length());
+                mCacheList.clear();
+            }
+            if (aData != nullptr && aSize > 0)
+                mDelegate->onQUICStreamReceivedData(this, (const char*)aData, aSize);
+        }
+    }
+    else
+    {
+        if (aData != nullptr && aSize > 0)
+            mCacheList.push_back(Data(aData, aSize));
+    }
+    
+    return false;
 }
