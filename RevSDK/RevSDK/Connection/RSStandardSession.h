@@ -24,5 +24,6 @@
 + (RSStandardSession*)instance;
 - (void)createTaskWithRequest:(NSURLRequest*)aRequest
                    connection:(std::shared_ptr<rs::Connection>)aConnection;
+- (void)createSession;
 
 @end

@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "RSStandardSession.h"
 #import "RSURLRequestProcessor.h"
 #import "RSUtils.h"
@@ -83,6 +85,14 @@ namespace rs
         Map mMap;
         mutable std::mutex mLock;
     };
+}
+
+static void displayStatusChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)
+    {
+        [[RSStandardSession instance] createSession];
+    }
 }
 
 @interface RSStandardSession()<NSURLSessionDataDelegate>
@@ -163,13 +173,16 @@ namespace rs
 
 - (void)threadRun:(id)ctx
 {
-    @autoreleasepool {
-        self.configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    @autoreleasepool
+    {
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        NULL,
+                                        displayStatusChanged,
+                                        CFSTR("com.apple.springboard.lockstate"),
+                                        NULL,
+                                        CFNotificationSuspensionBehaviorDeliverImmediately);
         
-        self.session = [NSURLSession sessionWithConfiguration:self.configuration
-                                                     delegate:self
-                                                delegateQueue:nil];
-        
+        [self createSession];
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                     target:self
@@ -179,6 +192,15 @@ namespace rs
         mInitialized = YES;
         [[NSRunLoop currentRunLoop] run];
     }
+}
+
+- (void)createSession
+{
+    self.configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    self.session = [NSURLSession sessionWithConfiguration:self.configuration
+                                                 delegate:self
+                                            delegateQueue:nil];
 }
 
 - (void)createTaskWithRequest:(NSURLRequest*)aRequest

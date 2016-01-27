@@ -23,5 +23,5 @@
 + (RSOriginSession*)instance;
 - (void)createTaskWithRequest:(NSURLRequest*)aRequest
                      delegate:(id<NSURLSessionDataDelegate>)aDelegate;
-
+- (void)createSession;
 @end

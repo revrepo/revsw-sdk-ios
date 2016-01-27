@@ -14,7 +14,9 @@
 		5B3096941BFA02120045024C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B3096931BFA02120045024C /* Assets.xcassets */; };
 		5B3096971BFA02120045024C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B3096951BFA02120045024C /* LaunchScreen.storyboard */; };
 		5B3096A21BFA02120045024C /* RevClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B3096A11BFA02120045024C /* RevClientTests.m */; };
-		5B3096DA1BFA06690045024C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3096D91BFA06690045024C /* RevSDK.framework */; };
+		5BF2DFDB1C591F6100538D16 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF2DFDA1C591F6100538D16 /* RevSDK.framework */; };
+		5BF2DFDC1C591F6E00538D16 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF2DFDA1C591F6100538D16 /* RevSDK.framework */; };
+		5BF2DFDD1C591F6E00538D16 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF2DFDA1C591F6100538D16 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +36,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5BF2DFDD1C591F6E00538D16 /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -54,6 +57,7 @@
 		5B30969D1BFA02120045024C /* RevClientTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RevClientTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B3096A11BFA02120045024C /* RevClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RevClientTests.m; sourceTree = "<group>"; };
 		5B3096D91BFA06690045024C /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
+		5BF2DFDA1C591F6100538D16 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5B3096DA1BFA06690045024C /* RevSDK.framework in Frameworks */,
+				5BF2DFDB1C591F6100538D16 /* RevSDK.framework in Frameworks */,
+				5BF2DFDC1C591F6E00538D16 /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +134,7 @@
 		5B3096DB1BFA06AA0045024C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5BF2DFDA1C591F6100538D16 /* RevSDK.framework */,
 				5B3096D91BFA06690045024C /* RevSDK.framework */,
 			);
 			name = Frameworks;
