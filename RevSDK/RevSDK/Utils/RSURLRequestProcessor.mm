@@ -107,6 +107,11 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     url = [NSURL URLWithString:urlStr];
     [newRequest setURL:url];
 
+    if ([aRequest.URL.absoluteString rangeOfString:@"speedof.me/api/userdata"].location != NSNotFound)
+    {
+        NSLog(@"USERDATA REQUEST %@ %@", newRequest, newRequest.allHTTPHeaderFields);
+    }
+    
     return newRequest;
 }
 

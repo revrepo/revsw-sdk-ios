@@ -84,7 +84,7 @@
 {
     self.dataLength = 0;
     
-    /*if ([self shouldRedirectRequest:self.request])
+    if ([self shouldRedirectRequest:self.request])
     {
          NSLog(@"START LOADING %@", self.request);
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
@@ -93,7 +93,7 @@
         self.connection = [RSURLConnection connectionWithRequest:self.request delegate:self];
         [self.connection start];
     }
-    else*/
+    else
     {
         NSLog(@"START LOADING %@", self.request);
         
@@ -141,7 +141,7 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    NSLog(@"RESPONSE %@", response.URL);
+    NSLog(@"RESPONSE %@", response);
     
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
                                                         object:nil];
@@ -158,8 +158,10 @@
 
 - (void) rsconnection:(RSURLConnection *)aConnection didReceiveData:(NSData *)aData
 {
-   // NSLog(@"DATA %@", [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding]);
-    
+    if (aData.length > 0)
+    {
+       NSLog(@"REQUEST %@ DATA %@ LENGTH %ld", self.request.URL.absoluteString, [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding], aData.length);
+    }
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveDataNotification
                                                         object:nil];
     
