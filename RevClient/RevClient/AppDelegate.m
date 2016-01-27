@@ -29,8 +29,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     
-    [RevSDK startWithSDKKey:@"12345"];
-    
     return YES;
 }
 

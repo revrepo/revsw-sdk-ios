@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -20,47 +20,31 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6KH-jZ-a4e">
                                 <rect key="frame" x="28" y="28" width="502" height="30"/>
-                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="0Gv-cx-swK"/>
                                 </connections>
                             </textField>
-                            <webView contentMode="scaleAspectFit" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="awx-jU-xf7">
-                                <rect key="frame" x="28" y="66" width="544" height="526"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="lWf-cg-3Rk"/>
-                                </connections>
-                            </webView>
                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RPj-VE-J8N">
                                 <rect key="frame" x="538" y="28" width="34" height="30"/>
-                                <animations/>
                                 <state key="normal" title="Start"/>
                                 <connections>
                                     <action selector="start" destination="BYZ-38-t0r" eventType="touchUpInside" id="X4M-3D-5an"/>
                                 </connections>
                             </button>
                         </subviews>
-                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="RPj-VE-J8N" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="0Cj-Tg-4j3"/>
-                            <constraint firstItem="awx-jU-xf7" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="3ja-XQ-JZO"/>
                             <constraint firstItem="6KH-jZ-a4e" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="8" id="NhU-tC-QpY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="awx-jU-xf7" secondAttribute="trailing" constant="8" id="RtJ-iC-S6p"/>
                             <constraint firstItem="6KH-jZ-a4e" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="V9t-b6-eh7"/>
                             <constraint firstItem="RPj-VE-J8N" firstAttribute="leading" secondItem="6KH-jZ-a4e" secondAttribute="trailing" constant="8" id="ebo-a0-gMn"/>
-                            <constraint firstItem="awx-jU-xf7" firstAttribute="top" secondItem="6KH-jZ-a4e" secondAttribute="bottom" constant="8" id="n7y-n1-cIi"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="awx-jU-xf7" secondAttribute="bottom" constant="8" id="rLE-Ag-997"/>
                             <constraint firstAttribute="trailingMargin" secondItem="RPj-VE-J8N" secondAttribute="trailing" constant="8" id="raS-Oj-XDF"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="textField" destination="6KH-jZ-a4e" id="w1n-Xq-fko"/>
-                        <outlet property="webView" destination="awx-jU-xf7" id="jlD-nG-qFY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
