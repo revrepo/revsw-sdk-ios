@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11C4BF661C5969160030937E /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; };
+		11C4BF671C5969160030937E /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2BF91DA281506E0B3FFB5BF4 /* libPods-RevSDK Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F53CE05FDC35922BDDD78BEB /* libPods-RevSDK Demo.a */; };
 		5B63439D1C3C106D002EE0BC /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B63439B1C3C106D002EE0BC /* Fabric.framework */; };
 		5B63439E1C3C106D002EE0BC /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B63439C1C3C106D002EE0BC /* Crashlytics.framework */; };
 		5B6C16A91C595E62002113C3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; };
-		5B6C16AA1C595E6A002113C3 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; };
-		5B6C16AB1C595E6A002113C3 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 650840BF1C2A762000B72CAF /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		6508409C1C2A75BF00B72CAF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6508409B1C2A75BF00B72CAF /* main.m */; };
 		6508409F1C2A75BF00B72CAF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6508409E1C2A75BF00B72CAF /* AppDelegate.m */; };
 		650840A21C2A75BF00B72CAF /* RevDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650840A11C2A75BF00B72CAF /* RevDemoViewController.m */; };
@@ -36,13 +36,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		5B6C16AC1C595E6A002113C3 /* Embed Frameworks */ = {
+		11C4BF681C5969160030937E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5B6C16AB1C595E6A002113C3 /* RevSDK.framework in Embed Frameworks */,
+				11C4BF671C5969160030937E /* RevSDK.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,7 +84,7 @@
 				5B6C16A91C595E62002113C3 /* RevSDK.framework in Frameworks */,
 				5B63439E1C3C106D002EE0BC /* Crashlytics.framework in Frameworks */,
 				5B63439D1C3C106D002EE0BC /* Fabric.framework in Frameworks */,
-				5B6C16AA1C595E6A002113C3 /* RevSDK.framework in Frameworks */,
+				11C4BF661C5969160030937E /* RevSDK.framework in Frameworks */,
 				2BF91DA281506E0B3FFB5BF4 /* libPods-RevSDK Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -200,7 +200,7 @@
 				5B63439A1C3C1033002EE0BC /* ShellScript */,
 				17C30228B7B17FA6913FE9FC /* Embed Pods Frameworks */,
 				1278F1D2E8EC1B7047F5085A /* Copy Pods Resources */,
-				5B6C16AC1C595E6A002113C3 /* Embed Frameworks */,
+				11C4BF681C5969160030937E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

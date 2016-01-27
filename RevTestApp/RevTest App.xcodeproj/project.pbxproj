@@ -14,6 +14,8 @@
 		1198FFA11C581A1300CB7FBA /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
 		1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11C4BF5A1C593D170030937E /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C4BF591C593D170030937E /* RevSDK.framework */; };
+		11C4BF641C5969080030937E /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C4BF631C5969080030937E /* RevSDK.framework */; };
+		11C4BF651C5969080030937E /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11C4BF631C5969080030937E /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
@@ -54,8 +56,6 @@
 		5B8767B51C4E55DC00363906 /* newrelic_postbuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
-		5BC066C31C58CC4700F49148 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC066C21C58CC4700F49148 /* RevSDK.framework */; };
-		5BC066C41C58CC5500F49148 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BC066C21C58CC4700F49148 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
 		5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0D5B71C3D6F3B0064F97D /* RTCell.m */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
@@ -97,7 +97,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5BC066C41C58CC5500F49148 /* RevSDK.framework in Embed Frameworks */,
+				11C4BF651C5969080030937E /* RevSDK.framework in Embed Frameworks */,
 				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
 				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
@@ -111,6 +111,7 @@
 		1198FF9B1C5819D200CB7FBA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1198FF9D1C5819DA00CB7FBA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		11C4BF591C593D170030937E /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../RevSDK/build/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
+		11C4BF631C5969080030937E /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/Alexander1/Library/Developer/Xcode/DerivedData/RevSDK-evtzuhfitxmxukbtzngfldtszrym/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RevSDK Racer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,7 +165,6 @@
 		5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = newrelic_postbuild.sh; sourceTree = "<group>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
-		5BC066C21C58CC4700F49148 /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RevSDK.framework; path = "../DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
 		5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTTesting.m"; sourceTree = "<group>"; };
 		5BE0D5B61C3D6F3B0064F97D /* RTCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCell.h; sourceTree = "<group>"; };
@@ -235,6 +235,7 @@
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
 				1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */,
+				11C4BF641C5969080030937E /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +270,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				11C4BF631C5969080030937E /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,

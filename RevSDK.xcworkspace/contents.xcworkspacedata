@@ -8,9 +8,6 @@
       location = "group:RevDemo/RevSDK Demo.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:RevClient/RevClient.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:RevSDK/RevSDK.xcodeproj">
    </FileRef>
    <FileRef
