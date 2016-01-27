@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "RSOriginSession.h"
 
 @interface RSLockedMap : NSObject
@@ -75,6 +77,14 @@
 }
 
 @end
+
+static void displayStatusChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive)
+    {
+        [[RSOriginSession instance] createSession];
+    }
+}
 
 @interface RSOriginSession()<NSURLSessionDataDelegate>
 {
@@ -151,11 +161,15 @@
 - (void)threadRun:(id)ctx
 {
     @autoreleasepool {
-        self.configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
         
-        self.session = [NSURLSession sessionWithConfiguration:self.configuration
-                                                     delegate:self
-                                                delegateQueue:nil];
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        NULL,
+                                        displayStatusChanged,
+                                        CFSTR("com.apple.springboard.lockstate"),
+                                        NULL,
+                                        CFNotificationSuspensionBehaviorDeliverImmediately);
+        
+        [self createSession];
         
         self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5
                                                     target:self
@@ -165,6 +179,15 @@
         mInitialized = YES;
         [[NSRunLoop currentRunLoop] run];
     }
+}
+
+- (void)createSession
+{
+    self.configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    self.session = [NSURLSession sessionWithConfiguration:self.configuration
+                                                 delegate:self
+                                            delegateQueue:nil];
 }
 
 - (void)createTaskWithRequest:(NSURLRequest*)aRequest
