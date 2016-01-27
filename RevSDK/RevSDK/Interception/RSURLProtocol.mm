@@ -35,19 +35,29 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    NSArray* forbiddenSchemes = @[rs::kRSDataSchemeName, rs::kRSMoatBridgeSchemeName];
+    NSURL* requestrURL = aRequest.URL;
+    NSString* host = requestrURL.host;
+    NSString* scheme = [requestrURL.scheme lowercaseString];
     
-    if ([forbiddenSchemes containsObject:aRequest.URL.scheme])
+    BOOL hasHost = host.length > 0;
+    
+    if (!hasHost)
     {
         return NO;
     }
-    
-    if (rs::Model::instance()->currentOperationMode() == rs::kRSOperationModeInnerOff)
+
+    BOOL isHTTPorHTTPS = [scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"];
+    if (!isHTTPorHTTPS)
     {
         return NO;
     }
     
     if (aRequest.isFileRequest)
+    {
+        return NO;
+    }
+
+    if (rs::Model::instance()->currentOperationMode() == rs::kRSOperationModeInnerOff)
     {
         return NO;
     }
@@ -75,11 +85,6 @@
 {
     NSURL* URL             = [aRequest URL];
     NSString* host         = [URL host];
-    
-    if (host.length == 0)
-    {
-        return NO;
-    }
     std::string domainName = rs::stdStringFromNSString(host);
     BOOL should            = rs::Model::instance()->shouldTransportDomainName(domainName);
     return should;
