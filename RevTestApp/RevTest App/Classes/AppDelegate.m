@@ -26,7 +26,7 @@
 
 #import "NSURLCache+ForceNoCache.h"
 
-#ifdef TARGET_IPHONE_SIMULATOR
+#if TARGET_IPHONE_SIMULATOR
 #else
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
@@ -55,7 +55,7 @@ id setBeingRemoved(id self, SEL selector, ...)
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"]; // Racer key for 65apps
-    //[NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
+    [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 

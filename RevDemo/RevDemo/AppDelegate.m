@@ -20,6 +20,12 @@
 #import <RevSDK/RevSDK.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import "objc/runtime.h"
+
+id setBeingRemoved(id self, SEL selector, ...)
+{
+    return nil;
+}
 
 @interface AppDelegate ()
 
@@ -40,6 +46,20 @@
     [RevSDK startWithSDKKey:@"a2e23128-4685-41d3-8e49-c8e76c1688ef"];
     
     [Fabric with:@[[Crashlytics class]]];
+    
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    Class class = NSClassFromString(@"WebActionDisablingCALayerDelegate");
+    class_addMethod(class, @selector(willBeRemoved), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(removeFromSuperview), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(setBeingRemoved:), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(_webCustomViewWillBeRemovedFromSuperview), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(layer), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(superview), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(setNode:), (IMP)setBeingRemoved, NULL);
+    class_addMethod(class, @selector(_webCustomViewWasRemovedFromSuperview:), (IMP)setBeingRemoved, NULL);
+#pragma clang diagnostic pop*/
+
     
     return YES;
 }
