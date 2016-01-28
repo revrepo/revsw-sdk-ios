@@ -1,4 +1,4 @@
-How ot build framework for distribution
+How to build framework for distribution
 
 1. Make sure you build in Release configuration
 2. Make sure that you build for all architectures

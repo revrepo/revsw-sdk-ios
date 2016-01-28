@@ -27,10 +27,6 @@
 		116C4D6B1C456FB5000CE641 /* RSSupervisor.h in Headers */ = {isa = PBXBuildFile; fileRef = 116C4D691C456FB5000CE641 /* RSSupervisor.h */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
-		1198FF8F1C5810C100CB7FBA /* sim_libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */; };
-		1198FF901C5810C100CB7FBA /* sim_libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */; };
-		1198FF911C5810C100CB7FBA /* sim_libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8D1C5810C100CB7FBA /* sim_libquic.a */; };
-		1198FF921C5810C100CB7FBA /* sim_libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8E1C5810C100CB7FBA /* sim_libssl.a */; };
 		11BB68021C5938CB00134420 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BB67FF1C5938CB00134420 /* libcrypto.a */; };
 		11BB68031C5938CB00134420 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BB68001C5938CB00134420 /* libprotobuf.a */; };
 		11BB68041C5938CB00134420 /* libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BB68011C5938CB00134420 /* libquic.a */; };
@@ -190,6 +186,9 @@
 		11BB67FF1C5938CB00134420 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
 		11BB68001C5938CB00134420 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
 		11BB68011C5938CB00134420 /* libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libquic.a; sourceTree = "<group>"; };
+		11C063F91C5971A30013D0B7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
+		11C063FA1C5971A30013D0B7 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
+		11C063FB1C5971A30013D0B7 /* libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libquic.a; sourceTree = "<group>"; };
 		11C196891C3FAF4600F28120 /* RSLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSLog.cpp; sourceTree = "<group>"; };
 		11C1968A1C3FAF4600F28120 /* RSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLog.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
@@ -326,13 +325,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1198FF921C5810C100CB7FBA /* sim_libssl.a in Frameworks */,
 				1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */,
 				11BB68041C5938CB00134420 /* libquic.a in Frameworks */,
-				1198FF8F1C5810C100CB7FBA /* sim_libcrypto.a in Frameworks */,
-				1198FF901C5810C100CB7FBA /* sim_libprotobuf.a in Frameworks */,
 				11BB68031C5938CB00134420 /* libprotobuf.a in Frameworks */,
-				1198FF911C5810C100CB7FBA /* sim_libquic.a in Frameworks */,
 				11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */,
 				11BB68021C5938CB00134420 /* libcrypto.a in Frameworks */,
 			);
@@ -409,6 +404,16 @@
 			path = dvc;
 			sourceTree = "<group>";
 		};
+		11C063F81C5971A30013D0B7 /* dvc_bitcode */ = {
+			isa = PBXGroup;
+			children = (
+				11C063F91C5971A30013D0B7 /* libcrypto.a */,
+				11C063FA1C5971A30013D0B7 /* libprotobuf.a */,
+				11C063FB1C5971A30013D0B7 /* libquic.a */,
+			);
+			path = dvc_bitcode;
+			sourceTree = "<group>";
+		};
 		11C90BBA1C4276670002DCA1 /* quic */ = {
 			isa = PBXGroup;
 			children = (
@@ -476,6 +481,7 @@
 		11C95FE11C2D469300CDE34D /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				11C063F81C5971A30013D0B7 /* dvc_bitcode */,
 				1198FF8A1C5810C100CB7FBA /* sim */,
 				11BB67FE1C5938CB00134420 /* dvc */,
 				11C95FE21C2D469300CDE34D /* libCrypto */,
@@ -1094,6 +1100,7 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sym",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc",
+					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc_bitcode",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1146,6 +1153,7 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sym",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc",
+					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc_bitcode",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (

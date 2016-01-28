@@ -133,19 +133,19 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     headers["X-Rev-Host"] = aRequest->host();
     headers["X-Rev-Proto"] = aRequest->originalScheme();
 
-//    mTS = timestampMS();
-//    
-//    std::string dump;
-//    dump += "timestamp = " + longLongToStr(mTS);
-//    dump += "url = " + aRequest->URL() + "\n";
-//    dump += "method = " + aRequest->method() + "\n";
-//    dump += "body-size = " + intToStr((int)body.size());
-//    dump += "headers = \n";
-//
-//    for (const auto& i : headers)
-//        dump += i.first + ": " + i.second + "\n";
-//    
-//    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
+    mTS = timestampMS();
+    
+    std::string dump;
+    dump += "timestamp = " + longLongToStr(mTS);
+    dump += "url = " + aRequest->URL() + "\n";
+    dump += "method = " + aRequest->method() + "\n";
+    dump += "body-size = " + intToStr((int)body.size());
+    dump += "headers = \n";
+
+    for (SpdyHeaderBlock::iterator i = headers.begin(), e = headers.end(); i != e; ++i)
+        dump += i->first.as_string() + ": " + i->second.as_string() + "\n";
+    
+    Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
     
     onStart();
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
@@ -156,16 +156,16 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
 {
     onResponseReceived();
     
-//    std::string dump;
-//    long long now = timestampMS();
-//    dump += "timestamp = " + longLongToStr(now);
-//    dump += "code = " + intToStr(aCode);
-//    dump += "headers = \n";
-//    
-//    for (const auto& i : aHeaders)
-//        dump += i.first.as_string() + ": " + i.second.as_string() + "\n";
-//    
-//    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
+    std::string dump;
+    long long now = timestampMS();
+    dump += "timestamp = " + longLongToStr(now);
+    dump += "code = " + intToStr(aCode);
+    dump += "headers = \n";
+    
+    for (const auto& i : aHeaders)
+        dump += i.first.as_string() + ": " + i.second.as_string() + "\n";
+    
+    Log::info(kLogTagQUICRequest, "Response #%d in %lld\n%s", mId, (now - mTS), dump.c_str());
 
     if (mRedirect.get() == nullptr)
     {
@@ -238,9 +238,9 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicS
 //        return;
 //    }
     
-//    std::string dump;
-//    dump += "data-len = " + intToStr((int)aLen);
-//    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
+    std::string dump;
+    dump += "data-len = " + intToStr((int)aLen);
+    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
 
     
     addReceivedBytesCount(aLen);

@@ -9,10 +9,6 @@
 /* Begin PBXBuildFile section */
 		1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF9B1C5819D200CB7FBA /* Security.framework */; };
 		1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF9D1C5819DA00CB7FBA /* SystemConfiguration.framework */; };
-		1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
-		1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1198FFA11C581A1300CB7FBA /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
-		1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		11C4BF5A1C593D170030937E /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C4BF591C593D170030937E /* RevSDK.framework */; };
 		11C4BF641C5969080030937E /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11C4BF631C5969080030937E /* RevSDK.framework */; };
 		11C4BF651C5969080030937E /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 11C4BF631C5969080030937E /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -98,8 +94,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				11C4BF651C5969080030937E /* RevSDK.framework in Embed Frameworks */,
-				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
-				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -225,7 +219,6 @@
 				11C4BF5A1C593D170030937E /* RevSDK.framework in Frameworks */,
 				1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */,
 				1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */,
-				1198FFA11C581A1300CB7FBA /* Crashlytics.framework in Frameworks */,
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
@@ -234,7 +227,6 @@
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
-				1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */,
 				11C4BF641C5969080030937E /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -357,6 +357,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0B08B3510F06C9B4627691476F149577 /* Pods-RevTest App.debug.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
@@ -374,6 +375,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C0071D9AAD9A853E892F0331BE0A0CD9 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -392,6 +394,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5EE809C5CEB117842CC4AB81BA962A51 /* Pods-RevTest App.release.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
@@ -409,6 +412,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6F55F88EDB65F6C65B0E48615944269B /* Pods-RevSDK Demo.release.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
@@ -426,6 +430,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C0071D9AAD9A853E892F0331BE0A0CD9 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -483,6 +488,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EC06B4F8E7F4BCE8E9DCE91BA10415CE /* Pods-RevSDK Demo.debug.xcconfig */;
 			buildSettings = {
+				ENABLE_BITCODE = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
