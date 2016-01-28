@@ -46,6 +46,10 @@
 		11C962261C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11C962241C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm */; };
 		11C9622A1C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C962281C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h */; };
 		11C9622D1C2D7AE400CDE34D /* RevProofVerifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */; };
+		11CDFD131C5AA6FB008BCF8F /* sim_libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */; };
+		11CDFD141C5AA6FB008BCF8F /* sim_libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */; };
+		11CDFD151C5AA6FB008BCF8F /* sim_libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8D1C5810C100CB7FBA /* sim_libquic.a */; };
+		11CDFD161C5AA6FB008BCF8F /* sim_libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8E1C5810C100CB7FBA /* sim_libssl.a */; };
 		11F24B341C3C06B900DABAE5 /* QUICDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */; };
 		11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B331C3C06B900DABAE5 /* QUICDataStream.h */; };
 		11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */; };
@@ -325,9 +329,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11CDFD161C5AA6FB008BCF8F /* sim_libssl.a in Frameworks */,
 				1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */,
 				11BB68041C5938CB00134420 /* libquic.a in Frameworks */,
+				11CDFD131C5AA6FB008BCF8F /* sim_libcrypto.a in Frameworks */,
+				11CDFD141C5AA6FB008BCF8F /* sim_libprotobuf.a in Frameworks */,
 				11BB68031C5938CB00134420 /* libprotobuf.a in Frameworks */,
+				11CDFD151C5AA6FB008BCF8F /* sim_libquic.a in Frameworks */,
 				11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */,
 				11BB68021C5938CB00134420 /* libcrypto.a in Frameworks */,
 			);

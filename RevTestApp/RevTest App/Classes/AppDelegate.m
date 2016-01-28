@@ -26,12 +26,12 @@
 
 #import "NSURLCache+ForceNoCache.h"
 
-//#if TARGET_IPHONE_SIMULATOR
-//#else
-//#import <Fabric/Fabric.h>
-//#import <Crashlytics/Crashlytics.h>
-//#define USE_CRASHLYTICS 1
-//#endif
+#if TARGET_IPHONE_SIMULATOR
+#else
+#import <Fabric/Fabric.h>
+#import <Crashlytics/Crashlytics.h>
+#define USE_CRASHLYTICS 1
+#endif
 
 id setBeingRemoved(id self, SEL selector, ...)
 {
