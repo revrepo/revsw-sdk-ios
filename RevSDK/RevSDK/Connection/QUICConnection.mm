@@ -200,7 +200,18 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                     newRequest->setRest(path);
                     newRequest->setOriginalScheme(scheme);
                     
-                    mRedirect->startWithRequest(newRequest, this);
+                    std::map<std::string, std::string> headers;
+                    
+                    for (const auto& h : aHeaders)
+                    {
+                        if (h.first.size() == 0)
+                            continue;
+                        
+                        if (h.first[0] != ':')
+                            headers[h.first.as_string()] = h.second.as_string();
+                    }
+                    std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
+                    mDelegate->connectionWasRedirected(mWeakThis.lock(), newRequest, response);
                     return;
                 }
             }
@@ -377,6 +388,11 @@ void QUICConnection::connectionDidFailWithError(std::shared_ptr<Connection> aCon
 {
     mDelegate->connectionDidFailWithError(aConnection, aError);
     mAnchor1.reset();
+}
+
+void QUICConnection::connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse)
+{
+    
 }
 
 

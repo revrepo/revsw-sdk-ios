@@ -72,7 +72,7 @@
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)aTask
 {
-    NSURLRequest* request = [aTask originalRequest];
+    NSURLRequest* request = [aTask currentRequest];
     return [self canInitWithRequest:request];
 }
 
@@ -93,7 +93,7 @@
 - (void)startLoading
 {
     self.dataLength = 0;
-    
+ 
     if ([self shouldRedirectRequest:self.request])
     {
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
@@ -136,7 +136,7 @@
 
 - (id)initWithTask:(NSURLSessionTask *)task cachedResponse:(NSCachedURLResponse *)cachedResponse client:(id<NSURLProtocolClient>)client
 {
-    NSURLRequest* request = [task originalRequest];
+    NSURLRequest* request = [task currentRequest];
     
     self = [self initWithRequest:request cachedResponse:cachedResponse client:client];
     
@@ -145,6 +145,13 @@
 
 #pragma mark -
 #pragma mark - RSURLConnectionDelegate
+
+- (void)rsconnection:(RSURLConnection *)connection wasRedirectedToRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
+{
+    [self.client URLProtocol:self
+      wasRedirectedToRequest:request
+            redirectResponse:response];
+}
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -202,7 +209,6 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didReceiveResponse:(NSURLResponse *)response
 {
-     NSLog(@"ORIGIN RESPONSE %@", response);
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
                                                         object:nil];
     
@@ -219,6 +225,13 @@
     }
 
     [self.client URLProtocolDidFinishLoading:self];
+}
+
+- (void)connection:(RSURLConnectionNative *)aConnection wasRedirectedToRequest:(NSURLRequest *)aRequest redirectResponse:(NSURLResponse *)aResponse
+{
+    [self.client URLProtocol:self
+      wasRedirectedToRequest:aRequest
+            redirectResponse:aResponse];
 }
 
 @end

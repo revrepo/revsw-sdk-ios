@@ -56,6 +56,7 @@ namespace rs
         
         void connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData) override {};
         void connectionDidFinish(std::shared_ptr<Connection> aConnection) override {};
+        void connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse) override {};
         
         void connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse) override
         {

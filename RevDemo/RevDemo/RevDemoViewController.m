@@ -25,7 +25,7 @@
 
 #import "MBProgressHUD.h"
 
-@interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate>
+@interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *urlTextField;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
@@ -40,6 +40,7 @@
 {
     [super viewDidLoad];
     [RevSDK debug_turnOnDebugBanners];
+    
     [self reloadPage];
 }
 

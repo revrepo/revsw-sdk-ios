@@ -242,35 +242,11 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
-
-    if (!request)
-    {
-        completionHandler(nil);
-    }
-    else if (rs::Model::instance()->currentOperationMode() == rs::kRSOperationModeInnerOff)
-    {
-        completionHandler(request);
-    }
-    else
-    {
-        int connectionId = [task.taskDescription intValue];
-        std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
-        
-        std::string edgeHost   = connection->edgeHost();
-        NSString* nsEdgeHost   = rs::NSStringFromStdString(edgeHost);
-        BOOL shouldModify      = ![request.URL.host isEqualToString:nsEdgeHost];
-        NSMutableURLRequest* r = shouldModify ? [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL] : [request mutableCopy];
-        
-        if (r != nil)
-            [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:r];
-        else
-        {
-            NSString* dump = [NSString stringWithFormat:@"%@\n%@", response.URL, response.allHeaderFields];
-            std::string cDump = rs::stdStringFromNSString(dump);
-            rs::Log::warning(rs::kLogTagSTDRequest, "Failed to process redirect. Resonse dump: %s", cDump.c_str());
-        }
-        completionHandler(r);
-    }
+    
+    int connectionId                           = [task.taskDescription intValue];
+    std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
+    
+    connection->wasRedirected((__bridge void *)request, (__bridge void *)response);
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data

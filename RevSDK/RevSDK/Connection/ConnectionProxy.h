@@ -41,21 +41,24 @@ namespace rs
        std::shared_ptr<Connection> mConnection;
        
        std::function<void()> mFinishRequestCallback;
-       std::function<void(Data)> mReceivedDataCallback;
+       std::function<void(const Data&)> mReceivedDataCallback;
        std::function<void(std::shared_ptr<Response>)> mReceivedResponseCallback;
-       std::function<void(Error)> mErrorCallback;
+       std::function<void(const Error&)> mErrorCallback;
+       std::function<void(std::shared_ptr<Request>, std::shared_ptr<Response>)> mRedirectCallback;
        
      public:
        ConnectionProxy(std::shared_ptr<Request> aRequest, const std::string& aCurrentProtocolName);
        ~ConnectionProxy();
        void start();
-       void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>, std::function<void(Error)>);
+       void setCallbacks(std::function<void()>, std::function<void(Data)>, std::function<void(std::shared_ptr<Response>)>, std::function<void(Error)>,
+                         std::function<void(std::shared_ptr<Request>, std::shared_ptr<Response>)>);
        
        //delegate
        virtual void connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse);
        virtual void connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData);
        virtual void connectionDidFinish(std::shared_ptr<Connection> aConnection);
        virtual void connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError);
+       virtual void connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse);
    };
 }
 

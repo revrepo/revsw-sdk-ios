@@ -26,6 +26,7 @@
 - (void)connectionDidFinish:(nonnull RSURLConnectionNative *)aConnection;
 - (void)connection:(nonnull RSURLConnectionNative *)aConnection didReceiveData:(nonnull NSData *)data;
 - (void)connection:(nonnull RSURLConnectionNative *)aConnection didReceiveResponse:(nonnull NSURLResponse *)response;
+- (void)connection:(nonnull RSURLConnectionNative *)aConnection wasRedirectedToRequest:(nonnull NSURLRequest *)aRequest redirectResponse:(nonnull NSURLResponse *)aResponse;
 
 @end
 

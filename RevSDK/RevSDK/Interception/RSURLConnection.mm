@@ -77,15 +77,24 @@
             [self.delegate rsconnection:self didFailWithError:error];
         };
         
+        std::function<void(std::shared_ptr<rs::Request>, std::shared_ptr<rs::Response>)> redirectCallback = [self](std::shared_ptr<rs::Request> aRequest, std::shared_ptr<rs::Response> aResponse){
+        
+            NSURLRequest* request       = rs::URLRequestFromRequest(aRequest);
+            NSHTTPURLResponse* response = rs::NSHTTPURLResponseFromResponse(aResponse);
+            
+            [self.delegate rsconnection:self
+                 wasRedirectedToRequest:request
+                       redirectResponse:response];
+        };
+        
         std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
         BOOL isEdge = currentProtocolName == rs::standardProtocolName();
-        
         NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdge baseURL:nil];
         std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
         request->setOriginalURL(rs::stdStringFromNSString(aRequest.URL.absoluteString));
         request->setOriginalScheme(rs::stdStringFromNSString(aRequest.URL.scheme));
         connectionProxy = std::make_shared<rs::ConnectionProxy>(request, currentProtocolName);
-        connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback);
+        connectionProxy.get()->setCallbacks(finishCallback, dataCallback, responseCallback, errorCallback, redirectCallback);
     }
     
     return self;
