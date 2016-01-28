@@ -43,6 +43,7 @@ namespace rs
         virtual void connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData) = 0;
         virtual void connectionDidFinish(std::shared_ptr<Connection> aConnection) = 0;
         virtual void connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError) = 0;
+        virtual void connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse) = 0;
     };
     
     class Connection
@@ -94,6 +95,7 @@ namespace rs
         virtual void didReceiveData(void* ) = 0;
         virtual void didReceiveResponse(void* ) = 0;
         virtual void didCompleteWithError(void* ) = 0;
+        virtual void wasRedirected(void*, void* ) = 0;
         
         static int getLastConnectionId();
         

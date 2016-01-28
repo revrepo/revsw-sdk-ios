@@ -379,6 +379,11 @@ void QUICConnection::connectionDidFailWithError(std::shared_ptr<Connection> aCon
     mAnchor1.reset();
 }
 
+void QUICConnection::connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse)
+{
+    
+}
+
 
 
 

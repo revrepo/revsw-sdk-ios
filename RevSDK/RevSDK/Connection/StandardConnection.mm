@@ -183,3 +183,15 @@ void StandardConnection::didCompleteWithError(void* aError)
     
     CFRelease(mHolder);
 }
+
+void StandardConnection::wasRedirected(void* aRequest, void* aResponse)
+{
+    NSURLRequest* request               = (__bridge NSURLRequest *)aRequest;
+    NSHTTPURLResponse* response         = (__bridge NSHTTPURLResponse *)aResponse;
+    std::shared_ptr<Response> _response = responseFromHTTPURLResponse(response);
+    std::shared_ptr<Request> _request   = requestFromURLRequest(request);
+    
+    mConnectionDelegate->connectionWasRedirected(mWeakThis.lock(),
+                                                 _request,
+                                                 _response);
+}

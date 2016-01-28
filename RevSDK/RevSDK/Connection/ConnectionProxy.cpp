@@ -45,12 +45,13 @@ namespace rs
         ProtocolFailureMonitor::logConnection(mConnection->edgeTransport());
     }
     
-    void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback, std::function<void(Error)> aErrorCallback)
+    void ConnectionProxy::setCallbacks(std::function<void()> aFinishCallback, std::function<void(Data)> aDataCallback, std::function<void(std::shared_ptr<Response>)> aResponseCallback, std::function<void(Error)> aErrorCallback, std::function<void(std::shared_ptr<Request>, std::shared_ptr<Response>)> aRedirectCallback)
     {
         mFinishRequestCallback    = aFinishCallback;
         mReceivedDataCallback     = aDataCallback;
         mReceivedResponseCallback = aResponseCallback;
         mErrorCallback            = aErrorCallback;
+        mRedirectCallback         = aRedirectCallback;
     }
     
     void ConnectionProxy:: connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse)
@@ -72,5 +73,10 @@ namespace rs
     {
         ProtocolFailureMonitor::logFailure(aConnection->edgeTransport(), aError.code);
         mErrorCallback(aError);
+    }
+    
+    void ConnectionProxy::connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse)
+    {
+        mRedirectCallback(aRequest, aResponse);
     }
 }

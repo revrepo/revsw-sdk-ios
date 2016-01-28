@@ -43,6 +43,7 @@ namespace rs
         virtual void didReceiveData(void* );
         virtual void didReceiveResponse(void* );
         virtual void didCompleteWithError(void* );
+        virtual void wasRedirected(void*, void* );
         
     private:
        

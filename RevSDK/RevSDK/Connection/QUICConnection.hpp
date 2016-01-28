@@ -60,11 +60,13 @@ namespace rs
         void didReceiveData(void* ) {}
         void didReceiveResponse(void* ) {}
         void didCompleteWithError(void* ) {}
+        void wasRedirected(void*, void*){}
         
         void connectionDidReceiveResponse(std::shared_ptr<Connection> aConnection, std::shared_ptr<Response> aResponse);
         void connectionDidReceiveData(std::shared_ptr<Connection> aConnection, Data aData);
         void connectionDidFinish(std::shared_ptr<Connection> aConnection);
         void connectionDidFailWithError(std::shared_ptr<Connection> aConnection, Error aError);
+        void connectionWasRedirected(std::shared_ptr<Connection> aConnection, std::shared_ptr<Request> aRequest, std::shared_ptr<Response> aResponse);
 
     private:
         int mId;

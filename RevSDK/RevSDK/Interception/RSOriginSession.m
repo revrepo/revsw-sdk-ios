@@ -262,4 +262,15 @@ didReceiveResponse:(NSURLResponse *)response
         [self.map removeConnectionId:dataTask.taskDescription];
 }
 
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
+{
+    id<NSURLSessionDataDelegate> delegate = [self.map delegateForConnectionId:task.taskDescription];
+    
+     [delegate URLSession:session
+                      task:task
+willPerformHTTPRedirection:response
+              newRequest:request
+       completionHandler:completionHandler];
+}
+
 @end
