@@ -241,9 +241,9 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
-    [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
-
     NSLog(@"RESPONSE %@ REQUEST %@", response, request);
+    
+    [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
     
     if (!request)
     {

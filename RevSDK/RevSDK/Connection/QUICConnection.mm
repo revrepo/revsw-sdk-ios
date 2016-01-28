@@ -214,8 +214,8 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                     }
                     std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
                     NSLog(@"REDIRECT QUIC !!!!!!");
-                    mDelegate->connectionWasRedirected(mWeakThis.lock(), newRequest, response);
-                    
+                    //mDelegate->connectionWasRedirected(mWeakThis.lock(), newRequest, response);
+                    mRedirect->startWithRequest(newRequest, this);
                     return;
                 }
             }

@@ -25,12 +25,13 @@
 
 #import "MBProgressHUD.h"
 
-@interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate>
+@interface RevDemoViewController () <UITextFieldDelegate, UIWebViewDelegate, NSURLSessionDataDelegate, NSURLSessionTaskDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *urlTextField;
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @property (weak, nonatomic) IBOutlet UIButton *backButton;
 @property (nonatomic, strong) MBProgressHUD* hud;
+@property (nonatomic, strong) NSURLSession* session;
 
 @end
 
@@ -40,7 +41,18 @@
 {
     [super viewDidLoad];
     [RevSDK debug_turnOnDebugBanners];
-    [self reloadPage];
+    
+    NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    
+    configuration.protocolClasses = @[NSClassFromString(@"RSURLProtocol")];
+    
+    self.session = [NSURLSession sessionWithConfiguration:configuration
+                                                 delegate:self
+                                            delegateQueue:nil];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+       [self reloadPage]; 
+    });
 }
 
 - (void)reloadPage
@@ -53,13 +65,26 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
     
-    /*NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
-                                                             completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
-                                                             
-                                                                 NSLog(@"RESPONSE %@", response);
-                                                             }];
+   // NSURLSessionTask* task = [self.session dataTaskWithRequest:request];
+   // [task resume];
+}
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
+{
+    NSLog(@"Response %@", response);
+    completionHandler(NSURLSessionResponseAllow);
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
+{
+    NSLog(@"Did complete %@", error);
+}
+
+- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
+{
+    NSLog(@"Redirection response %@ request %@", response, request);
     
-    [task resume];*/
+    completionHandler(request);
 }
 
 #pragma mark - Actions

@@ -186,10 +186,16 @@ void StandardConnection::didCompleteWithError(void* aError)
 
 void StandardConnection::wasRedirected(void* aRequest, void* aResponse)
 {
-    NSURLRequest* request               = (__bridge NSURLRequest *)aRequest;
-    NSHTTPURLResponse* response         = (__bridge NSHTTPURLResponse *)aResponse;
-    std::shared_ptr<Response> _response = responseFromHTTPURLResponse(response);
-    std::shared_ptr<Request> _request   = requestFromURLRequest(request);
+    NSURLRequest* request                = (__bridge NSURLRequest *)aRequest;
+    NSHTTPURLResponse* response          = (__bridge NSHTTPURLResponse *)aResponse;
+    NSString* originalURL                = NSStringFromStdString(mCurrentRequest->originalURL());
+    NSHTTPURLResponse* processedResponse = [[NSHTTPURLResponse alloc] initWithURL:[NSURL URLWithString:originalURL]
+                                                                       statusCode:response.statusCode
+                                                                      HTTPVersion:@"1.1"
+                                                                     headerFields:response.allHeaderFields];
+    std::shared_ptr<Response> _response  = responseFromHTTPURLResponse(processedResponse);
+    std::shared_ptr<Request> _request    = requestFromURLRequest(request);
+    mCurrentRequest                      = _request;
     
     mConnectionDelegate->connectionWasRedirected(mWeakThis.lock(),
                                                  _request,
