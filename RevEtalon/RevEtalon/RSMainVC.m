@@ -73,7 +73,7 @@ static const NSUInteger kMaxIterations = 10;
 
 - (NSURLSession*)session
 {
-    return [NSURLSession sharedSession];
+    return [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
 }
 
 - (void)viewWillAppear:(BOOL)animated

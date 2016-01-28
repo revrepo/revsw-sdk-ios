@@ -20,6 +20,7 @@
 #import "AppDelegate.h"
 #import "RSMainVC.h"
 #import "RSMainNC.h"
+#import <NewRelicAgent/NewRelic.h>
 
 @interface AppDelegate ()
 
@@ -35,6 +36,10 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.rootViewController = nc;
     [self.window makeKeyAndVisible];
+    
+    
+    [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
+    
     return YES;
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		53126D2A1E335BE8E2509C6D /* libPods-RevEtalon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B215B305A94317350FB798A2 /* libPods-RevEtalon.a */; };
 		849AA8FF1C4DA4BE006BD788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 849AA8FE1C4DA4BE006BD788 /* main.m */; };
 		849AA9021C4DA4BE006BD788 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 849AA9011C4DA4BE006BD788 /* AppDelegate.m */; };
 		849AA90A1C4DA4BE006BD788 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 849AA9091C4DA4BE006BD788 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5208E3CE7C099A455D8D8548 /* Pods-RevEtalon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevEtalon.release.xcconfig"; path = "../Pods/Target Support Files/Pods-RevEtalon/Pods-RevEtalon.release.xcconfig"; sourceTree = "<group>"; };
 		849AA8FA1C4DA4BE006BD788 /* RevEtalon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RevEtalon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		849AA8FE1C4DA4BE006BD788 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		849AA9001C4DA4BE006BD788 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -29,6 +31,8 @@
 		849AA9171C4DA524006BD788 /* RSMainNC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSMainNC.h; sourceTree = "<group>"; };
 		849AA9181C4DA524006BD788 /* RSMainNC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSMainNC.m; sourceTree = "<group>"; };
 		849AA91A1C4DA530006BD788 /* RSMainVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RSMainVC.xib; sourceTree = "<group>"; };
+		B215B305A94317350FB798A2 /* libPods-RevEtalon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevEtalon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C410022DE95EDCC3FAF73C68 /* Pods-RevEtalon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevEtalon.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevEtalon/Pods-RevEtalon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,17 +40,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53126D2A1E335BE8E2509C6D /* libPods-RevEtalon.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6577A927EB6AD3A5EF9BA784 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B215B305A94317350FB798A2 /* libPods-RevEtalon.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		849AA8F11C4DA4BD006BD788 = {
 			isa = PBXGroup;
 			children = (
 				849AA8FC1C4DA4BE006BD788 /* RevEtalon */,
 				849AA8FB1C4DA4BE006BD788 /* Products */,
+				AAC2A50DF0687D8D41BAC3EE /* Pods */,
+				6577A927EB6AD3A5EF9BA784 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -84,6 +99,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		AAC2A50DF0687D8D41BAC3EE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C410022DE95EDCC3FAF73C68 /* Pods-RevEtalon.debug.xcconfig */,
+				5208E3CE7C099A455D8D8548 /* Pods-RevEtalon.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -91,9 +115,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 849AA9111C4DA4BE006BD788 /* Build configuration list for PBXNativeTarget "RevEtalon" */;
 			buildPhases = (
+				CE4FDA8AC19484F8EBC8D613 /* Check Pods Manifest.lock */,
 				849AA8F61C4DA4BE006BD788 /* Sources */,
 				849AA8F71C4DA4BE006BD788 /* Frameworks */,
 				849AA8F81C4DA4BE006BD788 /* Resources */,
+				5E627CCE3708D544E7F4755D /* Embed Pods Frameworks */,
+				58A8A44B087A7627BAD5854C /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -148,6 +175,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		58A8A44B087A7627BAD5854C /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-RevEtalon/Pods-RevEtalon-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E627CCE3708D544E7F4755D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/../Pods/Target Support Files/Pods-RevEtalon/Pods-RevEtalon-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CE4FDA8AC19484F8EBC8D613 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		849AA8F61C4DA4BE006BD788 /* Sources */ = {
@@ -259,9 +334,14 @@
 		};
 		849AA9121C4DA4BE006BD788 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C410022DE95EDCC3FAF73C68 /* Pods-RevEtalon.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Alexander Mamchich (C5K93767WW)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RevEtalon",
+				);
 				INFOPLIST_FILE = RevEtalon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -273,9 +353,14 @@
 		};
 		849AA9131C4DA4BE006BD788 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5208E3CE7C099A455D8D8548 /* Pods-RevEtalon.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Alexander Mamchich (4BK2JHQGZF)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/RevEtalon",
+				);
 				INFOPLIST_FILE = RevEtalon/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

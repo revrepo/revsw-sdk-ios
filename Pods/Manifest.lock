@@ -1,13 +1,10 @@
 PODS:
-  - MBProgressHUD (0.9.2)
   - NewRelicAgent (5.3.5)
 
 DEPENDENCIES:
-  - MBProgressHUD (~> 0.9.1)
   - NewRelicAgent
 
 SPEC CHECKSUMS:
-  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   NewRelicAgent: 0e5d8312054fe779237efc12e05f10c314884c47
 
 COCOAPODS: 0.39.0
