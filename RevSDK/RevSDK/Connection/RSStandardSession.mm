@@ -243,6 +243,8 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 {
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
 
+    NSLog(@"RESPONSE %@ REQUEST %@", response, request);
+    
     if (!request)
     {
         completionHandler(nil);
@@ -256,7 +258,7 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
         int connectionId = [task.taskDescription intValue];
         std::shared_ptr<rs::Connection> connection = mConnections.getById(connectionId);
         
-        /*std::string edgeHost   = connection->edgeHost();
+       /* std::string edgeHost   = connection->edgeHost();
         NSString* nsEdgeHost   = rs::NSStringFromStdString(edgeHost);
         BOOL shouldModify      = ![request.URL.host isEqualToString:nsEdgeHost];
         NSMutableURLRequest* r = shouldModify ? [RSURLRequestProcessor proccessRequest:request isEdge:YES baseURL:task.originalRequest.URL] : [request mutableCopy];
@@ -268,10 +270,8 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
             NSString* dump = [NSString stringWithFormat:@"%@\n%@", response.URL, response.allHeaderFields];
             std::string cDump = rs::stdStringFromNSString(dump);
             rs::Log::warning(rs::kLogTagSTDRequest, "Failed to process redirect. Resonse dump: %s", cDump.c_str());
-        }*/
-        //completionHandler(r);
-        
-        
+        }
+        completionHandler(r);*/
         
         connection->wasRedirected((__bridge void *)request, (__bridge void *)response);
     }

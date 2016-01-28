@@ -200,7 +200,22 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                     newRequest->setRest(path);
                     newRequest->setOriginalScheme(scheme);
                     
-                    mRedirect->startWithRequest(newRequest, this);
+                    //mRedirect->startWithRequest(newRequest, this);
+                    
+                    std::map<std::string, std::string> headers;
+                    
+                    for (const auto& h : aHeaders)
+                    {
+                        if (h.first.size() == 0)
+                            continue;
+                        
+                        if (h.first[0] != ':')
+                            headers[h.first.as_string()] = h.second.as_string();
+                    }
+                    std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
+                    NSLog(@"REDIRECT QUIC !!!!!!");
+                    mDelegate->connectionWasRedirected(mWeakThis.lock(), newRequest, response);
+                    
                     return;
                 }
             }

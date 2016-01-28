@@ -52,6 +52,14 @@
     NSURL        *url     = [NSURL URLWithString:self.urlTextField.text];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.webView loadRequest:request];
+    
+    /*NSURLSessionTask* task = [[NSURLSession sharedSession] dataTaskWithRequest:request
+                                                             completionHandler:^(NSData* data, NSURLResponse* response, NSError* error){
+                                                             
+                                                                 NSLog(@"RESPONSE %@", response);
+                                                             }];
+    
+    [task resume];*/
 }
 
 #pragma mark - Actions
