@@ -93,7 +93,11 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
     
     if (rest.size() > 0)
     {
-        assert(rest[0] == '/');
+       if (rest[0] != '/')
+       {
+           Log::error(kLogTagQUICRequest, ("rest starts from invalid symbol " + rest).c_str());
+           rest = "/" + rest;
+       }
     }
     
 //    if (rest == "/ibm/main/2/i.gif")

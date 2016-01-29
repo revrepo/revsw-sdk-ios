@@ -65,7 +65,7 @@ namespace rs
     
     const std::string kRevHostHeader = stdStringFromNSString(kRSRevHostHeader);
     
-    const int kRequestsCount = 500;
+    const int kRequestsCountMax = 500;
     
     std::string loadConfigurationURL(const std::string& aSDKKey)
     {
