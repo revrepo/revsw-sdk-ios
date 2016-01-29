@@ -148,8 +148,13 @@
 
 - (void)rsconnection:(RSURLConnection *)connection wasRedirectedToRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
+    NSMutableURLRequest* newRequest = [request mutableCopy];
+    
+    [NSURLProtocol removePropertyForKey:rs::kRSURLProtocolHandledKey
+                              inRequest:newRequest];
+    
     [self.client URLProtocol:self
-      wasRedirectedToRequest:request
+      wasRedirectedToRequest:newRequest
             redirectResponse:response];
 }
 
@@ -229,8 +234,13 @@
 
 - (void)connection:(RSURLConnectionNative *)aConnection wasRedirectedToRequest:(NSURLRequest *)aRequest redirectResponse:(NSURLResponse *)aResponse
 {
+    NSMutableURLRequest* newRequest = [aRequest mutableCopy];
+    
+    [NSURLProtocol removePropertyForKey:rs::kRSURLProtocolHandledKey
+                              inRequest:newRequest];
+    
     [self.client URLProtocol:self
-      wasRedirectedToRequest:aRequest
+      wasRedirectedToRequest:newRequest
             redirectResponse:aResponse];
 }
 

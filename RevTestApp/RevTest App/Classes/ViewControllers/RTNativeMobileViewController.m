@@ -44,6 +44,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, copy) NSString* urlString;
 @property (nonatomic, strong) PickerView* historyPickerView;
+@property (nonatomic, strong) NSHTTPURLResponse* currentResponse;
 
 @end
 
@@ -239,72 +240,39 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     [self showHistoryPickerView:[Storage nativeMobileAppHistory]];
 }
 
-//- (void)calculateMD5AndSave:(NSString*)aRequestData sent:(bool)aSent mode:(RSOperationMode)aMode
-//{
-//    NSString* sum = [aRequestData MD5String];
-//    
-//    if (aMode == kRSOperationModeOff)
-//    {
-//        if (aSent)
-//        {
-//           self.currentResult.asisSentChecksum = sum;
-//        }
-//        else
-//        {
-//            self.currentResult.asisRcvdChecksum = sum;
-//        }
-//    }
-//    else
-//    {
-//        if (aSent)
-//        {
-//            self.currentResult.edgeSentChecksum = sum;
-//        }
-//        else
-//        {
-//            self.currentResult.edgeRcvdChecksum = sum;
-//        }
-//    }
-//}
-
 - (void)loadRequest:(NSURLRequest *)aRequest
-{ 
-    NSURLSession* session = [NSURLSession sharedSession];
-    
-    NSData* body = aRequest.HTTPBody;
-    NSString* requestData = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
-//    self.currentResult.method = aRequest.HTTPMethod;
-//    
-//    [self calculateMD5AndSave:requestData sent:true mode:[RevSDK operationMode]];
-    
+{
     [self loadStarted:self.URLTextField.text];
     
-    NSURLSessionTask* task = [session dataTaskWithRequest:aRequest
-                                        completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
-                                            
-                                            NSString* rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
-                                            
-                                            NSError* error = nil;
-                                            
-                                            NSDictionary *dictionary = nil;
-                                            if (aData != nil)
-                                            {
-                                                dictionary = [NSJSONSerialization JSONObjectWithData:aData
-                                                                                             options:kNilOptions
-                                                                                               error:&error];
-                                            }
-                                            NSString* data = [dictionary objectForKey:@"data"];
-                                            data = data ? data : rcvdData;
-                                            
-                                            NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse; 
-                                            
-                                            //quick fix
-                                            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                                        
-                                                [self loadFinished:[httpResponse statusCode]];
-                                                
-                                            });
-                                        }];
+    NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.protocolClasses            = @[NSClassFromString(@"RSURLProtocol")];
+    NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration];
+    NSURLSessionTask* task                   = [session dataTaskWithRequest:aRequest
+                                                          completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
+                                                              
+                                                              NSString* rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
+                                                              
+                                                              NSError* error = nil;
+                                                              
+                                                              NSDictionary *dictionary = nil;
+                                                              if (aData != nil)
+                                                              {
+                                                                  dictionary = [NSJSONSerialization JSONObjectWithData:aData
+                                                                                                               options:kNilOptions
+                                                                                                                 error:&error];
+                                                              }
+                                                              NSString* data = [dictionary objectForKey:@"data"];
+                                                              data = data ? data : rcvdData;
+                                                              
+                                                              NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) aResponse;
+                                                              
+                                                              //quick fix
+                                                              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.01 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                                                                  
+                                                                  [self loadFinished:[httpResponse statusCode]];
+                                                                  
+                                                              });
+                                                          }];
     [task resume];
 }
 
