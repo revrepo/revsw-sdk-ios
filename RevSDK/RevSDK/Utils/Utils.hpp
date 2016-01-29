@@ -97,6 +97,8 @@ typedef enum
     
     extern const std::string kRevHostHeader;
     
+    extern const int kRequestsCountMax;
+    
     std::string loadConfigurationURL(const std::string&);
     std::string reportStatsURL();
     std::string errorDescriptionKey();

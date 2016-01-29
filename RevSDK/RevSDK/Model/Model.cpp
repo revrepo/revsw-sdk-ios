@@ -242,7 +242,12 @@ namespace rs
                 int requestsCount = this->mConfService->getActive()->statsReportingMaxRequests;
                 const std::string appName = this->mConfService->getActive()->appName;
                 
-                assert(requestsCount);
+                if (requestsCount <= 0)
+                {
+                    Log::error(kLogTagSDKStats, ("invalid requests count " + std::to_string(requestsCount)).c_str());
+                    requestsCount = kRequestsCountMax;
+                }
+                
                 Log::info(kLogTagSDKStats,
                           ("Paking reports, max at once :: " + std::to_string(requestsCount)).c_str());
                 
