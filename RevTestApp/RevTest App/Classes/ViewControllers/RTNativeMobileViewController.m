@@ -34,7 +34,7 @@ static const NSInteger kMethodPickerTag = 1;
 static const NSInteger kFormatPickerTag = 2;
 static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 
-@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PickerViewDelegate, NSURLSessionDataDelegate, NSURLSessionDelegate>
+@interface RTNativeMobileViewController ()<UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate, PickerViewDelegate>
 
 @property (nonatomic, strong) UITextField* fakeTextField;
 @property (nonatomic, strong) NSArray* methods;
@@ -44,6 +44,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 @property (nonatomic, strong) RTTestModel* testModel;
 @property (nonatomic, copy) NSString* urlString;
 @property (nonatomic, strong) PickerView* historyPickerView;
+@property (nonatomic, strong) NSHTTPURLResponse* currentResponse;
 
 @end
 
@@ -243,15 +244,13 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 {
     [self loadStarted:self.URLTextField.text];
     
-    NSData* body                             = aRequest.HTTPBody;
-    NSString* requestData                    = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
     NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.protocolClasses            = @[NSClassFromString(@"RSURLProtocol")];
     NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration
-                                                                             delegate:self
+                                                                             delegate:nil
                                                                         delegateQueue:nil];
-    NSURLSessionTask* task                   = [session dataTaskWithRequest:aRequest];
-                                                          /*completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
+    NSURLSessionTask* task                   = [session dataTaskWithRequest:aRequest
+                                                          completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                                               
                                                               NSString* rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
                                                               
@@ -275,7 +274,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
                                                                   [self loadFinished:[httpResponse statusCode]];
                                                                   
                                                               });
-                                                          }];*/
+                                                          }];
     [task resume];
 }
 
@@ -380,13 +379,6 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
 {
     self.URLTextField.text = urlString;
     [self hideHistoryPickerView];
-}
-
-#pragma mark - NSURLSessionDelegate
-
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
-{
-    
 }
 
 @end
