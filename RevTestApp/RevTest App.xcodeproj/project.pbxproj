@@ -11,7 +11,6 @@
 		1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF9D1C5819DA00CB7FBA /* SystemConfiguration.framework */; };
 		1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
 		1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		1198FFA11C581A1300CB7FBA /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
 		1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -58,6 +57,7 @@
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
 		5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0D5B71C3D6F3B0064F97D /* RTCell.m */; };
+		5BE164E41C5BA1FE003A6E5B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
 		5BEC8CA01C06FB2B0019BCD1 /* RTStartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9F1C06FB2B0019BCD1 /* RTStartViewController.xib */; };
 		5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA31C0706A00019BCD1 /* RTMobileWebViewController.m */; };
@@ -234,6 +234,7 @@
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
 				1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */,
 				5B6AB2BC1C5A1AEA0006D2BB /* RevSDK.framework in Frameworks */,
+				5BE164E41C5BA1FE003A6E5B /* Crashlytics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
