@@ -16,6 +16,8 @@
  * from Rev Software, Inc.
  */
 
+#import <UIKit/UIKit.h>
+
 #import "RSPublicConsts.h"
 #import "RSUtils.h"
 
@@ -814,20 +816,11 @@ namespace rs
         NSString* host1 = URL1.host;
         NSString* host2 = URL2.host;
         
-//        NSRange range = [host1 rangeOfString:@"www."]; // bug
-//        
-//        if (range.location == 0)
-//        {
-//            host1 = [host1 stringByReplacingCharactersInRange:range withString:@""];
-//        }
-//        
-//        range = [host2 rangeOfString:@"www."];
-//        
-//        if (range.location == 0)
-//        {
-//            host2 = [host2 stringByReplacingCharactersInRange:range withString:@""];
-//        }
-        
         return [host1 isEqualToString:host2];
+    }
+    
+    bool _isApplicationActive()
+    {
+        return [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
     }
 }

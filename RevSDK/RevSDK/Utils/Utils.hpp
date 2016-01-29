@@ -119,6 +119,7 @@ typedef enum
     bool internetConnectionAvailable();
     bool areDomainNamesEqual(const std::string&, const std::string&);
     bool domainsContainDomainName(const std::vector<std::string>&, const std::string&);
+    bool isApplicationActive();
 }
 
 #endif /* Utils_hpp */

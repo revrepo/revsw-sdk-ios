@@ -147,6 +147,7 @@ namespace rs
     bool _isValidConfiguration(const Data&, Error*);
     bool _internetConnectionAvailable();
     bool _areDomainNamesEqual(NSString*, NSString*);
+    bool _isApplicationActive();
 }
 #endif
 

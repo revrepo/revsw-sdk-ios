@@ -42,7 +42,7 @@
     [RevSDK debug_turnOnDebugBanners];
     [self performSelector:@selector(reloadPage)
                withObject:nil
-               afterDelay:0.25];
+               afterDelay:0.5];
 }
 
 - (void)reloadPage

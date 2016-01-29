@@ -252,4 +252,9 @@ namespace rs
         
         return false;
     }
+    
+    bool isApplicationActive()
+    {
+        return _isApplicationActive();
+    }
 }

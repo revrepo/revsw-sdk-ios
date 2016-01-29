@@ -44,6 +44,14 @@ QUICSession* QUICSession::mInstance = nullptr;
 //QUICThread QUICSession::mInstanceThread;
 //std::mutex QUICSession::mInstanceLock;
 
+static void displayStatusChanged(CFNotificationCenterRef center, void *observer, CFStringRef name, const void *object, CFDictionaryRef userInfo)
+{
+    if (!isApplicationActive())
+    {
+        QUICSession::instance()->reconnect();
+    }
+}
+
 void QUICSession::executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync)
 {
 //    dispatch_async(dispatch_get_main_queue(), ^{
@@ -58,6 +66,13 @@ QUICSession* QUICSession::instance()
     {
         mInstance = new QUICSession();
         reconnect();
+        
+        CFNotificationCenterAddObserver(CFNotificationCenterGetDarwinNotifyCenter(),
+                                        NULL,
+                                        displayStatusChanged,
+                                        CFSTR("com.apple.springboard.lockstate"),
+                                        NULL,
+                                        CFNotificationSuspensionBehaviorDeliverImmediately);
     }
     return mInstance;
 }
