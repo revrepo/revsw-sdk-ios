@@ -40,8 +40,9 @@
 {
     [super viewDidLoad];
     [RevSDK debug_turnOnDebugBanners];
-    
-    [self reloadPage];
+    [self performSelector:@selector(reloadPage)
+               withObject:nil
+               afterDelay:0.25];
 }
 
 - (void)reloadPage
