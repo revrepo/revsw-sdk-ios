@@ -246,9 +246,7 @@ static NSString* const kTextFieldNativeAppKey = @"tf-na-key";
     
     NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.protocolClasses            = @[NSClassFromString(@"RSURLProtocol")];
-    NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration
-                                                                             delegate:nil
-                                                                        delegateQueue:nil];
+    NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration];
     NSURLSessionTask* task                   = [session dataTaskWithRequest:aRequest
                                                           completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){
                                                               

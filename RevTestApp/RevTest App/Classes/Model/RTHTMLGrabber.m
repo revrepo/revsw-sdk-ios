@@ -42,7 +42,9 @@
 
 - (void)loadRequest:(NSURLRequest *)request
 {
-    NSURLSession* session = [NSURLSession sharedSession];
+    NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    configuration.protocolClasses            = @[NSClassFromString(@"RSURLProtocol")];
+    NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration];
     
     self.requestAbsoluteURL = request.URL.absoluteString;
     self.statusCode = -1;
