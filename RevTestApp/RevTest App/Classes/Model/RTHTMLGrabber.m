@@ -75,7 +75,6 @@
 - (NSURLSessionTask *)recursiveTaskForRequest:(NSURLRequest *)request
                                 withinSession:(NSURLSession *)session
 {
-    NSString* urlStr = request.URL.absoluteString;
     return
     [session dataTaskWithRequest:request
                completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError) {
@@ -85,7 +84,6 @@
                     if ([self.requestAbsoluteURL isEqualToString:request.URL.absoluteString])
                     {
                         self.statusCode = [(NSHTTPURLResponse *)aResponse statusCode];
-                        NSLog(@"STATUS CODE = %ld", self.statusCode);
                     }
                    
                    if (aError != nil)

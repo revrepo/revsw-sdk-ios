@@ -234,7 +234,9 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
                     task:task
     didCompleteWithError:error];
     if (task.state == NSURLSessionTaskStateCompleted)
+    {
         [self.map removeConnectionId:task.taskDescription];
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
@@ -243,8 +245,15 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
     [delegate URLSession:session
                 dataTask:dataTask
           didReceiveData:data];
+    
     if (dataTask.state == NSURLSessionTaskStateCompleted)
+    {
+        [delegate URLSession:session
+                        task:dataTask
+        didCompleteWithError:nil];
+        
         [self.map removeConnectionId:dataTask.taskDescription];
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session
@@ -259,7 +268,13 @@ didReceiveResponse:(NSURLResponse *)response
        completionHandler:completionHandler];
     
     if (dataTask.state == NSURLSessionTaskStateCompleted)
+    {
+        [delegate URLSession:session
+                        task:dataTask
+        didCompleteWithError:nil];
+
         [self.map removeConnectionId:dataTask.taskDescription];
+    }
 }
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
