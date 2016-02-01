@@ -155,7 +155,7 @@
     
     self.testModel.cancelBlock = ^(NSInteger aCode){
         RTPerformBlockOnMainQueue(weakSelf.cancelBlock);
-        [weakSelf loadFinished:aCode];
+        [weakSelf loadFinished:aCode dataSize:0];
     };
 }
 
@@ -205,9 +205,9 @@
     [self.testModel loadStarted];
 }
 
-- (void)loadFinished:(NSInteger) aCode
+- (void)loadFinished:(NSInteger) aCode dataSize:(NSUInteger)aDataSize
 {
-    [self.testModel loadFinished:aCode];
+    [self.testModel loadFinished:aCode dataSize:aDataSize];
 }
 
 - (void)stepStarted
@@ -219,11 +219,6 @@
 {
     [self.testModel invalidateTimer];
 }
-
-/*- (void)stepFinished:(bool)result
-{
-    [self.testModel stepFinished:result];
-}*/
 
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest
 {

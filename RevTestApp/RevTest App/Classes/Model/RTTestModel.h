@@ -33,7 +33,7 @@
 - (void)setWhiteListOption:(BOOL)aOn;
 - (void)setNumberOfTests:(NSUInteger)aNumberOfTests;
 
-- (void)loadFinished:(NSInteger)aResult;
+- (void)loadFinished:(NSInteger)aResult dataSize:(NSUInteger)aDataSize;
 - (void)loadStarted;
 
 - (void)stepStarted;

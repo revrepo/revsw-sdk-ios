@@ -116,12 +116,7 @@
 
 - (void)stopLoading
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kRSURLProtocolStoppedLoadingNotification
-                                                        object:nil
-                                                      userInfo:@{
-                                                                 kRSDataKey : @(self.dataLength),
-                                                                 kRSHostKey : self.request.URL.host ? self.request.URL.host : @""
-                                                                 }];
+   
 }
 
 - (NSCachedURLResponse *)cachedResponse

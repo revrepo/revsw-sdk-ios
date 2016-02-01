@@ -42,10 +42,9 @@
 - (void)startTesting;
 - (BOOL)shouldStartLoadingRequest:(NSURLRequest *)aURLRequest;
 - (void)loadStarted:(NSString*) aUrlString;
-- (void)loadFinished:(NSInteger) aCode;
+- (void)loadFinished:(NSInteger) aCode dataSize:(NSUInteger)aDataSize;
 
 - (void)stepStarted;
-//- (void)stepFinished:(bool)result;
 
 - (void)stopTimer;
 

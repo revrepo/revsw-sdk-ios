@@ -59,7 +59,7 @@ static BOOL shouldReportDataInMB = NO;
 
 - (NSString *)description
 {
-    return self.dataLengthString;
+    return [NSString stringWithFormat:@"%ld", self.errorCode];
 }
 
 @end

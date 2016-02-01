@@ -68,11 +68,6 @@ typedef enum
          self.shouldLoad         = NO;
          self.testResults        = [NSMutableArray array];
         
-         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                  selector:@selector(didReceiveStopLoadingNotification:)
-                                                      name:@"kRSURLProtocolStoppedLoadingNotification"
-                                                    object:nil];
-        
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(resetTimer)
                                                      name:@"kRSURLProtocolDidReceiveResponseNotification"
@@ -85,19 +80,6 @@ typedef enum
     }
     
     return self;
-}
-
-- (void)didReceiveStopLoadingNotification:(NSNotification *)aNotification
-{
-    NSDictionary* userInfo = aNotification.userInfo;
-    NSNumber* number       = userInfo[@"kRSDataKey"];
-    NSUInteger dataSize    = number.unsignedIntegerValue;
-    NSString* host         = userInfo[@"kRSHostKey"];
-    
-    if (![host isEqualToString:@"mobile-collector.newrelic.com"])
-    {
-        mCurrentDataSize += dataSize;
-    }
 }
 
 - (void)dealloc
@@ -297,7 +279,7 @@ typedef enum
     }
 }
 
-- (void)loadFinished:(NSInteger) aResult
+- (void)loadFinished:(NSInteger) aResult dataSize:(NSUInteger)aDataSize
 {
     if ([self.testCases count] == 0)
     {
@@ -309,6 +291,9 @@ typedef enum
         [self.timer invalidate];
          self.timer = nil;
     }
+    
+    mCurrentDataSize = aDataSize;
+    
     RTTestResult* tres = [[RTTestResult alloc] init];
     
     mIsLoading              = NO;

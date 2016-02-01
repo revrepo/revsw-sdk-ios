@@ -31,7 +31,7 @@
 
 @optional
 - (void)grabberDidStartLoad:(RTHTMLGrabber *)grabber;
-- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode;
+- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode dataSize:(NSUInteger)aDataSize;
 - (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error;
 
 @end

@@ -26,6 +26,7 @@
 @property (nonatomic, strong) NSMutableSet* set;
 @property (nonatomic, copy) NSString* requestAbsoluteURL;
 @property (nonatomic) NSInteger statusCode;
+@property (nonatomic, assign) NSUInteger dataSize;
 @end
 
 @implementation RTHTMLGrabber
@@ -42,6 +43,8 @@
 
 - (void)loadRequest:(NSURLRequest *)request
 {
+    self.dataSize = 0;
+    
     NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     configuration.protocolClasses            = @[NSClassFromString(@"RSURLProtocol")];
     NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration];
@@ -73,18 +76,16 @@
                                 withinSession:(NSURLSession *)session
 {
     NSString* urlStr = request.URL.absoluteString;
-//    if ([urlStr isEqualToString:@"https://:0"])
-//        return nil;
-    NSLog(@"RTHTMLGrabber loading URL: %@", urlStr);
-   // NSLog(@"Request started %@", request.URL);
-    
     return
     [session dataTaskWithRequest:request
                completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError) {
                    
+                    self.dataSize += aData.length;
+                   
                     if ([self.requestAbsoluteURL isEqualToString:request.URL.absoluteString])
                     {
                         self.statusCode = [(NSHTTPURLResponse *)aResponse statusCode];
+                        NSLog(@"STATUS CODE = %ld", self.statusCode);
                     }
                    
                    if (aError != nil)
@@ -98,16 +99,14 @@
                        return;
                    }
                    
-                   NSLog(@"RTHTMLGrabber done URL: %@", request.URL.absoluteString);
-                   //NSLog(@"Request done %@", aResponse);
                    NSString *rcvdData = [[NSString alloc] initWithData:aData encoding:NSUTF8StringEncoding];
                    
                    NSMutableArray *newTasks = [NSMutableArray new];
                    NSError *error = nil;
                    HTMLParser *parser = [[HTMLParser alloc] initWithString:rcvdData error:&error];
-                  // NSLog(@"rcvdData %@", rcvdData);
+            
                    BOOL contains = [self.set containsObject:rcvdData];
-                   //NSLog(@"CONTAINS %d", contains);
+                  
                    if (!contains && !error)
                    {
                        if (rcvdData)
@@ -169,7 +168,12 @@
                        if (self.delegate)
                        {
                            [self.set removeAllObjects];
-                           [self.delegate grabberDidFinishLoad:self withStatusCode:self.statusCode];
+                           
+                           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                              [self.delegate grabberDidFinishLoad:self
+                                                   withStatusCode:self.statusCode
+                                                         dataSize:self.dataSize];
+                           });
                        }
                    }
                }];

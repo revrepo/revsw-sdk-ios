@@ -307,16 +307,16 @@ static const NSInteger kSuccessCode = 200;
     [self loadStarted:self.URLTextField.text];
 }
 
-- (void)didFinishLoadWithCode:(NSInteger)aCode
+- (void)didFinishLoadWithCode:(NSInteger)aCode dataSize:(NSUInteger)aDataSize
 {
-    [self loadFinished:aCode];
+    [self loadFinished:aCode dataSize:aDataSize];
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)aWebView
 {
     if (!aWebView.isLoading)
     {
-        [self didFinishLoadWithCode:kSuccessCode];
+        [self didFinishLoadWithCode:kSuccessCode dataSize:0];
     }
 }
 
@@ -326,34 +326,9 @@ static const NSInteger kSuccessCode = 200;
     if (!aWebView.isLoading)
     {
         NSLog(@"Webview error %@ loading %d", aError, aWebView.isLoading);
-        [self didFinishLoadWithCode:aError.code];
+        [self didFinishLoadWithCode:aError.code dataSize:0];
     }
 }
-
-//#pragma mark - WKNavigationDelegate
-//
-//- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(null_unspecified WKNavigation *)navigation
-//{
-//    [self loadStarted];
-//}
-//
-//- (void)webView:(WKWebView *)webView didFinishNavigation:(null_unspecified WKNavigation *)navigation
-//{
-//    if (!webView.isLoading)
-//    {
-//        [self didFinishLoadWithCode:kSuccessCode];
-//    }
-//}
-//
-//- (void)webView:(WKWebView *)webView didFailNavigation:(null_unspecified WKNavigation *)navigation withError:(NSError *)error
-//{
-//    if (error.code == NSURLErrorCancelled) return;
-//    if (!webView.isLoading)
-//    {
-//        NSLog(@"Webview error %@ loading %d", error, webView.isLoading);
-//        [self didFinishLoadWithCode:error.code];
-//    }
-//}
 
 #pragma mark - RTHTMLGrabberDelegate
 
@@ -362,14 +337,14 @@ static const NSInteger kSuccessCode = 200;
     [self loadStarted:self.URLTextField.text];
 }
 
-- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode
+- (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode dataSize:(NSUInteger)aDataSize
 {
-    [self didFinishLoadWithCode:statusCode];
+    [self didFinishLoadWithCode:statusCode dataSize:aDataSize];
 }
 
 - (void)grabber:(RTHTMLGrabber *)grabber didFailLoadWithError:(nullable NSError *)error
 {
-    [self didFinishLoadWithCode:error.code];
+    [self didFinishLoadWithCode:error.code dataSize:0];
 }
 
 #pragma mark - PickerViewDelegate
