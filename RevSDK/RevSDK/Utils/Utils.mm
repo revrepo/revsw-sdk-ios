@@ -259,4 +259,19 @@ namespace rs
     {
         return _isApplicationActive();
     }
+    
+    void correctURLIfNeeded(std::string& aURL, const std::string& aScheme)
+    {
+        NSString* URLString            = NSStringFromStdString(aURL);
+        NSURLComponents* URLComponents = [NSURLComponents componentsWithString:URLString];
+        
+        if (URLComponents.scheme == nil)
+        {
+            URLComponents.scheme = NSStringFromStdString(aScheme);
+        }
+        
+        NSURL* URL = URLComponents.URL;
+        URLString  = URL.absoluteString;
+        aURL       = stdStringFromNSString(URLString);
+    }
 }

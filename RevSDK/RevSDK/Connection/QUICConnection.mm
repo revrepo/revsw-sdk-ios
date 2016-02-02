@@ -188,6 +188,7 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                 
                 std::string baseURL = mURL;
                 std::string url = w->second.as_string();
+                correctURLIfNeeded(url, mRequest->originalScheme());
                 newRequest->setURL(url);
                 std::string host;
                 std::string path;

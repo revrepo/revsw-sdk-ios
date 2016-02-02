@@ -122,6 +122,7 @@ typedef enum
     bool areDomainNamesEqual(const std::string&, const std::string&);
     bool domainsContainDomainName(const std::vector<std::string>&, const std::string&);
     bool isApplicationActive();
+    void correctURLIfNeeded(std::string&, const std::string&);
 }
 
 #endif /* Utils_hpp */
