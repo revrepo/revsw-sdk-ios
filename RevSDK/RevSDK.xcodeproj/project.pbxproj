@@ -55,7 +55,6 @@
 		11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */; };
 		11F24B391C3C09C100DABAE5 /* QUICClientSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B371C3C09C100DABAE5 /* QUICClientSession.h */; };
 		11F24B411C3C57E500DABAE5 /* RSUDPSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */; };
-		11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11F24B421C3C5FBA00DABAE5 /* libboost.a */; };
 		11F24B4B1C3D695D00DABAE5 /* RSUDPService.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B491C3D695D00DABAE5 /* RSUDPService.h */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
@@ -180,6 +179,7 @@
 		114D658C1C3476E400C2D176 /* NSURL+RevSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RevSDK.m"; sourceTree = "<group>"; };
 		116C4D681C456FB5000CE641 /* RSSupervisor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSSupervisor.cpp; sourceTree = "<group>"; };
 		116C4D691C456FB5000CE641 /* RSSupervisor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSupervisor.h; sourceTree = "<group>"; };
+		117D66631C610EA1000B897D /* RevSDK copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RevSDK copy-Info.plist"; path = "/Users/Alexander1/Projects/RevSDK/RevSDK/RevSDK copy-Info.plist"; sourceTree = "<absolute>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
 		1198FF731C57FD9F00CB7FBA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
@@ -336,7 +336,6 @@
 				11CDFD141C5AA6FB008BCF8F /* sim_libprotobuf.a in Frameworks */,
 				11BB68031C5938CB00134420 /* libprotobuf.a in Frameworks */,
 				11CDFD151C5AA6FB008BCF8F /* sim_libquic.a in Frameworks */,
-				11F24B431C3C5FBA00DABAE5 /* libboost.a in Frameworks */,
 				11BB68021C5938CB00134420 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,6 +522,7 @@
 				5B3096C41BFA02770045024C /* RevSDKTests */,
 				5B3096B71BFA02770045024C /* Products */,
 				0C970DE8623DE2851A075105 /* Frameworks */,
+				117D66631C610EA1000B897D /* RevSDK copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
