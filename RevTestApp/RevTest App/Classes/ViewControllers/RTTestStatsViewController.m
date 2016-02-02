@@ -55,7 +55,8 @@
     
     if (indexPath.row == 0)
     {
-        [cell setTexts:@[@"Current", @"DOTS", @"RevSDK"] startText:@""];
+        NSArray* names = [[self.testResults.firstObject testResults] valueForKeyPath:@"@unionOfObjects.testName"];
+        [cell setTexts:names startText:@""];
     }
     else
     {

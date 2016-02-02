@@ -130,7 +130,7 @@ typedef enum
     ////////////////////////////////
     
     tcase = [[RTTestCase alloc] init];
-    tcase.testName = @"DOTS";
+    tcase.testName = @"RevAPM";
     tcase.protocolID = @"standard";
     tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
     
