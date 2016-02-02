@@ -241,6 +241,21 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
+    std::string edgeHost = rs::Model::instance()->edgeHost();
+    NSString* nsEdgeHost = rs::NSStringFromStdString(edgeHost);
+    NSURL* URL           = request.URL;
+    
+    if ([URL.host isEqualToString:nsEdgeHost])
+    {
+        NSURLComponents* URLComponents      = [NSURLComponents componentsWithString:URL.absoluteString];
+        URLComponents.host                  = task.originalRequest.URL.host;
+        NSURL* newURL                       = URLComponents.URL;
+        NSMutableURLRequest* mutableRequest = [request mutableCopy];
+        mutableRequest.URL                  = newURL;
+        request                             = mutableRequest;
+        abort();
+    }
+   
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
     
     int connectionId                           = [task.taskDescription intValue];

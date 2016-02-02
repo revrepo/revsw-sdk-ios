@@ -155,6 +155,11 @@
 
 - (void) rsconnection:(RSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
+    if ([[response URL].absoluteString rangeOfString:@"rev-200.revdn.net"].location != NSNotFound)
+    {
+        abort();
+    }
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:rs::kRSURLProtocolDidReceiveResponseNotification
                                                         object:nil];
     

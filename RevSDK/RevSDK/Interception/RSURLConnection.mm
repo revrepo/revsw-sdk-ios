@@ -87,7 +87,7 @@
                        redirectResponse:response];
         };
         
-        std::string currentProtocolName = rs::Model::instance()->currentProtocol()->protocolName();
+        std::string currentProtocolName = rs::standardProtocolName();//rs::Model::instance()->currentProtocol()->protocolName();
         BOOL isEdge = currentProtocolName == rs::standardProtocolName();
         NSURLRequest* newRequest             = [RSURLRequestProcessor proccessRequest:aRequest isEdge:isEdge baseURL:nil];
         std::shared_ptr<rs::Request> request = rs::requestFromURLRequest(newRequest);
