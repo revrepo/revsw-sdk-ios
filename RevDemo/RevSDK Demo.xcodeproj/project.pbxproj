@@ -529,7 +529,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo2;
 				PRODUCT_NAME = "RevSDK Demo";
-				PROVISIONING_PROFILE = "a5f74504-a2a0-40f0-83df-eefb664d6a54";
+				PROVISIONING_PROFILE = "05825b2d-4c03-46d3-839c-1e72ba45cf7e";
 			};
 			name = Release;
 		};
