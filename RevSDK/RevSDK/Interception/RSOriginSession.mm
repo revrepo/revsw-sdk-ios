@@ -19,6 +19,8 @@
 #import <UIKit/UIKit.h>
 
 #import "RSOriginSession.h"
+#import "RSLog.h"
+#import "RSUtils.h"
 
 @interface RSLockedMap : NSObject
 {
@@ -221,7 +223,7 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
     NSAssert(request != nil && connectionId != nil && delegate != nil, @"Bad parameters!");
     
     [self.map setDelegate:delegate forConnectionId:connectionId];
-    
+    rs::Log::info(rs::kLogTagRequestTracking, ("Origin task created " + [request StdDescription]).c_str());
     NSURLSessionTask* task = [self.session dataTaskWithRequest:request];
     task.taskDescription = connectionId;
     [task resume];
@@ -229,6 +231,8 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Origin task completed " + [task.currentRequest StdDescription] + [error StdDescription]).c_str());
+    
     id<NSURLSessionDataDelegate> delegate = [self.map delegateForConnectionId:task.taskDescription];
     [delegate URLSession:session
                     task:task
@@ -279,6 +283,8 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Origin redirect " + [request StdDescription] + [response StdDescription]).c_str());
+    
     id<NSURLSessionDataDelegate> delegate = [self.map delegateForConnectionId:task.taskDescription];
     
      [delegate URLSession:session

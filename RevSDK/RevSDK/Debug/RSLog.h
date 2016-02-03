@@ -43,6 +43,9 @@ namespace rs
 
     static const int kLogTagPerfMIN     = 30;
     static const int kLogTagPerfMAX     = 39;
+    
+    static const int kLogTagRequestTrackingMIN  = 40;
+    static const int kLogTagRequestTrackingMAX  = 49;
 
     // SDK
     static const int kLogTagSDKStats             = kLogTagSDKMIN + 0;
@@ -64,7 +67,9 @@ namespace rs
     
     // Performance
     static const int kLogTagPerfMemory     = kLogTagPerfMIN + 0;
-
+    
+    //Request tracking
+    static const int kLogTagRequestTracking = kLogTagRequestTrackingMIN + 0;
 
     class Traffic
     {
@@ -229,4 +234,37 @@ namespace rs
         Entry::List mEntries;
         bool mOn;
     };
+    
+    /*class LogTargetRequestTracking : public Log::Target
+    {
+    public:
+        
+        enum class RequestType
+        {
+            Origin = 0,
+            Standard = 1,
+            QUIC = 2
+        };
+        
+        class LogRequestTracking
+        {
+            RequestType mRequestType;
+            LogTarget::Entry::List mEntries;
+            
+        public:
+            
+            LogRequestTracking(const RequestType& aRequestTYpe):mRequestType(aRequestTYpe){}
+            ~LogRequestTracking(){}
+            LogTarget::Entry::List logEntries;
+        };
+        
+        typedef std::vector<LogRequestTracking> RequestList;
+        
+    protected:
+        void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage);
+        
+    private:
+        RequestList mRequestList;
+        
+    };*/
 }

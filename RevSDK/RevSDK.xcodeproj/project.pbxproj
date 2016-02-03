@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1103818C1C492B92001F60E9 /* RSOriginSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1103818A1C492B92001F60E9 /* RSOriginSession.h */; };
-		1103818D1C492B92001F60E9 /* RSOriginSession.m in Sources */ = {isa = PBXBuildFile; fileRef = 1103818B1C492B92001F60E9 /* RSOriginSession.m */; };
+		1103818D1C492B92001F60E9 /* RSOriginSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1103818B1C492B92001F60E9 /* RSOriginSession.mm */; };
 		110381931C496C8E001F60E9 /* json-forwards.h in Headers */ = {isa = PBXBuildFile; fileRef = 110381901C496C8E001F60E9 /* json-forwards.h */; };
 		110381941C496C8E001F60E9 /* json.h in Headers */ = {isa = PBXBuildFile; fileRef = 110381911C496C8E001F60E9 /* json.h */; };
 		110381951C496C8E001F60E9 /* jsoncpp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 110381921C496C8E001F60E9 /* jsoncpp.cpp */; };
@@ -162,7 +162,7 @@
 
 /* Begin PBXFileReference section */
 		1103818A1C492B92001F60E9 /* RSOriginSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSOriginSession.h; sourceTree = "<group>"; };
-		1103818B1C492B92001F60E9 /* RSOriginSession.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSOriginSession.m; sourceTree = "<group>"; };
+		1103818B1C492B92001F60E9 /* RSOriginSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSOriginSession.mm; sourceTree = "<group>"; };
 		110381901C496C8E001F60E9 /* json-forwards.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "json-forwards.h"; sourceTree = "<group>"; };
 		110381911C496C8E001F60E9 /* json.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = json.h; sourceTree = "<group>"; };
 		110381921C496C8E001F60E9 /* jsoncpp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = jsoncpp.cpp; sourceTree = "<group>"; };
@@ -572,7 +572,7 @@
 			isa = PBXGroup;
 			children = (
 				1103818A1C492B92001F60E9 /* RSOriginSession.h */,
-				1103818B1C492B92001F60E9 /* RSOriginSession.m */,
+				1103818B1C492B92001F60E9 /* RSOriginSession.mm */,
 				5B3096E81BFA0CB70045024C /* RSURLProtocol.h */,
 				5B3096E91BFA0CB70045024C /* RSURLProtocol.mm */,
 				5B3096EC1BFA0CD30045024C /* RSURLConnection.h */,
@@ -963,7 +963,7 @@
 				5B7C91B21C08A9D200676ADC /* RSURLRequestProcessor.mm in Sources */,
 				5BEBD72C1C22B05C002EC0CB /* RequestStatsHandler.cpp in Sources */,
 				6D1F860D1C3A83F300E48AC9 /* NativeNetworkEventsHandler.mm in Sources */,
-				1103818D1C492B92001F60E9 /* RSOriginSession.m in Sources */,
+				1103818D1C492B92001F60E9 /* RSOriginSession.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

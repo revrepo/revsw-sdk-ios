@@ -150,7 +150,7 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
         dump += i->first.as_string() + ": " + i->second.as_string() + "\n";
     
     Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
-    
+    rs::Log::info(rs::kLogTagRequestTracking, ("QUIC start " + aRequest->URL()).c_str());
     onStart();
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
@@ -301,7 +301,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
             Data requestData                = dataFromRequestAndResponse(request, httpResponse, mWeakThis.lock().get(), originalScheme, YES);
             Model::instance()->addRequestData(requestData);
         }
-        
+        rs::Log::info(rs::kLogTagRequestTracking, ("QUIC finish " + mRequest->URL()).c_str());
         mDelegate->connectionDidFinish(mWeakThis.lock());
     }
     mAnchor0.reset();
@@ -327,6 +327,7 @@ void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicSpdyStre
     if (mDelegate != nullptr)
     {
         QUICDataStream* qds = (QUICDataStream*)aStream;
+         rs::Log::error(rs::kLogTagRequestTracking, ("QUIC fail " + mRequest->URL() + qds->error().description()).c_str());
         mDelegate->connectionDidFailWithError(mWeakThis.lock(), qds->error());
     }
     mAnchor0.reset();

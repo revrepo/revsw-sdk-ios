@@ -232,7 +232,7 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
     NSURLRequest* request = aParams[@"r"];
     NSString* connectionId = aParams[@"id"];
     NSAssert(request != nil && connectionId != nil, @"Bad parameters!");
-    
+     rs::Log::info(rs::kLogTagRequestTracking, ("Standard task created " + [request StdDescription]).c_str());
     NSURLSessionTask* task = [self.session dataTaskWithRequest:request];
     task.taskDescription = connectionId;
     [task resume];
@@ -241,6 +241,8 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest *))completionHandler
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Standard redirect " + [request StdDescription] + [response StdDescription]).c_str());
+    
     std::string edgeHost = rs::Model::instance()->edgeHost();
     NSString* nsEdgeHost = rs::NSStringFromStdString(edgeHost);
     NSURL* URL           = request.URL;
@@ -297,6 +299,8 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Standard task completed " + [task.currentRequest StdDescription] + [error StdDescription]).c_str());
+    
     NSString* entry = [NSString stringWithFormat:@"Complete with error %@", error];
     [self writeHistoryEntry:entry forTaskId:task.taskDescription];
 

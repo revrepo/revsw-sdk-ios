@@ -43,6 +43,32 @@
 
 @end
 
+@implementation NSObject(StdDescription)
+
+- (std::string)StdDescription
+{
+    NSURL* URL                  = nil;
+    SEL URLSelector             = @selector(URL);
+    NSString* descriptionString = nil;
+    
+    if ([self respondsToSelector:URLSelector])
+    {
+        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
+                                               URL = [self performSelector:URLSelector];
+                                               );
+        
+        descriptionString = [URL absoluteString];
+    }
+    else
+    {
+        descriptionString = [self description];
+    }
+    
+    return rs::stdStringFromNSString(descriptionString);
+}
+
+@end
+
 //notifications
 NSString* const kRSURLProtocolStoppedLoadingNotification = @"kRSURLProtocolStoppedLoadingNotification";
 

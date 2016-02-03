@@ -35,9 +35,11 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Request entered protocol " + [aRequest StdDescription]).c_str());
+    
     NSURL* requestrURL = aRequest.URL;
-    NSString* host = requestrURL.host;
-    NSString* scheme = [requestrURL.scheme lowercaseString];
+    NSString* host     = requestrURL.host;
+    NSString* scheme   = [requestrURL.scheme lowercaseString];
     
     BOOL hasHost = host.length > 0;
     
@@ -66,6 +68,8 @@
     {
         return NO;
     }
+    
+    rs::Log::info(rs::kLogTagRequestTracking, ("Request passed " + [aRequest StdDescription]).c_str());
     
     return YES;
 }
@@ -96,6 +100,8 @@
  
     if ([self shouldRedirectRequest:self.request])
     {
+        rs::Log::info(rs::kLogTagRequestTracking, ("Start loading origin " + [self.request StdDescription]).c_str());
+        
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
                           self.request.URL, self.request.HTTPMethod, self.request.allHTTPHeaderFields];
         rs::Log::info(rs::kLogTagSDKInerception, "Request %s", rs::stdStringFromNSString(dump).c_str());
@@ -104,6 +110,8 @@
     }
     else
     {
+        rs::Log::info(rs::kLogTagRequestTracking, ("Start loading REV " + [self.request StdDescription]).c_str());
+        
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
@@ -116,7 +124,7 @@
 
 - (void)stopLoading
 {
-   
+   rs::Log::info(rs::kLogTagRequestTracking, ("Stop loading " + [self.request StdDescription]).c_str());
 }
 
 - (NSCachedURLResponse *)cachedResponse
@@ -143,6 +151,8 @@
 
 - (void)rsconnection:(RSURLConnection *)connection wasRedirectedToRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("REV redirect request " +  [request StdDescription] + " response " + [response StdDescription]).c_str());
+    
     NSMutableURLRequest* newRequest = [request mutableCopy];
     
     [NSURLProtocol removePropertyForKey:rs::kRSURLProtocolHandledKey
@@ -179,11 +189,14 @@
 
 - (void) rsconnectionDidFinishLoading:(RSURLConnection *)connection
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("REV protocol did finish" + [self.request StdDescription]).c_str());
     [self.client URLProtocolDidFinishLoading:self];
 }
 
 - (void) rsconnection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
+    rs::Log::error(rs::kLogTagRequestTracking, ("REV protocol did fail " + [self.request StdDescription] + [error StdDescription]).c_str());
+    
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -196,6 +209,7 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didFailWithError:(NSError *)error
 {
+     rs::Log::error(rs::kLogTagRequestTracking, ("Origin protocol did fail " + [self.request StdDescription] + [error StdDescription]).c_str());
     [self.client URLProtocol:self didFailWithError:error];
 }
 
@@ -217,6 +231,8 @@
 
 - (void)connectionDidFinish:(RSURLConnectionNative *)connection
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Origin protocol did finish" + [self.request StdDescription]).c_str());
+    
     if (rs::Model::instance()->shouldCollectRequestsData())
     {
         self.directConnection.totalBytesReceived = @(self.dataLength);
@@ -229,6 +245,7 @@
 
 - (void)connection:(RSURLConnectionNative *)aConnection wasRedirectedToRequest:(NSURLRequest *)aRequest redirectResponse:(NSURLResponse *)aResponse
 {
+    rs::Log::info(rs::kLogTagRequestTracking, ("Origin protcol redirect request " +  [aRequest StdDescription] + " response " + [aResponse StdDescription]).c_str());
     NSMutableURLRequest* newRequest = [aRequest mutableCopy];
     
     [NSURLProtocol removePropertyForKey:rs::kRSURLProtocolHandledKey
