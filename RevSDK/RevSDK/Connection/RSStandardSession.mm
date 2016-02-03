@@ -247,13 +247,14 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
     
     if ([URL.host isEqualToString:nsEdgeHost])
     {
+        NSURLRequest* originalRequest       = task.originalRequest;
+        NSString* originalHost              = originalRequest.allHTTPHeaderFields[rs::kRSRevHostHeader];
         NSURLComponents* URLComponents      = [NSURLComponents componentsWithString:URL.absoluteString];
-        URLComponents.host                  = task.originalRequest.URL.host;
+        URLComponents.host                  = originalHost;
         NSURL* newURL                       = URLComponents.URL;
         NSMutableURLRequest* mutableRequest = [request mutableCopy];
         mutableRequest.URL                  = newURL;
         request                             = mutableRequest;
-        abort();
     }
    
     [self writeHistoryEntry:@"Redirected" forTaskId:task.taskDescription];
