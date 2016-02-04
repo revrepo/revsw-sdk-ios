@@ -58,11 +58,32 @@ typedef enum
 
 + (instancetype)defaultTestLoop
 {
-    NSArray* domains = @[@"mgemi.com", @"httpbin.org", @"google.com"];
+    NSArray* domains = @[@"mgemi.com",
+                         @"httpbin.org",
+                         @"google.com",
+                         @"mbeans.com",
+                         @"cnn.com",
+                         @"stackoverflow.com",
+                         @"bmwusa.com",
+                         @"ebay.com",
+                         @"m.vk.com",
+                         @"yandex.ru",
+                         @"amazon.com",
+                         @"youtube.com",
+                         @"linkedin.com",
+                         @"echo.msk.ru",
+                         @"ibm.com",
+                         @"revapm.net",
+                         @"bing.com",
+                         @"akamai.com",
+                         @"skrill.com",
+                         @"raywenderlich.com",
+                         @"facebook.com",
+                         @"twitter.com"];
     
     RTRequestTestLoop* testLoop = [[RTRequestTestLoop alloc] initWithDomains:domains
-                                                               numberOfTests:2
-                                                          numberOfFullPasses:2];
+                                                               numberOfTests:20
+                                                          numberOfFullPasses:10];
 
     
     return testLoop;

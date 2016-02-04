@@ -153,6 +153,11 @@
             for (int i = rs::kLogTagSTDMIN; i <= rs::kLogTagSTDMAX; ++i)
                 tags.insert(i);
             break;
+        case 6:
+            // udp socket
+            for (int i = rs::kLogTagUDPMIN; i <= rs::kLogTagUDPMAX; ++i)
+                tags.insert(i);
+            break;
         default:
             break;
     }
@@ -205,6 +210,7 @@
     [self.domainPicker addButtonWithTitle:@"SDK"];
     [self.domainPicker addButtonWithTitle:@"Performance"];
     [self.domainPicker addButtonWithTitle:@"Request tracking"];
+    [self.domainPicker addButtonWithTitle:@"UDP socket"];
     NSInteger cb = [self.domainPicker addButtonWithTitle:@"Cancel"];
     self.domainPicker.cancelButtonIndex = cb;
     self.domainPicker.delegate = self;
@@ -229,7 +235,7 @@
 {
     [super viewDidLoad];
     self.levels = @[@"ALL", @"INF", @"WRN", @"ERR"];
-    self.domains = @[@"ANY", @"QUIC", @"STD", @"SDK", @"Perf", @"Track"];
+    self.domains = @[@"ANY", @"QUIC", @"STD", @"SDK", @"Perf", @"Track", @"UDP"];
     self.view.backgroundColor = [UIColor whiteColor];
     self.navigationItem.title = @"LOG";
     UIBarButtonItem* bbi = nil;

@@ -50,6 +50,9 @@ namespace rs
     static const int kLogTagProtocolMIN = 50;
     static const int kLogTagProtocolMAX = 59;
     
+    static const int kLogTagUDPMIN = 60;
+    static const int kLogTagUDPMAX = 69;
+    
     // SDK
     static const int kLogTagSDKStats             = kLogTagSDKMIN + 0;
     static const int kLogTagSDKLastMile          = kLogTagSDKStats + 1;
@@ -93,7 +96,9 @@ namespace rs
     
     // Performance
     static const int kLogTagPerfMemory     = kLogTagPerfMIN + 0;
-
+    
+    //UDP
+    static const int kLogTagUDPData = kLogTagUDPMIN + 0;
 
     class Traffic
     {

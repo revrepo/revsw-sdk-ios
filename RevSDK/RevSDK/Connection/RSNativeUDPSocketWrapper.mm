@@ -17,6 +17,8 @@
  */
 
 #import "RSNativeUDPSocketWrapper.h"
+#import "RSLog.h"
+#import "RSUtils.h"
 
 @implementation NativeUDPSocketWrapper
 
@@ -74,6 +76,8 @@ didNotSendDataWithTag:(long)tag
            fromHost:(NSString *)host
                port:(UInt16)port
 {
+    rs::Log::info(rs::kLogTagUDPData, "socket received data %ld from host %s timestamp %lld", data.length, host.UTF8String, RSTimeStamp);
+    
     if (! self->mDelegate)
     {
         return NO;
@@ -93,6 +97,8 @@ didNotSendDataWithTag:(long)tag
 didNotReceiveDataWithTag:(long)tag
          dueToError:(NSError *)error
 {
+    rs::Log::error(rs::kLogTagUDPData, "socket did not receive data %S timestamp %lld", error.description.UTF8String, RSTimeStamp);
+    
     NSLog(@"didNotReceiveDataWithTag dueToError %@", error);
 }
 
