@@ -87,6 +87,12 @@
 		5B46D1EA1C217C9700A9834C /* NativeStatsHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B46D1E81C217C9700A9834C /* NativeStatsHandler.mm */; };
 		5B46D1ED1C21B61C00A9834C /* Utils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B46D1EB1C21B61C00A9834C /* Utils.mm */; };
 		5B46D1EE1C21B61C00A9834C /* Utils.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B46D1EC1C21B61C00A9834C /* Utils.hpp */; };
+		5B4BA1A31C63A091004AD509 /* LogStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4BA1A11C63A091004AD509 /* LogStorage.h */; };
+		5B4BA1A41C63A091004AD509 /* LogStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BA1A21C63A091004AD509 /* LogStorage.m */; };
+		5B4BA1A71C63A93D004AD509 /* RSDumpListVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4BA1A51C63A93D004AD509 /* RSDumpListVC.h */; };
+		5B4BA1A81C63A93D004AD509 /* RSDumpListVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BA1A61C63A93D004AD509 /* RSDumpListVC.m */; };
+		5B4BA1AB1C63B21F004AD509 /* RSDumpVC.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4BA1A91C63B21F004AD509 /* RSDumpVC.h */; };
+		5B4BA1AC1C63B21F004AD509 /* RSDumpVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B4BA1AA1C63B21F004AD509 /* RSDumpVC.m */; };
 		5B4FCD2D1C03216000C8D320 /* RSRequestOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD2B1C03216000C8D320 /* RSRequestOperation.h */; };
 		5B4FCD2E1C03216000C8D320 /* RSRequestOperation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B4FCD2C1C03216000C8D320 /* RSRequestOperation.mm */; };
 		5B4FCD311C0321B400C8D320 /* NativeNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B4FCD2F1C0321B400C8D320 /* NativeNetwork.h */; };
@@ -255,6 +261,12 @@
 		5B46D1E81C217C9700A9834C /* NativeStatsHandler.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = NativeStatsHandler.mm; sourceTree = "<group>"; };
 		5B46D1EB1C21B61C00A9834C /* Utils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Utils.mm; sourceTree = "<group>"; };
 		5B46D1EC1C21B61C00A9834C /* Utils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Utils.hpp; sourceTree = "<group>"; };
+		5B4BA1A11C63A091004AD509 /* LogStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogStorage.h; sourceTree = "<group>"; };
+		5B4BA1A21C63A091004AD509 /* LogStorage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogStorage.m; sourceTree = "<group>"; };
+		5B4BA1A51C63A93D004AD509 /* RSDumpListVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDumpListVC.h; sourceTree = "<group>"; };
+		5B4BA1A61C63A93D004AD509 /* RSDumpListVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDumpListVC.m; sourceTree = "<group>"; };
+		5B4BA1A91C63B21F004AD509 /* RSDumpVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDumpVC.h; sourceTree = "<group>"; };
+		5B4BA1AA1C63B21F004AD509 /* RSDumpVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDumpVC.m; sourceTree = "<group>"; };
 		5B4FCD2B1C03216000C8D320 /* RSRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSRequestOperation.h; sourceTree = "<group>"; };
 		5B4FCD2C1C03216000C8D320 /* RSRequestOperation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RSRequestOperation.mm; sourceTree = "<group>"; };
 		5B4FCD2F1C0321B400C8D320 /* NativeNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NativeNetwork.h; sourceTree = "<group>"; };
@@ -386,6 +398,12 @@
 				65B3A7D11C45018D003C9426 /* LeakDetector.h */,
 				116C4D691C456FB5000CE641 /* RSSupervisor.h */,
 				116C4D681C456FB5000CE641 /* RSSupervisor.cpp */,
+				5B4BA1A11C63A091004AD509 /* LogStorage.h */,
+				5B4BA1A21C63A091004AD509 /* LogStorage.m */,
+				5B4BA1A51C63A93D004AD509 /* RSDumpListVC.h */,
+				5B4BA1A61C63A93D004AD509 /* RSDumpListVC.m */,
+				5B4BA1A91C63B21F004AD509 /* RSDumpVC.h */,
+				5B4BA1AA1C63B21F004AD509 /* RSDumpVC.m */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -734,6 +752,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B4BA1A71C63A93D004AD509 /* RSDumpListVC.h in Headers */,
 				110381931C496C8E001F60E9 /* json-forwards.h in Headers */,
 				6DEAB1CF1C2D8D2B0078CE65 /* RSStaticStatsProvider.h in Headers */,
 				5B54C33D1BFB714C00217971 /* QUICProtocol.hpp in Headers */,
@@ -743,6 +762,7 @@
 				5B46D1E61C217BC100A9834C /* StatsHandler.hpp in Headers */,
 				11C961111C2D469300CDE34D /* RevAsyncUdpSocket.h in Headers */,
 				5B2F4BD01BFDBAF8003DCB27 /* Response.hpp in Headers */,
+				5B4BA1AB1C63B21F004AD509 /* RSDumpVC.h in Headers */,
 				110381941C496C8E001F60E9 /* json.h in Headers */,
 				5B2035AA1C3453FC00A28C01 /* Event.hpp in Headers */,
 				11C961101C2D469300CDE34D /* quic_spdy_client_stream.h in Headers */,
@@ -752,6 +772,7 @@
 				5B8FEAF41C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.h in Headers */,
 				5B54C3451BFB7AE200217971 /* StandardConnection.hpp in Headers */,
 				5BE3F86E1C04A0C50087BC28 /* Timer.hpp in Headers */,
+				5B4BA1A31C63A091004AD509 /* LogStorage.h in Headers */,
 				5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */,
 				5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */,
 				11C962221C2D54CE00CDE34D /* QUICHelpers.h in Headers */,
@@ -924,6 +945,7 @@
 				5B2035A91C3453FC00A28C01 /* Event.cpp in Sources */,
 				5B2F4BD71BFE11F6003DCB27 /* Error.cpp in Sources */,
 				6D45447D1C32B1CA0020224C /* ReportTransaction.cpp in Sources */,
+				5B4BA1AC1C63B21F004AD509 /* RSDumpVC.m in Sources */,
 				11C961121C2D469300CDE34D /* RevAsyncUdpSocket.m in Sources */,
 				5B54C32B1BFB5EF000217971 /* RSUtils.mm in Sources */,
 				6DEAB1CD1C2D803C0078CE65 /* RSLocationService.m in Sources */,
@@ -931,6 +953,7 @@
 				5B54C32F1BFB700C00217971 /* Model.cpp in Sources */,
 				119145321C33D2D800B91C6E /* QUICThread.mm in Sources */,
 				5BE0D5B41C3D5E3F0064F97D /* RSURLConnectionNative.mm in Sources */,
+				5B4BA1A41C63A091004AD509 /* LogStorage.m in Sources */,
 				5B54C33C1BFB714C00217971 /* QUICProtocol.cpp in Sources */,
 				5B4FCD351C032A6A00C8D320 /* Network.cpp in Sources */,
 				5BDA28271BFA31C9003F55F6 /* ConnectionProxy.cpp in Sources */,
@@ -950,6 +973,7 @@
 				6D1F86091C3A730800E48AC9 /* ProtocolSelector.cpp in Sources */,
 				5B8FEAF51C200F8B00315773 /* NSURLSessionConfiguration+RSUtils.m in Sources */,
 				110381951C496C8E001F60E9 /* jsoncpp.cpp in Sources */,
+				5B4BA1A81C63A93D004AD509 /* RSDumpListVC.m in Sources */,
 				5B2F4BCF1BFDBAF8003DCB27 /* Response.cpp in Sources */,
 				5B54C3401BFB7A9200217971 /* Connection.cpp in Sources */,
 				5B54C3481BFB7B8700217971 /* QUICConnection.mm in Sources */,
