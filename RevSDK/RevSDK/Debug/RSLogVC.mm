@@ -20,6 +20,8 @@
 #import <MessageUI/MFMailComposeViewController.h>
 #import "Model.hpp"
 #import "RSEntryVC.h"
+#import "LogStorage.h"
+#import "RSDumpListVC.h"
 
 @interface RSLogEntry : NSObject
 
@@ -112,8 +114,37 @@
                                                         style:UIBarButtonItemStylePlain
                                                        target:self
                                                        action:@selector(onLevelClicked:)];
-    [toolbar setItems:@[self.domainButton, self.levelButton]];
+    
+    UIBarButtonItem* scrollButton = [[UIBarButtonItem alloc] initWithTitle:@"Scroll down"
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(scrollToBottom)];
+    
+    UIBarButtonItem* dumpsButton = [[UIBarButtonItem alloc] initWithTitle:@"Dumps"
+                                                                    style:UIBarButtonItemStylePlain
+                                                                   target:self
+                                                                   action:@selector(showDump)];
+    
+    [toolbar setItems:@[self.domainButton, self.levelButton, scrollButton, dumpsButton]];
+    
     return toolbar;
+}
+
+- (void)showDump
+{
+    RSDumpListVC* dumpVC = [RSDumpListVC new];
+    UINavigationController* navc = [[UINavigationController alloc] initWithRootViewController:dumpVC];
+    
+    [self presentViewController:navc
+                       animated:YES
+                     completion:nil];
+}
+
+- (void)scrollToBottom
+{
+    [self.table scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:self.content.count - 1 inSection:0]
+                      atScrollPosition:UITableViewScrollPositionBottom
+                              animated:YES];
 }
 
 - (void)applyDomainAndLevel
@@ -250,7 +281,7 @@
                                           action:@selector(onFilterPressed:)];
     self.navigationItem.rightBarButtonItem = bbi;
 
-    UITableView* tv = [[UITableView alloc] initWithFrame:self.view.bounds];
+    UITableView* tv = [[UITableView alloc] initWithFrame:CGRectInset(self.view.bounds, 0, 44)];
     self.table = tv;
     self.table.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin |
     UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin |
@@ -286,6 +317,7 @@
         }
         
         NSString* content = [fileContent componentsJoinedByString:@"\n"];
+        [LogStorage save:content];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];

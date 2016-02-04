@@ -212,7 +212,6 @@ typedef enum
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
-    NSLog(@"URL = %@ transport = %@", URLString, self.currentTestCase.testName);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];
