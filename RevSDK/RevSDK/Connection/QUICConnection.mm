@@ -150,7 +150,6 @@ void QUICConnection::p_startWithRequest(std::shared_ptr<Request> aRequest, Conne
         dump += i->first.as_string() + ": " + i->second.as_string() + "\n";
     
     Log::info(kLogTagQUICRequest, "Request #%d\n%s", mId, dump.c_str());
-    rs::Log::info(rs::kLogTagRequestTracking, ("QUIC start " + aRequest->URL()).c_str());
     onStart();
     QUICSession::instance()->sendRequest(headers, body, this, 0, nullptr);
 }
@@ -215,6 +214,9 @@ void QUICConnection::quicSessionDidReceiveResponse(QUICSession* aSession, net::Q
                         if (h.first[0] != ':')
                             headers[h.first.as_string()] = h.second.as_string();
                     }
+                    
+                    rs::Log::info(rs::kLogTagQUICRedirect, "QUIC Redirect %s %s timestamp %lld", mURL.c_str(), url.c_str(), RSTimeStamp);
+                    
                     std::shared_ptr<Response> response = std::make_shared<Response>(mURL, headers, aCode);
                     mDelegate->connectionWasRedirected(mWeakThis.lock(), newRequest, response);
                     return;
@@ -256,7 +258,7 @@ void QUICConnection::quicSessionDidReceiveData(QUICSession* aSession, net::QuicS
     
     std::string dump;
     dump += "data-len = " + intToStr((int)aLen);
-    Log::info(kLogTagQUICRequest, "Data #%d\n%s", mId, dump.c_str());
+    Log::info(kLogTagQUICRequest, "Data #%d\n%s timestamp %lld", mId, dump.c_str(), RSTimeStamp);
 
     
     addReceivedBytesCount(aLen);
@@ -286,7 +288,6 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
 //        return;
 //    }
     Model::instance()->debug_usageTracker()->QUICRequestsFinishedWithSuccess();
-    Log::info(kLogTagQUICRequest, "Finished #%d\n", mId);
 
     if (mRedirect.get() != nullptr)
         return;
@@ -301,7 +302,7 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
             Data requestData                = dataFromRequestAndResponse(request, httpResponse, mWeakThis.lock().get(), originalScheme, YES);
             Model::instance()->addRequestData(requestData);
         }
-        rs::Log::info(rs::kLogTagRequestTracking, ("QUIC finish " + mRequest->URL()).c_str());
+        rs::Log::info(rs::kLogTagQUICFinish, "QUIC finish %d request %s timestamp %lld", mId, mRequest->URL().c_str(), RSTimeStamp);
         mDelegate->connectionDidFinish(mWeakThis.lock());
     }
     mAnchor0.reset();
@@ -310,7 +311,6 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
 void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicSpdyStream* aStream)
 {
     Model::instance()->debug_usageTracker()->QUICRequestsFinishedWithError();
-    Log::info(kLogTagQUICRequest, "Failed #%d\n", mId);
 //    if (mParent != nullptr)
 //    {
 //        if (aStream == mRedirectedStream)
@@ -327,7 +327,7 @@ void QUICConnection::quicSessionDidFail(QUICSession* aSession, net::QuicSpdyStre
     if (mDelegate != nullptr)
     {
         QUICDataStream* qds = (QUICDataStream*)aStream;
-         rs::Log::error(rs::kLogTagRequestTracking, ("QUIC fail " + mRequest->URL() + qds->error().description()).c_str());
+         rs::Log::error(rs::kLogTagQUICFail, "QUIC fail %d request URL %s error %s timestamp %lld", mId,  mRequest->URL().c_str(), qds->error().description().c_str(), RSTimeStamp);
         mDelegate->connectionDidFailWithError(mWeakThis.lock(), qds->error());
     }
     mAnchor0.reset();

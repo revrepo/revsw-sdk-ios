@@ -188,7 +188,6 @@ typedef enum
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
-    NSLog(@"URL = %@ it index %ld domain index %ld", URLString, _iterationIndex, _currentDomainIndex);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];

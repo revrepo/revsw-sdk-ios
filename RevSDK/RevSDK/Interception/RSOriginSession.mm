@@ -223,7 +223,7 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
     NSAssert(request != nil && connectionId != nil && delegate != nil, @"Bad parameters!");
     
     [self.map setDelegate:delegate forConnectionId:connectionId];
-    rs::Log::info(rs::kLogTagRequestTracking, ("Origin task created " + [request StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagOriginStart, "Origin task created  request %s timestamp %lld", request.cDescription, RSTimeStamp);
     NSURLSessionTask* task = [self.session dataTaskWithRequest:request];
     task.taskDescription = connectionId;
     [task resume];
@@ -231,7 +231,7 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(NSError *)error
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("Origin task completed " + [task.currentRequest StdDescription] + [error StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagOriginFinish, "Origin task completed request %s error %s timestamp %lld", task.currentRequest.cDescription, error.description.UTF8String, RSTimeStamp);
     
     id<NSURLSessionDataDelegate> delegate = [self.map delegateForConnectionId:task.taskDescription];
     [delegate URLSession:session
@@ -265,6 +265,8 @@ static void displayStatusChanged(CFNotificationCenterRef center, void *observer,
 didReceiveResponse:(NSURLResponse *)response
  completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler
 {
+    rs::Log::info(rs::kLogTagOriginResponse, "Origin response %s request %s timestamp %lld", ((NSHTTPURLResponse *)response).cDescription, dataTask.currentRequest.cDescription, RSTimeStamp);
+    
     id<NSURLSessionDataDelegate> delegate = [self.map delegateForConnectionId:dataTask.taskDescription];
     [delegate URLSession:session
                 dataTask:dataTask
@@ -283,7 +285,7 @@ didReceiveResponse:(NSURLResponse *)response
 
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task willPerformHTTPRedirection:(NSHTTPURLResponse *)response newRequest:(NSURLRequest *)request completionHandler:(void (^)(NSURLRequest * _Nullable))completionHandler
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("Origin redirect " + [request StdDescription] + [response StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagOriginRediret, "Origin redirect request %s response %s timestamp %lld", request.cDescription, response.cDescription, RSTimeStamp);
     
     id<NSURLSessionDataDelegate> delegate = [self.map delegateForConnectionId:task.taskDescription];
     

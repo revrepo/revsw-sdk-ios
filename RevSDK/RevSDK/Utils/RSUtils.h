@@ -29,11 +29,7 @@
 
 #import "RSPublicConsts.h"
 
-#define SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(code)                        \
-_Pragma("clang diagnostic push")                                        \
-_Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"")     \
-code;                                                                   \
-_Pragma("clang diagnostic pop")                                         \
+#define RSTimeStamp ((long)([[NSDate date] timeIntervalSince1970] * 1000))
 
 @class RSURLConnectionNative;
 
@@ -43,9 +39,15 @@ _Pragma("clang diagnostic pop")                                         \
 
 @end
 
-@interface NSObject (StdDescription)
+@interface NSURLRequest (CDescription)
 
-- (std::string)StdDescription;
+- (const char*)cDescription;
+
+@end
+
+@interface NSHTTPURLResponse (CDescription)
+
+- (const char*)cDescription;
 
 @end
 

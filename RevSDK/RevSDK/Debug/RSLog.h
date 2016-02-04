@@ -44,9 +44,12 @@ namespace rs
     static const int kLogTagPerfMIN     = 30;
     static const int kLogTagPerfMAX     = 39;
     
-    static const int kLogTagRequestTrackingMIN  = 40;
-    static const int kLogTagRequestTrackingMAX  = 49;
-
+    static const int kLogTagOriginMIN   = 40;
+    static const int kLogTagOriginMax   = 49;
+    
+    static const int kLogTagProtocolMIN = 50;
+    static const int kLogTagProtocolMAX = 59;
+    
     // SDK
     static const int kLogTagSDKStats             = kLogTagSDKMIN + 0;
     static const int kLogTagSDKLastMile          = kLogTagSDKStats + 1;
@@ -58,18 +61,39 @@ namespace rs
     static const int kLogTagSTDRequest            = kLogTagSTDMIN + 0;
     static const int kLogTagSTDStandardRedirects  = kLogTagSTDMIN + 1;
     static const int kLogTagSTDStandardConnection = kLogTagSTDMIN + 2;
+    static const int kLogTagSTDStandardResponse   = kLogTagSTDMIN + 3;
+    static const int kLogTagSTDStandardFail       = kLogTagSTDMIN + 4;
+    static const int kLogTagSTDStandardFinish     = kLogTagSTDMIN + 5;
 
     // QUIC
     static const int kLogTagQUICRequest           = kLogTagQUICMIN + 0;
     static const int kLogTagQUICLibrary           = kLogTagQUICMIN + 1;
     static const int kLogTagQUICNetwork           = kLogTagQUICMIN + 2;
     static const int kLogTagQUICTraffic           = kLogTagQUICMIN + 3;
+    static const int kLogTagQUICRedirect          = kLogTagQUICMIN + 4;
+    static const int kLogTagQUICResponse          = kLogTagQUICMIN + 5;
+    static const int kLogTagQUICFail              = kLogTagQUICMIN + 6;
+    static const int kLogTagQUICFinish            = kLogTagQUICMIN + 7;
+    
+    // Origin
+    static const int kLogTagOriginStart           = kLogTagOriginMIN + 0;
+    static const int kLogTagOriginRediret         = kLogTagOriginMIN + 1;
+    static const int kLogTagOriginResponse        = kLogTagOriginMIN + 2;
+    static const int kLogTagOriginFail            = kLogTagOriginMIN + 3;
+    static const int kLogTagOriginFinish          = kLogTagOriginMIN + 4;
+    
+    //Protocol
+    static const int kLogTagProtocolCanInit       = kLogTagProtocolMIN + 0;
+    static const int kLogTagProtocolStartLoading  = kLogTagProtocolMIN + 1;
+    static const int kLogTagProtocolStopLoading   = kLogTagProtocolMIN + 2;
+    static const int kLogTagProtocolOriginFinish  = kLogTagProtocolMIN + 3;
+    static const int kLogTagProtocolOriginFail    = kLogTagProtocolMIN + 4;
+    static const int kLogTagProtocolRevFinish     = kLogTagProtocolMIN + 5;
+    static const int kLogTagProtocolRevFail       = kLogTagProtocolMIN + 6;
     
     // Performance
     static const int kLogTagPerfMemory     = kLogTagPerfMIN + 0;
-    
-    //Request tracking
-    static const int kLogTagRequestTracking = kLogTagRequestTrackingMIN + 0;
+
 
     class Traffic
     {

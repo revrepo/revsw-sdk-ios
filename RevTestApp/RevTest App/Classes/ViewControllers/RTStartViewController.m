@@ -62,11 +62,8 @@
 
 - (IBAction)mobileWeb:(id)sender
 {
-    self.testLoop = [RTRequestTestLoop defaultTestLoop];
-    [self.testLoop start];
-    
-    //UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
-    //[self.navigationController pushViewController:startViewController animated:YES];
+    UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
+    [self.navigationController pushViewController:startViewController animated:YES];
 }
 
 - (void)onLogPressed:(id)sender

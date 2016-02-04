@@ -35,7 +35,7 @@
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)aRequest
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("Request entered protocol " + [aRequest StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagProtocolCanInit, "Request %s entered protocol timestamp %lld", aRequest.cDescription, RSTimeStamp);
     
     NSURL* requestrURL = aRequest.URL;
     NSString* host     = requestrURL.host;
@@ -69,8 +69,6 @@
         return NO;
     }
     
-    rs::Log::info(rs::kLogTagRequestTracking, ("Request passed " + [aRequest StdDescription]).c_str());
-    
     return YES;
 }
 
@@ -98,10 +96,10 @@
 {
     self.dataLength = 0;
  
+    rs::Log::info(rs::kLogTagProtocolStartLoading, "Start loading request %s timestamp %lld ", self.request.cDescription, RSTimeStamp);
+    
     if ([self shouldRedirectRequest:self.request])
     {
-        rs::Log::info(rs::kLogTagRequestTracking, ("Start loading origin " + [self.request StdDescription]).c_str());
-        
         NSString* dump = [NSString stringWithFormat:@"URL=%@, Method=%@, Headers:\n%@",
                           self.request.URL, self.request.HTTPMethod, self.request.allHTTPHeaderFields];
         rs::Log::info(rs::kLogTagSDKInerception, "Request %s", rs::stdStringFromNSString(dump).c_str());
@@ -110,8 +108,6 @@
     }
     else
     {
-        rs::Log::info(rs::kLogTagRequestTracking, ("Start loading REV " + [self.request StdDescription]).c_str());
-        
         NSMutableURLRequest* newRequest = [self.request mutableCopy];
         [NSURLProtocol setProperty:@YES
                             forKey:rs::kRSURLProtocolHandledKey
@@ -124,7 +120,7 @@
 
 - (void)stopLoading
 {
-   rs::Log::info(rs::kLogTagRequestTracking, ("Stop loading " + [self.request StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagProtocolStartLoading, "Stop loading request %s timestamp %lld", self.request.cDescription, RSTimeStamp);
 }
 
 - (NSCachedURLResponse *)cachedResponse
@@ -151,8 +147,6 @@
 
 - (void)rsconnection:(RSURLConnection *)connection wasRedirectedToRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("REV redirect request " +  [request StdDescription] + " response " + [response StdDescription]).c_str());
-    
     NSMutableURLRequest* newRequest = [request mutableCopy];
     
     [NSURLProtocol removePropertyForKey:rs::kRSURLProtocolHandledKey
@@ -189,13 +183,13 @@
 
 - (void) rsconnectionDidFinishLoading:(RSURLConnection *)connection
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("REV protocol did finish" + [self.request StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagProtocolRevFinish, "REV protocol did finish request %s timestamp %lld", self.request.cDescription, RSTimeStamp);
     [self.client URLProtocolDidFinishLoading:self];
 }
 
 - (void) rsconnection:(RSURLConnection *)connection didFailWithError:(NSError *)error
 {
-    rs::Log::error(rs::kLogTagRequestTracking, ("REV protocol did fail " + [self.request StdDescription] + [error StdDescription]).c_str());
+    rs::Log::error(rs::kLogTagProtocolRevFail, "REV protocol did fail request %s timestamp %lld", self.request.cDescription, RSTimeStamp);
     
     [self.client URLProtocol:self didFailWithError:error];
     __block BOOL flag = NO;
@@ -209,7 +203,7 @@
 
 - (void)connection:(RSURLConnectionNative *)connection didFailWithError:(NSError *)error
 {
-     rs::Log::error(rs::kLogTagRequestTracking, ("Origin protocol did fail " + [self.request StdDescription] + [error StdDescription]).c_str());
+     rs::Log::error(rs::kLogTagProtocolRevFail, "Origin protocol did fail request %s timestamp %lld", self.request.cDescription, RSTimeStamp);
     [self.client URLProtocol:self didFailWithError:error];
 }
 
@@ -231,7 +225,7 @@
 
 - (void)connectionDidFinish:(RSURLConnectionNative *)connection
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("Origin protocol did finish" + [self.request StdDescription]).c_str());
+    rs::Log::info(rs::kLogTagProtocolRevFinish, "Origin protocol did finish request %s timestamp %lld", self.request.cDescription, RSTimeStamp);
     
     if (rs::Model::instance()->shouldCollectRequestsData())
     {
@@ -245,7 +239,6 @@
 
 - (void)connection:(RSURLConnectionNative *)aConnection wasRedirectedToRequest:(NSURLRequest *)aRequest redirectResponse:(NSURLResponse *)aResponse
 {
-    rs::Log::info(rs::kLogTagRequestTracking, ("Origin protcol redirect request " +  [aRequest StdDescription] + " response " + [aResponse StdDescription]).c_str());
     NSMutableURLRequest* newRequest = [aRequest mutableCopy];
     
     [NSURLProtocol removePropertyForKey:rs::kRSURLProtocolHandledKey

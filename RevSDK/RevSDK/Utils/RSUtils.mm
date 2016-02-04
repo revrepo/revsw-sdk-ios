@@ -43,28 +43,20 @@
 
 @end
 
-@implementation NSObject(StdDescription)
+@implementation NSURLRequest(CDescription)
 
-- (std::string)StdDescription
+- (const char *)cDescription
 {
-    NSURL* URL                  = nil;
-    SEL URLSelector             = @selector(URL);
-    NSString* descriptionString = nil;
-    
-    if ([self respondsToSelector:URLSelector])
-    {
-        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
-                                               URL = [self performSelector:URLSelector];
-                                               ); 
-        
-        descriptionString = [URL absoluteString];
-    }
-    else
-    {
-        descriptionString = [self description];
-    }
-    
-    return rs::stdStringFromNSString(descriptionString);
+    return [NSString stringWithFormat:@"URL %@ headers %@", self.URL.absoluteString, self.allHTTPHeaderFields].UTF8String;
+}
+
+@end
+
+@implementation NSHTTPURLResponse (CDescription)
+
+- (const char *)cDescription
+{
+    return [NSString stringWithFormat:@"URL %@ status code %ld headers %@", self.URL.absoluteString, self.statusCode, self.allHeaderFields].UTF8String;
 }
 
 @end

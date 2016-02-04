@@ -144,7 +144,13 @@
                 tags.insert(i);
             break;
         case 5: //Request tracking
-            for (int i = rs::kLogTagRequestTrackingMIN; i <= rs::kLogTagRequestTrackingMAX; ++i)
+            for (int i = rs::kLogTagProtocolMIN; i <= rs::kLogTagProtocolMAX; ++i)
+                tags.insert(i);
+            for (int i = rs::kLogTagOriginMIN; i <= rs::kLogTagOriginMax; ++i)
+                tags.insert(i);
+            for (int i = rs::kLogTagQUICMIN; i <= rs::kLogTagQUICMAX; ++i)
+                tags.insert(i);
+            for (int i = rs::kLogTagSTDMIN; i <= rs::kLogTagSTDMAX; ++i)
                 tags.insert(i);
             break;
         default:
