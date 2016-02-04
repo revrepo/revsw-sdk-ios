@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:RevSDK/RevSDK/quicrepack/quicrepack.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:RevTestApp/RevTest App.xcodeproj">
    </FileRef>
    <FileRef

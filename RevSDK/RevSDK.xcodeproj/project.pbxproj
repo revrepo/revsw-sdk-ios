@@ -27,9 +27,7 @@
 		116C4D6B1C456FB5000CE641 /* RSSupervisor.h in Headers */ = {isa = PBXBuildFile; fileRef = 116C4D691C456FB5000CE641 /* RSSupervisor.h */; };
 		119145321C33D2D800B91C6E /* QUICThread.mm in Sources */ = {isa = PBXBuildFile; fileRef = 119145301C33D2D800B91C6E /* QUICThread.mm */; };
 		119145331C33D2D800B91C6E /* QUICThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 119145311C33D2D800B91C6E /* QUICThread.h */; };
-		11BB68021C5938CB00134420 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BB67FF1C5938CB00134420 /* libcrypto.a */; };
-		11BB68031C5938CB00134420 /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BB68001C5938CB00134420 /* libprotobuf.a */; };
-		11BB68041C5938CB00134420 /* libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 11BB68011C5938CB00134420 /* libquic.a */; };
+		1196D1161C63C8A900686584 /* libquicrepack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1196D1151C63C8A900686584 /* libquicrepack.a */; };
 		11C1968B1C3FAF4600F28120 /* RSLog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11C196891C3FAF4600F28120 /* RSLog.cpp */; };
 		11C1968C1C3FAF4600F28120 /* RSLog.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C1968A1C3FAF4600F28120 /* RSLog.h */; };
 		11C9610D1C2D469300CDE34D /* quic_client_session.cc in Sources */ = {isa = PBXBuildFile; fileRef = 11C95FD81C2D469300CDE34D /* quic_client_session.cc */; };
@@ -46,10 +44,6 @@
 		11C962261C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 11C962241C2D779100CDE34D /* RSNativeUDPSocketWrapper.mm */; };
 		11C9622A1C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C962281C2D789700CDE34D /* NativeUDPSocketCPPDelegate.h */; };
 		11C9622D1C2D7AE400CDE34D /* RevProofVerifier.h in Headers */ = {isa = PBXBuildFile; fileRef = 11C9622C1C2D7AE400CDE34D /* RevProofVerifier.h */; };
-		11CDFD131C5AA6FB008BCF8F /* sim_libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */; };
-		11CDFD141C5AA6FB008BCF8F /* sim_libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */; };
-		11CDFD151C5AA6FB008BCF8F /* sim_libquic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8D1C5810C100CB7FBA /* sim_libquic.a */; };
-		11CDFD161C5AA6FB008BCF8F /* sim_libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF8E1C5810C100CB7FBA /* sim_libssl.a */; };
 		11F24B341C3C06B900DABAE5 /* QUICDataStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B321C3C06B900DABAE5 /* QUICDataStream.cpp */; };
 		11F24B351C3C06B900DABAE5 /* QUICDataStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B331C3C06B900DABAE5 /* QUICDataStream.h */; };
 		11F24B381C3C09C100DABAE5 /* QUICClientSession.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 11F24B361C3C09C100DABAE5 /* QUICClientSession.cpp */; };
@@ -182,17 +176,9 @@
 		117D66631C610EA1000B897D /* RevSDK copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "RevSDK copy-Info.plist"; path = "/Users/Alexander1/Projects/RevSDK/RevSDK/RevSDK copy-Info.plist"; sourceTree = "<absolute>"; };
 		119145301C33D2D800B91C6E /* QUICThread.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICThread.mm; sourceTree = "<group>"; };
 		119145311C33D2D800B91C6E /* QUICThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICThread.h; sourceTree = "<group>"; };
+		1196D1131C63C1FD00686584 /* libquicrepack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libquicrepack.a; path = "RevSDK/quicrepack/build/Debug-iphoneos/libquicrepack.a"; sourceTree = "<group>"; };
+		1196D1151C63C8A900686584 /* libquicrepack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libquicrepack.a; path = "../../../Library/Developer/Xcode/DerivedData/RevSDK-evtzuhfitxmxukbtzngfldtszrym/Build/Products/Debug-iphoneos/libquicrepack.a"; sourceTree = "<group>"; };
 		1198FF731C57FD9F00CB7FBA /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libcrypto.a; sourceTree = "<group>"; };
-		1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libprotobuf.a; sourceTree = "<group>"; };
-		1198FF8D1C5810C100CB7FBA /* sim_libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libquic.a; sourceTree = "<group>"; };
-		1198FF8E1C5810C100CB7FBA /* sim_libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = sim_libssl.a; sourceTree = "<group>"; };
-		11BB67FF1C5938CB00134420 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		11BB68001C5938CB00134420 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
-		11BB68011C5938CB00134420 /* libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libquic.a; sourceTree = "<group>"; };
-		11C063F91C5971A30013D0B7 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		11C063FA1C5971A30013D0B7 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
-		11C063FB1C5971A30013D0B7 /* libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libquic.a; sourceTree = "<group>"; };
 		11C196891C3FAF4600F28120 /* RSLog.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSLog.cpp; sourceTree = "<group>"; };
 		11C1968A1C3FAF4600F28120 /* RSLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSLog.h; sourceTree = "<group>"; };
 		11C95FD81C2D469300CDE34D /* quic_client_session.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = quic_client_session.cc; sourceTree = "<group>"; };
@@ -201,8 +187,6 @@
 		11C95FDB1C2D469300CDE34D /* quic_spdy_client_stream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quic_spdy_client_stream.h; sourceTree = "<group>"; };
 		11C95FDC1C2D469300CDE34D /* RevAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevAsyncUdpSocket.h; sourceTree = "<group>"; };
 		11C95FDD1C2D469300CDE34D /* RevAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevAsyncUdpSocket.m; sourceTree = "<group>"; };
-		11C95FE31C2D469300CDE34D /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		11C960851C2D469300CDE34D /* libquic.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libquic.a; sourceTree = "<group>"; };
 		11C9621B1C2D54C000CDE34D /* QUICSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICSession.mm; sourceTree = "<group>"; };
 		11C9621C1C2D54C000CDE34D /* QUICSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICSession.h; sourceTree = "<group>"; };
 		11C9621F1C2D54CE00CDE34D /* QUICHelpers.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = QUICHelpers.mm; sourceTree = "<group>"; };
@@ -302,7 +286,6 @@
 		65B3A7D11C45018D003C9426 /* LeakDetector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeakDetector.h; sourceTree = "<group>"; };
 		65B3A7D21C463145003C9426 /* GCDAsyncUdpSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCDAsyncUdpSocket.h; sourceTree = "<group>"; };
 		65B3A7D31C463146003C9426 /* GCDAsyncUdpSocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncUdpSocket.m; sourceTree = "<group>"; };
-		65B3A7D81C46641D003C9426 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libprotobuf.a; sourceTree = "<group>"; };
 		6D1348661C4131310017D07E /* ProtocolFailureMonitor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ProtocolFailureMonitor.h; sourceTree = "<group>"; };
 		6D1348671C4131430017D07E /* ProtocolFailureMonitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolFailureMonitor.cpp; sourceTree = "<group>"; };
 		6D1F86071C3A730800E48AC9 /* ProtocolSelector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ProtocolSelector.cpp; sourceTree = "<group>"; };
@@ -329,14 +312,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				11CDFD161C5AA6FB008BCF8F /* sim_libssl.a in Frameworks */,
+				1196D1161C63C8A900686584 /* libquicrepack.a in Frameworks */,
 				1109F3CF1C401EEE00ABB160 /* MessageUI.framework in Frameworks */,
-				11BB68041C5938CB00134420 /* libquic.a in Frameworks */,
-				11CDFD131C5AA6FB008BCF8F /* sim_libcrypto.a in Frameworks */,
-				11CDFD141C5AA6FB008BCF8F /* sim_libprotobuf.a in Frameworks */,
-				11BB68031C5938CB00134420 /* libprotobuf.a in Frameworks */,
-				11CDFD151C5AA6FB008BCF8F /* sim_libquic.a in Frameworks */,
-				11BB68021C5938CB00134420 /* libcrypto.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -354,6 +331,8 @@
 		0C970DE8623DE2851A075105 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1196D1151C63C8A900686584 /* libquicrepack.a */,
+				1196D1131C63C1FD00686584 /* libquicrepack.a */,
 				1109F3CE1C401EEE00ABB160 /* MessageUI.framework */,
 			);
 			name = Frameworks;
@@ -388,37 +367,6 @@
 				116C4D681C456FB5000CE641 /* RSSupervisor.cpp */,
 			);
 			path = Debug;
-			sourceTree = "<group>";
-		};
-		1198FF8A1C5810C100CB7FBA /* sim */ = {
-			isa = PBXGroup;
-			children = (
-				1198FF8B1C5810C100CB7FBA /* sim_libcrypto.a */,
-				1198FF8C1C5810C100CB7FBA /* sim_libprotobuf.a */,
-				1198FF8D1C5810C100CB7FBA /* sim_libquic.a */,
-				1198FF8E1C5810C100CB7FBA /* sim_libssl.a */,
-			);
-			path = sim;
-			sourceTree = "<group>";
-		};
-		11BB67FE1C5938CB00134420 /* dvc */ = {
-			isa = PBXGroup;
-			children = (
-				11BB67FF1C5938CB00134420 /* libcrypto.a */,
-				11BB68001C5938CB00134420 /* libprotobuf.a */,
-				11BB68011C5938CB00134420 /* libquic.a */,
-			);
-			path = dvc;
-			sourceTree = "<group>";
-		};
-		11C063F81C5971A30013D0B7 /* dvc_bitcode */ = {
-			isa = PBXGroup;
-			children = (
-				11C063F91C5971A30013D0B7 /* libcrypto.a */,
-				11C063FA1C5971A30013D0B7 /* libprotobuf.a */,
-				11C063FB1C5971A30013D0B7 /* libquic.a */,
-			);
-			path = dvc_bitcode;
 			sourceTree = "<group>";
 		};
 		11C90BBA1C4276670002DCA1 /* quic */ = {
@@ -488,30 +436,8 @@
 		11C95FE11C2D469300CDE34D /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
-				11C063F81C5971A30013D0B7 /* dvc_bitcode */,
-				1198FF8A1C5810C100CB7FBA /* sim */,
-				11BB67FE1C5938CB00134420 /* dvc */,
-				11C95FE21C2D469300CDE34D /* libCrypto */,
-				65B3A7D71C46641D003C9426 /* libProtobuf */,
-				11C95FE41C2D469300CDE34D /* libQUIC */,
 			);
 			path = ThirdParty;
-			sourceTree = "<group>";
-		};
-		11C95FE21C2D469300CDE34D /* libCrypto */ = {
-			isa = PBXGroup;
-			children = (
-				11C95FE31C2D469300CDE34D /* libcrypto.a */,
-			);
-			path = libCrypto;
-			sourceTree = "<group>";
-		};
-		11C95FE41C2D469300CDE34D /* libQUIC */ = {
-			isa = PBXGroup;
-			children = (
-				11C960851C2D469300CDE34D /* libquic.a */,
-			);
-			path = libQUIC;
 			sourceTree = "<group>";
 		};
 		5B3096AC1BFA02760045024C = {
@@ -717,14 +643,6 @@
 				5BE3F86F1C04A0DE0087BC28 /* Timer.mm */,
 			);
 			path = Timer;
-			sourceTree = "<group>";
-		};
-		65B3A7D71C46641D003C9426 /* libProtobuf */ = {
-			isa = PBXGroup;
-			children = (
-				65B3A7D81C46641D003C9426 /* libprotobuf.a */,
-			);
-			path = libProtobuf;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1093,8 +1011,7 @@
 					TARGET_OS_IPHONE,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/RevSDK/libs/boost/include",
-					"$(SRCROOT)/RevSDK/quic/ThirdParty/libQUIC",
+					"$(SRCROOT)/RevSDK/quicrepack/src",
 					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
@@ -1111,6 +1028,7 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc_bitcode",
+					"$(PROJECT_DIR)/RevSDK/quicrepack/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1146,8 +1064,7 @@
 					TARGET_OS_IPHONE,
 				);
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/RevSDK/libs/boost/include",
-					"$(SRCROOT)/RevSDK/quic/ThirdParty/libQUIC",
+					"$(SRCROOT)/RevSDK/quicrepack/src",
 					"${SRCROOT}",
 				);
 				INFOPLIST_FILE = RevSDK/Info.plist;
@@ -1164,6 +1081,7 @@
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc",
 					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc_bitcode",
+					"$(PROJECT_DIR)/RevSDK/quicrepack/build/Debug-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
