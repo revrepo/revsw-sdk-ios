@@ -120,15 +120,16 @@ typedef enum
 {
     self.testCases = [NSMutableArray array];
     
-    RTTestCase* tcase = [[RTTestCase alloc] init];
-    // 1st case
+    RTTestCase* tcase = nil;
+
+    tcase = [[RTTestCase alloc] init];
     tcase.testName = @"Current";
     tcase.protocolID = @"none";
     tcase.operationMode = RSOperationMode::kRSOperationModeReport;
     
     [self.testCases addObject:tcase];
     ////////////////////////////////
-    
+
     tcase = [[RTTestCase alloc] init];
     tcase.testName = @"RevAPM";
     tcase.protocolID = @"standard";

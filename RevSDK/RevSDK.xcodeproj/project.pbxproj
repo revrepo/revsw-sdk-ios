@@ -209,7 +209,6 @@
 		11F24B371C3C09C100DABAE5 /* QUICClientSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QUICClientSession.h; sourceTree = "<group>"; };
 		11F24B3E1C3C57E500DABAE5 /* RSUDPSocket.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSUDPSocket.cpp; sourceTree = "<group>"; };
 		11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUDPSocket.h; sourceTree = "<group>"; };
-		11F24B421C3C5FBA00DABAE5 /* libboost.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libboost.a; path = libs/boost/ios/libboost.a; sourceTree = "<group>"; };
 		11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSUDPService.cpp; sourceTree = "<group>"; };
 		11F24B491C3D695D00DABAE5 /* RSUDPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUDPService.h; sourceTree = "<group>"; };
 		5B2035821C33DBB400A28C01 /* RSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReachability.h; sourceTree = "<group>"; };
@@ -483,7 +482,6 @@
 			isa = PBXGroup;
 			children = (
 				1103818F1C496C8E001F60E9 /* json */,
-				11F24B421C3C5FBA00DABAE5 /* libboost.a */,
 				114D65841C34502C00C2D176 /* Debug */,
 				11C95FD61C2D462200CDE34D /* quic */,
 				5B46D1E21C217B7200A9834C /* Stats */,
@@ -1033,6 +1031,7 @@
 					"$(inherited)",
 					"COCOAPODS=1",
 					TARGET_OS_IPHONE,
+					"REVSDK_QUIC_LOGGING=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/RevSDK/quicrepack/src",
@@ -1044,15 +1043,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libCrypto",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libQUIC",
-					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sym",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc_bitcode",
-					"$(PROJECT_DIR)/RevSDK/quicrepack/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/RevSDK/quicrepack/build/$(CONFIGURATION)-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
@@ -1097,15 +1088,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libCrypto",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libQUIC",
-					"$(PROJECT_DIR)/RevSDK/libs/boost/ios",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/libProtobuf",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sym",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/sim",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc",
-					"$(PROJECT_DIR)/RevSDK/quic/ThirdParty/dvc_bitcode",
-					"$(PROJECT_DIR)/RevSDK/quicrepack/build/Debug-iphoneos",
+					"$(PROJECT_DIR)/RevSDK/quicrepack/build/$(CONFIGURATION)-iphoneos",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (

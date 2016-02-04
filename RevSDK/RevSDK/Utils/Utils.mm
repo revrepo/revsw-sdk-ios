@@ -274,4 +274,20 @@ namespace rs
         URLString  = URL.absoluteString;
         aURL       = stdStringFromNSString(URLString);
     }
+    
+    std::string executableFilePath()
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *basePath = paths.firstObject;
+        NSString* path = [basePath stringByAppendingPathComponent:@"none"];
+        return std::string([path UTF8String]);
+    }
+    
+    std::string quicLogFilePath()
+    {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *basePath = paths.firstObject;
+        NSString* path = [basePath stringByAppendingPathComponent:@"quic.log"];
+        return std::string([path UTF8String]);
+    }
 }

@@ -19,6 +19,8 @@
 #include <mutex>
 #include <map>
 #include <algorithm>
+#include <base/logging.h>
+#include <base/command_line.h>
 
 #include "RSLog.h"
 
@@ -40,6 +42,10 @@
 #include "Event.hpp"
 #include "DebugUsageTracker.hpp"
 
+#if TARGET_IPHONE_SIMULATOR
+#define CUSTOM_QUIC_LOG_PATH "/Users/Alexander1/Dev/quictest/quic.txt"
+#endif
+
 namespace rs
 {
     class ProxyTarget: public Log::Target
@@ -59,6 +65,37 @@ namespace rs
     Model::Model():
         mEventTriggerOn (false)
     {
+#if REVSDK_QUIC_LOGGING
+        {
+            const std::string exePatj = executableFilePath();
+            typedef const char* constpchar;
+            constpchar kExePath = executableFilePath().c_str();
+            
+            constpchar argv[] =
+            {
+                kExePath,
+                "--enable-logging",
+                "--v=1",
+                nullptr
+            };
+            int argc = 0;
+            while (argv[argc])
+                argc++;
+            
+//            base::CommandLine::Init(argc, argv);
+            logging::LoggingSettings quicLogSettings;
+            quicLogSettings.logging_dest = logging::LOG_TO_ALL;
+            quicLogSettings.delete_old = logging::APPEND_TO_OLD_LOG_FILE;
+            quicLogSettings.lock_log = logging::DONT_LOCK_LOG_FILE;
+            std::string quicLogFile = quicLogFilePath();
+#if defined(CUSTOM_QUIC_LOG_PATH)
+            quicLogFile = CUSTOM_QUIC_LOG_PATH;
+#endif
+            quicLogSettings.log_file = quicLogFile.c_str();
+            std::cout << "QUIC LOG FILE: " << quicLogFile.c_str() << std::endl;
+//            logging::InitLogging(quicLogSettings);
+        }
+#endif
         Log::initialize();
         Traffic::initialize();
 

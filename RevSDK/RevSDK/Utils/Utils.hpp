@@ -123,6 +123,9 @@ typedef enum
     bool domainsContainDomainName(const std::vector<std::string>&, const std::string&);
     bool isApplicationActive();
     void correctURLIfNeeded(std::string&, const std::string&);
+    
+    std::string executableFilePath();
+    std::string quicLogFilePath();
 }
 
 #endif /* Utils_hpp */
