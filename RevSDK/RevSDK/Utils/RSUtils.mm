@@ -55,7 +55,7 @@
     {
         SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING(
                                                URL = [self performSelector:URLSelector];
-                                               );
+                                               ); 
         
         descriptionString = [URL absoluteString];
     }

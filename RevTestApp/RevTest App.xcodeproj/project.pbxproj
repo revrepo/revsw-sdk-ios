@@ -47,6 +47,7 @@
 		5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B43F58E1C44053200D6F33D /* Images.xcassets */; };
 		5B58B3481C620B33002B14EC /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B58B3471C620B33002B14EC /* RevSDK.framework */; };
 		5B58B3491C620B33002B14EC /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B58B3471C620B33002B14EC /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5B58B3501C626D31002B14EC /* RTRequestTestLoop.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */; };
 		5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
 		5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
 		5B7804E01C15E241003AD4F5 /* RTNativeMobileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B7804DE1C15E241003AD4F5 /* RTNativeMobileViewController.m */; };
@@ -153,6 +154,8 @@
 		5B43F58C1C4404F900D6F33D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "RevTest App/Assets.xcassets"; sourceTree = "<group>"; };
 		5B43F58E1C44053200D6F33D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "RevTest App/Images.xcassets"; sourceTree = SOURCE_ROOT; };
 		5B58B3471C620B33002B14EC /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
+		5B58B34E1C626D31002B14EC /* RTRequestTestLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRequestTestLoop.h; sourceTree = "<group>"; };
+		5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRequestTestLoop.m; sourceTree = "<group>"; };
 		5B70CA101C3D17F60051D31F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		5B70CA111C3D17F60051D31F /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5B70CA161C3D19E00051D31F /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -406,6 +409,8 @@
 				6D8BD9A91C3FCD23008353DB /* RTTestCase.m */,
 				65C1EE5B1C4796520095537E /* RTHTMLGrabber.h */,
 				65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */,
+				5B58B34E1C626D31002B14EC /* RTRequestTestLoop.h */,
+				5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -680,6 +685,7 @@
 				65C1EE5D1C4796520095537E /* RTHTMLGrabber.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				6D8BD9AA1C3FCD23008353DB /* RTTestCase.m in Sources */,
+				5B58B3501C626D31002B14EC /* RTRequestTestLoop.m in Sources */,
 				65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */,
 				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,

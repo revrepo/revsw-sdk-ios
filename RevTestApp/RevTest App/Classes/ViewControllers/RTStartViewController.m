@@ -21,6 +21,13 @@
 #import "RTMobileWebViewController.h"
 #import "RTNativeMobileViewController.h"
 #import <RevSDK/RevSDK.h>
+#import "RTRequestTestLoop.h"
+
+@interface RTStartViewController ()
+
+@property (nonatomic, strong) RTRequestTestLoop* testLoop;
+
+@end
 
 @implementation RTStartViewController
 
@@ -55,8 +62,11 @@
 
 - (IBAction)mobileWeb:(id)sender
 {
-    UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
-    [self.navigationController pushViewController:startViewController animated:YES];
+    self.testLoop = [RTRequestTestLoop defaultTestLoop];
+    [self.testLoop start];
+    
+    //UIViewController* startViewController = [RTMobileWebViewController viewControllerFromXib];
+    //[self.navigationController pushViewController:startViewController animated:YES];
 }
 
 - (void)onLogPressed:(id)sender
