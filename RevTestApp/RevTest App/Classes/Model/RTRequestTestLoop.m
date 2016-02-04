@@ -51,6 +51,7 @@ typedef enum
 @property (nonatomic, assign) NSUInteger numberOfFullPasses;
 @property (nonatomic, assign) NSUInteger currentPass;
 @property (nonatomic, assign) BOOL isIterating;
+@property (nonatomic, strong) RTTestCase* currentTestCase;
 
 @end
 
@@ -163,8 +164,9 @@ typedef enum
     SEL selector = @selector(debug_enableTestMode);
     [RevSDK performSelector:selector];
     
-    RTTestCase* tcase    = [self.testCases objectAtIndex:_iterationIndex];
+    RTTestCase* tcase    = [self.testCases objectAtIndex:_iterationIndex % self.testCases.count];
     RSOperationMode mode = (RSOperationMode) tcase.operationMode;
+    self.currentTestCase = tcase;
     [self pushTestConfiguration:tcase.protocolID mode:mode];
     
     self.iterationIndex     = 0;
@@ -188,6 +190,7 @@ typedef enum
         RTTestCase* tcase    = [self.testCases objectAtIndex:self.iterationIndex % self.testCases.count];
         RSOperationMode mode = (RSOperationMode) tcase.operationMode;
         [self pushTestConfiguration:tcase.protocolID mode:mode];
+        self.currentTestCase = tcase;
         
         [self next];
     }
@@ -209,6 +212,7 @@ typedef enum
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
+    NSLog(@"URL = %@ transport = %@", URLString, self.currentTestCase.testName);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];
@@ -224,6 +228,7 @@ typedef enum
 - (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode dataSize:(NSUInteger)aDataSize
 {
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"Did finish with code %ld", statusCode);
         [self restart];
     });
 }

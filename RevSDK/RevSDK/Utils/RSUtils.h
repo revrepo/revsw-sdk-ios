@@ -29,7 +29,7 @@
 
 #import "RSPublicConsts.h"
 
-#define RSTimeStamp ((long)([[NSDate date] timeIntervalSince1970] * 1000))
+#define RSTimeStamp ((long long)([[NSDate date] timeIntervalSince1970] * 1000))
 
 @class RSURLConnectionNative;
 
