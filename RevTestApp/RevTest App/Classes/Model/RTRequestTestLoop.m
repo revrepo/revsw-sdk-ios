@@ -11,6 +11,7 @@
 #import "RTRequestTestLoop.h"
 #import "RTHTMLGrabber.h"
 #import "RTTestModel.h"
+#import "RTUtils.h"
 
 @interface NSString (URLString)
 
@@ -52,6 +53,7 @@ typedef enum
 @property (nonatomic, assign) NSUInteger currentPass;
 @property (nonatomic, assign) BOOL isIterating;
 @property (nonatomic, strong) RTTestCase* currentTestCase;
+@property (nonatomic, strong) NSMutableArray* statusCodes;
 
 @end
 
@@ -96,6 +98,7 @@ typedef enum
     
     if (self)
     {
+        _statusCodes          = [NSMutableArray array];
         _numberOfTests        = aNumberOfTests;
         _domains              = [aDomains copy];
         _htmlGrabber          = [RTHTMLGrabber new];
@@ -119,13 +122,6 @@ typedef enum
         
         [_testCases addObject:tcase];
         ////////////////////////////////
-        
-        tcase = [[RTTestCase alloc] init];
-        tcase.testName = @"RevSDK";
-        tcase.protocolID = @"quic";
-        tcase.operationMode = kRSOperationModeTransportAndReport;
-        
-        [_testCases addObject:tcase];
     }
     
     return self;
@@ -206,12 +202,19 @@ typedef enum
         
         SEL selector = @selector(debug_disableTestMode);
         [RevSDK performSelector:selector];
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
+                                                            object:nil
+                                                          userInfo:@{
+                                                                     kRTResultKey : @YES
+                                                                     }];
     }
 }
 
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
+    NSLog(@"Start %@ test - %@", URLString, self.currentTestCase.testName);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];
@@ -226,8 +229,39 @@ typedef enum
 
 - (void)grabberDidFinishLoad:(RTHTMLGrabber *)grabber withStatusCode:(NSInteger)statusCode dataSize:(NSUInteger)aDataSize
 {
+    [self.statusCodes addObject:@(statusCode)];
+    
+    if (self.statusCodes.count == self.testCases.count)
+    {
+        NSInteger firstCode = 0;
+        
+        for (NSNumber * number in self.statusCodes)
+        {
+            NSInteger statusCode = number.integerValue;
+            
+            if (firstCode == 0)
+            {
+                firstCode = statusCode;
+            }
+            else
+            {
+                if (statusCode != firstCode)
+                {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
+                                                                        object:nil
+                                                                      userInfo:@{
+                                                                                 kRTResultKey : @NO
+                                                                                 }];
+                }
+            }
+        }
+        
+        [self.statusCodes removeAllObjects];
+    }
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         NSLog(@"Did finish with code %ld", statusCode);
+        
         [self restart];
     });
 }

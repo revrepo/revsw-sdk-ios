@@ -19,6 +19,10 @@
 
 #import "RTTestResult.h"
 
+@interface RTTestResult ()
+
+@end
+
 static BOOL shouldReportDataInMB = NO;
 
 @implementation RTTestResult

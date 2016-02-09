@@ -31,8 +31,6 @@
 		30B4F30219D5E07200D9F7D8 /* Default-Landscape-736h.png in Resources */ = {isa = PBXBuildFile; fileRef = 30B4F2FF19D5E07200D9F7D8 /* Default-Landscape-736h.png */; };
 		30C1856619D5FC0A00212699 /* icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30C1856519D5FC0A00212699 /* icon-60@3x.png */; };
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
-		5B05139A1C69F6DE0014686C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B58B3471C620B33002B14EC /* RevSDK.framework */; };
-		5B05139B1C69F6DE0014686C /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B58B3471C620B33002B14EC /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5B0BFEDA1C0C53DE0057715A /* RTReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFED91C0C53DE0057715A /* RTReportViewController.m */; };
 		5B0BFEE71C0C6C1B0057715A /* RTReportCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B0BFEE61C0C6C1B0057715A /* RTReportCell.m */; };
 		5B0BFEE91C0C6C2E0057715A /* RTReportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5B0BFEE81C0C6C2E0057715A /* RTReportCell.xib */; };
@@ -55,6 +53,12 @@
 		5B8767B51C4E55DC00363906 /* newrelic_postbuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
+		5BB7F2461C6A2D1D0095D508 /* revsdkdemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */; };
+		5BB7F24B1C6A38AA0095D508 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C1EE591C4795460095537E /* libxml2.tbd */; };
+		5BB7F2531C6A3C2B0095D508 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */; };
+		5BB7F2541C6A3C2B0095D508 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5BB7F2551C6A3DB80095D508 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
+		5BB7F2561C6A3DC00095D508 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
 		5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0D5B71C3D6F3B0064F97D /* RTCell.m */; };
 		5BE164E41C5BA1FE003A6E5B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
@@ -90,6 +94,16 @@
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		5BB7F2401C6A2CB90095D508 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = "RevTest App";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		1179627B1C578804003B9E66 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -97,7 +111,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5B05139B1C69F6DE0014686C /* RevSDK.framework in Embed Frameworks */,
+				5BB7F2541C6A3C2B0095D508 /* RevSDK.framework in Embed Frameworks */,
 				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
 				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
@@ -153,7 +167,6 @@
 		5B25817E1C17155F00C55959 /* RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTUtils.m; sourceTree = "<group>"; };
 		5B43F58C1C4404F900D6F33D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "RevTest App/Assets.xcassets"; sourceTree = "<group>"; };
 		5B43F58E1C44053200D6F33D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = "RevTest App/Images.xcassets"; sourceTree = SOURCE_ROOT; };
-		5B58B3471C620B33002B14EC /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5B58B34E1C626D31002B14EC /* RTRequestTestLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTRequestTestLoop.h; sourceTree = "<group>"; };
 		5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTRequestTestLoop.m; sourceTree = "<group>"; };
 		5B70CA101C3D17F60051D31F /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
@@ -166,6 +179,10 @@
 		5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = newrelic_postbuild.sh; sourceTree = "<group>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
+		5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = revsdkdemo.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BB7F23F1C6A2CB90095D508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = revsdkdemo.m; sourceTree = "<group>"; };
+		5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
 		5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTTesting.m"; sourceTree = "<group>"; };
 		5BE0D5B61C3D6F3B0064F97D /* RTCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCell.h; sourceTree = "<group>"; };
@@ -226,7 +243,7 @@
 				1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */,
 				1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */,
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
-				5B05139A1C69F6DE0014686C /* RevSDK.framework in Frameworks */,
+				5BB7F2531C6A3C2B0095D508 /* RevSDK.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
@@ -236,6 +253,16 @@
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
 				1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */,
 				5BE164E41C5BA1FE003A6E5B /* Crashlytics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BB7F2381C6A2CB90095D508 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BB7F2561C6A3DC00095D508 /* libc++.tbd in Frameworks */,
+				5BB7F2551C6A3DB80095D508 /* libz.tbd in Frameworks */,
+				5BB7F24B1C6A38AA0095D508 /* libxml2.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +290,7 @@
 			isa = PBXGroup;
 			children = (
 				1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */,
+				5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,12 +298,13 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				5B58B3471C620B33002B14EC /* RevSDK.framework */,
+				5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				65C1EE511C4794D30095537E /* ThirdParty */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				5BB7F23C1C6A2CB90095D508 /* revsdkdemo */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				2A9CDFBE923BCBF87827823E /* Pods */,
@@ -424,6 +453,15 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		5BB7F23C1C6A2CB90095D508 /* revsdkdemo */ = {
+			isa = PBXGroup;
+			children = (
+				5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */,
+				5BB7F23F1C6A2CB90095D508 /* Info.plist */,
+			);
+			path = revsdkdemo;
+			sourceTree = "<group>";
+		};
 		5BEC8C9B1C06FAD90019BCD1 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,6 +575,24 @@
 			productReference = 1D6058910D05DD3D006BFB54 /* RevSDK Racer.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5BB7F23A1C6A2CB90095D508 /* revsdkdemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5BB7F2441C6A2CB90095D508 /* Build configuration list for PBXNativeTarget "revsdkdemo" */;
+			buildPhases = (
+				5BB7F2371C6A2CB90095D508 /* Sources */,
+				5BB7F2381C6A2CB90095D508 /* Frameworks */,
+				5BB7F2391C6A2CB90095D508 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5BB7F2411C6A2CB90095D508 /* PBXTargetDependency */,
+			);
+			name = revsdkdemo;
+			productName = revsdkdemo;
+			productReference = 5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -547,6 +603,10 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = 4BK2JHQGZF;
+					};
+					5BB7F23A1C6A2CB90095D508 = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = 1D6058900D05DD3D006BFB54;
 					};
 				};
 			};
@@ -569,6 +629,7 @@
 			projectRoot = "";
 			targets = (
 				1D6058900D05DD3D006BFB54 /* RevTest App */,
+				5BB7F23A1C6A2CB90095D508 /* revsdkdemo */,
 			);
 		};
 /* End PBXProject section */
@@ -616,6 +677,13 @@
 				5B43F58F1C44053200D6F33D /* Images.xcassets in Resources */,
 				5B0BFEE91C0C6C2E0057715A /* RTReportCell.xib in Resources */,
 				30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5BB7F2391C6A2CB90095D508 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -700,7 +768,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5BB7F2371C6A2CB90095D508 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5BB7F2461C6A2D1D0095D508 /* revsdkdemo.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5BB7F2411C6A2CB90095D508 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D6058900D05DD3D006BFB54 /* RevTest App */;
+			targetProxy = 5BB7F2401C6A2CB90095D508 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		1D6058940D05DD3E006BFB54 /* Debug */ = {
@@ -722,6 +806,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
@@ -774,6 +859,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = "";
 				HEADER_SEARCH_PATHS = (
@@ -806,6 +892,86 @@
 				PRODUCT_NAME = "RevSDK Racer";
 				PROVISIONING_PROFILE = "7400bae8-51a4-4a91-bd8d-4994c80b4827";
 				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		5BB7F2421C6A2CB90095D508 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RevSDK Racer.app/RevSDK Racer";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+					/usr/include/libxml2,
+				);
+				INFOPLIST_FILE = revsdkdemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+			};
+			name = Debug;
+		};
+		5BB7F2431C6A2CB90095D508 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/RevSDK Racer.app/RevSDK Racer";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				HEADER_SEARCH_PATHS = (
+					"\"$(TARGET_BUILD_DIR)/usr/local/lib/include\"",
+					"\"$(OBJROOT)/UninstalledProducts/include\"",
+					"\"$(BUILT_PRODUCTS_DIR)\"",
+					"\"$(OBJROOT)/UninstalledProducts/$(PLATFORM_NAME)/include\"",
+					/usr/include/libxml2,
+				);
+				INFOPLIST_FILE = revsdkdemo/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -913,6 +1079,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		5BB7F2441C6A2CB90095D508 /* Build configuration list for PBXNativeTarget "revsdkdemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5BB7F2421C6A2CB90095D508 /* Debug */,
+				5BB7F2431C6A2CB90095D508 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RevTest App" */ = {
 			isa = XCConfigurationList;

@@ -183,6 +183,8 @@ void ConfigurationService::loadConfiguration()
                                              this->loadConfiguration();
                                          });
                 }
+                
+                postNotification(kConfigurationLoadedNotification);
             }
             else
             {

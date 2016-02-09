@@ -23,6 +23,8 @@ namespace rs
 {
     const int kSDKVersionNumber = kRSSDKVersion;
     
+    const std::string kConfigurationLoadedNotification = "kConfigurationLoadedNotification";
+    
     const std::string kOSKey                           = stdStringFromNSString(kRSOSKey);
     const std::string kAppNameKey                      = stdStringFromNSString(kRSAppNameKey);
     const std::string kSDKReleaseVersionKey            = stdStringFromNSString(kRSSDKReleaseVersionKey);
@@ -289,5 +291,11 @@ namespace rs
         NSString *basePath = paths.firstObject;
         NSString* path = [basePath stringByAppendingPathComponent:@"quic.log"];
         return std::string([path UTF8String]);
+    }
+    
+    void postNotification(const std::string& aNotificationName)
+    {
+        NSString* notificationName = NSStringFromStdString(aNotificationName);
+        _postNotification(notificationName);
     }
 }

@@ -841,4 +841,10 @@ namespace rs
     {
         return [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
     }
+    
+    void _postNotification(NSString * aNotificationName)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:aNotificationName
+                                                            object:nil];
+    }
 }

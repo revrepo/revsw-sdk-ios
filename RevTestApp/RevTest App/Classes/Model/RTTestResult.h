@@ -18,6 +18,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import <CoreGraphics/CGBase.h>
 
 @interface RTTestResult : NSObject
 
@@ -32,5 +33,6 @@
 @property (nonatomic, readonly) NSString* wholeString;
 @property (nonnull, readonly) NSString* plainWholeString;
 @property (nonatomic, readonly) NSString* nameString;
+
 
 @end

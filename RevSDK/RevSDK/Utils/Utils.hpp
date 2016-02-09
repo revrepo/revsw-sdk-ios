@@ -55,6 +55,8 @@ typedef enum
     
     extern const int kSDKVersionNumber;
     
+    extern const std::string kConfigurationLoadedNotification;
+    
     extern const std::string kOSKey;
     extern const std::string kAppNameKey;
     extern const std::string kSDKReleaseVersionKey;
@@ -126,6 +128,7 @@ typedef enum
     
     std::string executableFilePath();
     std::string quicLogFilePath();
+    void postNotification(const std::string&);
 }
 
 #endif /* Utils_hpp */
