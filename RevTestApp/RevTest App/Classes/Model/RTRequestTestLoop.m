@@ -159,6 +159,18 @@ typedef enum
 
 - (void)start
 {
+    if (self.numberOfFullPasses == 0 || self.numberOfTests == 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
+                                                            object:nil
+                                                          userInfo:@{
+                                                                     kRTResultKey : @NO,
+                                                                     kRTErrorKey : [NSString stringWithFormat:@"Incorrect parameters full passes %ld tests %ld", self.numberOfFullPasses, self.numberOfTests ]
+                                                                     }];
+
+        return;
+    }
+    
     if (!self.isIterating)
     {
         self.isIterating = YES;

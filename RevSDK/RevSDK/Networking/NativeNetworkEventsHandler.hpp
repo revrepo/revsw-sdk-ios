@@ -46,6 +46,8 @@ namespace rs
         
         std::string mSSID;
         
+        void* mReachability;
+        
     public:
         NativeNetworkEventsHandler(INetworkEventsDelegate* aDelegate);
         

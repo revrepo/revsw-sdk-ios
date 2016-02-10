@@ -57,6 +57,12 @@ static void RSReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 #pragma mark - Reachability implementation
 
+@interface RSReachability ()
+
+@property (nonatomic, strong) RSReachability* fakeReachability;
+
+@end
+
 @implementation RSReachability
 {
 	BOOL _alwaysReturnLocalWiFiStatus; //default is NO
@@ -138,6 +144,27 @@ static void RSReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 
 #pragma mark - Start and stop notifier
+
+- (void)postFake
+{
+    RSReachability* reachability = [RSReachability rs_reachabilityForInternetConnection];
+    reachability.fake = YES;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName: kRSReachabilityChangedNotification
+                                                        object: reachability];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:@"kRSFakeNetworkStatusChanged"
+                                                  object:nil];
+}
+
+- (void)prepareForFake
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(postFake)
+                                                 name:@"kRSFakeNetworkStatusChanged"
+                                               object:nil];
+}
 
 - (BOOL)rs_startNotifier
 {
@@ -253,6 +280,11 @@ static void RSReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
 
 - (RSNetworkStatus)rs_currentReachabilityStatus
 {
+    if (self.isFake)
+    {
+        return kRSFakeStatus;
+    }
+    
 	NSAssert(_reachabilityRef != NULL, @"currentNetworkStatus called with NULL SCNetworkReachabilityRef");
 	RSNetworkStatus returnValue = kRSNotReachable;
 	SCNetworkReachabilityFlags flags;
@@ -281,6 +313,7 @@ static void RSReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkRea
         case kRSNotReachable: return @"_";
         case kRSReachableViaWiFi: return @"WiFi";
         case kRSReachableViaWWAN: return @"Mobile";
+        case kRSFakeStatus: return @"Fake";
     }
 }
 

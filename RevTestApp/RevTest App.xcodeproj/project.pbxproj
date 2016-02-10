@@ -55,8 +55,6 @@
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
 		5BB7F2461C6A2D1D0095D508 /* revsdkdemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */; };
 		5BB7F24B1C6A38AA0095D508 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C1EE591C4795460095537E /* libxml2.tbd */; };
-		5BB7F2531C6A3C2B0095D508 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */; };
-		5BB7F2541C6A3C2B0095D508 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5BB7F2551C6A3DB80095D508 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
 		5BB7F2561C6A3DC00095D508 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
@@ -68,6 +66,9 @@
 		5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */; };
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
+		5BF51E5B1C6B951600A4632C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF51E5A1C6B951600A4632C /* RevSDK.framework */; };
+		5BF51E5C1C6B951600A4632C /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF51E5A1C6B951600A4632C /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5BF51E5F1C6B996B00A4632C /* RTConfigurationObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF51E5E1C6B996B00A4632C /* RTConfigurationObserver.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
 		65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */; };
 		65C1EE571C4794D30095537E /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C1EE541C4794D30095537E /* HTMLNode.m */; };
@@ -111,7 +112,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5BB7F2541C6A3C2B0095D508 /* RevSDK.framework in Embed Frameworks */,
+				5BF51E5C1C6B951600A4632C /* RevSDK.framework in Embed Frameworks */,
 				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
 				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
@@ -182,7 +183,6 @@
 		5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = revsdkdemo.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB7F23F1C6A2CB90095D508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = revsdkdemo.m; sourceTree = "<group>"; };
-		5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
 		5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTTesting.m"; sourceTree = "<group>"; };
 		5BE0D5B61C3D6F3B0064F97D /* RTCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCell.h; sourceTree = "<group>"; };
@@ -197,6 +197,9 @@
 		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
+		5BF51E5A1C6B951600A4632C /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
+		5BF51E5D1C6B996B00A4632C /* RTConfigurationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTConfigurationObserver.h; sourceTree = "<group>"; };
+		5BF51E5E1C6B996B00A4632C /* RTConfigurationObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTConfigurationObserver.m; sourceTree = "<group>"; };
 		65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ForceNoCache.h"; sourceTree = "<group>"; };
 		65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ForceNoCache.m"; sourceTree = "<group>"; };
 		65C1EE531C4794D30095537E /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
@@ -243,7 +246,7 @@
 				1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */,
 				1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */,
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
-				5BB7F2531C6A3C2B0095D508 /* RevSDK.framework in Frameworks */,
+				5BF51E5B1C6B951600A4632C /* RevSDK.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
@@ -298,7 +301,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */,
+				5BF51E5A1C6B951600A4632C /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -440,6 +443,8 @@
 				65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */,
 				5B58B34E1C626D31002B14EC /* RTRequestTestLoop.h */,
 				5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */,
+				5BF51E5D1C6B996B00A4632C /* RTConfigurationObserver.h */,
+				5BF51E5E1C6B996B00A4632C /* RTConfigurationObserver.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -748,6 +753,7 @@
 				A7EC06CC1C562F8E00542AEE /* Storage.m in Sources */,
 				A7EC06D11C56384000542AEE /* PickerView.m in Sources */,
 				65C1EE571C4794D30095537E /* HTMLNode.m in Sources */,
+				5BF51E5F1C6B996B00A4632C /* RTConfigurationObserver.m in Sources */,
 				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
 				65C1EE5D1C4796520095537E /* RTHTMLGrabber.m in Sources */,
@@ -1087,6 +1093,7 @@
 				5BB7F2431C6A2CB90095D508 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RevTest App" */ = {
 			isa = XCConfigurationList;
