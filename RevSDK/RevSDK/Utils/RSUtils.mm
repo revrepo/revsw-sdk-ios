@@ -31,7 +31,9 @@
 #import "NSURL+RevSDK.h"
 #import "RSURLConnectionNative.h"
 #import "RSReachability.h"
-
+//10.02.16 Perepelitsa: because it uses the getter "getABTesting..()" of  singletone "Model"
+#import "Model.hpp"
+//
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
 @implementation NSURLRequest(FileRequest)
@@ -115,6 +117,9 @@ namespace rs
     NSString* const kRSDomainsBlackListKey             = @"domains_black_list";
     NSString* const kRSLoggingLevelKey                 = @"logging_level";
     NSString* const kRSConfigsKey                      = @"configs";
+    //10.02.16 Perepelitsa: implementation of constant (json key of the received request)
+    NSString* const kRSABTestingOriginOffloadRatioKey  = @"a_b_testing_origin_offload_ratio";
+    //
     
     //request keys
     NSString* const kRS_JKey_ConnID    = @"conn_id";
@@ -136,6 +141,9 @@ namespace rs
     NSString* const kRS_JKey_Destination = @"destination";
     NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
     NSString* const kRS_JKey_RevCache = @"x-rev-cache";
+    //10.02.16 Perepelitsa: add new constant (json key of the status request)
+    NSString* const kRS_JKey_ABMode    = @"a_b_mode";  
+    //
     
     //field
     NSString* const kRSiOSField = @"iOS";
@@ -209,7 +217,10 @@ namespace rs
         configuration.domainsWhiteList          = vectorFromNSArray(aDictionary[kRSDomainsWhiteListKey]);
         configuration.domainsBlackList          = vectorFromNSArray(aDictionary[kRSDomainsBlackListKey]);
         configuration.loggingLevel              = stdStringFromNSString(aDictionary[kRSLoggingLevelKey]);
-        
+        //10.02.16 Perepelitsa: add fields of a/b testing to copying  
+        configuration.abTesMode                 = [aDictionary[kRS_JKey_ABMode] boolValue];
+        configuration.abTestingRatio            = [aDictionary[kRSABTestingOriginOffloadRatioKey] intValue];
+        //}
         return configuration;
     }
     
@@ -236,7 +247,10 @@ namespace rs
         dictionary[kRSDomainsWhiteListKey]             = NSArrayFromVector(aConfiguration.domainsWhiteList);
         dictionary[kRSDomainsBlackListKey]             = NSArrayFromVector(aConfiguration.domainsBlackList);
         dictionary[kRSLoggingLevelKey]                 = NSStringFromStdString(aConfiguration.loggingLevel);
-        
+        //10.02.16 Perepelitsa: add fields of a/b testing to copying  
+        dictionary[kRS_JKey_ABMode]                    = @(aConfiguration.abTesMode);
+        dictionary[kRSABTestingOriginOffloadRatioKey]  = @(aConfiguration.abTestingRatio);
+        //}
         return dictionary;
     }
     
@@ -513,6 +527,9 @@ namespace rs
             dataDictionary[kRS_JKey_TransportProt] 	= @"-";
             dataDictionary[kRS_JKey_Destination]    = @"_";
             dataDictionary[kRS_JKey_EdgeTransport]  = @"_";
+            //10.02.16 Perepelitsa: set default value to ab_mode status 
+            dataDictionary[kRS_JKey_ABMode] = @NO;
+            //
         }
         // fetching data
         {
@@ -541,6 +558,9 @@ namespace rs
                 
                 NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
                 dataDictionary[kRS_JKey_RevCache] = STRVALUE_OR_DEFAULT(revCache);
+                //10.02.16 Perepelitsa: set ab_mode status in every outbound request
+                dataDictionary[kRS_JKey_ABMode]        =  @(Model::instance()->getABTestingMode());
+                //
             }
         }
         

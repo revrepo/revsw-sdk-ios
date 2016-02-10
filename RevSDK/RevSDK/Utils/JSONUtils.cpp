@@ -24,6 +24,9 @@
 #include "Data.hpp"
 #include "Configuration.hpp"
 #include "Utils.hpp"
+//10.02.16 Perepelitsa: because it uses the getter "getABTesting..()" of  singletone "Model"
+#import "Model.hpp"
+//
 
 namespace rs
 {
@@ -124,6 +127,28 @@ namespace rs
             configuration.domainsWhiteList          = vectorFromValue(configs[kDomainsWhiteListKey]);
             configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);
             configuration.loggingLevel              = configs[kLoggingLevelKey].asString();
+            //10.02.16 Perepelitsa: random "lottery" process
+            int newABRatio                          = configs[kABTestingOriginOffloadRatioKey].asInt();  
+            int oldABRatio                          = Model::instance()->getABTestingRatio();            
+            if(oldABRatio < 0 && newABRatio > 0)
+            {
+                configuration.abTestingRatio = newABRatio;
+                if( (rand() % 100) < configuration.abTestingRatio)
+                {
+                    configuration.abTesMode         = true;
+                }
+                else 
+                {
+                    configuration.abTesMode         = false;
+                }
+            } 
+            else
+            {
+                // Set previos value
+                configuration.abTesMode             = Model::instance()->getABTestingMode();
+                configuration.abTestingRatio        = oldABRatio;            
+            }
+            //
         }
         
         return configuration;

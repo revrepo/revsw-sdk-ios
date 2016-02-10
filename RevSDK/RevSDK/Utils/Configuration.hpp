@@ -35,10 +35,19 @@ namespace rs
         REV_LEAK_DETECTOR(Configuration);
         
         Configuration() : operationMode(RSOperationModeInner::kRSOperationModeInnerOff)
-        {}
+        {
+            //10.02.16 Perepelitsa: assignment defaul values
+            abTesMode                   = false;
+            abTestingRatio              = -1;
+            //
+        }
         
         Configuration(const Configuration&);
         
+        //10.02.16 Perepelitsa: add fields storing condition of a/b testing
+        bool abTesMode;
+        int abTestingRatio;
+        //
         float sdkReleaseVersion;
         std::string configurationApiURL;
         int refreshInterval;

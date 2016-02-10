@@ -485,6 +485,16 @@ namespace rs
             mStatsHandler->addEvent(event);
         }
     }
+    //10.02.16 Perepelitsa: insert getter of AB Testing state into singleton
+    int Model::getABTestingRatio()
+    {
+        return mConfService->getActive()->abTestingRatio;
+    }
+    bool Model::getABTestingMode()
+    {
+        return mConfService->getActive()->abTesMode;
+    }
+    //
 }
 
 

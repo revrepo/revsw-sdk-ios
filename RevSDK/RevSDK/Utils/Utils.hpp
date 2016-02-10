@@ -99,6 +99,11 @@ typedef enum
     
     extern const std::string kRevHostHeader;
     
+    //10.02.16 Perepelitsa: add new std constant (json key of the received request) 
+    //  - "a_b_testing_origin_offload_ratio" (0..100) 
+    extern const std::string kABTestingOriginOffloadRatioKey;
+    //
+    
     extern const int kRequestsCountMax;
     
     std::string loadConfigurationURL(const std::string&);

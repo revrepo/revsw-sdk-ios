@@ -45,6 +45,10 @@ namespace rs
         domainsWhiteList          = aConfiguration.domainsWhiteList;
         domainsBlackList          = aConfiguration.domainsBlackList;
         loggingLevel              = aConfiguration.loggingLevel;
+        //10.02.16 Perepelitsa: copying copying values of a/b testing
+        abTesMode                 = aConfiguration.abTesMode;
+        abTestingRatio            = aConfiguration.abTestingRatio;
+        //
     }
     
     Data Configuration::toData()

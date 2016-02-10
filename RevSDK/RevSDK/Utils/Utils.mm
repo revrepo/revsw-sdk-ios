@@ -50,6 +50,9 @@ namespace rs
     const std::string kSDKKeyKey                       = "sdk_key";
     const std::string kSDKVersionKey                   = "sdk_version";
     const std::string kAppVersionKey                   = "version";
+    //10.02.16 Perepelitsa: implementation of constant (json key of the received request)
+    const std::string kABTestingOriginOffloadRatioKey  = stdStringFromNSString(kRSABTestingOriginOffloadRatioKey);
+    //
     
     const std::string kHTTPSProtocolName    = stdStringFromNSString(kRSHTTPSProtocolName);
     const std::string kStandardProtocolName = stdStringFromNSString(kRSStandardProtocolName);

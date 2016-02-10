@@ -102,6 +102,10 @@ namespace rs
     extern NSString* const kRSDomainsBlackListKey;
     extern NSString* const kRSLoggingLevelKey;
     extern NSString* const kRSConfigsKey;
+    //10.02.16 Perepelitsa: add new NS constant (json key of the received request) 
+    //  - "a_b_testing_origin_offload_ratio" (0%..100%)
+    extern NSString* const kRSABTestingOriginOffloadRatioKey;
+    //
     
     //fields
     extern NSString*  const kRSiOSField;

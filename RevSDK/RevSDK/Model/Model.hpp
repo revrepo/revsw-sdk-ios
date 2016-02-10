@@ -134,6 +134,11 @@ namespace rs
         LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
         
         void addEvent(const std::string&, const int, const std::string& , const float, RSLogginLevel);
+        
+        //10.02.16 Perepelitsa: declaration of getter of A/BTesting state in the singleton
+        int getABTestingRatio();
+        bool getABTestingMode();
+        //
     };
 }
 
