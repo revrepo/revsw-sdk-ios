@@ -90,9 +90,7 @@ static const int kProtocolTestingTimeout          = 10;
         [self waitForConfigurationLoad];
     }
     
-     self.testLoop = [[RTRequestTestLoop alloc] initWithDomains:@[@"httpbin.org"]
-                                                  numberOfTests:1
-                                             numberOfFullPasses:3];
+     self.testLoop = [RTRequestTestLoop defaultTestLoop];
     [self.testLoop start];
     
     XCTestExpectation* expectation = [self expectationForNotification:kRTRequestLoopDidFinishNotification
