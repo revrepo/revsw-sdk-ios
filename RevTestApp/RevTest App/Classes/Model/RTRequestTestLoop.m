@@ -1,10 +1,21 @@
-//
-//  RTRequestTestLoop.m
-//  RevTest App
-//
-//  Created by Andrey Chernukha on 2/3/16.
-//
-//
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2015] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
+
 
 #import <RevSDK/RevSDK.h>
 
@@ -206,7 +217,8 @@ typedef enum
         [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
                                                             object:nil
                                                           userInfo:@{
-                                                                     kRTResultKey : @YES
+                                                                     kRTResultKey : @YES,
+                                                                     kRTErrorKey : @"Success"
                                                                      }];
     }
 }
@@ -247,11 +259,20 @@ typedef enum
             {
                 if (statusCode != firstCode)
                 {
+                     NSMutableString* errorMessage = [NSMutableString stringWithFormat:@"%@ failed with codes ", self.domains[self.currentDomainIndex]];
+                    
+                    for (NSNumber * number in self.statusCodes)
+                    {
+                        [errorMessage appendFormat:@"%ld", number.integerValue];
+                    }
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
                                                                         object:nil
                                                                       userInfo:@{
-                                                                                 kRTResultKey : @NO
+                                                                                 kRTResultKey : @NO,
+                                                                                 kRTErrorKey : errorMessage
                                                                                  }];
+                    break;
                 }
             }
         }

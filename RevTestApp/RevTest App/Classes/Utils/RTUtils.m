@@ -27,6 +27,7 @@ NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
 NSString* const kRTTitleKey = @"kRTTitleKey";
 NSString* const kRTTextsKey = @"kRTTextsKey";
 NSString* const kRTResultKey = @"kRTResultKey";
+NSString* const kRTErrorKey = @"kRTErrorKey";
 
 @implementation RTUtils
 

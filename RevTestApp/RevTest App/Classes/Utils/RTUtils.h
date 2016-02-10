@@ -37,6 +37,7 @@ extern NSString* const kRTSDKLabelTextKey;
 extern NSString* const kRTTitleKey;
 extern NSString* const kRTTextsKey;
 extern NSString* const kRTResultKey;
+extern NSString* const kRTErrorKey;
 
 @interface RTUtils : NSObject
 
