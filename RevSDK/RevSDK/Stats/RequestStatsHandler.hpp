@@ -53,6 +53,9 @@ namespace rs
         ~RequestStatsHandler(){};
         
         void addNewRequestData(const Data&);
+        void deleteAllData();
+        
+        size_t requestsCount()const { return mRequestsDataVector.size(); }
         
         ReportTransactionHanle requestsData(int32_t aRequestCount);
         

@@ -39,7 +39,7 @@ void TestConfigurationService::pushTestConfig(const std::string &aProtocolName, 
 
 std::shared_ptr<const Configuration> TestConfigurationService::getActive()
 {
-    return mTestConfiguration;
+    return mTestConfiguration ? mTestConfiguration : std::make_shared<Configuration>(mDefaultConfiguration);
 }
 
 void TestConfigurationService::stopUpdate() {}

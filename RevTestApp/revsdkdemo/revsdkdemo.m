@@ -22,6 +22,7 @@
 #import <XCTest/XCTest.h>
 
 #import "RTRequestTestLoop.h"
+#import "RTStatsUploadTester.h"
 #import "RTUtils.h"
 
 #define kRSStandardNotificationHandler ^BOOL(NSNotification* aNotification){ return YES; }
@@ -32,6 +33,7 @@ static const int kProtocolTestingTimeout          = 10;
 @interface revsdkdemo : XCTestCase
 
 @property (nonatomic, strong) RTRequestTestLoop* testLoop;
+@property (nonatomic, strong) RTStatsUploadTester* statsUploadTester;
 
 @end
 
@@ -131,6 +133,14 @@ static const int kProtocolTestingTimeout          = 10;
                                                         object:nil];
 
     [self waitForProtocolsTestingEndWithFailureDescription:@"Protocol testing failed after changing network reachability"];
+}
+
+- (void)test_4_StatsUploadTest
+{
+    self.statsUploadTester = [RTStatsUploadTester defaultTester];
+    [self.statsUploadTester start];
+    
+   [self waitForStandardExpectationNotification:kRTStatsTesterDidFinishNotification];
 }
 
 @end

@@ -78,6 +78,24 @@ static rs::TestConfigurationService* TestConfService = nullptr;
     rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
 }
 
++ (void)debug_enableStatsUploadTestMode
+{
+    auto defaultConfiguration = rs::Model::instance()->getActiveConfiguration();
+    
+    rs::Configuration configuration;
+    configuration.staleTimeout           = 100000;
+    configuration.refreshInterval        = 100000;
+    configuration.statsReportingInterval = 15;
+    configuration.operationMode          = rs::kRSOperationModeInnerReport;
+    configuration.statsReportingLevel    = rs::kRSStatsReportingLevelRelease;
+    configuration.statsReportingURL      = defaultConfiguration->statsReportingURL;
+    
+    TestConfService = new rs::TestConfigurationService(rs::Model::instance(), configuration);
+    TestConfService->init();
+    rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
+    rs::Model::instance()->deleteRequestsData();
+}
+
 + (void)debug_disableTestMode
 {
      if(TestConfService)

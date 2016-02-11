@@ -32,6 +32,7 @@ RTPerformBlockOnQueue(dispatch_get_main_queue(), block, __VA_ARGS__)
 extern const CGFloat kRTRowHeight;
 
 extern NSString* const kRTRequestLoopDidFinishNotification;
+extern NSString* const kRTStatsTesterDidFinishNotification;
 extern NSString* const kRTLoadConfigirationTestNotification;
 extern NSString* const kRTSDKLabelTextKey;
 extern NSString* const kRTTitleKey;

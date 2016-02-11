@@ -41,6 +41,7 @@
 #include "StatsHandler.hpp"
 #include "Event.hpp"
 #include "DebugUsageTracker.hpp"
+#include "TestConfigurationService.h"
 
 #if TARGET_IPHONE_SIMULATOR
 #define CUSTOM_QUIC_LOG_PATH "/Users/Alexander1/Dev/quictest/quic.txt"
@@ -273,6 +274,8 @@ namespace rs
         {
             ReportTransactionHanle statsData;
             
+            size_t requests_count = 0;
+            
             {
                 std::lock_guard<std::mutex> lockGuard(mLock);
 #ifndef RS_DBG_MAXREQESTS
@@ -288,12 +291,16 @@ namespace rs
                 Log::info(kLogTagSDKStats,
                           ("Paking reports, max at once :: " + std::to_string(requestsCount)).c_str());
                 
+                requests_count = mStatsHandler->requestsCount();
+                
                 statsData = mStatsHandler->createSendTransaction(requestsCount, appName);
 #else
                 statsData = mStatsHandler->createSendTransaction(RS_DBG_MAXREQESTS);
 #endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
+            
+             postNotification("kRequestsCountNotification", std::to_string(requests_count));
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
                 std::lock_guard<std::mutex> lockGuard(mLock);
@@ -419,8 +426,8 @@ namespace rs
         std::lock_guard<std::mutex> scopedLock(mLock);
         mConfService = std::shared_ptr<IConfigurationService>(aNewService);
         Log::info(kLogTagSDKConfiguration, "Replacing configuration service on mock");
+        scheduleStatsReporting();
     }
-    
     
     void Model::debug_disableDebugMode()
     {
@@ -484,6 +491,27 @@ namespace rs
             Event event(aSeverity, aCode, aMessage, aInterval);
             mStatsHandler->addEvent(event);
         }
+    }
+    
+    bool Model::shouldPassHost(const std::string& aHost)
+    {
+         TestConfigurationService* tcs = dynamic_cast<TestConfigurationService*>(mConfService.get());
+        
+         if (tcs == nullptr)
+             return true;
+        
+         if (mConfService->getActive()->operationMode != kRSOperationModeInnerReport)
+             return true;
+        
+        std::vector<std::string> forbiddenHosts = {"mobile-collector.newrelic.com"};
+        
+        auto it = std::find(forbiddenHosts.begin(), forbiddenHosts.end(), aHost);
+        return it == forbiddenHosts.end();
+    }
+    
+    void Model::deleteRequestsData()
+    {
+        mStatsHandler->deleteRequestsData();
     }
 }
 

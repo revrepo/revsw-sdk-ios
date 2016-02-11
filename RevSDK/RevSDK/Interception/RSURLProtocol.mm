@@ -64,6 +64,11 @@
         return NO;
     }
     
+    if (!rs::Model::instance()->shouldPassHost(rs::stdStringFromNSString(host)))
+    {
+        return NO;
+    }
+    
     if ([NSURLProtocol propertyForKey:rs::kRSURLProtocolHandledKey inRequest:aRequest])
     {
         return NO;

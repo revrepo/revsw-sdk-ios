@@ -131,9 +131,13 @@ namespace rs
         
         bool debug_isConfigurationStale();
         
+        bool shouldPassHost(const std::string &);
+        
         LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
         
         void addEvent(const std::string&, const int, const std::string& , const float, RSLogginLevel);
+        
+        void deleteRequestsData();
     };
 }
 

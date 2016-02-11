@@ -89,7 +89,8 @@ bool ConfigurationService::isTimedOut() const
 }
 
 ConfigurationService::~ConfigurationService()
-{ 
+{
+    
 }
 
 void ConfigurationService::init()

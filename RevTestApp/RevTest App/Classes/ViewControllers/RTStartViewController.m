@@ -25,8 +25,6 @@
 
 @interface RTStartViewController ()
 
-@property (nonatomic, strong) RTRequestTestLoop* testLoop;
-
 @end
 
 @implementation RTStartViewController
