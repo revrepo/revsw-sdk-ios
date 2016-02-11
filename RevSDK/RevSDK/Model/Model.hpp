@@ -135,9 +135,13 @@ namespace rs
         
         void addEvent(const std::string&, const int, const std::string& , const float, RSLogginLevel);
         
-        //10.02.16 Perepelitsa: declaration of getter of A/BTesting state in the singleton
-        int getABTestingRatio();
-        bool getABTestingMode();
+        //10.02.16 Perepelitsa: insert getter of AB Testing state into singleton
+        int abTestingRatio() const { return mConfService->getActive()->abTestingRatio; }
+        bool abTestingMode() const { return mConfService->getActive()->abTesMode; }
+        std::string revBaseHost() const { return mConfService->getActive()->SDKDomain; }
+        int quicUDPPort() const { return mConfService->getActive()->quicUDPPort; }        
+        double failuresFailoverThreshold() const { return mConfService->getActive()->failuresFailoverThreshold; }
+        int failuresMonitoringInterval() const { return mConfService->getActive()->failuresMonitoringInterval; }
         //
     };
 }

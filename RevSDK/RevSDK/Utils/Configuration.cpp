@@ -44,10 +44,18 @@ namespace rs
         domainsProvisionedList    = aConfiguration.domainsProvisionedList;
         domainsWhiteList          = aConfiguration.domainsWhiteList;
         domainsBlackList          = aConfiguration.domainsBlackList;
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+        domainsInternalBlackList  = aConfiguration.domainsInternalBlackList;
+        //
         loggingLevel              = aConfiguration.loggingLevel;
         //10.02.16 Perepelitsa: copying copying values of a/b testing
         abTesMode                 = aConfiguration.abTesMode;
         abTestingRatio            = aConfiguration.abTestingRatio;
+        //10.02.16 Perepelitsa: Add new SDK configuration options
+        failuresFailoverThreshold = aConfiguration.failuresFailoverThreshold;
+        failuresMonitoringInterval= aConfiguration.failuresMonitoringInterval;
+        quicUDPPort               = aConfiguration.quicUDPPort;
+        SDKDomain                 = aConfiguration.SDKDomain;
         //
     }
     

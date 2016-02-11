@@ -76,7 +76,9 @@ namespace rs
     const int kRSSDKVersion = 1;
     
     //Rev Host
-    const std::string kRSRevBaseHost   = "revsdk.net";
+    //11.02.16 Perepelitsa: remoove kRSRevBaseHost. it will be parameter 
+    //const std::string kRSRevBaseHost   = "revsdk.net";
+    //
     const std::string kRSLoadConfigurationEndPoint = "/v1/sdk/config/";
     const std::string kRSReportStatsEndPoint = "/stats";
     NSString* const kRSRevLoadConfigurationHost = @"sdk-config-api.revapm.net";
@@ -114,11 +116,24 @@ namespace rs
     NSString* const kRSStatsReportingMaxRequestsKey    = @"stats_reporting_max_requests_per_report";
     NSString* const kRSDomainsProvisionedListKey       = @"domains_provisioned_list";
     NSString* const kRSDomainsWhiteListKey             = @"domains_white_list";
-    NSString* const kRSDomainsBlackListKey             = @"domains_black_list";
+    NSString* const kRSDomainsBlackListKey             = @"domains_black_list";    
+    //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+    NSString* const kRSDomainsInternalBlackListKey     = @"internal_domains_black_list";
+    //
     NSString* const kRSLoggingLevelKey                 = @"logging_level";
     NSString* const kRSConfigsKey                      = @"configs";
     //10.02.16 Perepelitsa: implementation of constant (json key of the received request)
     NSString* const kRSABTestingOriginOffloadRatioKey  = @"a_b_testing_origin_offload_ratio";
+    //10.02.16 Perepelitsa: Add new SDK configuration options
+    NSString* const kRSConnectTimeout                  = @"edge_connect_timeout_sec";
+    NSString* const kRSDataReceiveTimeout              = @"edge_data_receive_timeout_sec";
+    NSString* const kRSFirstByteTeout                  = @"edge_first_byte_timeout_sec";
+    NSString* const kRSSDKDomain                       = @"edge_sdk_domain";
+    NSString* const kRSQuicUDPPort                     = @"edge_quic_udp_port";
+    NSString* const kRSFailuresMonitoringInterval      = @"edge_failures_monitoring_interval_sec";
+    NSString* const kRSFailuresFailoverThreshold       = @"edge_failures_failover_threshold_percent";
+    
+    
     //
     
     //request keys
@@ -142,7 +157,12 @@ namespace rs
     NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
     NSString* const kRS_JKey_RevCache = @"x-rev-cache";
     //10.02.16 Perepelitsa: add new constant (json key of the status request)
-    NSString* const kRS_JKey_ABMode    = @"a_b_mode";  
+    NSString* const kRS_JKey_ABMode    = @"a_b_mode";
+    //10.02.16 Perepelitsa: programmatically detect the name and version of “master” application and report it
+    NSString* const kRS_JKey_AppName    = @"master_app_name";
+    NSString* const kRS_JKey_AppBundle    = @"master_app_bundle_id";
+    NSString* const kRS_JKey_AppVersion    = @"master_app_version";
+    NSString* const kRS_JKey_AppBuild    = @"master_app_build";
     //
     
     //field
@@ -215,12 +235,20 @@ namespace rs
         configuration.statsReportingMaxRequests = [aDictionary[kRSStatsReportingMaxRequestsKey] intValue];
         configuration.domainsProvisionedList    = vectorFromNSArray(aDictionary[kRSDomainsProvisionedListKey]);
         configuration.domainsWhiteList          = vectorFromNSArray(aDictionary[kRSDomainsWhiteListKey]);
-        configuration.domainsBlackList          = vectorFromNSArray(aDictionary[kRSDomainsBlackListKey]);
+        configuration.domainsBlackList          = vectorFromNSArray(aDictionary[kRSDomainsBlackListKey]);        
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+        configuration.domainsInternalBlackList  = vectorFromNSArray(aDictionary[kRSDomainsInternalBlackListKey]);
+        //
         configuration.loggingLevel              = stdStringFromNSString(aDictionary[kRSLoggingLevelKey]);
         //10.02.16 Perepelitsa: add fields of a/b testing to copying  
         configuration.abTesMode                 = [aDictionary[kRS_JKey_ABMode] boolValue];
         configuration.abTestingRatio            = [aDictionary[kRSABTestingOriginOffloadRatioKey] intValue];
-        //}
+        //10.02.16 Perepelitsa: Add new SDK configuration options  
+        configuration.failuresFailoverThreshold     = [aDictionary[kRSFailuresFailoverThreshold] doubleValue];
+        configuration.failuresMonitoringInterval    = [aDictionary[kRSFailuresMonitoringInterval] intValue];
+        configuration.quicUDPPort                   = [aDictionary[kRSQuicUDPPort] intValue];
+        configuration.SDKDomain                     = [aDictionary[kRSSDKDomain] intValue];
+        //
         return configuration;
     }
     
@@ -246,11 +274,19 @@ namespace rs
         dictionary[kRSDomainsProvisionedListKey]       = NSArrayFromVector(aConfiguration.domainsProvisionedList);
         dictionary[kRSDomainsWhiteListKey]             = NSArrayFromVector(aConfiguration.domainsWhiteList);
         dictionary[kRSDomainsBlackListKey]             = NSArrayFromVector(aConfiguration.domainsBlackList);
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+         dictionary[kRSDomainsInternalBlackListKey]    = NSArrayFromVector(aConfiguration.domainsInternalBlackList);
+        //
         dictionary[kRSLoggingLevelKey]                 = NSStringFromStdString(aConfiguration.loggingLevel);
         //10.02.16 Perepelitsa: add fields of a/b testing to copying  
         dictionary[kRS_JKey_ABMode]                    = @(aConfiguration.abTesMode);
         dictionary[kRSABTestingOriginOffloadRatioKey]  = @(aConfiguration.abTestingRatio);
-        //}
+        //10.02.16 Perepelitsa: Add new SDK configuration options  
+        dictionary[kRSFailuresFailoverThreshold]       = @(aConfiguration.failuresFailoverThreshold);
+        dictionary[kRSFailuresMonitoringInterval]      = @(aConfiguration.failuresMonitoringInterval);
+        dictionary[kRSQuicUDPPort]                     = @(aConfiguration.quicUDPPort);
+        dictionary[kRSSDKDomain]                       = NSStringFromStdString(aConfiguration.SDKDomain);
+        //
         return dictionary;
     }
     
@@ -422,7 +458,7 @@ namespace rs
     
     std::string URLWithSchemeAndPath(std::string aScheme, std::string aPath)
     {
-        return URLWithComponents(aScheme, kRSRevBaseHost, aPath);
+        return URLWithComponents(aScheme, rs::Model::instance()->revBaseHost(), aPath);
     }
     
     std::string HTTPSURLWithPath(std::string aPath)
@@ -559,7 +595,16 @@ namespace rs
                 NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
                 dataDictionary[kRS_JKey_RevCache] = STRVALUE_OR_DEFAULT(revCache);
                 //10.02.16 Perepelitsa: set ab_mode status in every outbound request
-                dataDictionary[kRS_JKey_ABMode]        =  @(Model::instance()->getABTestingMode());
+                dataDictionary[kRS_JKey_ABMode]         =  @(Model::instance()->abTestingMode());
+                //10.02.16 Perepelitsa: programmatically detect the name and version 
+                //getting info from owner app plist
+                dataDictionary[kRS_JKey_AppName]        =  [[[NSBundle mainBundle] infoDictionary]  
+                                                            objectForKey:(id)kCFBundleNameKey];
+                dataDictionary[kRS_JKey_AppBundle]      =  [[NSBundle mainBundle] bundleIdentifier];
+                dataDictionary[kRS_JKey_AppVersion]     =  [[[NSBundle mainBundle] infoDictionary]  
+                                                            objectForKey:(id)kCFBundleVersionKey];
+                dataDictionary[kRS_JKey_AppBuild]       =  [[[NSBundle mainBundle] infoDictionary] 
+                                                             objectForKey:@"CFBundleShortVersionString"];                
                 //
             }
         }
@@ -706,7 +751,7 @@ namespace rs
             return false;
         }
         
-        NSArray* blackList = configsDict[kRSDomainsBlackListKey];
+        NSArray* blackList = configsDict[kRSDomainsBlackListKey];    
         
         if (![blackList isKindOfClass:[NSArray class]])
         {
@@ -715,6 +760,20 @@ namespace rs
             
             return false;
         }
+        
+//        11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+//        11.02.16 Perepelitsa: "internal_domains_black_list" not yet implemented on the server
+        
+//        NSArray* blackListInternal = configsDict[kRSDomainsInternalBlackListKey];        
+//                 
+//        if ( ![blackListInternal isKindOfClass:[NSArray class]])
+//        {
+//            (*aError).code = kRSErrorCodeConfigurationNotValid;
+//            (*aError).userInfo = {{errorDescrKey, "configuration refresh interval invalid " + stdStringFromNSString([refreshInterval description])}};
+//            
+//            return false;
+//        }
+        
         
         NSArray* provisionedList = configsDict[kRSDomainsProvisionedListKey];
         

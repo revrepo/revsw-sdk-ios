@@ -125,29 +125,19 @@ namespace rs
             configuration.statsReportingMaxRequests = configs[kStatsReportingMaxRequestsKey].asInt();
             configuration.domainsProvisionedList    = vectorFromValue(configs[kDomainsProvisionedListKey]);
             configuration.domainsWhiteList          = vectorFromValue(configs[kDomainsWhiteListKey]);
-            configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);
-            configuration.loggingLevel              = configs[kLoggingLevelKey].asString();
-            //10.02.16 Perepelitsa: random "lottery" process
-            int newABRatio                          = configs[kABTestingOriginOffloadRatioKey].asInt();  
-            int oldABRatio                          = Model::instance()->getABTestingRatio();            
-            if(oldABRatio < 0 && newABRatio > 0)
-            {
-                configuration.abTestingRatio = newABRatio;
-                if( (rand() % 100) < configuration.abTestingRatio)
-                {
-                    configuration.abTesMode         = true;
-                }
-                else 
-                {
-                    configuration.abTesMode         = false;
-                }
-            } 
-            else
-            {
-                // Set previos value
-                configuration.abTesMode             = Model::instance()->getABTestingMode();
-                configuration.abTestingRatio        = oldABRatio;            
-            }
+            configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);            
+            //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+            configuration.domainsInternalBlackList = vectorFromValue(configs[kDomainsInternalBlackListKey]);
+            //
+            configuration.loggingLevel              = configs[kLoggingLevelKey].asString();            
+            //10.02.16 Perepelitsa: Add new SDK configuration options
+            configuration.failuresFailoverThreshold = (configs[kFailuresFailoverThreshold].asInt()) / 100.0f;
+            configuration.failuresMonitoringInterval= configs[kFailuresMonitoringInterval].asInt();         //default 120
+            configuration.quicUDPPort               = configs[kQuicUDPPort].asInt();
+            configuration.SDKDomain                 = /*"revsdk.net";*/configs[kSDKDomain].asString();                       //default "revsdk.net"
+            //11.02.16 Perepelitsa: A/B Testing
+            configuration.abTestingRatio            = configs[kABTestingOriginOffloadRatioKey].asInt();  
+            //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
             //
         }
         

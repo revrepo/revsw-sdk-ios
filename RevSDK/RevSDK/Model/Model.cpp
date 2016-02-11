@@ -367,6 +367,13 @@ namespace rs
             return false;
         }
         
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+        if (domainsContainDomainName(conf->domainsInternalBlackList, aDomainName))
+        {
+            return false;
+        }
+        //
+        
         if (domainsContainDomainName(conf->domainsProvisionedList, aDomainName))
         {
             return true;
@@ -485,16 +492,7 @@ namespace rs
             mStatsHandler->addEvent(event);
         }
     }
-    //10.02.16 Perepelitsa: insert getter of AB Testing state into singleton
-    int Model::getABTestingRatio()
-    {
-        return mConfService->getActive()->abTestingRatio;
-    }
-    bool Model::getABTestingMode()
-    {
-        return mConfService->getActive()->abTesMode;
-    }
-    //
+    
 }
 
 

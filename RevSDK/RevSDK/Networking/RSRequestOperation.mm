@@ -65,6 +65,11 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     
     NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//    10.02.16 Perepelitsa: set timeoutInterval from cofiguration
+//    NSTimeInterval dataReceiveTimeout = rs::Model::instance()->getActiveConfiguration().get()->dataReceiveTimeout;
+//    [configuration setTimeoutIntervalForRequest:dataReceiveTimeout];    // no efect
+//    [configuration setTimeoutIntervalForResource:dataReceiveTimeout];   // 
+//    
     NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration];
     NSURLSessionDataTask* task               = [session dataTaskWithRequest:request
                                                           completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){

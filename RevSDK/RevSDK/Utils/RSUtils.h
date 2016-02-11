@@ -64,7 +64,9 @@ namespace rs
     extern const int kRSSDKVersion;
     
     // Rev Host
-    extern const std::string kRSRevBaseHost;
+    //11.02.16 Perepelitsa: remove kRSRevBaseHost. it will be parameter 
+    //extern const std::string kRSRevBaseHost;
+    //
     extern NSString* const kRSRevHostHeader;
     extern NSString* const kRSRevLoadConfigurationHost;
     
@@ -100,11 +102,22 @@ namespace rs
     extern NSString* const kRSDomainsProvisionedListKey;
     extern NSString* const kRSDomainsWhiteListKey;
     extern NSString* const kRSDomainsBlackListKey;
+    //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+    extern NSString* const kRSDomainsInternalBlackListKey;
+    //
     extern NSString* const kRSLoggingLevelKey;
     extern NSString* const kRSConfigsKey;
     //10.02.16 Perepelitsa: add new NS constant (json key of the received request) 
     //  - "a_b_testing_origin_offload_ratio" (0%..100%)
     extern NSString* const kRSABTestingOriginOffloadRatioKey;
+    //10.02.16 Perepelitsa: Add new SDK configuration options
+    extern NSString* const kRSConnectTimeout;                 
+    extern NSString* const kRSDataReceiveTimeout;          
+    extern NSString* const kRSFirstByteTeout;                 
+    extern NSString* const kRSSDKDomain;                  
+    extern NSString* const kRSQuicUDPPort;                  
+    extern NSString* const kRSFailuresMonitoringInterval;      
+    extern NSString* const kRSFailuresFailoverThreshold;
     //
     
     //fields
