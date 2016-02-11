@@ -79,7 +79,6 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
         
         int64_t timePassed = std::chrono::duration_cast<tSec>(std::chrono::system_clock::now() - *rqIter).count();
         //11.02.16 Perepelitsa: remove kTimeoutSec constant
-        //while (timePassed > mInstanse->kTimeoutSec)
         while (timePassed > Model::instance()->failuresMonitoringInterval())
         {
             rqIter = rqVec.erase(rqIter);
@@ -96,7 +95,6 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
         int64_t timePassed = std::chrono::duration_cast<tSec>(std::chrono::system_clock::now() - iter->DateReported).count();
         
         //11.02.16 Perepelitsa: remove kTimeoutSec constant
-        //while (timePassed > mInstanse->kTimeoutSec)
         while (timePassed > Model::instance()->failuresMonitoringInterval())
         {
             iter = vec.erase(iter);
@@ -113,7 +111,6 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
     std::string message(aProtocolID + " | Request failed (" + std::to_string(vec.front().Code)+ "); percent of failed requests in last ");
     
     //11.02.16 Perepelitsa: remove kTimeoutSec constant
-    //message += std::to_string(kTimeoutSec);
     message += std::to_string(Model::instance()->failuresMonitoringInterval());
     
     message += " sec :: ";
