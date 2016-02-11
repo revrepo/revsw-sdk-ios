@@ -67,8 +67,6 @@
 		5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */; };
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
-		5BF51E5B1C6B951600A4632C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF51E5A1C6B951600A4632C /* RevSDK.framework */; };
-		5BF51E5C1C6B951600A4632C /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF51E5A1C6B951600A4632C /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5BF51E5F1C6B996B00A4632C /* RTConfigurationLoadObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
 		65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */; };
@@ -90,6 +88,8 @@
 		7E7966E51810823500FA85AD /* icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DB1810823500FA85AD /* icon-76@2x.png */; };
 		7E7966E61810823500FA85AD /* icon-small.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DC1810823500FA85AD /* icon-small.png */; };
 		7E7966E71810823500FA85AD /* icon-small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7E7966DD1810823500FA85AD /* icon-small@2x.png */; };
+		842813D91C6D3ABD002E4350 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 842813D81C6D3ABD002E4350 /* RevSDK.framework */; };
+		842813DA1C6D3ABD002E4350 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 842813D81C6D3ABD002E4350 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A7EC06CC1C562F8E00542AEE /* Storage.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EC06CB1C562F8E00542AEE /* Storage.m */; };
 		A7EC06D11C56384000542AEE /* PickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = A7EC06D01C56384000542AEE /* PickerView.m */; };
 		A7EC06D61C56427300542AEE /* PickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7EC06D51C56427300542AEE /* PickerView.xib */; };
@@ -113,7 +113,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5BF51E5C1C6B951600A4632C /* RevSDK.framework in Embed Frameworks */,
+				842813DA1C6D3ABD002E4350 /* RevSDK.framework in Embed Frameworks */,
 				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
 				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
@@ -200,7 +200,6 @@
 		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
-		5BF51E5A1C6B951600A4632C /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5BF51E5D1C6B996B00A4632C /* RTConfigurationLoadObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTConfigurationLoadObserver.h; sourceTree = "<group>"; };
 		5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTConfigurationLoadObserver.m; sourceTree = "<group>"; };
 		65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ForceNoCache.h"; sourceTree = "<group>"; };
@@ -230,6 +229,7 @@
 		7E7966DB1810823500FA85AD /* icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-76@2x.png"; sourceTree = "<group>"; };
 		7E7966DC1810823500FA85AD /* icon-small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small.png"; sourceTree = "<group>"; };
 		7E7966DD1810823500FA85AD /* icon-small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-small@2x.png"; sourceTree = "<group>"; };
+		842813D81C6D3ABD002E4350 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/admin/Projects/RevSDK_gh/DerivedData/RevSDK/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* RevTest App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "RevTest App-Info.plist"; path = "../RevTest App-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RevTest App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E7497F3B8E7A0C0D288F2E0 /* Pods-RevTest App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RevTest App.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-RevTest App/Pods-RevTest App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -249,7 +249,7 @@
 				1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */,
 				1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */,
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
-				5BF51E5B1C6B951600A4632C /* RevSDK.framework in Frameworks */,
+				842813D91C6D3ABD002E4350 /* RevSDK.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
@@ -304,7 +304,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				5BF51E5A1C6B951600A4632C /* RevSDK.framework */,
+				842813D81C6D3ABD002E4350 /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
