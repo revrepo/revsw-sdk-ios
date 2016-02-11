@@ -35,6 +35,12 @@
 
 static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
+//11.02.16 Perepelitsa: keys of report the name and version of “master” application
+static NSString* const kRS_JKey_AppName         = @"master_app_name";
+static NSString* const kRS_JKey_AppBundle       = @"master_app_bundle_id";
+static NSString* const kRS_JKey_AppVersion      = @"master_app_version";
+static NSString* const kRS_JKey_AppBuild        = @"master_app_build";  
+//
 
 static RSIPUtils* ipUtils = [RSIPUtils new];
 
@@ -126,6 +132,26 @@ namespace rs
         data_storage::deleteEvents();
         return events;
     }
+    
+    //11.02.16 Perepelitsa: 
+    NSDictionary* applicationInfo()
+    {
+        NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
+        
+        statsDictionary[kRS_JKey_AppName] = [[[NSBundle mainBundle] infoDictionary]  
+                                                 objectForKey:(id)kCFBundleNameKey];
+
+        statsDictionary[kRS_JKey_AppBundle] = [[NSBundle mainBundle] bundleIdentifier];
+        
+        statsDictionary[kRS_JKey_AppVersion] = [[[NSBundle mainBundle] infoDictionary]  
+                                                objectForKey:(id)kCFBundleVersionKey];
+        
+        statsDictionary[kRS_JKey_AppBuild] = [[[NSBundle mainBundle] infoDictionary] 
+                                         objectForKey:@"CFBundleShortVersionString"]; 
+        
+        return statsDictionary;
+    }
+    //
     
     NSDictionary* wifiDataDict()
     {
@@ -382,6 +408,7 @@ namespace rs
         sd[@"wifi"] = wifiDataDict();
         sd[@"location"] = locationDataDict();
         sd[@"log_events"] = logDataArray();
+        sd[@"applicationInfo"] = applicationInfo();
         
         for (auto& i : aParams)
         {

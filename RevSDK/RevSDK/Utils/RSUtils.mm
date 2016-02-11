@@ -131,9 +131,7 @@ namespace rs
     NSString* const kRSSDKDomain                       = @"edge_sdk_domain";
     NSString* const kRSQuicUDPPort                     = @"edge_quic_udp_port";
     NSString* const kRSFailuresMonitoringInterval      = @"edge_failures_monitoring_interval_sec";
-    NSString* const kRSFailuresFailoverThreshold       = @"edge_failures_failover_threshold_percent";
-    
-    
+    NSString* const kRSFailuresFailoverThreshold       = @"edge_failures_failover_threshold_percent";  
     //
     
     //request keys
@@ -158,12 +156,6 @@ namespace rs
     NSString* const kRS_JKey_RevCache = @"x-rev-cache";
     //10.02.16 Perepelitsa: add new constant (json key of the status request)
     NSString* const kRS_JKey_ABMode    = @"a_b_mode";
-    //10.02.16 Perepelitsa: programmatically detect the name and version of “master” application and report it
-    NSString* const kRS_JKey_AppName    = @"master_app_name";
-    NSString* const kRS_JKey_AppBundle    = @"master_app_bundle_id";
-    NSString* const kRS_JKey_AppVersion    = @"master_app_version";
-    NSString* const kRS_JKey_AppBuild    = @"master_app_build";
-    //
     
     //field
     NSString* const kRSiOSField = @"iOS";
@@ -595,16 +587,7 @@ namespace rs
                 NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
                 dataDictionary[kRS_JKey_RevCache] = STRVALUE_OR_DEFAULT(revCache);
                 //10.02.16 Perepelitsa: set ab_mode status in every outbound request
-                dataDictionary[kRS_JKey_ABMode]         =  @(Model::instance()->abTestingMode());
-                //10.02.16 Perepelitsa: programmatically detect the name and version 
-                //getting info from owner app plist
-                dataDictionary[kRS_JKey_AppName]        =  [[[NSBundle mainBundle] infoDictionary]  
-                                                            objectForKey:(id)kCFBundleNameKey];
-                dataDictionary[kRS_JKey_AppBundle]      =  [[NSBundle mainBundle] bundleIdentifier];
-                dataDictionary[kRS_JKey_AppVersion]     =  [[[NSBundle mainBundle] infoDictionary]  
-                                                            objectForKey:(id)kCFBundleVersionKey];
-                dataDictionary[kRS_JKey_AppBuild]       =  [[[NSBundle mainBundle] infoDictionary] 
-                                                             objectForKey:@"CFBundleShortVersionString"];                
+                dataDictionary[kRS_JKey_ABMode]         =  @(Model::instance()->abTestingMode());                               
                 //
             }
         }
