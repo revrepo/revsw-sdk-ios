@@ -16,27 +16,8 @@
  * from Rev Software, Inc.
  */
 
+#import <Foundation/Foundation.h>
 
-#import "RTConfigurationObserver.h"
-
-static BOOL configurationLoaded = NO;
-
-@implementation RTConfigurationObserver
-
-+ (void)load
-{
-    [[NSNotificationCenter defaultCenter] addObserverForName:@"kConfigurationLoadedNotification"
-                                                      object:nil
-                                                       queue:nil
-                                                  usingBlock:^(NSNotification* aNote){
-                                                  
-                                                      configurationLoaded = YES;
-                                                  }];
-}
-
-+ (BOOL)configurationLoaded
-{
-    return configurationLoaded;
-}
+@interface RTConfigurationLoadObserver : NSObject
 
 @end

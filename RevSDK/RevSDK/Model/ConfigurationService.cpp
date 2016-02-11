@@ -184,7 +184,8 @@ void ConfigurationService::loadConfiguration()
                                          });
                 }
                 
-                postNotification(kConfigurationLoadedNotification);
+                std::string interval = std::to_string(refreshInterval);
+                postNotification(kConfigurationLoadedNotification, interval);
             }
             else
             {

@@ -842,9 +842,14 @@ namespace rs
         return [UIApplication sharedApplication].applicationState == UIApplicationStateActive;
     }
     
-    void _postNotification(NSString * aNotificationName)
+    void _postNotification(NSString * aNotificationName, NSString* aInfo)
     {
+        NSDictionary* userInfo = @{
+                                   @"info_key" : aInfo
+                                   };
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:aNotificationName
-                                                            object:nil];
+                                                            object:nil
+                                                          userInfo:userInfo];
     }
 }

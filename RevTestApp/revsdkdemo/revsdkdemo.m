@@ -23,7 +23,8 @@
 
 #import "RTRequestTestLoop.h"
 #import "RTUtils.h"
-#import "RTConfigurationObserver.h"
+
+#define kRSStandardNotificationHandler ^BOOL(NSNotification* aNotification){ return YES; }
 
 static const int kConfigurationExpectationTimeout = 10;
 static const int kProtocolTestingTimeout          = 10;
@@ -50,68 +51,71 @@ static const int kProtocolTestingTimeout          = 10;
 {
     [self waitForExpectationsWithTimeout:kConfigurationExpectationTimeout
                         notificationName:@"kConfigurationLoadedNotification"
-                          timeoutHandler:nil];
+                          timeoutHandler:nil
+                     notificationHandler:kRSStandardNotificationHandler];
 }
 
 - (void)waitForProtocolsTestingEndWithFailureDescription:(NSString *)aFailureDescription
 {
+    id timeoutHandler = ^(NSError* error){
+        
+        if (error)
+        {
+            [self recordFailureWithDescription:aFailureDescription
+                                        inFile:@__FILE__
+                                        atLine:0
+                                      expected:YES];
+        }
+    };
+    
     [self waitForExpectationsWithTimeout:kProtocolTestingTimeout
                         notificationName:@"kProtocolTestingOverNotification"
-                          timeoutHandler:^(NSError* error){
-                              
-                              if (error)
-                              {
-                                  [self recordFailureWithDescription:aFailureDescription
-                                                              inFile:@__FILE__
-                                                              atLine:0
-                                                            expected:YES];
-                              }
-                          }];
+                          timeoutHandler:timeoutHandler
+                     notificationHandler:kRSStandardNotificationHandler];
 }
 
-- (void)waitForExpectationsWithTimeout:(NSTimeInterval)aTimeout notificationName:(NSString *)aNotificationName timeoutHandler:(void(^)(NSError *))aHandler
+- (void)waitForExpectationsWithTimeout:(NSTimeInterval)aTimeout notificationName:(NSString *)aNotificationName timeoutHandler:(void(^)(NSError *))aHandler notificationHandler:(BOOL (^)(NSNotification*))aNotificationHandler
 {
-    XCTestExpectation* expectation = [self expectationForNotification:aNotificationName
-                                                                            object:nil
-                                                                           handler:^BOOL(NSNotification* aNotification){
-                                                                               
-                                                                               [expectation fulfill];
-                                                                               
-                                                                               return YES;
-                                                                           }];
+    [self expectationForNotification:aNotificationName
+                              object:nil
+                             handler:aNotificationHandler];
     
     [self waitForExpectationsWithTimeout:aTimeout handler:aHandler];
 }
 
-- (void)test_1_RequestTestLoop
+- (void)waitForStandardExpectationNotification:(NSString *)aNotificationName
 {
-    if (![RTConfigurationObserver configurationLoaded])
-    {
-        [self waitForConfigurationLoad];
-    }
+    id notificationHandler = ^BOOL(NSNotification * aNotification){
+        
+        NSDictionary* userInfo = aNotification.userInfo;
+        NSNumber* result       = userInfo[kRTResultKey];
+        NSString* errorMessage = userInfo[kRTErrorKey];
+        
+        XCTAssertTrue(result.boolValue, @" %@", errorMessage);
+        
+        return YES;
+    };
     
-     self.testLoop = [RTRequestTestLoop defaultTestLoop];
-    [self.testLoop start];
-    
-    XCTestExpectation* expectation = [self expectationForNotification:kRTRequestLoopDidFinishNotification
-                                                               object:nil
-                                                              handler:^BOOL(NSNotification *aNotification){
-                                                                  
-                                                                  [expectation fulfill];
-                                                                  
-                                                                  NSDictionary* userInfo = aNotification.userInfo;
-                                                                  NSNumber* result       = userInfo[kRTResultKey];
-                                                                  NSString* errorMessage = userInfo[kRTErrorKey];
-                                                                  
-                                                                  XCTAssertTrue(result.boolValue, @" %@", errorMessage);
-                                                                  
-                                                                  return YES;
-                                                              }];
-    
-    [self waitForExpectationsWithTimeout:INT_MAX handler:nil];
+    [self waitForExpectationsWithTimeout:INT_MAX
+                        notificationName:aNotificationName
+                          timeoutHandler:nil
+                     notificationHandler:notificationHandler];
 }
 
-- (void)test_2_ProtocolTestingSequence
+- (void)test_1_ConfigurationLoadTest
+{
+    [self waitForStandardExpectationNotification:kRTLoadConfigirationTestNotification];
+}
+
+- (void)test_2_RequestTestLoop
+{
+     self.testLoop = [RTRequestTestLoop defaultTestLoop];
+    [self.testLoop start];
+ 
+    [self waitForStandardExpectationNotification:kRTRequestLoopDidFinishNotification];
+}
+
+- (void)test_3_ProtocolTestingSequence
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:CTRadioAccessTechnologyDidChangeNotification
                                                         object:nil];

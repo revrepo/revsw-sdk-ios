@@ -68,7 +68,7 @@
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
 		5BF51E5B1C6B951600A4632C /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF51E5A1C6B951600A4632C /* RevSDK.framework */; };
 		5BF51E5C1C6B951600A4632C /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BF51E5A1C6B951600A4632C /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5BF51E5F1C6B996B00A4632C /* RTConfigurationObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF51E5E1C6B996B00A4632C /* RTConfigurationObserver.m */; };
+		5BF51E5F1C6B996B00A4632C /* RTConfigurationLoadObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
 		65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */; };
 		65C1EE571C4794D30095537E /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C1EE541C4794D30095537E /* HTMLNode.m */; };
@@ -198,8 +198,8 @@
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
 		5BF51E5A1C6B951600A4632C /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Debug-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
-		5BF51E5D1C6B996B00A4632C /* RTConfigurationObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTConfigurationObserver.h; sourceTree = "<group>"; };
-		5BF51E5E1C6B996B00A4632C /* RTConfigurationObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTConfigurationObserver.m; sourceTree = "<group>"; };
+		5BF51E5D1C6B996B00A4632C /* RTConfigurationLoadObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTConfigurationLoadObserver.h; sourceTree = "<group>"; };
+		5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTConfigurationLoadObserver.m; sourceTree = "<group>"; };
 		65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ForceNoCache.h"; sourceTree = "<group>"; };
 		65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ForceNoCache.m"; sourceTree = "<group>"; };
 		65C1EE531C4794D30095537E /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
@@ -443,8 +443,8 @@
 				65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */,
 				5B58B34E1C626D31002B14EC /* RTRequestTestLoop.h */,
 				5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */,
-				5BF51E5D1C6B996B00A4632C /* RTConfigurationObserver.h */,
-				5BF51E5E1C6B996B00A4632C /* RTConfigurationObserver.m */,
+				5BF51E5D1C6B996B00A4632C /* RTConfigurationLoadObserver.h */,
+				5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -753,7 +753,7 @@
 				A7EC06CC1C562F8E00542AEE /* Storage.m in Sources */,
 				A7EC06D11C56384000542AEE /* PickerView.m in Sources */,
 				65C1EE571C4794D30095537E /* HTMLNode.m in Sources */,
-				5BF51E5F1C6B996B00A4632C /* RTConfigurationObserver.m in Sources */,
+				5BF51E5F1C6B996B00A4632C /* RTConfigurationLoadObserver.m in Sources */,
 				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
 				65C1EE5D1C4796520095537E /* RTHTMLGrabber.m in Sources */,
