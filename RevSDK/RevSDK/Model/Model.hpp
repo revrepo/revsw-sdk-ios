@@ -85,6 +85,8 @@ namespace rs
 
         void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage) override;
         
+        bool mShouldSimulateErrors;
+        
       public:
         
         Model();
@@ -138,6 +140,8 @@ namespace rs
         void addEvent(const std::string&, const int, const std::string& , const float, RSLogginLevel);
         
         void deleteRequestsData();
+        
+        void setShouldSimulate(bool aShouldSimulate) { mShouldSimulateErrors = aShouldSimulate; }
     };
 }
 

@@ -57,6 +57,7 @@
 		5BB7F24B1C6A38AA0095D508 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C1EE591C4795460095537E /* libxml2.tbd */; };
 		5BB7F2551C6A3DB80095D508 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
 		5BB7F2561C6A3DC00095D508 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
+		5BBAA0041C6CE0C700AC492B /* RTProtocolSwitchTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAA0031C6CE0C700AC492B /* RTProtocolSwitchTester.m */; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
 		5BDF00EA1C6CA31400A15E40 /* RTStatsUploadTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDF00E91C6CA31400A15E40 /* RTStatsUploadTester.m */; };
 		5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0D5B71C3D6F3B0064F97D /* RTCell.m */; };
@@ -184,6 +185,8 @@
 		5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = revsdkdemo.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB7F23F1C6A2CB90095D508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = revsdkdemo.m; sourceTree = "<group>"; };
+		5BBAA0021C6CE0C700AC492B /* RTProtocolSwitchTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTProtocolSwitchTester.h; sourceTree = "<group>"; };
+		5BBAA0031C6CE0C700AC492B /* RTProtocolSwitchTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTProtocolSwitchTester.m; sourceTree = "<group>"; };
 		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
 		5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTTesting.m"; sourceTree = "<group>"; };
 		5BDF00E81C6CA31400A15E40 /* RTStatsUploadTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStatsUploadTester.h; sourceTree = "<group>"; };
@@ -450,6 +453,8 @@
 				5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */,
 				5BDF00E81C6CA31400A15E40 /* RTStatsUploadTester.h */,
 				5BDF00E91C6CA31400A15E40 /* RTStatsUploadTester.m */,
+				5BBAA0021C6CE0C700AC492B /* RTProtocolSwitchTester.h */,
+				5BBAA0031C6CE0C700AC492B /* RTProtocolSwitchTester.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -776,6 +781,7 @@
 				5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */,
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
+				5BBAA0041C6CE0C700AC492B /* RTProtocolSwitchTester.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

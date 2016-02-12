@@ -96,6 +96,11 @@ static rs::TestConfigurationService* TestConfService = nullptr;
     rs::Model::instance()->deleteRequestsData();
 }
 
++ (void)debug_enableErrorMode
+{
+    rs::Model::instance()->setShouldSimulate(true);
+}
+
 + (void)debug_disableTestMode
 {
      if(TestConfService)
@@ -104,6 +109,8 @@ static rs::TestConfigurationService* TestConfService = nullptr;
      }
     
     TestConfService = nullptr;
+    
+    rs::Model::instance()->setShouldSimulate(false);
 }
 
 + (void)debug_pushTestConifguration:(NSString *)aProtocolID mode:(RSOperationMode)aOperationMode

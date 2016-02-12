@@ -119,6 +119,8 @@ namespace rs
         mConfService         = std::shared_ptr<ConfigurationService>(conf);
         mStatsReportingTimer = nullptr;
         mUsageTracker        = std::make_shared<DebugUsageTracker>();
+       
+        mShouldSimulateErrors = false;
     }
     
     Model::~Model()
@@ -200,9 +202,13 @@ namespace rs
     std::shared_ptr<Connection> Model::connectionForProtocolName(const std::string& aProtocolName)
     {
         if (aProtocolName == standardProtocolName())
-            return Connection::create<StandardConnection>();
+        {
+            return mShouldSimulateErrors ? Connection::createFake<StandardConnection>() : Connection::create<StandardConnection>();
+        }
         else if (aProtocolName == quicProtocolName())
-            return Connection::create<QUICConnection>();
+        {
+            return mShouldSimulateErrors ? Connection::createFake<QUICConnection>() : Connection::create<QUICConnection>();
+        }
         else
         {
             assert(false);

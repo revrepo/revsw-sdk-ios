@@ -24,6 +24,7 @@
 #import "RTRequestTestLoop.h"
 #import "RTStatsUploadTester.h"
 #import "RTUtils.h"
+#import "RTProtocolSwitchTester.h"
 
 #define kRSStandardNotificationHandler ^BOOL(NSNotification* aNotification){ return YES; }
 
@@ -34,6 +35,7 @@ static const int kProtocolTestingTimeout          = 10;
 
 @property (nonatomic, strong) RTRequestTestLoop* testLoop;
 @property (nonatomic, strong) RTStatsUploadTester* statsUploadTester;
+@property (nonatomic, strong) RTProtocolSwitchTester* protocolTester;
 
 @end
 
@@ -141,6 +143,14 @@ static const int kProtocolTestingTimeout          = 10;
     [self.statsUploadTester start];
     
    [self waitForStandardExpectationNotification:kRTStatsTesterDidFinishNotification];
+}
+
+- (void)test_5_ProtocolSwitchTest
+{
+    self.protocolTester = [RTProtocolSwitchTester defaultTester];
+    [self.protocolTester start];
+    
+    [self waitForStandardExpectationNotification:kRTProtocolSwitchTesterDidFinish];
 }
 
 @end

@@ -24,6 +24,7 @@ const CGFloat kRTRowHeight = 50.f;
 
 NSString* const kRTRequestLoopDidFinishNotification = @"kRTRequestLoopDidFinishNotification";
 NSString* const kRTStatsTesterDidFinishNotification = @"kRTStatsTesterDidFinishNotification";
+NSString* const kRTProtocolSwitchTesterDidFinish    = @"kRTProtocolSwitchTesterDidFinish";
 NSString* const kRTLoadConfigirationTestNotification = @"kRTLoadConfigirationTestNotification";
 NSString* const kRTSDKLabelTextKey = @"kRTSDKLabelTextKey";
 NSString* const kRTTitleKey = @"kRTTitleKey";
