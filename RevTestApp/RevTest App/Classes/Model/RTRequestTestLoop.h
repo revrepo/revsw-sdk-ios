@@ -26,5 +26,10 @@
                   numberOfTests:(NSUInteger)aNumberOfTests
              numberOfFullPasses:(NSUInteger)aNumberOfFullPasses;
 - (void)start;
+- (void)finish;
+
+@end
+
+@interface RTRequestTestLoopOffMode : RTRequestTestLoop
 
 @end

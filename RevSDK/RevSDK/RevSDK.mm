@@ -113,6 +113,17 @@ static rs::TestConfigurationService* TestConfService = nullptr;
     rs::Model::instance()->setShouldSimulate(false);
 }
 
++ (void)debug_setOffMode
+{
+    auto defaultConfiguration       = rs::Model::instance()->getActiveConfiguration();
+    rs::Configuration configuration = *defaultConfiguration.get();
+    configuration.operationMode     = rs::kRSOperationModeInnerOff;
+    
+    TestConfService = new rs::TestConfigurationService(rs::Model::instance(), configuration);
+    TestConfService->init();
+    rs::Model::instance()->debug_replaceConfigurationService(TestConfService);
+}
+
 + (void)debug_pushTestConifguration:(NSString *)aProtocolID mode:(RSOperationMode)aOperationMode
 {
     assert(TestConfService);

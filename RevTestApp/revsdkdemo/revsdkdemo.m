@@ -153,4 +153,13 @@ static const int kProtocolTestingTimeout          = 10;
     [self waitForStandardExpectationNotification:kRTProtocolSwitchTesterDidFinish];
 }
 
+- (void)test_6_OffModeTest
+{
+    self.testLoop = [RTRequestTestLoopOffMode defaultTestLoop];
+    
+    [self.testLoop start];
+    
+    [self waitForStandardExpectationNotification:kRTOperationModeOffTestDidFinish];
+}
+
 @end

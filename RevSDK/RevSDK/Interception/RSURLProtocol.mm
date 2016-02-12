@@ -99,6 +99,22 @@
 
 - (void)startLoading
 {
+    if (rs::Model::instance()->currentOperationMode() == rs::kRSOperationModeInnerOff)
+    {
+        NSString* errorMessage = [NSString stringWithFormat:@"Operation mode off failed on URL %@", self.request.URL.absoluteString];
+        
+        NSDictionary* userInfo = @{
+                                   @"kRTResultKey" : @NO,
+                                   @"kRTErrorKey" : errorMessage
+                                   };
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"kRTOperationModeOffTestDidFinish"
+                                                            object:nil
+                                                          userInfo:userInfo];
+        
+        rs::Log::error(rs::kLogTagSDKInerception, errorMessage.UTF8String);
+    }
+    
     self.dataLength = 0;
  
     rs::Log::info(rs::kLogTagProtocolStartLoading, "Start loading request %s timestamp %lld ", self.request.cDescription, RSTimeStamp);

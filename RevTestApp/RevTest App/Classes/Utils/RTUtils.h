@@ -34,6 +34,7 @@ extern const CGFloat kRTRowHeight;
 extern NSString* const kRTRequestLoopDidFinishNotification;
 extern NSString* const kRTStatsTesterDidFinishNotification;
 extern NSString* const kRTProtocolSwitchTesterDidFinish;
+extern NSString* const kRTOperationModeOffTestDidFinish;
 extern NSString* const kRTLoadConfigirationTestNotification;
 extern NSString* const kRTSDKLabelTextKey;
 extern NSString* const kRTTitleKey;

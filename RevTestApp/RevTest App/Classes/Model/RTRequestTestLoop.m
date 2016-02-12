@@ -70,36 +70,39 @@ typedef enum
 
 @implementation RTRequestTestLoop
 
++ (NSArray *)defaultDomains
+{
+    return @[@"mgemi.com",
+             @"httpbin.org",
+             @"google.com",
+             @"mbeans.com",
+             @"cnn.com",
+             @"stackoverflow.com",
+             @"bmwusa.com",
+             @"ebay.com",
+             @"m.vk.com",
+             @"yandex.ru",
+             @"amazon.com",
+             @"youtube.com",
+             @"linkedin.com",
+             @"echo.msk.ru",
+             @"ibm.com",
+             @"revapm.net",
+             @"bing.com",
+             @"akamai.com",
+             @"skrill.com",
+             @"raywenderlich.com",
+             @"facebook.com",
+             @"twitter.com"];
+}
+
 + (instancetype)defaultTestLoop
 {
-    NSArray* domains = @[@"mgemi.com",
-                         @"httpbin.org",
-                         @"google.com",
-                         @"mbeans.com",
-                         @"cnn.com",
-                         @"stackoverflow.com",
-                         @"bmwusa.com",
-                         @"ebay.com",
-                         @"m.vk.com",
-                         @"yandex.ru",
-                         @"amazon.com",
-                         @"youtube.com",
-                         @"linkedin.com",
-                         @"echo.msk.ru",
-                         @"ibm.com",
-                         @"revapm.net",
-                         @"bing.com",
-                         @"akamai.com",
-                         @"skrill.com",
-                         @"raywenderlich.com",
-                         @"facebook.com",
-                         @"twitter.com"];
+    NSArray* domains = [self defaultDomains];
     
-    RTRequestTestLoop* testLoop = [[RTRequestTestLoop alloc] initWithDomains:domains
-                                                               numberOfTests:20
-                                                          numberOfFullPasses:10];
-
-    
+    RTRequestTestLoop* testLoop = [[self alloc] initWithDomains:domains
+                                                  numberOfTests:20
+                                             numberOfFullPasses:10];
     return testLoop;
 }
 
@@ -178,9 +181,14 @@ typedef enum
     }
 }
 
+- (SEL)startSelector
+{
+    return @selector(debug_enableTestMode);
+}
+
 - (void)startIterating
 {
-    SEL selector = @selector(debug_enableTestMode);
+    SEL selector = [self startSelector];
     [RevSDK performSelector:selector];
     
     RTTestCase* tcase    = [self.testCases objectAtIndex:_iterationIndex % self.testCases.count];
@@ -221,18 +229,23 @@ typedef enum
     }
     else
     {
-        self.isIterating = NO;
-        
-        SEL selector = @selector(debug_disableTestMode);
-        [RevSDK performSelector:selector];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
-                                                            object:nil
-                                                          userInfo:@{
-                                                                     kRTResultKey : @YES,
-                                                                     kRTErrorKey : @"Success"
-                                                                     }];
+        [self finish];
     }
+}
+
+- (void)finish
+{
+    self.isIterating = NO;
+    
+    SEL selector = @selector(debug_disableTestMode);
+    [RevSDK performSelector:selector];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
+                                                        object:nil
+                                                      userInfo:@{
+                                                                 kRTResultKey : @YES,
+                                                                 kRTErrorKey : @"Success"
+                                                                 }];
 }
 
 - (void)next
@@ -306,5 +319,25 @@ typedef enum
     });
 }
 
+@end
+
+@implementation RTRequestTestLoopOffMode
+
+- (SEL)startSelector
+{
+    return @selector(debug_setOffMode);
+}
+
+- (void)finish
+{
+    [super finish];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRTOperationModeOffTestDidFinish
+                                                        object:nil
+                                                      userInfo:@{
+                                                                 kRTResultKey : @YES,
+                                                                 kRTErrorKey : @"Success"
+                                                                 }];
+}
 
 @end
