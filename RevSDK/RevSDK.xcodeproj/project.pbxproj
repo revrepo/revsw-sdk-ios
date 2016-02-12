@@ -51,6 +51,7 @@
 		11F24B411C3C57E500DABAE5 /* RSUDPSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */; };
 		11F24B4B1C3D695D00DABAE5 /* RSUDPService.h in Headers */ = {isa = PBXBuildFile; fileRef = 11F24B491C3D695D00DABAE5 /* RSUDPService.h */; };
 		5B0278841C1ABB0D00ACEF19 /* RSPublicConsts.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFD82221C198B2900CCF1EA /* RSPublicConsts.h */; };
+		5B0DF99D1C6E1AAB0096C528 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5B0DF99C1C6E1AAB0096C528 /* Info.plist */; };
 		5B2035841C33DBB400A28C01 /* RSReachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035821C33DBB400A28C01 /* RSReachability.h */; };
 		5B2035851C33DBB400A28C01 /* RSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B2035831C33DBB400A28C01 /* RSReachability.m */; };
 		5B2035941C33E85E00A28C01 /* RSSystemInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B2035921C33E85E00A28C01 /* RSSystemInfo.h */; };
@@ -211,6 +212,7 @@
 		11F24B3F1C3C57E500DABAE5 /* RSUDPSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUDPSocket.h; sourceTree = "<group>"; };
 		11F24B481C3D695D00DABAE5 /* RSUDPService.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RSUDPService.cpp; sourceTree = "<group>"; };
 		11F24B491C3D695D00DABAE5 /* RSUDPService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSUDPService.h; sourceTree = "<group>"; };
+		5B0DF99C1C6E1AAB0096C528 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B2035821C33DBB400A28C01 /* RSReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSReachability.h; sourceTree = "<group>"; };
 		5B2035831C33DBB400A28C01 /* RSReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSReachability.m; sourceTree = "<group>"; };
 		5B2035921C33E85E00A28C01 /* RSSystemInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSSystemInfo.h; sourceTree = "<group>"; };
@@ -505,6 +507,7 @@
 		5B3096C41BFA02770045024C /* RevSDKTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B0DF99C1C6E1AAB0096C528 /* Info.plist */,
 				5B3096C51BFA02770045024C /* RevSDKTests.m */,
 			);
 			path = RevSDKTests;
@@ -828,6 +831,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0DF99D1C6E1AAB0096C528 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
