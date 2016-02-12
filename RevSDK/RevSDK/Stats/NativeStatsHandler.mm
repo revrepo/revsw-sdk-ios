@@ -411,7 +411,9 @@ namespace rs
         sd[@"location"] = locationDataDict();
         sd[@"log_events"] = logDataArray();
         sd[@"applicationInfo"] = applicationInfo();
-        
+        //12.02.16 Perepelitsa: move a_b_mode flag into json root        
+        sd[@"a_b_mode"] =  @(Model::instance()->abTestingMode()); 
+        //
         for (auto& i : aParams)
         {
             NSString* key = [NSString stringWithUTF8String:i.first.c_str()];
