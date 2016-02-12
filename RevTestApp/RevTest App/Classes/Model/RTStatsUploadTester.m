@@ -114,8 +114,6 @@
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    NSLog(@"FINISH WITH MESSAGE %@", aMessage);
-    
     NSDictionary* userInfo = @{
                                kRTErrorKey : aMessage,
                                kRTResultKey : aResult

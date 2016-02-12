@@ -303,7 +303,20 @@ void QUICConnection::quicSessionDidFinish(QUICSession* aSession, net::QuicSpdySt
             Model::instance()->addRequestData(requestData);
         }
         rs::Log::info(rs::kLogTagQUICFinish, "QUIC finish %d request %s timestamp %lld", mId, mRequest->URL().c_str(), RSTimeStamp);
-        mDelegate->connectionDidFinish(mWeakThis.lock());
+        
+        if (mIsFake)
+        {
+            Error error;
+            error.code     = -2;
+            error.domain   = "com.revsdk";
+            error.userInfo = std::map <std::string, std::string>();
+            error.userInfo[errorDescriptionKey()] = "Fake error";
+            mDelegate->connectionDidFailWithError(mWeakThis.lock(), error);
+        }
+        else
+        {
+           mDelegate->connectionDidFinish(mWeakThis.lock());
+        }
     }
     mAnchor0.reset();
 }

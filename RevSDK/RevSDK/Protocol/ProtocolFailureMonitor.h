@@ -57,7 +57,7 @@ namespace rs
         const unsigned int kMinimumRequests = 4;
         const double kMinFailPercentToSwitchProto = 0.6;
         
-        void validate(const std::string& aProtocolID);
+        void validate(const std::string& aProtocolID, const ErrorReport&);
         
         static std::mutex mLock;
         

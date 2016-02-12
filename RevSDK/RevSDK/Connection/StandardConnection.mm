@@ -156,8 +156,20 @@ void StandardConnection::didCompleteWithError(void* aError)
     
     if (!aError)
     {
-        mConnectionDelegate->connectionDidFinish(mWeakThis.lock());
-        Model::instance()->debug_usageTracker()->trackRequestFinished(usingRevHost, mBytesReceived, *mResponse.get());
+        if (mIsFake)
+        {
+            Error error;
+            error.code     = -2;
+            error.domain   = "com.revsdk";
+            error.userInfo = std::map <std::string, std::string>();
+            error.userInfo[errorDescriptionKey()] = "Fake error";
+            mConnectionDelegate->connectionDidFailWithError(mWeakThis.lock(), error);
+        }
+        else
+        {
+            mConnectionDelegate->connectionDidFinish(mWeakThis.lock());
+            Model::instance()->debug_usageTracker()->trackRequestFinished(usingRevHost, mBytesReceived, *mResponse.get());
+        }
     }
     else
     {

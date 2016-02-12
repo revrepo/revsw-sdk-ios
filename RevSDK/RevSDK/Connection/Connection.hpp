@@ -71,6 +71,16 @@ namespace rs
         {
             std::shared_ptr<Connection> result(new T());
             result->mWeakThis = std::weak_ptr<Connection>(result);
+            result->mIsFake   = false;
+            return result;
+        }
+        
+        template <class T>
+        static std::shared_ptr<Connection> createFake()
+        {
+            std::shared_ptr<Connection> result(new T());
+            result->mWeakThis = std::weak_ptr<Connection>(result);
+            result->mIsFake = true;
             return result;
         }
         
@@ -107,6 +117,8 @@ namespace rs
         int64_t mBytesReceived;
         
         std::weak_ptr<Connection> mWeakThis;
+        
+        bool mIsFake;
     };
 }
 

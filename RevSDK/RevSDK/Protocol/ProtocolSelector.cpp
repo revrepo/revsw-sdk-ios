@@ -110,6 +110,7 @@ void ProtocolSelector::convertIDToPropocol(const std::string& aID)
     {
         mBestProtocol = nullptr;
     }
+    postNotification("kBestProtocolSelected", aID);
 }
 
 void ProtocolSelector::saveAvailable()
@@ -195,7 +196,6 @@ void ProtocolSelector::sortProtocols(std::vector<std::string> aProtocolNamesOrde
 
 std::shared_ptr<Protocol> ProtocolSelector::bestProtocol()
 {
-    //return std::make_shared<QUICProtocol>();
     std::lock_guard<std::mutex> lockGuard(mLock);
     if (mBestProtocol/* && mAvailableProtocols.size()*/)
     {
