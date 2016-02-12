@@ -135,27 +135,27 @@ namespace rs
     //
     
     //request keys
-    NSString* const kRS_JKey_ConnID    = @"conn_id";
-    NSString* const kRS_JKey_Encoding    = @"cont_encoding";
-    NSString* const kRS_JKey_ContType   = @"cont_type";
-    NSString* const kRS_JKey_EndTs    = @"end_ts";
-    NSString* const kRS_JKey_FirstByteTs    = @"first_byte_ts";
-    NSString* const kRS_JKey_KeepAliveStatus    = @"keepalive_status";
-    NSString* const kRS_JKey_LocCacheStatus    = @"local_cache_status";
-    NSString* const kRS_JKey_Method    = @"method";
-    NSString* const kRS_JKey_Network    = @"network";
-    NSString* const kRS_JKey_Protocol    = @"protocol";
-    NSString* const kRS_JKey_RecDytes    = @"received_bytes";
-    NSString* const kRS_JKey_SentBytes    = @"sent_bytes";
-    NSString* const kRS_JKey_StartTs    = @"start_ts";
-    NSString* const kRS_JKey_StatusCode    = @"status_code";
-    NSString* const kRS_JKey_SuccessStatus    = @"success_status";
-    NSString* const kRS_JKey_TransportProt    = @"transport_protocol";
-    NSString* const kRS_JKey_Destination = @"destination";
-    NSString* const kRS_JKey_EdgeTransport = @"edge_transport";
-    NSString* const kRS_JKey_RevCache = @"x-rev-cache";
+    NSString* const kRSJKeyConnID    = @"conn_id";
+    NSString* const kRSJKeyEncoding    = @"cont_encoding";
+    NSString* const kRSJKeyContType   = @"cont_type";
+    NSString* const kRSJKeyEndTs    = @"end_ts";
+    NSString* const kRSJKeyFirstByteTs    = @"first_byte_ts";
+    NSString* const kRSJKeyKeepAliveStatus    = @"keepalive_status";
+    NSString* const kRSJKeyLocCacheStatus    = @"local_cache_status";
+    NSString* const kRSJKeyMethod    = @"method";
+    NSString* const kRSJKeyNetwork    = @"network";
+    NSString* const kRSJKeyProtocol    = @"protocol";
+    NSString* const kRSJKeyRecDytes    = @"received_bytes";
+    NSString* const kRSJKeySentBytes    = @"sent_bytes";
+    NSString* const kRSJKeyStartTs    = @"start_ts";
+    NSString* const kRSJKeyStatusCode    = @"status_code";
+    NSString* const kRSJKeySuccessStatus    = @"success_status";
+    NSString* const kRSJKeyTransportProt    = @"transport_protocol";
+    NSString* const kRSJKeyDestination = @"destination";
+    NSString* const kRSJKeyEdgeTransport = @"edge_transport";
+    NSString* const kRSJKeyRevCache = @"x-rev-cache";
     //10.02.16 Perepelitsa: add new constant (json key of the status request)
-    NSString* const kRS_JKey_ABMode    = @"a_b_mode";
+    NSString* const kRSJKeyABMode    = @"a_b_mode";
     
     //field
     NSString* const kRSiOSField = @"iOS";
@@ -233,7 +233,7 @@ namespace rs
         //
         configuration.loggingLevel              = stdStringFromNSString(aDictionary[kRSLoggingLevelKey]);
         //10.02.16 Perepelitsa: add fields of a/b testing to copying  
-        configuration.abTesMode                 = [aDictionary[kRS_JKey_ABMode] boolValue];
+        configuration.abTesMode                 = [aDictionary[kRSJKeyABMode] boolValue];
         configuration.abTestingRatio            = [aDictionary[kRSABTestingOriginOffloadRatioKey] intValue];
         //10.02.16 Perepelitsa: Add new SDK configuration options  
         configuration.failuresFailoverThreshold     = [aDictionary[kRSFailuresFailoverThreshold] doubleValue];
@@ -271,7 +271,7 @@ namespace rs
         //
         dictionary[kRSLoggingLevelKey]                 = NSStringFromStdString(aConfiguration.loggingLevel);
         //10.02.16 Perepelitsa: add fields of a/b testing to copying  
-        dictionary[kRS_JKey_ABMode]                    = @(aConfiguration.abTesMode);
+        dictionary[kRSJKeyABMode]                    = @(aConfiguration.abTesMode);
         dictionary[kRSABTestingOriginOffloadRatioKey]  = @(aConfiguration.abTestingRatio);
         //10.02.16 Perepelitsa: Add new SDK configuration options  
         dictionary[kRSFailuresFailoverThreshold]       = @(aConfiguration.failuresFailoverThreshold);
@@ -485,9 +485,9 @@ namespace rs
     
     Data dataFromRequestsDictionary(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, NSDictionary* aDictionary, BOOL aIsRedirecting)
     {
-        NSNumber* startTimestamp     = aDictionary[kRS_JKey_StartTs];
-        NSNumber* endTimestamp       = aDictionary[kRS_JKey_EndTs];
-        NSNumber* firstByteTimestamp = aDictionary[kRS_JKey_FirstByteTs];
+        NSNumber* startTimestamp     = aDictionary[kRSJKeyStartTs];
+        NSNumber* endTimestamp       = aDictionary[kRSJKeyEndTs];
+        NSNumber* firstByteTimestamp = aDictionary[kRSJKeyFirstByteTs];
         
         CFNumberRef stRef  = (__bridge CFNumberRef)startTimestamp;
         CFNumberRef endRef = (__bridge CFNumberRef)endTimestamp;
@@ -526,10 +526,10 @@ namespace rs
         BOOL successStatus                  = aResponse.statusCode >= 200 && aResponse.statusCode < 300;
         
         dataDictionary[kRSURLKey]           = URLString;
-        dataDictionary[kRS_JKey_StatusCode] = @(statusCode);
-        dataDictionary[kRS_JKey_SuccessStatus] = @((int)successStatus);
+        dataDictionary[kRSJKeyStatusCode] = @(statusCode);
+        dataDictionary[kRSJKeySuccessStatus] = @((int)successStatus);
         
-        int successStatusCheck = [dataDictionary[kRS_JKey_SuccessStatus] intValue];
+        int successStatusCheck = [dataDictionary[kRSJKeySuccessStatus] intValue];
         
         if (successStatusCheck != 0 && successStatusCheck != 1)
         {
@@ -540,55 +540,50 @@ namespace rs
         //fill with defaults
         {
             NSNumber *defaultVal = [NSNumber numberWithInt:0];
-            dataDictionary[kRS_JKey_Encoding] 		= @"-";
-            dataDictionary[kRS_JKey_ContType] 		= @"-";
-            dataDictionary[kRS_JKey_EndTs] 			= defaultVal;
-            dataDictionary[kRS_JKey_FirstByteTs] 	= defaultVal;
-            dataDictionary[kRS_JKey_KeepAliveStatus]= defaultVal;
-            dataDictionary[kRS_JKey_LocCacheStatus] = @"-";
-            dataDictionary[kRS_JKey_Method] 		= @"-";
-            dataDictionary[kRS_JKey_Network] 		= @"-";
-            dataDictionary[kRS_JKey_Protocol] 		= @"-";
-            dataDictionary[kRS_JKey_RecDytes] 		= defaultVal;
-            dataDictionary[kRS_JKey_SentBytes] 		= defaultVal;
-            dataDictionary[kRS_JKey_StartTs] 		= defaultVal;
-            dataDictionary[kRS_JKey_TransportProt] 	= @"-";
-            dataDictionary[kRS_JKey_Destination]    = @"_";
-            dataDictionary[kRS_JKey_EdgeTransport]  = @"_";
-            //10.02.16 Perepelitsa: set default value to ab_mode status 
-            dataDictionary[kRS_JKey_ABMode] = @NO;
+            dataDictionary[kRSJKeyEncoding] 		= @"-";
+            dataDictionary[kRSJKeyContType] 		= @"-";
+            dataDictionary[kRSJKeyEndTs] 			= defaultVal;
+            dataDictionary[kRSJKeyFirstByteTs]      = defaultVal;
+            dataDictionary[kRSJKeyKeepAliveStatus]  = defaultVal;
+            dataDictionary[kRSJKeyLocCacheStatus]   = @"-";
+            dataDictionary[kRSJKeyMethod]           = @"-";
+            dataDictionary[kRSJKeyNetwork]          = @"-";
+            dataDictionary[kRSJKeyProtocol] 		= @"-";
+            dataDictionary[kRSJKeyRecDytes] 		= defaultVal;
+            dataDictionary[kRSJKeySentBytes] 		= defaultVal;
+            dataDictionary[kRSJKeyStartTs]          = defaultVal;
+            dataDictionary[kRSJKeyTransportProt] 	= @"-";
+            dataDictionary[kRSJKeyDestination]      = @"_";
+            dataDictionary[kRSJKeyEdgeTransport]    = @"_";
             //
         }
         // fetching data
         {
-            dataDictionary[kRS_JKey_ConnID] = aDictionary[kRS_JKey_ConnID];
-            dataDictionary[kRS_JKey_Method] = [aRequest HTTPMethod];
+            dataDictionary[kRSJKeyConnID] = aDictionary[kRSJKeyConnID];
+            dataDictionary[kRSJKeyMethod] = [aRequest HTTPMethod];
 
             
             if (aResponse)
             {
                 NSDictionary* headers = [aResponse allHeaderFields];
                 
-                dataDictionary[kRS_JKey_Encoding]   = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
-                dataDictionary[kRS_JKey_ContType]   = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
-                dataDictionary[kRS_JKey_LocCacheStatus] = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
-                dataDictionary[kRS_JKey_TransportProt] = aDictionary[kRS_JKey_TransportProt];//aRequest.URL.scheme;
+                dataDictionary[kRSJKeyEncoding]         = STRVALUE_OR_DEFAULT(headers[@"Content-Encoding"]);
+                dataDictionary[kRSJKeyContType]         = STRVALUE_OR_DEFAULT(headers[@"Content-Type"]);
+                dataDictionary[kRSJKeyLocCacheStatus]   = STRVALUE_OR_DEFAULT(headers[@"Cache-Control"]);;
+                dataDictionary[kRSJKeyTransportProt]    = aDictionary[kRSJKeyTransportProt];//aRequest.URL.scheme;
                 
-                dataDictionary[kRS_JKey_StartTs] 		= startTimestamp;
-                dataDictionary[kRS_JKey_RecDytes] 		= aDictionary[kRS_JKey_RecDytes];
-                dataDictionary[kRS_JKey_SentBytes] 		= aDictionary[kRS_JKey_SentBytes];
-                dataDictionary[kRS_JKey_EndTs] 			= endTimestamp;
-                dataDictionary[kRS_JKey_FirstByteTs] 	= firstByteTimestamp;
+                dataDictionary[kRSJKeyStartTs]          = startTimestamp;
+                dataDictionary[kRSJKeyRecDytes] 		= aDictionary[kRSJKeyRecDytes];
+                dataDictionary[kRSJKeySentBytes] 		= aDictionary[kRSJKeySentBytes];
+                dataDictionary[kRSJKeyEndTs] 			= endTimestamp;
+                dataDictionary[kRSJKeyFirstByteTs]      = firstByteTimestamp;
                 
-                dataDictionary[kRS_JKey_KeepAliveStatus]= [NSNumber numberWithInt:1];
-                dataDictionary[kRS_JKey_Destination]    = aIsRedirecting ? @"rev_edge" : @"origin";
-                dataDictionary[kRS_JKey_EdgeTransport]  = aDictionary[kRS_JKey_EdgeTransport];
+                dataDictionary[kRSJKeyKeepAliveStatus]  = [NSNumber numberWithInt:1];
+                dataDictionary[kRSJKeyDestination]      = aIsRedirecting ? @"rev_edge" : @"origin";
+                dataDictionary[kRSJKeyEdgeTransport]    = aDictionary[kRSJKeyEdgeTransport];
                 
-                NSString* revCache = aResponse.allHeaderFields[kRS_JKey_RevCache];
-                dataDictionary[kRS_JKey_RevCache] = STRVALUE_OR_DEFAULT(revCache);
-                //10.02.16 Perepelitsa: set ab_mode status in every outbound request
-                dataDictionary[kRS_JKey_ABMode]         =  @(Model::instance()->abTestingMode());                               
-                //
+                NSString* revCache = aResponse.allHeaderFields[kRSJKeyRevCache];
+                dataDictionary[kRSJKeyRevCache] = STRVALUE_OR_DEFAULT(revCache);
             }
         }
         
@@ -603,14 +598,14 @@ namespace rs
     Data dataFromRequestAndResponse(NSURLRequest* aRequest, NSHTTPURLResponse* aResponse, Connection* aConnection, NSString* aOriginalScheme, BOOL aIsRedirecting)
     {
         NSDictionary* dictionary = @{
-                                     kRS_JKey_ConnID : @(aConnection->getID()),
-                                     kRS_JKey_StartTs : @(aConnection->getStartTimestamp()),
-                                     kRS_JKey_RecDytes : @(aConnection->getTotalReceived()),
-                                     kRS_JKey_SentBytes : @(aConnection->getTotalSent()),
-                                     kRS_JKey_EndTs : @(aConnection->getEndTimestamp()),
-                                     kRS_JKey_FirstByteTs : @(aConnection->getFirstByteTimestamp()),
-                                     kRS_JKey_TransportProt : aOriginalScheme,
-                                     kRS_JKey_EdgeTransport : NSStringFromStdString(aConnection->edgeTransport())
+                                     kRSJKeyConnID : @(aConnection->getID()),
+                                     kRSJKeyStartTs : @(aConnection->getStartTimestamp()),
+                                     kRSJKeyRecDytes : @(aConnection->getTotalReceived()),
+                                     kRSJKeySentBytes : @(aConnection->getTotalSent()),
+                                     kRSJKeyEndTs : @(aConnection->getEndTimestamp()),
+                                     kRSJKeyFirstByteTs : @(aConnection->getFirstByteTimestamp()),
+                                     kRSJKeyTransportProt : aOriginalScheme,
+                                     kRSJKeyEdgeTransport : NSStringFromStdString(aConnection->edgeTransport())
                                      
                                      };
         
@@ -623,14 +618,14 @@ namespace rs
         NSHTTPURLResponse* response = aConnection.response;
         
         NSDictionary* dictionary = @{
-                                     kRS_JKey_ConnID : aConnection.connectionId,
-                                     kRS_JKey_StartTs : aConnection.startTimestamp,
-                                     kRS_JKey_RecDytes : aConnection.totalBytesReceived,
-                                     kRS_JKey_SentBytes : @(request.HTTPBody.length),
-                                     kRS_JKey_EndTs : aConnection.endTimestamp,
-                                     kRS_JKey_FirstByteTs : aConnection.firstByteTimestamp ? aConnection.firstByteTimestamp : @(0),
-                                     kRS_JKey_TransportProt : request.URL.scheme,
-                                     kRS_JKey_EdgeTransport : @"_"
+                                     kRSJKeyConnID : aConnection.connectionId,
+                                     kRSJKeyStartTs : aConnection.startTimestamp,
+                                     kRSJKeyRecDytes : aConnection.totalBytesReceived,
+                                     kRSJKeySentBytes : @(request.HTTPBody.length),
+                                     kRSJKeyEndTs : aConnection.endTimestamp,
+                                     kRSJKeyFirstByteTs : aConnection.firstByteTimestamp ? aConnection.firstByteTimestamp : @(0),
+                                     kRSJKeyTransportProt : request.URL.scheme,
+                                     kRSJKeyEdgeTransport : @"_"
                                      };
         
         return dataFromRequestsDictionary(request, response, dictionary, aIsRedirecting);

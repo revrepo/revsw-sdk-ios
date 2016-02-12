@@ -31,16 +31,18 @@
 #include "Event.hpp"
 #include "DataStorage.hpp"
 
+
+#include "Model.hpp";
+
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 
 static NSString* const kRSDeviceNameKey = @"kRSDeviceNameKey";
 static NSString* const kRSOSVersionKey = @"kRSOSVersionKey";
 //11.02.16 Perepelitsa: keys of report the name and version of “master” application
-static NSString* const kRS_JKey_AppName         = @"master_app_name";
-static NSString* const kRS_JKey_AppBundle       = @"master_app_bundle_id";
-static NSString* const kRS_JKey_AppVersion      = @"master_app_version";
-static NSString* const kRS_JKey_AppBuild        = @"master_app_build";  
-//
+static NSString* const kRSJKeyAppName         = @"master_app_name";
+static NSString* const kRSJKeyAppBundle       = @"master_app_bundle_id";
+static NSString* const kRSJKeyAppVersion      = @"master_app_version";
+static NSString* const kRSJKeyAppBuild        = @"master_app_build";  
 
 static RSIPUtils* ipUtils = [RSIPUtils new];
 
@@ -138,15 +140,15 @@ namespace rs
     {
         NSMutableDictionary* statsDictionary = [NSMutableDictionary dictionary];
         
-        statsDictionary[kRS_JKey_AppName] = [[[NSBundle mainBundle] infoDictionary]  
+        statsDictionary[kRSJKeyAppName] = [[[NSBundle mainBundle] infoDictionary]  
                                                  objectForKey:(id)kCFBundleNameKey];
 
-        statsDictionary[kRS_JKey_AppBundle] = [[NSBundle mainBundle] bundleIdentifier];
+        statsDictionary[kRSJKeyAppBundle] = [[NSBundle mainBundle] bundleIdentifier];
         
-        statsDictionary[kRS_JKey_AppVersion] = [[[NSBundle mainBundle] infoDictionary]  
+        statsDictionary[kRSJKeyAppVersion] = [[[NSBundle mainBundle] infoDictionary]  
                                                 objectForKey:(id)kCFBundleVersionKey];
         
-        statsDictionary[kRS_JKey_AppBuild] = [[[NSBundle mainBundle] infoDictionary] 
+        statsDictionary[kRSJKeyAppBuild] = [[[NSBundle mainBundle] infoDictionary] 
                                          objectForKey:@"CFBundleShortVersionString"]; 
         
         return statsDictionary;
