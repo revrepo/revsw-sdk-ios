@@ -30,8 +30,8 @@ QUIC_PROJ_SYMROOT=${QUIC_PROJ_BUILD_DIR}
 QUIC_IPHONEOS_BUILD_DIR=${QUIC_PROJ_BUILD_DIR}/t-${QUIC_PROJ_CONFIG}-${SDK_IPHONEOS}
 QUIC_SIMULATOR_BUILD_DIR=${QUIC_PROJ_BUILD_DIR}/t-${QUIC_PROJ_CONFIG}-${SDK_SIMULATOR}
 
-#rm -rf "${REV_PROJ_EXPORT_DIR}"
-#rm -rf "${QUIC_PROJ_DIR}/build/"
+rm -rf "${REV_PROJ_EXPORT_DIR}"
+rm -rf "${QUIC_PROJ_DIR}/build/"
 
 mkdir -p "${REV_PROJ_EXPORT_DIR}"
 
@@ -57,4 +57,5 @@ cp -R "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_UNIVERSAL_BU
 
 lipo -create "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}" "${REV_SIMULATOR_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}" -output "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}"
 
+# !!! Don't uncomment this if you aren't sure you know what are you doing :-) !!!
 #cp -R "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework"
