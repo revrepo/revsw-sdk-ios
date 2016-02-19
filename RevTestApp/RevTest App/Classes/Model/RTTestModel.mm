@@ -138,13 +138,13 @@ typedef enum
     [self.testCases addObject:tcase];
     ////////////////////////////////
     
-//    tcase = [[RTTestCase alloc] init];
-//    tcase.testName = @"RevSDK";
-//    tcase.protocolID = @"quic";
-//    tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
-//    
-//    [self.testCases addObject:tcase];
-//    ////////////////////////////////
+    tcase = [[RTTestCase alloc] init];
+    tcase.testName = @"RevSDK";
+    tcase.protocolID = @"quic";
+    tcase.operationMode = RSOperationMode::kRSOperationModeTransportAndReport;
+    
+    [self.testCases addObject:tcase];
+    ////////////////////////////////
 }
 
 - (void)toNextCase
