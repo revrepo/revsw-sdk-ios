@@ -58,4 +58,4 @@ cp -R "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_UNIVERSAL_BU
 lipo -create "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}" "${REV_SIMULATOR_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}" -output "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}"
 
 # !!! Don't uncomment this if you aren't sure you know what are you doing :-) !!!
-#cp -R "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework"
+cp -R "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework"
