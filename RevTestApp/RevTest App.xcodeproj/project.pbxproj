@@ -53,6 +53,8 @@
 		5B8767B51C4E55DC00363906 /* newrelic_postbuild.sh in Resources */ = {isa = PBXBuildFile; fileRef = 5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */; };
 		5B925DEA1C11BFD80021B077 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */; };
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
+		5B999C3A1C773D36002076C1 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B999C391C773D36002076C1 /* RevSDK.framework */; };
+		5B999C3B1C773D36002076C1 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5B999C391C773D36002076C1 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5BB7F2461C6A2D1D0095D508 /* revsdkdemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */; };
 		5BB7F24B1C6A38AA0095D508 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C1EE591C4795460095537E /* libxml2.tbd */; };
 		5BB7F2551C6A3DB80095D508 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
@@ -112,6 +114,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5B999C3B1C773D36002076C1 /* RevSDK.framework in Embed Frameworks */,
 				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
 				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
@@ -179,6 +182,7 @@
 		5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = newrelic_postbuild.sh; sourceTree = "<group>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
+		5B999C391C773D36002076C1 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
 		5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = revsdkdemo.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB7F23F1C6A2CB90095D508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = revsdkdemo.m; sourceTree = "<group>"; };
@@ -248,6 +252,7 @@
 				1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */,
 				1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */,
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
+				5B999C3A1C773D36002076C1 /* RevSDK.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
@@ -302,6 +307,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				5B999C391C773D36002076C1 /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
