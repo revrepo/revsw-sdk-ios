@@ -857,7 +857,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevSDK Racer";
-				PROVISIONING_PROFILE = "c593f316-503e-49b4-a575-7fe8683ec7a5";
+				PROVISIONING_PROFILE = "a72c76fc-5c0f-4e87-9954-e40b905984f1";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -912,7 +912,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevSDK Racer";
-				PROVISIONING_PROFILE = "264d5e2d-d703-4431-91ce-f25bbbdb4b5a";
+				PROVISIONING_PROFILE = "8c70591b-c320-42f1-958a-a40b81b3c859";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -939,6 +939,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"TEST=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
