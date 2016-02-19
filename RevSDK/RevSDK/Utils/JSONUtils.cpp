@@ -24,6 +24,9 @@
 #include "Data.hpp"
 #include "Configuration.hpp"
 #include "Utils.hpp"
+//10.02.16 Perepelitsa: because it uses the getter "getABTesting..()" of  singletone "Model"
+#import "Model.hpp"
+//
 
 namespace rs
 {
@@ -122,8 +125,20 @@ namespace rs
             configuration.statsReportingMaxRequests = configs[kStatsReportingMaxRequestsKey].asInt();
             configuration.domainsProvisionedList    = vectorFromValue(configs[kDomainsProvisionedListKey]);
             configuration.domainsWhiteList          = vectorFromValue(configs[kDomainsWhiteListKey]);
-            configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);
-            configuration.loggingLevel              = configs[kLoggingLevelKey].asString();
+            configuration.domainsBlackList          = vectorFromValue(configs[kDomainsBlackListKey]);            
+            //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+            configuration.domainsInternalBlackList = vectorFromValue(configs[kDomainsInternalBlackListKey]);
+            //
+            configuration.loggingLevel              = configs[kLoggingLevelKey].asString();            
+            //10.02.16 Perepelitsa: Add new SDK configuration options
+            configuration.failuresFailoverThreshold = (configs[kFailuresFailoverThreshold].asInt()) / 100.0f;
+            configuration.failuresMonitoringInterval= configs[kFailuresMonitoringInterval].asInt();         //default 120
+            configuration.quicUDPPort               = configs[kQuicUDPPort].asInt();
+            configuration.SDKDomain                 = /*"revsdk.net";*/configs[kSDKDomain].asString();                       //default "revsdk.net"
+            //11.02.16 Perepelitsa: A/B Testing
+            configuration.abTestingRatio            = configs[kABTestingOriginOffloadRatioKey].asInt();  
+            //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+            //
         }
         
         return configuration;

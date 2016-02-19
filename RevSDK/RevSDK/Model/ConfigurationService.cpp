@@ -151,6 +151,28 @@ void ConfigurationService::loadConfiguration()
                 Log::info(kLogTagSDKConfiguration, "ConfigurationService: new conf received, valid");
                 
                 Configuration configuration = processConfigurationData(aData);
+                //10.02.16 Perepelitsa: random "lottery" process
+                int oldABRatio = Model::instance()->abTestingRatio();
+                bool oldABMode = Model::instance()->abTestingMode();
+                if(oldABRatio != configuration.abTestingRatio)
+                {
+                    if(configuration.abTestingRatio >= 100 || configuration.abTestingRatio > (rand() % 100))
+                    {
+                        configuration.abTesMode         = true;
+                        //11.02.16 Perepelitsa: set operation mode to Report
+                        configuration.operationMode     = kRSOperationModeInnerReport; // set mode "report only"
+                    }
+                    else 
+                    {
+                        configuration.abTesMode         = false;
+                    }
+                } 
+                else
+                {
+                    // Set previos value
+                    configuration.abTesMode             = oldABMode;
+                    configuration.abTestingRatio        = oldABRatio;            
+                }
                 
                 Model::instance()->debug_usageTracker()->trackConfigurationPulled(aData);
                 

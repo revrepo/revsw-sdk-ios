@@ -35,13 +35,38 @@ namespace rs
         REV_LEAK_DETECTOR(Configuration);
         
         Configuration() : operationMode(RSOperationModeInner::kRSOperationModeInnerOff)
-        {}
+        {
+            //10.02.16 Perepelitsa: assignment defaul values
+            abTesMode                      = false;
+            abTestingRatio                 = -1;            
+            //10.02.16 Perepelitsa: Add new SDK configuration options
+            //edge_connectTimeout          = 10;
+            //edge_dataReceiveTimeout      = 60;
+            //edge_firstByteTimeout        = 60;
+            SDKDomain                      = "revsdk.net";
+            quicUDPPort                    = 443;
+            failuresMonitoringInterval     = 120;
+            failuresFailoverThreshold      = 0.6;
+            //
+        }
         
         Configuration(const Configuration&);
         
+        //10.02.16 Perepelitsa: add fields storing condition of a/b testing
+        bool abTesMode;
+        int abTestingRatio;
+        //10.02.16 Perepelitsa: Add new SDK configuration options
+        //int edge_connectTimeout;             //sec
+        //int edge_dataReceiveTimeout;         //sec
+        //int edge_firstByteTimeout;           //sec
+        std::string SDKDomain;
+        int quicUDPPort;
+        int failuresMonitoringInterval; //sec
+        double failuresFailoverThreshold;  //(0..1)%
+        //
         float sdkReleaseVersion;
         std::string configurationApiURL;
-        int refreshInterval;
+        int refreshInterval;        //Trying to load configuration...
         int staleTimeout;
         std::string edgeHost;
         RSOperationModeInner operationMode;
@@ -55,7 +80,9 @@ namespace rs
         std::vector<std::string> domainsProvisionedList;
         std::vector<std::string> domainsWhiteList;
         std::vector<std::string> domainsBlackList;
-        
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+        std::vector<std::string> domainsInternalBlackList;
+        //
         std::string appName;
         std::string os;
         std::string loggingLevel;
