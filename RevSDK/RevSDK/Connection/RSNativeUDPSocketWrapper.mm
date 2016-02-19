@@ -49,7 +49,7 @@
     
     [self->udpSocket receiveWithTimeout:-1 tag:0];
     
-    NSLog(@"Ready");
+    //NSLog(@"Ready");
     return self;
 }
 

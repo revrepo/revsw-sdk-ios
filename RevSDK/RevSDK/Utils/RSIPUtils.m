@@ -265,7 +265,7 @@ int getdefaultgateway(in_addr_t * addr)
     }
     else
     {
-        NSLog(@"getdefaultgateway() failed");
+        //NSLog(@"getdefaultgateway() failed");
     }
     
     return ipString;
