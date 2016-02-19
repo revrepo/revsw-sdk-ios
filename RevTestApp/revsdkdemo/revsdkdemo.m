@@ -108,19 +108,25 @@ static const int kProtocolTestingTimeout          = 10;
 
 - (void)test_1_ConfigurationLoadTest
 {
+    NSLog(@"TEST 1 STARTED!");
     [self waitForStandardExpectationNotification:kRTLoadConfigirationTestNotification];
+    NSLog(@"TEST 1 FINISHED!");
 }
 
 - (void)test_2_RequestTestLoop
 {
+    NSLog(@"TEST 2 STARTED!");
      self.testLoop = [RTRequestTestLoop defaultTestLoop];
     [self.testLoop start];
  
     [self waitForStandardExpectationNotification:kRTRequestLoopDidFinishNotification];
+    NSLog(@"TEST 2 FINISHED!");
 }
 
 - (void)test_3_ProtocolTestingSequence
 {
+    NSLog(@"TEST 3 STARTED!");
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:CTRadioAccessTechnologyDidChangeNotification
                                                         object:nil];
 
@@ -135,31 +141,44 @@ static const int kProtocolTestingTimeout          = 10;
                                                         object:nil];
 
     [self waitForProtocolsTestingEndWithFailureDescription:@"Protocol testing failed after changing network reachability"];
+    
+    NSLog(@"TEST 3 FINISHED!");
 }
 
 - (void)test_4_StatsUploadTest
 {
+    NSLog(@"TEST 4 STARTED!");
+    
     self.statsUploadTester = [RTStatsUploadTester defaultTester];
     [self.statsUploadTester start];
     
    [self waitForStandardExpectationNotification:kRTStatsTesterDidFinishNotification];
+    
+    NSLog(@"TEST 4 FINISHED!");
 }
 
 - (void)test_5_ProtocolSwitchTest
 {
+    NSLog(@"TEST 5 STARTED!");
+    
     self.protocolTester = [RTProtocolSwitchTester defaultTester];
     [self.protocolTester start];
     
     [self waitForStandardExpectationNotification:kRTProtocolSwitchTesterDidFinish];
+    NSLog(@"TEST 5 FINISHED!");
 }
 
 - (void)test_6_OffModeTest
 {
+    NSLog(@"TEST 6 STARTED!");
+    
     self.testLoop = [RTRequestTestLoopOffMode defaultTestLoop];
     
     [self.testLoop start];
     
     [self waitForStandardExpectationNotification:kRTOperationModeOffTestDidFinish];
+    
+    NSLog(@"TEST 6 FINISHED!");
 }
 
 @end
