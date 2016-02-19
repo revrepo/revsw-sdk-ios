@@ -38,7 +38,6 @@ static const int kTotalLoads    = 20;
                                                   usingBlock:^(NSNotification* aNote){
                                                       
                                                       printf(".");
-                                                      NSLog(@"Configuration loaded");
                                                   
                                                       if (configurationLoaded)
                                                       {
