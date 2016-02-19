@@ -36,6 +36,8 @@ static const int kTotalLoads    = 20;
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification* aNote){
+                                                      
+                                                      printf(".");
                                                   
                                                       if (configurationLoaded)
                                                       {

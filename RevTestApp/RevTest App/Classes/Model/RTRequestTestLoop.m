@@ -102,7 +102,7 @@ typedef enum
     
     RTRequestTestLoop* testLoop = [[self alloc] initWithDomains:domains
                                                   numberOfTests:20
-                                             numberOfFullPasses:10];
+                                             numberOfFullPasses:2];
     return testLoop;
 }
 
@@ -251,7 +251,6 @@ typedef enum
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
-    NSLog(@"Start %@ test - %@", URLString, self.currentTestCase.testName);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];
@@ -306,7 +305,7 @@ typedef enum
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Did finish with code %ld", statusCode);
+        printf(".");
         
         [self restart];
     });

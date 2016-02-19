@@ -305,7 +305,7 @@ namespace rs
 #endif
                 hasDataToSend = mStatsHandler->hasRequestsData();
             }
-            std::cout << "Stats data " << statsData.Buffer.toString();
+            
              postNotification("kRequestsCountNotification", std::to_string(requests_count));
             
             std::function<void(const Error& )> completion = [=](const Error& aError){
