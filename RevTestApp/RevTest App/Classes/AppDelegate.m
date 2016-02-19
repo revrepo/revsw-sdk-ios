@@ -66,12 +66,7 @@ id setBeingRemoved(id self, SEL selector, ...)
     
     if (!isRunningTests())
     {
-        NSLog(@"NOT TEST");
         [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
-    }
-    else
-    {
-        NSLog(@"TEST");
     }
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
