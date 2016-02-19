@@ -182,7 +182,7 @@
 		5B8767B41C4E55DC00363906 /* newrelic_postbuild.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = newrelic_postbuild.sh; sourceTree = "<group>"; };
 		5B925DE91C11BFD80021B077 /* Launch Screen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		5B925DEB1C11BFF10021B077 /* logo_revAPM.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo_revAPM.png; sourceTree = "<group>"; };
-		5B999C391C773D36002076C1 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
+		5B999C391C773D36002076C1 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "../DerivedData/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<group>"; };
 		5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = revsdkdemo.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB7F23F1C6A2CB90095D508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = revsdkdemo.m; sourceTree = "<group>"; };
