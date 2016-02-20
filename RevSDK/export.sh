@@ -59,3 +59,19 @@ lipo -create "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NA
 
 # !!! Don't uncomment this if you aren't sure you know what are you doing :-) !!!
 cp -R "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework"
+
+echo "INFO: Preparing a ZIP file with the freshly compiled SDK framework..."
+
+if [ -z "$BUILD_NUMBER" ]; then
+        echo "WARNING: BUILD_NUMBER environment variable is empty - setting it to 0"
+        BUILD_NUMBER=0
+fi
+
+VERSION=1.0.$BUILD_NUMBER
+FRAMEWORK=${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework
+
+if [ -d "$FRAMEWORK" ]; then
+        FILE="${FRAMEWORK}-${VERSION}.zip"
+        echo "INFO: Packing the framework to file $FILE..."
+        zip -r $FILE $FRAMEWORK
+fi
