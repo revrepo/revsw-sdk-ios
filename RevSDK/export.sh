@@ -67,8 +67,10 @@ if [ -z "$BUILD_NUMBER" ]; then
         BUILD_NUMBER=0
 fi
 
+cd ${REV_PROJ_EXPORT_DIR}
+
 VERSION=1.0.$BUILD_NUMBER
-FRAMEWORK=${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework
+FRAMEWORK=${REV_PROJ_NAME}.framework
 
 if [ -d "$FRAMEWORK" ]; then
         FILE="${FRAMEWORK}-${VERSION}.zip"
