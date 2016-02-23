@@ -36,21 +36,46 @@ rm -rf "${QUIC_PROJ_DIR}/build/"
 mkdir -p "${REV_PROJ_EXPORT_DIR}"
 
 xcodebuild -project "${QUIC_PROJ_PATH}" -target "${QUIC_PROJ_TARGET}" -configuration "${QUIC_PROJ_CONFIG}" -sdk ${SDK_IPHONEOS} BUILD_DIR="${QUIC_PROJ_BUILD_DIR}" OBJROOT="${QUIC_PROJ_OBJROOT}" BUILD_ROOT="${QUIC_PROJ_BUILD_ROOT}" CONFIGURATION_BUILD_DIR="${QUIC_IPHONEOS_BUILD_DIR}" SYMROOT="${QUIC_PROJ_SYMROOT}" ARCHS='arm64 armv7 armv7s' VALID_ARCHS='arm64 armv7 armv7s' ${THE_ACTION}
-EC_QUIC_BUILD_ARM=$?
+EXIT_CODE=$?
+if [[ $EXIT_CODE -ne 0 ]]; 
+  then 
+  	echo "QUIC for ARM failed with exit code ${EXIT_CODE}"
+   	exit ${EXIT_CODE}
+  fi
 
 xcodebuild -project "${QUIC_PROJ_PATH}" -target "${QUIC_PROJ_TARGET}" -configuration "${QUIC_PROJ_CONFIG}" -sdk ${SDK_SIMULATOR} BUILD_DIR="${QUIC_PROJ_BUILD_DIR}" OBJROOT="${QUIC_PROJ_OBJROOT}" BUILD_ROOT="${QUIC_PROJ_BUILD_ROOT}" CONFIGURATION_BUILD_DIR="${QUIC_SIMULATOR_BUILD_DIR}" SYMROOT="${QUIC_PROJ_SYMROOT}" ARCHS='x86_64 i386' VALID_ARCHS='x86_64 i386' ${THE_ACTION}
-EC_QUIC_BUILD_X86=$?
+EXIT_CODE=$?
+if [[ $EXIT_CODE -ne 0 ]]; 
+  then 
+  	echo "QUIC for x86 failed with exit code ${EXIT_CODE}"
+   	exit ${EXIT_CODE}
+  fi
 
 mkdir -p "${QUIC_PROJ_DIR}/build/${QUIC_PROJ_CONFIG}-${SDK_IPHONEOS}/"
 
 lipo -create "${QUIC_PROJ_DIR}/build/t-${QUIC_PROJ_CONFIG}-${SDK_IPHONEOS}/lib${QUIC_PROJ_NAME}.a" "${QUIC_PROJ_DIR}/build/t-${QUIC_PROJ_CONFIG}-${SDK_SIMULATOR}/lib${QUIC_PROJ_NAME}.a" -output "${QUIC_PROJ_DIR}/build/${QUIC_PROJ_CONFIG}-${SDK_IPHONEOS}/lib${QUIC_PROJ_NAME}.a"
-EC_QUIC_LINK=$?
+EXIT_CODE=$?
+if [[ $EXIT_CODE -ne 0 ]]; 
+  then 
+  	echo "QUIC link failed with exit code ${EXIT_CODE}"
+   	exit ${EXIT_CODE}
+  fi
 
 xcodebuild -project "${REV_PROJ_PATH}" -target "${REV_PROJ_TARGET}" -configuration "${REV_PROJ_CONFIG}" -sdk ${SDK_IPHONEOS} BUILD_DIR="${REV_PROJ_BUILD_DIR}" OBJROOT="${REV_PROJ_OBJROOT}" BUILD_ROOT="${REV_PROJ_BUILD_ROOT}" CONFIGURATION_BUILD_DIR="${REV_IPHONEOS_BUILD_DIR}" SYMROOT="${REV_PROJ_SYMROOT}" ARCHS='arm64 armv7 armv7s' VALID_ARCHS='arm64 armv7 armv7s' ${THE_ACTION} CODE_SIGN_IDENTITY="iPhone Developer"
-EC_SDK_BUILD_ARM=$?
+EXIT_CODE=$?
+if [[ $EXIT_CODE -ne 0 ]]; 
+  then 
+  	echo "SDK for ARM failed with exit code ${EXIT_CODE}"
+   	exit ${EXIT_CODE}
+  fi
 
 xcodebuild -project "${REV_PROJ_PATH}" -target "${REV_PROJ_TARGET}" -configuration "${REV_PROJ_CONFIG}" -sdk ${SDK_SIMULATOR} BUILD_DIR="${REV_PROJ_BUILD_DIR}" OBJROOT="${REV_PROJ_OBJROOT}" BUILD_ROOT="${REV_PROJ_BUILD_ROOT}" CONFIGURATION_BUILD_DIR="${REV_SIMULATOR_BUILD_DIR}" SYMROOT="${REV_PROJ_SYMROOT}" ARCHS='x86_64 i386' VALID_ARCHS='x86_64 i386' ${THE_ACTION} CODE_SIGN_IDENTITY="iPhone Developer"
-EC_SDK_BUILD_X86=$?
+EXIT_CODE=$?
+if [[ $EXIT_CODE -ne 0 ]]; 
+  then 
+  	echo "SDK for x86 failed with exit code ${EXIT_CODE}"
+   	exit ${EXIT_CODE}
+  fi
 
 mkdir -p "${REV_UNIVERSAL_BUILD_DIR}"
 
@@ -61,41 +86,14 @@ REV_BUILD_UNIVERSAL=${REV_PROJ_NAME}-${SDK_UNIVERSAL}
 cp -R "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework"
 
 lipo -create "${REV_IPHONEOS_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}" "${REV_SIMULATOR_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}" -output "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework/${REV_PROJ_NAME}"
-EC_SDK_LINK=$?
+EXIT_CODE=$?
+if [[ $EXIT_CODE -ne 0 ]]; 
+  then 
+  	echo "REV link failed with exit code ${EXIT_CODE}"
+   	exit ${EXIT_CODE}
+  fi
 
 cp -R "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework"
-
-EXIT_CODE=0
-
-if [[ $EC_SDK_LINK -ne 0 ]]; 
-  then 
-   	EXIT_CODE=6
-  fi
-
-if [[ $EC_SDK_BUILD_X86 -ne 0 ]]; 
-  then 
-   	EXIT_CODE=5
-  fi
-
-if [[ $EC_SDK_BUILD_ARM -ne 0 ]]; 
-  then 
-   	EXIT_CODE=4
-  fi
-
-if [[ $EC_QUIC_LINK -ne 0 ]]; 
-  then 
-   	EXIT_CODE=3
-  fi
-
-if [[ $EC_QUIC_BUILD_X86 -ne 0 ]]; 
-  then 
-   	EXIT_CODE=2
-  fi
-
-if [[ $EC_QUIC_BUILD_ARM -ne 0 ]]; 
-  then 
-   	EXIT_CODE=1
-  fi
 
 echo "INFO: Preparing a ZIP file with the freshly compiled SDK framework..."
 
@@ -114,7 +112,3 @@ if [ -d "$FRAMEWORK" ]; then
         echo "INFO: Packing the framework to file $FILE..."
         zip -r $FILE $FRAMEWORK
 fi
-
-echo "Finished with exit code: EXIT_CODE"
-
-exit ${EXIT_CODE}
