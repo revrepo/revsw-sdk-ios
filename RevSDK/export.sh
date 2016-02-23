@@ -65,13 +65,37 @@ EC_SDK_LINK=$?
 
 cp -R "${REV_UNIVERSAL_BUILD_DIR}/${REV_PROJ_NAME}.framework" "${REV_PROJ_EXPORT_DIR}/${REV_PROJ_NAME}.framework"
 
-EXIT_CODE=-1
+EXIT_CODE=0
 
-if [[ $EC_QUIC_BUILD_ARM -eq 0 ]] && [[ $EC_QUIC_BUILD_X86 -eq 0 ]] && [[ $EC_QUIC_LINK -eq 0 ]] && [[ $EC_SDK_BUILD_ARM -eq 0 ]] && [[ $EC_SDK_BUILD_X86 -eq 0 ]] && [[ $EC_SDK_LINK -eq 0 ]]; 
+if [[ $EC_SDK_LINK -ne 0 ]]; 
   then 
-   	EXIT_CODE=0
+   	EXIT_CODE=6
   fi
 
+if [[ $EC_SDK_BUILD_X86 -ne 0 ]]; 
+  then 
+   	EXIT_CODE=5
+  fi
+
+if [[ $EC_SDK_BUILD_ARM -ne 0 ]]; 
+  then 
+   	EXIT_CODE=4
+  fi
+
+if [[ $EC_QUIC_LINK -ne 0 ]]; 
+  then 
+   	EXIT_CODE=3
+  fi
+
+if [[ $EC_QUIC_BUILD_X86 -ne 0 ]]; 
+  then 
+   	EXIT_CODE=2
+  fi
+
+if [[ $EC_QUIC_BUILD_ARM -ne 0 ]]; 
+  then 
+   	EXIT_CODE=1
+  fi
 
 echo "INFO: Preparing a ZIP file with the freshly compiled SDK framework..."
 
@@ -90,5 +114,7 @@ if [ -d "$FRAMEWORK" ]; then
         echo "INFO: Packing the framework to file $FILE..."
         zip -r $FILE $FRAMEWORK
 fi
+
+echo "Finished with exit code: EXIT_CODE"
 
 exit ${EXIT_CODE}
