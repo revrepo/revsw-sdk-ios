@@ -410,7 +410,8 @@ namespace rs
         sd[@"wifi"] = wifiDataDict();
         sd[@"location"] = locationDataDict();
         sd[@"log_events"] = logDataArray();
-        sd[@"applicationInfo"] = applicationInfo();
+        //22.02.16 Perepelitsa: applicationInfo renamed to application_info
+        sd[@"application_info"] = applicationInfo();
         //12.02.16 Perepelitsa: move a_b_mode flag into json root        
         sd[@"a_b_mode"] =  @(Model::instance()->abTestingMode()); 
         //
