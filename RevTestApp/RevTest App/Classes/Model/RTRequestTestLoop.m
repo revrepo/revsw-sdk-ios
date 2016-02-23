@@ -72,28 +72,32 @@ typedef enum
 
 + (NSArray *)defaultDomains
 {
-    return @[@"mgemi.com",
-             @"httpbin.org",
-             @"google.com",
-             @"mbeans.com",
-             @"cnn.com",
-             @"stackoverflow.com",
-             @"bmwusa.com",
-             @"ebay.com",
-             @"m.vk.com",
-             @"yandex.ru",
-             @"amazon.com",
-             @"youtube.com",
-             @"linkedin.com",
-             @"echo.msk.ru",
-             @"ibm.com",
-             @"revapm.net",
-             @"bing.com",
-             @"akamai.com",
-             @"skrill.com",
-             @"raywenderlich.com",
-             @"facebook.com",
-             @"twitter.com"];
+//    return @[@"mgemi.com",
+//             @"httpbin.org",
+//             @"google.com",
+//             @"mbeans.com",
+//             @"cnn.com",
+//             @"stackoverflow.com",
+//             @"bmwusa.com",
+//             @"ebay.com",
+//             @"m.vk.com",
+//             @"yandex.ru",
+//             @"amazon.com",
+//             @"youtube.com",
+//             @"linkedin.com",
+//             @"echo.msk.ru",
+//             @"ibm.com",
+//             @"revapm.net",
+//             @"bing.com",
+//             @"akamai.com",
+//             @"skrill.com",
+//             @"raywenderlich.com",
+//             @"facebook.com",
+//             @"twitter.com"];
+    return @[@"monitor.revsw.net/100KB.jpg",
+             @"monitor.revsw.net/1M.jpg",
+             @"monitor.revsw.net/test-cache.js",
+             @"google.com"];
 }
 
 + (instancetype)defaultTestLoop
@@ -101,8 +105,8 @@ typedef enum
     NSArray* domains = [self defaultDomains];
     
     RTRequestTestLoop* testLoop = [[self alloc] initWithDomains:domains
-                                                  numberOfTests:20
-                                             numberOfFullPasses:2];
+                                                  numberOfTests:10
+                                             numberOfFullPasses:1];
     return testLoop;
 }
 

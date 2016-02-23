@@ -10,3 +10,6 @@ xcodebuild test \
 -scheme RevTest\ App \
 -destination 'platform=iOS Simulator,OS=9.2,name=iPhone 6' \
 
+EXIT_CODE=$?
+echo ${EXIT_CODE}
+exit ${EXIT_CODE}

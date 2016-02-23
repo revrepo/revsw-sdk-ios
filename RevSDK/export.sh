@@ -72,4 +72,23 @@ if [[ $EC_QUIC_BUILD_ARM -eq 0 ]] && [[ $EC_QUIC_BUILD_X86 -eq 0 ]] && [[ $EC_QU
    	EXIT_CODE=0
   fi
 
+
+echo "INFO: Preparing a ZIP file with the freshly compiled SDK framework..."
+
+if [ -z "$BUILD_NUMBER" ]; then
+        echo "WARNING: BUILD_NUMBER environment variable is empty - setting it to 0"
+        BUILD_NUMBER=0
+fi
+
+cd ${REV_PROJ_EXPORT_DIR}
+
+VERSION=1.0.$BUILD_NUMBER
+FRAMEWORK=${REV_PROJ_NAME}.framework
+
+if [ -d "$FRAMEWORK" ]; then
+        FILE="${FRAMEWORK}-${VERSION}.zip"
+        echo "INFO: Packing the framework to file $FILE..."
+        zip -r $FILE $FRAMEWORK
+fi
+
 exit ${EXIT_CODE}
