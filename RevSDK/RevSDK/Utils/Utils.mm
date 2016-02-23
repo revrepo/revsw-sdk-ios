@@ -42,7 +42,10 @@ namespace rs
     const std::string kStatsReportingMaxRequestsKey    = stdStringFromNSString(kRSStatsReportingMaxRequestsKey);
     const std::string kDomainsProvisionedListKey       = stdStringFromNSString(kRSDomainsProvisionedListKey);
     const std::string kDomainsWhiteListKey             = stdStringFromNSString(kRSDomainsWhiteListKey);
-    const std::string kDomainsBlackListKey             = stdStringFromNSString(kRSDomainsBlackListKey);
+    const std::string kDomainsBlackListKey             = stdStringFromNSString(kRSDomainsBlackListKey);    
+    //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+    const std::string kDomainsInternalBlackListKey     = stdStringFromNSString(kRSDomainsInternalBlackListKey); 
+    //
     const std::string kConfigsKey                      = stdStringFromNSString(kRSConfigsKey);
     const std::string kDeviceStatsKey                  = "stats";
     const std::string kRequestsStatsKey                = "requests";
@@ -50,6 +53,17 @@ namespace rs
     const std::string kSDKKeyKey                       = "sdk_key";
     const std::string kSDKVersionKey                   = "sdk_version";
     const std::string kAppVersionKey                   = "version";
+    //10.02.16 Perepelitsa: implementation of constant (json key of the received request)
+    const std::string kABTestingOriginOffloadRatioKey  = stdStringFromNSString(kRSABTestingOriginOffloadRatioKey);    
+    //10.02.16 Perepelitsa: Add new SDK configuration options
+    const std::string kConnectTimeout = stdStringFromNSString(kRSConnectTimeout);                 
+    const std::string kDataReceiveTimeout = stdStringFromNSString(kRSDataReceiveTimeout);          
+    const std::string kFirstByteTeout = stdStringFromNSString(kRSFirstByteTeout);                 
+    const std::string kSDKDomain = stdStringFromNSString(kRSSDKDomain);                  
+    const std::string kQuicUDPPort = stdStringFromNSString(kRSQuicUDPPort);                  
+    const std::string kFailuresMonitoringInterval = stdStringFromNSString(kRSFailuresMonitoringInterval);      
+    const std::string kFailuresFailoverThreshold = stdStringFromNSString(kRSFailuresFailoverThreshold);
+    //
     
     const std::string kHTTPSProtocolName    = stdStringFromNSString(kRSHTTPSProtocolName);
     const std::string kStandardProtocolName = stdStringFromNSString(kRSStandardProtocolName);

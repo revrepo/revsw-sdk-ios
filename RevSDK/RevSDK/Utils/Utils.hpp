@@ -75,6 +75,9 @@ typedef enum
     extern const std::string kDomainsProvisionedListKey;
     extern const std::string kDomainsWhiteListKey;
     extern const std::string kDomainsBlackListKey;
+    //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+    extern const std::string kDomainsInternalBlackListKey;
+    //
     extern const std::string kConfigsKey;
     extern const std::string kDeviceStatsKey;
     extern const std::string kRequestsStatsKey;
@@ -98,6 +101,19 @@ typedef enum
     extern const std::string kOperationModeTransferReportString;
     
     extern const std::string kRevHostHeader;
+    
+    //10.02.16 Perepelitsa: add new std constant (json key of the received request) 
+    //  - "a_b_testing_origin_offload_ratio" (0..100) 
+    extern const std::string kABTestingOriginOffloadRatioKey;
+    //10.02.16 Perepelitsa: Add new SDK configuration options
+    extern const std::string kConnectTimeout;              
+    extern const std::string kDataReceiveTimeout;           
+    extern const std::string kFirstByteTeout;           
+    extern const std::string kSDKDomain;           
+    extern const std::string kQuicUDPPort;        
+    extern const std::string kFailuresMonitoringInterval; 
+    extern const std::string kFailuresFailoverThreshold;
+    //
     
     extern const int kRequestsCountMax;
     

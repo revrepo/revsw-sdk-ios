@@ -22,6 +22,10 @@
 
 #include "ProtocolFailureMonitor.h"
 
+//11.02.16 Perepelitsa: use Model configuration
+#include "Model.hpp"
+//
+
 using namespace rs;
 
 std::mutex ProtocolFailureMonitor::mLock;
@@ -72,8 +76,8 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID, const Erro
         auto rqIter = rqVec.begin();
         
         int64_t timePassed = std::chrono::duration_cast<tSec>(std::chrono::system_clock::now() - *rqIter).count();
-        
-        while (timePassed > mInstanse->kTimeoutSec)
+        //11.02.16 Perepelitsa: remove kTimeoutSec constant
+        while (timePassed > Model::instance()->failuresMonitoringInterval())
         {
             rqIter = rqVec.erase(rqIter);
             if (rqIter != rqVec.end())
@@ -88,7 +92,8 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID, const Erro
         
         int64_t timePassed = std::chrono::duration_cast<tSec>(std::chrono::system_clock::now() - iter->DateReported).count();
         
-        while (timePassed > mInstanse->kTimeoutSec)
+        //11.02.16 Perepelitsa: remove kTimeoutSec constant
+        while (timePassed > Model::instance()->failuresMonitoringInterval())
         {
             iter = vec.erase(iter);
             if (iter != vec.end())
@@ -103,7 +108,8 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID, const Erro
 #if RS_LOG
     std::string message(aProtocolID + " | Request failed (" + std::to_string(vec.front().Code)+ "); percent of failed requests in last ");
     
-    message += std::to_string(kTimeoutSec);
+    //11.02.16 Perepelitsa: remove kTimeoutSec constant
+    message += std::to_string(Model::instance()->failuresMonitoringInterval());
     
     message += " sec :: ";
     
@@ -111,8 +117,9 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID, const Erro
     
     Log::warning(kLogTagProtocolAvailability, message.c_str());
 #endif
-    
-    if (failPercent > mInstanse->kMinFailPercentToSwitchProto)
+    //11.02.16 Perepelitsa: remove kMinFailPercentToSwitchProto constant
+    //if (failPercent > mInstanse->kMinFailPercentToSwitchProto)
+    if (failPercent > Model::instance()->failuresFailoverThreshold())
     {
         Log::error(kLogTagProtocolAvailability, "Too many failed requests using current protocol, trying to switch.");
         for (auto it: cbOnProtocolFailed)

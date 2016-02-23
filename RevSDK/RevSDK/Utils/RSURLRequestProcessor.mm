@@ -57,7 +57,10 @@ static NSString* const kRSRevMethodHeader = @"X-Rev-Proto";
     }
     
     NSString* host = url.host;
-    NSString* sdkBaseHost = rs::NSStringFromStdString(rs::kRSRevBaseHost);
+    //11.02.16 Perepelitsa remove kRSRevBaseHostto config parameter
+    //NSString* sdkBaseHost = rs::NSStringFromStdString(rs::kRSRevBaseHost);
+    NSString* sdkBaseHost = rs::NSStringFromStdString(rs::Model::instance()->revBaseHost());
+    //
     NSString* scheme = url.scheme;
 
     if (![RSURLRequestProcessor isValidScheme:scheme])

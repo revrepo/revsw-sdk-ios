@@ -65,6 +65,7 @@ static const NSUInteger kRSResponseStatusCodeOk = 200;
     [NSURLProtocol setProperty:@YES forKey:rs::kRSURLProtocolHandledKey inRequest:request];
     
     NSURLSessionConfiguration* configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+   
     NSURLSession* session                    = [NSURLSession sessionWithConfiguration:configuration];
     NSURLSessionDataTask* task               = [session dataTaskWithRequest:request
                                                           completionHandler:^(NSData* aData, NSURLResponse* aResponse, NSError* aError){

@@ -380,6 +380,13 @@ namespace rs
             return false;
         }
         
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+        if (domainsContainDomainName(conf->domainsInternalBlackList, aDomainName))
+        {
+            return false;
+        }
+        //
+        
         if (domainsContainDomainName(conf->domainsProvisionedList, aDomainName))
         {
             return true;
