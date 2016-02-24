@@ -132,7 +132,7 @@ std::shared_ptr<const Configuration> ConfigurationService::getActive()
         return mStaleConfiguration;
     }
     
-    return mActiveConfiguration;//
+    return mActiveConfiguration;
 }
 
 void ConfigurationService::loadConfiguration()
