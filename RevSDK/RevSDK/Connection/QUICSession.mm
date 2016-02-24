@@ -98,7 +98,8 @@ QUICSession::QUICSession():
     mSessionDelegate (nullptr),
     mObjC(new ObjCImpl()),
     //10.02.16 Perepelitsa: read quicUDPPort of config. default: port = 443
-    mClientAddress({0, 0, 0, 0}, Model::instance()->quicUDPPort())
+    mClientAddress({0, 0, 0, 0}, Model::instance()->quicUDPPort()),
+    mPort (0)
     //
 {
     std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, this, std::placeholders::_1);
@@ -162,6 +163,8 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
     
     mServerAddress = IPEndPoint({0, 0, 0, 0}, aTargetServerId.port());
     mServerId = aTargetServerId;
+    mHost = aTargetServerId.host();
+    mPort = aTargetServerId.port();
     
     const UInt16 port = mServerId.host_port_pair().port();
     NSString *address = [NSString stringWithCString:mServerId.host_port_pair().host().c_str()

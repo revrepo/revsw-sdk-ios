@@ -57,6 +57,7 @@ namespace rs
         void update(size_t aNowMS);
         
         std::string host() const { return mHost; }
+        int port() const { return mPort; }
         
     private:
         void p_connect(net::QuicServerId aTargetServerId);
@@ -88,6 +89,7 @@ namespace rs
         QUICThread mInstanceThread;
         //UDPService* mService;
         std::string mHost;
+        int mPort;
         
         void executeOnSessionThread(std::function<void(void)> aFunction, bool aForceAsync = false);
         
