@@ -321,7 +321,10 @@ namespace rs
                 else
                 {
                     Model::instance()->debug_usageTracker()->statsUploadFinishedWithError();
-                    Log::error(kLogTagSDKStats, "Stats reported with an error");
+                    std::string domain = aError.domain;
+                    if (domain.size() == 0)
+                        domain = "rev.common";
+                    Log::error(kLogTagSDKStats, "Stats report: %ld @ %s", aError.code, domain.c_str());
                     if (statsData.cbOnFail)
                     {
                         statsData.cbOnFail();
