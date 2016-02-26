@@ -324,7 +324,8 @@ namespace rs
                     std::string domain = aError.domain;
                     if (domain.size() == 0)
                         domain = "rev.common";
-                    Log::error(kLogTagSDKStats, "Stats report: %ld @ %s", aError.code, domain.c_str());
+                    Log::error(kLogTagSDKStats, "Stats report: %ld @ %s\nURL:%s", aError.code, domain.c_str(),
+                               mConfService->getActive()->statsReportingURL.c_str());
                     if (statsData.cbOnFail)
                     {
                         statsData.cbOnFail();
@@ -332,6 +333,7 @@ namespace rs
                 }
             };
             assert(statsData.Buffer.length());
+            
             
             mNetwork.sendStats(mConfService->getActive()->statsReportingURL, statsData.Buffer, completion);
         }
