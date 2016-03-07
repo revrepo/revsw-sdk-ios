@@ -105,7 +105,7 @@ typedef enum
     NSArray* domains = [self defaultDomains];
     
     RTRequestTestLoop* testLoop = [[self alloc] initWithDomains:domains
-                                                  numberOfTests:10
+                                                  numberOfTests:3
                                              numberOfFullPasses:1];
     return testLoop;
 }

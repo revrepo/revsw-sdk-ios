@@ -62,6 +62,9 @@ id setBeingRemoved(id self, SEL selector, ...)
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
 
+    // racer: 0efbbd35-a131-4419-b330-00de5eb3696b
+    // demo1: 42e276ea-1823-4945-baa4-8747f08d0abe
+    // demo2: a2e23128-4685-41d3-8e49-c8e76c1688ef
     [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"]; // Racer key for 65apps
     
     if (!isRunningTests())

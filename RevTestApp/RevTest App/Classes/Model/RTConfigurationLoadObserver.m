@@ -26,7 +26,7 @@ static NSDate* lastDate         = nil;
 static int loadsCounter         = 0;
 static BOOL expectedToFail      = NO;
 static const int kDeviation     = 5;
-static const int kTotalLoads    = 5;
+static const int kTotalLoads    = 3;
 
 @implementation RTConfigurationLoadObserver
 
