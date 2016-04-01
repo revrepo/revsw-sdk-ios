@@ -97,7 +97,12 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID, const Erro
             }
         }
     }
-    assert(vec.size() <= rqVec.size());
+    if (vec.size() > rqVec.size())
+    {
+        // Case is possible because of NewRelic integration
+        // But this case also means that all requests are successful
+        return;
+    }
     
     double failPercent = vec.size() / ((float)rqVec.size());
 #if RS_LOG
