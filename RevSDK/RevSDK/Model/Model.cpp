@@ -321,7 +321,11 @@ namespace rs
                 else
                 {
                     Model::instance()->debug_usageTracker()->statsUploadFinishedWithError();
-                    Log::error(kLogTagSDKStats, "Stats reported with an error");
+                    std::string domain = aError.domain;
+                    if (domain.size() == 0)
+                        domain = "rev.common";
+                    Log::error(kLogTagSDKStats, "Stats report: %ld @ %s\nURL:%s", aError.code, domain.c_str(),
+                               mConfService->getActive()->statsReportingURL.c_str());
                     if (statsData.cbOnFail)
                     {
                         statsData.cbOnFail();
@@ -329,6 +333,7 @@ namespace rs
                 }
             };
             assert(statsData.Buffer.length());
+            
             
             mNetwork.sendStats(mConfService->getActive()->statsReportingURL, statsData.Buffer, completion);
         }
@@ -379,6 +384,13 @@ namespace rs
         {
             return false;
         }
+        
+        //11.02.16 Perepelitsa: Add support for “internal_domains_black_list” SDK configuration field
+        if (domainsContainDomainName(conf->domainsInternalBlackList, aDomainName))
+        {
+            return false;
+        }
+        //
         
         if (domainsContainDomainName(conf->domainsProvisionedList, aDomainName))
         {

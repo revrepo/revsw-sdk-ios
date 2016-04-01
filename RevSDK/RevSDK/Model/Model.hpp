@@ -142,6 +142,15 @@ namespace rs
         void deleteRequestsData();
         
         void setShouldSimulate(bool aShouldSimulate) { mShouldSimulateErrors = aShouldSimulate; }
+
+        //10.02.16 Perepelitsa: insert getter of AB Testing state into singleton
+        int abTestingRatio() const { return mConfService->getActive()->abTestingRatio; }
+        bool abTestingMode() const { return mConfService->getActive()->abTesMode; }
+        std::string revBaseHost() const { return mConfService->getActive()->SDKDomain; }
+        int quicUDPPort() const { return mConfService->getActive()->quicUDPPort; }        
+        double failuresFailoverThreshold() const { return mConfService->getActive()->failuresFailoverThreshold; }
+        int failuresMonitoringInterval() const { return mConfService->getActive()->failuresMonitoringInterval; }
+        //
     };
 }
 

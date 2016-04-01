@@ -80,6 +80,7 @@
 
 - (void)didReceiveRequestsCount:(NSNotification *)aNotification
 {
+    NSLog(@".");
     self.requestCounter++;
     
     NSDictionary* userInfo   = aNotification.userInfo;

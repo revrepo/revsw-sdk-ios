@@ -26,7 +26,7 @@ static NSDate* lastDate         = nil;
 static int loadsCounter         = 0;
 static BOOL expectedToFail      = NO;
 static const int kDeviation     = 5;
-static const int kTotalLoads    = 20;
+static const int kTotalLoads    = 3;
 
 @implementation RTConfigurationLoadObserver
 
@@ -36,6 +36,8 @@ static const int kTotalLoads    = 20;
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification* aNote){
+                                                      
+                                                      NSLog(@".");
                                                   
                                                       if (configurationLoaded)
                                                       {

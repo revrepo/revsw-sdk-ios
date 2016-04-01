@@ -72,28 +72,32 @@ typedef enum
 
 + (NSArray *)defaultDomains
 {
-    return @[@"mgemi.com",
-             @"httpbin.org",
-             @"google.com",
-             @"mbeans.com",
-             @"cnn.com",
-             @"stackoverflow.com",
-             @"bmwusa.com",
-             @"ebay.com",
-             @"m.vk.com",
-             @"yandex.ru",
-             @"amazon.com",
-             @"youtube.com",
-             @"linkedin.com",
-             @"echo.msk.ru",
-             @"ibm.com",
-             @"revapm.net",
-             @"bing.com",
-             @"akamai.com",
-             @"skrill.com",
-             @"raywenderlich.com",
-             @"facebook.com",
-             @"twitter.com"];
+//    return @[@"mgemi.com",
+//             @"httpbin.org",
+//             @"google.com",
+//             @"mbeans.com",
+//             @"cnn.com",
+//             @"stackoverflow.com",
+//             @"bmwusa.com",
+//             @"ebay.com",
+//             @"m.vk.com",
+//             @"yandex.ru",
+//             @"amazon.com",
+//             @"youtube.com",
+//             @"linkedin.com",
+//             @"echo.msk.ru",
+//             @"ibm.com",
+//             @"revapm.net",
+//             @"bing.com",
+//             @"akamai.com",
+//             @"skrill.com",
+//             @"raywenderlich.com",
+//             @"facebook.com",
+//             @"twitter.com"];
+    return @[@"monitor.revsw.net/100KB.jpg",
+             @"monitor.revsw.net/1M.jpg",
+             @"monitor.revsw.net/test-cache.js",
+             @"google.com"];
 }
 
 + (instancetype)defaultTestLoop
@@ -101,8 +105,8 @@ typedef enum
     NSArray* domains = [self defaultDomains];
     
     RTRequestTestLoop* testLoop = [[self alloc] initWithDomains:domains
-                                                  numberOfTests:20
-                                             numberOfFullPasses:10];
+                                                  numberOfTests:3
+                                             numberOfFullPasses:1];
     return testLoop;
 }
 
@@ -251,7 +255,6 @@ typedef enum
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
-    NSLog(@"Start %@ test - %@", URLString, self.currentTestCase.testName);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];
@@ -306,7 +309,7 @@ typedef enum
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Did finish with code %ld", statusCode);
+        NSLog(@".");
         
         [self restart];
     });

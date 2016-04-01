@@ -1,0 +1,6 @@
+framework module RevSDK {
+  umbrella header "RevSDK.h"
+
+  export *
+  module * { export * }
+}

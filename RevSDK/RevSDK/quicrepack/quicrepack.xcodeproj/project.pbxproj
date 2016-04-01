@@ -5094,6 +5094,7 @@
 					"\"$(SRCROOT)/src/third_party/protobuf\"",
 					"\"$(SRCROOT)/src/third_party/protobuf/src\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -5118,6 +5119,7 @@
 					"\"$(SRCROOT)/src/third_party/protobuf\"",
 					"\"$(SRCROOT)/src/third_party/protobuf/src\"",
 				);
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

@@ -139,10 +139,11 @@ static const int kProtocolTestingTimeout          = 10;
 
 - (void)test_4_StatsUploadTest
 {
+    [NSThread sleepForTimeInterval:5.0f]; // Make sure config loaded
     self.statsUploadTester = [RTStatsUploadTester defaultTester];
     [self.statsUploadTester start];
     
-   [self waitForStandardExpectationNotification:kRTStatsTesterDidFinishNotification];
+    [self waitForStandardExpectationNotification:kRTStatsTesterDidFinishNotification];
 }
 
 - (void)test_5_ProtocolSwitchTest
@@ -155,6 +156,7 @@ static const int kProtocolTestingTimeout          = 10;
 
 - (void)test_6_OffModeTest
 {
+    [NSThread sleepForTimeInterval:5.0f]; // Make sure config loaded
     self.testLoop = [RTRequestTestLoopOffMode defaultTestLoop];
     
     [self.testLoop start];

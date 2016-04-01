@@ -52,10 +52,15 @@ namespace rs
         
         std::map<size_t, std::function<void(const std::string&)>> cbOnProtocolFailed;
         
-        const unsigned int kTimeoutSec = 300;
+        //11.02.16 Perepelitsa: remove kTimeoutSec. it will be parameter, default: kTimeoutSec = 300
+        //
+        
         /// TODO: Replace on config values
         const unsigned int kMinimumRequests = 4;
-        const double kMinFailPercentToSwitchProto = 0.6;
+        
+        //11.02.16 Perepelitsa: remove kMinFailPercentToSwitchProto. it will be parameter, 
+        //  default kMinFailPercentToSwitchProto = 0.6
+        //
         
         void validate(const std::string& aProtocolID, const ErrorReport&);
         

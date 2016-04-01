@@ -79,7 +79,9 @@ QUICSession* QUICSession::instance()
 
 void QUICSession::reconnect()
 {
-    int port = 443;
+    //10.02.16 Perepelitsa: read quicUDPPort of config. default: port = 443
+    int port = Model::instance()->quicUDPPort();
+    //
     std::string address = Model::instance()->edgeHost();
     if (address.size() == 0) {
         address = "www.revapm.com";
@@ -95,7 +97,10 @@ QUICSession::QUICSession():
     mConnectionHelper(new QuicConnectionHelper()),
     mSessionDelegate (nullptr),
     mObjC(new ObjCImpl()),
-    mClientAddress({0, 0, 0, 0}, 443)
+    //10.02.16 Perepelitsa: read quicUDPPort of config. default: port = 443
+    mClientAddress({0, 0, 0, 0}, Model::instance()->quicUDPPort()),
+    mPort (0)
+    //
 {
     std::function<void(size_t)> updFunc = std::bind(&QUICSession::update, this, std::placeholders::_1);
     mInstanceThread.setUpdateCallback(updFunc);
@@ -158,6 +163,8 @@ void QUICSession::p_connect(QuicServerId aTargetServerId)
     
     mServerAddress = IPEndPoint({0, 0, 0, 0}, aTargetServerId.port());
     mServerId = aTargetServerId;
+    mHost = aTargetServerId.host();
+    mPort = aTargetServerId.port();
     
     const UInt16 port = mServerId.host_port_pair().port();
     NSString *address = [NSString stringWithCString:mServerId.host_port_pair().host().c_str()

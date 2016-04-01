@@ -19,6 +19,7 @@
 		1109F3D71C401FD700ABB160 /* RSEntryVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 1109F3D51C401FD700ABB160 /* RSEntryVC.m */; };
 		1109F3E41C41580E00ABB160 /* RSStandardSession.h in Headers */ = {isa = PBXBuildFile; fileRef = 1109F3E21C41580E00ABB160 /* RSStandardSession.h */; };
 		1109F3E51C41580E00ABB160 /* RSStandardSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1109F3E31C41580E00ABB160 /* RSStandardSession.mm */; };
+		11149B521C80E2A50010116D /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C32D1BFB700C00217971 /* Model.cpp */; };
 		114D65871C34502C00C2D176 /* DebugUsageTracker.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 114D65851C34502C00C2D176 /* DebugUsageTracker.hpp */; };
 		114D65881C34502C00C2D176 /* DebugUsageTracker.mm in Sources */ = {isa = PBXBuildFile; fileRef = 114D65861C34502C00C2D176 /* DebugUsageTracker.mm */; };
 		114D658D1C3476E400C2D176 /* NSURL+RevSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 114D658B1C3476E400C2D176 /* NSURL+RevSDK.h */; };
@@ -98,7 +99,6 @@
 		5B54C3221BFB598700217971 /* Request.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3201BFB598700217971 /* Request.hpp */; };
 		5B54C32A1BFB5EF000217971 /* RSUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3281BFB5EF000217971 /* RSUtils.h */; };
 		5B54C32B1BFB5EF000217971 /* RSUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3291BFB5EF000217971 /* RSUtils.mm */; };
-		5B54C32F1BFB700C00217971 /* Model.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C32D1BFB700C00217971 /* Model.cpp */; };
 		5B54C3301BFB700C00217971 /* Model.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C32E1BFB700C00217971 /* Model.hpp */; };
 		5B54C3341BFB705B00217971 /* Protocol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5B54C3321BFB705B00217971 /* Protocol.cpp */; };
 		5B54C3351BFB705B00217971 /* Protocol.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 5B54C3331BFB705B00217971 /* Protocol.hpp */; };
@@ -870,7 +870,6 @@
 				5B54C32B1BFB5EF000217971 /* RSUtils.mm in Sources */,
 				6DEAB1CD1C2D803C0078CE65 /* RSLocationService.m in Sources */,
 				5B46D1E51C217BC100A9834C /* StatsHandler.cpp in Sources */,
-				5B54C32F1BFB700C00217971 /* Model.cpp in Sources */,
 				119145321C33D2D800B91C6E /* QUICThread.mm in Sources */,
 				5BE0D5B41C3D5E3F0064F97D /* RSURLConnectionNative.mm in Sources */,
 				5B4BA1A41C63A091004AD509 /* LogStorage.m in Sources */,
@@ -882,6 +881,7 @@
 				6D8BD9A71C3FC22A008353DB /* TestConfigurationService.cpp in Sources */,
 				6DEAB1D11C2D8D5E0078CE65 /* RSStaticStatsProvider.m in Sources */,
 				5B2035951C33E85E00A28C01 /* RSSystemInfo.m in Sources */,
+				11149B521C80E2A50010116D /* Model.cpp in Sources */,
 				116C4D6A1C456FB5000CE641 /* RSSupervisor.cpp in Sources */,
 				5B2F4BD31BFDD20B003DCB27 /* Data.cpp in Sources */,
 				5B2035A11C3404DC00A28C01 /* RSIPUtils.m in Sources */,

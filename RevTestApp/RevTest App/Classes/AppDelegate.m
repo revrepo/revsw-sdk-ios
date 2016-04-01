@@ -33,6 +33,13 @@
 #define USE_CRASHLYTICS 1
 #endif
 
+static BOOL isRunningTests(void)
+{
+    NSDictionary* environment = [[NSProcessInfo processInfo] environment];
+    NSString* injectBundle = environment[@"XCInjectBundle"];
+    return [[injectBundle pathExtension] isEqualToString:@"xctest"];
+}
+
 id setBeingRemoved(id self, SEL selector, ...)
 {
     return nil;
@@ -54,8 +61,16 @@ id setBeingRemoved(id self, SEL selector, ...)
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+
+    // racer: 0efbbd35-a131-4419-b330-00de5eb3696b
+    // demo1: 42e276ea-1823-4945-baa4-8747f08d0abe
+    // demo2: a2e23128-4685-41d3-8e49-c8e76c1688ef
     [RevSDK startWithSDKKey:@"0efbbd35-a131-4419-b330-00de5eb3696b"]; // Racer key for 65apps
-    [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
+    
+    if (!isRunningTests())
+    {
+        [NewRelicAgent startWithApplicationToken:@"AA289b5c865e93a480d7cffca562cf1a44ed67e5bb"];
+    }
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
