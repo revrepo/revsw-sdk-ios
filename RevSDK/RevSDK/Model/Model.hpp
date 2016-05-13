@@ -85,6 +85,8 @@ namespace rs
 
         void logTargetPrint(Log::Level aLevel, int aTag, const char* aMessage) override;
         
+        bool mShouldSimulateErrors;
+        
       public:
         
         Model();
@@ -131,10 +133,16 @@ namespace rs
         
         bool debug_isConfigurationStale();
         
+        bool shouldPassHost(const std::string &);
+        
         LogTarget* log() { return (LogTarget*)mMemoryLog.get(); }
         
         void addEvent(const std::string&, const int, const std::string& , const float, RSLogginLevel);
         
+        void deleteRequestsData();
+        
+        void setShouldSimulate(bool aShouldSimulate) { mShouldSimulateErrors = aShouldSimulate; }
+
         //10.02.16 Perepelitsa: insert getter of AB Testing state into singleton
         int abTestingRatio() const { return mConfService->getActive()->abTestingRatio; }
         bool abTestingMode() const { return mConfService->getActive()->abTesMode; }

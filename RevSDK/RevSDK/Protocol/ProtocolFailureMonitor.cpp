@@ -53,13 +53,10 @@ ProtocolFailureMonitor* ProtocolFailureMonitor::getInstance()
 
 void ProtocolFailureMonitor::logFailure(const std::string& aProtocolID, long aErrorCode)
 {
-    std::lock_guard<std::mutex> scopedLock(mLock);
-    
-    mInstanse->mReportMap[aProtocolID].push_back(ErrorReport(aErrorCode));
-    mInstanse->validate(aProtocolID);
+    mInstanse->validate(aProtocolID, ErrorReport(aErrorCode));
 }
 
-void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
+void ProtocolFailureMonitor::validate(const std::string& aProtocolID, const ErrorReport& aErrorReport)
 {
     typedef std::chrono::seconds tSec;
     typedef std::chrono::system_clock tSclock;
@@ -69,6 +66,7 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
     
     {
         std::lock_guard<std::mutex> guard(mLock);
+        mInstanse->mReportMap[aProtocolID].push_back(aErrorReport);
         vec   = mInstanse->mReportMap[aProtocolID];
         rqVec = mInstanse->mLoggedConnections[aProtocolID];
     }
@@ -104,7 +102,12 @@ void ProtocolFailureMonitor::validate(const std::string& aProtocolID)
             }
         }
     }
-    assert(vec.size() <= rqVec.size());
+    if (vec.size() > rqVec.size())
+    {
+        // Case is possible because of NewRelic integration
+        // But this case also means that all requests are successful
+        return;
+    }
     
     double failPercent = vec.size() / ((float)rqVec.size());
 #if RS_LOG

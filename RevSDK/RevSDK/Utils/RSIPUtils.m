@@ -261,11 +261,11 @@ int getdefaultgateway(in_addr_t * addr)
     if(r >= 0)
     {
         ipString = [NSString stringWithFormat: @"%s",inet_ntoa(gatewayaddr)];
-        NSLog(@"default gateway : %@", ipString );
+        //NSLog(@"default gateway : %@", ipString );
     }
     else
     {
-        NSLog(@"getdefaultgateway() failed");
+        //NSLog(@"getdefaultgateway() failed");
     }
     
     return ipString;

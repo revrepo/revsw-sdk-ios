@@ -179,7 +179,7 @@ namespace rs
     bool _internetConnectionAvailable();
     bool _areDomainNamesEqual(NSString*, NSString*);
     bool _isApplicationActive();
-    void _postNotification(NSString*);
+    void _postNotification(NSString*, NSString*);
 }
 #endif
 

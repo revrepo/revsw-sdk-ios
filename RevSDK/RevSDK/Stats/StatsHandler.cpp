@@ -47,6 +47,11 @@ namespace rs
         mStatsReportingLevel = aReportingLevel;
     }
     
+    size_t StatsHandler::requestsCount() const
+    {
+        return mRequestStatsHandler->requestsCount();
+    }
+    
     ReportTransactionHanle StatsHandler::createSendTransaction(int aRequestCount, const std::string& aAppName)
     {
         ReportTransactionHanle requestsData = mRequestStatsHandler->requestsData(aRequestCount);
@@ -92,5 +97,10 @@ namespace rs
     void StatsHandler::setSDKKey(const std::string& aSDKKey)
     {
         mSDKKey = aSDKKey;
+    }
+    
+    void StatsHandler::deleteRequestsData()
+    {
+        mRequestStatsHandler->deleteAllData();
     }
 }

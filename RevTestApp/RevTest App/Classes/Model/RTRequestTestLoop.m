@@ -1,10 +1,21 @@
-//
-//  RTRequestTestLoop.m
-//  RevTest App
-//
-//  Created by Andrey Chernukha on 2/3/16.
-//
-//
+/*************************************************************************
+ *
+ * REV SOFTWARE CONFIDENTIAL
+ *
+ * [2013] - [2015] Rev Software, Inc.
+ * All Rights Reserved.
+ *
+ * NOTICE:  All information contained herein is, and remains
+ * the property of Rev Software, Inc. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Rev Software, Inc.
+ * and its suppliers and may be covered by U.S. and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Rev Software, Inc.
+ */
+
 
 #import <RevSDK/RevSDK.h>
 
@@ -59,36 +70,43 @@ typedef enum
 
 @implementation RTRequestTestLoop
 
++ (NSArray *)defaultDomains
+{
+//    return @[@"mgemi.com",
+//             @"httpbin.org",
+//             @"google.com",
+//             @"mbeans.com",
+//             @"cnn.com",
+//             @"stackoverflow.com",
+//             @"bmwusa.com",
+//             @"ebay.com",
+//             @"m.vk.com",
+//             @"yandex.ru",
+//             @"amazon.com",
+//             @"youtube.com",
+//             @"linkedin.com",
+//             @"echo.msk.ru",
+//             @"ibm.com",
+//             @"revapm.net",
+//             @"bing.com",
+//             @"akamai.com",
+//             @"skrill.com",
+//             @"raywenderlich.com",
+//             @"facebook.com",
+//             @"twitter.com"];
+    return @[@"monitor.revsw.net/100KB.jpg",
+             @"monitor.revsw.net/1M.jpg",
+             @"monitor.revsw.net/test-cache.js",
+             @"google.com"];
+}
+
 + (instancetype)defaultTestLoop
 {
-    NSArray* domains = @[@"mgemi.com",
-                         @"httpbin.org",
-                         @"google.com",
-                         @"mbeans.com",
-                         @"cnn.com",
-                         @"stackoverflow.com",
-                         @"bmwusa.com",
-                         @"ebay.com",
-                         @"m.vk.com",
-                         @"yandex.ru",
-                         @"amazon.com",
-                         @"youtube.com",
-                         @"linkedin.com",
-                         @"echo.msk.ru",
-                         @"ibm.com",
-                         @"revapm.net",
-                         @"bing.com",
-                         @"akamai.com",
-                         @"skrill.com",
-                         @"raywenderlich.com",
-                         @"facebook.com",
-                         @"twitter.com"];
+    NSArray* domains = [self defaultDomains];
     
-    RTRequestTestLoop* testLoop = [[RTRequestTestLoop alloc] initWithDomains:domains
-                                                               numberOfTests:20
-                                                          numberOfFullPasses:10];
-
-    
+    RTRequestTestLoop* testLoop = [[self alloc] initWithDomains:domains
+                                                  numberOfTests:3
+                                             numberOfFullPasses:1];
     return testLoop;
 }
 
@@ -148,6 +166,18 @@ typedef enum
 
 - (void)start
 {
+    if (self.numberOfFullPasses == 0 || self.numberOfTests == 0)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
+                                                            object:nil
+                                                          userInfo:@{
+                                                                     kRTResultKey : @NO,
+                                                                     kRTErrorKey : [NSString stringWithFormat:@"Incorrect parameters full passes %ld tests %ld", self.numberOfFullPasses, self.numberOfTests ]
+                                                                     }];
+
+        return;
+    }
+    
     if (!self.isIterating)
     {
         self.isIterating = YES;
@@ -155,9 +185,14 @@ typedef enum
     }
 }
 
+- (SEL)startSelector
+{
+    return @selector(debug_enableTestMode);
+}
+
 - (void)startIterating
 {
-    SEL selector = @selector(debug_enableTestMode);
+    SEL selector = [self startSelector];
     [RevSDK performSelector:selector];
     
     RTTestCase* tcase    = [self.testCases objectAtIndex:_iterationIndex % self.testCases.count];
@@ -198,23 +233,28 @@ typedef enum
     }
     else
     {
-        self.isIterating = NO;
-        
-        SEL selector = @selector(debug_disableTestMode);
-        [RevSDK performSelector:selector];
-        
-        [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
-                                                            object:nil
-                                                          userInfo:@{
-                                                                     kRTResultKey : @YES
-                                                                     }];
+        [self finish];
     }
+}
+
+- (void)finish
+{
+    self.isIterating = NO;
+    
+    SEL selector = @selector(debug_disableTestMode);
+    [RevSDK performSelector:selector];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
+                                                        object:nil
+                                                      userInfo:@{
+                                                                 kRTResultKey : @YES,
+                                                                 kRTErrorKey : @"Success"
+                                                                 }];
 }
 
 - (void)next
 {
     NSString* URLString   = [self.domains[self.currentDomainIndex] stringByAddingScheme];
-    NSLog(@"Start %@ test - %@", URLString, self.currentTestCase.testName);
     NSURL* URL            = [NSURL URLWithString:URLString];
     NSURLRequest* request = [NSURLRequest requestWithURL:URL];
     [self.htmlGrabber loadRequest:request];
@@ -247,11 +287,20 @@ typedef enum
             {
                 if (statusCode != firstCode)
                 {
+                     NSMutableString* errorMessage = [NSMutableString stringWithFormat:@"%@ failed with codes ", self.domains[self.currentDomainIndex]];
+                    
+                    for (NSNumber * number in self.statusCodes)
+                    {
+                        [errorMessage appendFormat:@"%ld", number.integerValue];
+                    }
+                    
                     [[NSNotificationCenter defaultCenter] postNotificationName:kRTRequestLoopDidFinishNotification
                                                                         object:nil
                                                                       userInfo:@{
-                                                                                 kRTResultKey : @NO
+                                                                                 kRTResultKey : @NO,
+                                                                                 kRTErrorKey : errorMessage
                                                                                  }];
+                    break;
                 }
             }
         }
@@ -260,7 +309,7 @@ typedef enum
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSLog(@"Did finish with code %ld", statusCode);
+        NSLog(@".");
         
         [self restart];
     });
@@ -273,5 +322,25 @@ typedef enum
     });
 }
 
+@end
+
+@implementation RTRequestTestLoopOffMode
+
+- (SEL)startSelector
+{
+    return @selector(debug_setOffMode);
+}
+
+- (void)finish
+{
+    [super finish];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:kRTOperationModeOffTestDidFinish
+                                                        object:nil
+                                                      userInfo:@{
+                                                                 kRTResultKey : @YES,
+                                                                 kRTErrorKey : @"Success"
+                                                                 }];
+}
 
 @end

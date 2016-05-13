@@ -39,14 +39,15 @@ mNativeTelephonyHandle(nullptr)
 {
     RSReachability* internetConnection = [RSReachability rs_reachabilityForInternetConnection];
     [internetConnection rs_startNotifier];
+    [internetConnection prepareForFake];
     
+    mReachability = (void *)CFBridgingRetain(internetConnection);
     
    id observer =  [[NSNotificationCenter defaultCenter] addObserverForName:kRSReachabilityChangedNotification
                                                       object:nil
                                                        queue:nil
                                                   usingBlock:^(NSNotification* aNotification){
                                                   
-                                                      
                                                       RSReachability* noteObject = [aNotification object];;
                                                       
                                                       if (noteObject)
@@ -81,7 +82,11 @@ mNativeTelephonyHandle(nullptr)
         {
             mDelegate->onSSIDChanged();
         }
-        mSSID = str;
+        
+        if (str != "Fake_SSID")
+        {
+           mSSID = str;
+        }
     });
     ////////////////////
     
@@ -91,6 +96,8 @@ mNativeTelephonyHandle(nullptr)
 
 NativeNetworkEventsHandler::~NativeNetworkEventsHandler()
 {
+    CFRelease(mReachability);
+    
     id obs = (id)CFBridgingRelease(mNativeHandle);
     [[NSNotificationCenter defaultCenter] removeObserver:obs];
     

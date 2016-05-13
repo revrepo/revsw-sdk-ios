@@ -60,6 +60,10 @@ namespace rs
         void stopMonitoring();
         
         void setSDKKey(const std::string&);
+        
+        void deleteRequestsData();
+        
+        size_t requestsCount()const;
     };
 }
 

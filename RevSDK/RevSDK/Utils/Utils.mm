@@ -307,9 +307,10 @@ namespace rs
         return std::string([path UTF8String]);
     }
     
-    void postNotification(const std::string& aNotificationName)
+    void postNotification(const std::string& aNotificationName, const std::string& aInfo)
     {
         NSString* notificationName = NSStringFromStdString(aNotificationName);
-        _postNotification(notificationName);
+        NSString* info = NSStringFromStdString(aInfo);
+        _postNotification(notificationName, info);
     }
 }

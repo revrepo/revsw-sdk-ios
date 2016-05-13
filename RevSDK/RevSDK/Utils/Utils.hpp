@@ -144,7 +144,7 @@ typedef enum
     
     std::string executableFilePath();
     std::string quicLogFilePath();
-    void postNotification(const std::string&);
+    void postNotification(const std::string&, const std::string&);
 }
 
 #endif /* Utils_hpp */

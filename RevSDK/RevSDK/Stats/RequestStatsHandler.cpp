@@ -133,4 +133,10 @@ namespace rs
             data_storage::saveRequestDataVec(mRequestsDataVector);
         }
     }
+    
+    void RequestStatsHandler::deleteAllData()
+    {
+        mRequestsDataVector.clear();
+        deleteRequestsData();
+    }
 }

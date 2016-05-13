@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		115834AD1C8DC08400A8C7BD /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 115834AC1C8DC08400A8C7BD /* RevSDK.framework */; };
+		115834AE1C8DC0A600A8C7BD /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 115834AC1C8DC08400A8C7BD /* RevSDK.framework */; };
+		115834AF1C8DC0A600A8C7BD /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 115834AC1C8DC08400A8C7BD /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF9B1C5819D200CB7FBA /* Security.framework */; };
 		1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1198FF9D1C5819DA00CB7FBA /* SystemConfiguration.framework */; };
 		1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA101C3D17F60051D31F /* Fabric.framework */; };
@@ -55,11 +58,11 @@
 		5B925DEC1C11BFF10021B077 /* logo_revAPM.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B925DEB1C11BFF10021B077 /* logo_revAPM.png */; };
 		5BB7F2461C6A2D1D0095D508 /* revsdkdemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */; };
 		5BB7F24B1C6A38AA0095D508 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 65C1EE591C4795460095537E /* libxml2.tbd */; };
-		5BB7F2531C6A3C2B0095D508 /* RevSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */; };
-		5BB7F2541C6A3C2B0095D508 /* RevSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5BB7F2551C6A3DB80095D508 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA161C3D19E00051D31F /* libz.tbd */; };
 		5BB7F2561C6A3DC00095D508 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA181C3D19E80051D31F /* libc++.tbd */; };
+		5BBAA0041C6CE0C700AC492B /* RTProtocolSwitchTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAA0031C6CE0C700AC492B /* RTProtocolSwitchTester.m */; };
 		5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */; };
+		5BDF00EA1C6CA31400A15E40 /* RTStatsUploadTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BDF00E91C6CA31400A15E40 /* RTStatsUploadTester.m */; };
 		5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0D5B71C3D6F3B0064F97D /* RTCell.m */; };
 		5BE164E41C5BA1FE003A6E5B /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B70CA111C3D17F60051D31F /* Crashlytics.framework */; };
 		5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8C9D1C06FB000019BCD1 /* RTStartViewController.m */; };
@@ -68,6 +71,7 @@
 		5BEC8CA61C0706A00019BCD1 /* RTMobileWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA41C0706A00019BCD1 /* RTMobileWebViewController.xib */; };
 		5BEC8CAA1C0707F80019BCD1 /* UIViewController+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */; };
 		5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */; };
+		5BF51E5F1C6B996B00A4632C /* RTConfigurationLoadObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */; };
 		61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EBA9FF95906FE4C84E26539 /* libPods-RevTest App.a */; };
 		65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */; };
 		65C1EE571C4794D30095537E /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C1EE541C4794D30095537E /* HTMLNode.m */; };
@@ -111,7 +115,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				5BB7F2541C6A3C2B0095D508 /* RevSDK.framework in Embed Frameworks */,
+				115834AF1C8DC0A600A8C7BD /* RevSDK.framework in Embed Frameworks */,
 				1198FFA21C581A1300CB7FBA /* Crashlytics.framework in Embed Frameworks */,
 				1198FFA01C581A0F00CB7FBA /* Fabric.framework in Embed Frameworks */,
 			);
@@ -122,6 +126,8 @@
 
 /* Begin PBXFileReference section */
 		1109F3CC1C401ED000ABB160 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		11149B531C80E2C50010116D /* libquicrepack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libquicrepack.a; path = "../../../Library/Developer/Xcode/DerivedData/RevSDK-evtzuhfitxmxukbtzngfldtszrym/Build/Products/Debug-iphoneos/libquicrepack.a"; sourceTree = "<group>"; };
+		115834AC1C8DC08400A8C7BD /* RevSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RevSDK.framework; sourceTree = "<group>"; };
 		1198FF9B1C5819D200CB7FBA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		1198FF9D1C5819DA00CB7FBA /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -182,9 +188,12 @@
 		5BB7F23B1C6A2CB90095D508 /* revsdkdemo.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = revsdkdemo.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5BB7F23F1C6A2CB90095D508 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5BB7F2451C6A2D1D0095D508 /* revsdkdemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = revsdkdemo.m; sourceTree = "<group>"; };
-		5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RevSDK.framework; path = "/Users/andreychernukha/Projects/RevSDK/revsdk-ios/DerivedData/RevSDK/Build/Products/Release-iphoneos/RevSDK.framework"; sourceTree = "<absolute>"; };
+		5BBAA0021C6CE0C700AC492B /* RTProtocolSwitchTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTProtocolSwitchTester.h; sourceTree = "<group>"; };
+		5BBAA0031C6CE0C700AC492B /* RTProtocolSwitchTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTProtocolSwitchTester.m; sourceTree = "<group>"; };
 		5BDE69431C1826CC001DB8D4 /* UIViewController+RTTesting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+RTTesting.h"; sourceTree = "<group>"; };
 		5BDE69441C1826CC001DB8D4 /* UIViewController+RTTesting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTTesting.m"; sourceTree = "<group>"; };
+		5BDF00E81C6CA31400A15E40 /* RTStatsUploadTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStatsUploadTester.h; sourceTree = "<group>"; };
+		5BDF00E91C6CA31400A15E40 /* RTStatsUploadTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTStatsUploadTester.m; sourceTree = "<group>"; };
 		5BE0D5B61C3D6F3B0064F97D /* RTCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTCell.h; sourceTree = "<group>"; };
 		5BE0D5B71C3D6F3B0064F97D /* RTCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTCell.m; sourceTree = "<group>"; };
 		5BEC8C9C1C06FB000019BCD1 /* RTStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTStartViewController.h; sourceTree = "<group>"; };
@@ -197,6 +206,8 @@
 		5BEC8CA91C0707F80019BCD1 /* UIViewController+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+RTUtils.m"; sourceTree = "<group>"; };
 		5BEC8CAB1C07259B0019BCD1 /* NSURL+RTUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+RTUtils.h"; sourceTree = "<group>"; };
 		5BEC8CAC1C07259B0019BCD1 /* NSURL+RTUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+RTUtils.m"; sourceTree = "<group>"; };
+		5BF51E5D1C6B996B00A4632C /* RTConfigurationLoadObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RTConfigurationLoadObserver.h; sourceTree = "<group>"; };
+		5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RTConfigurationLoadObserver.m; sourceTree = "<group>"; };
 		65B3A7CD1C44E5EA003C9426 /* NSURLCache+ForceNoCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLCache+ForceNoCache.h"; sourceTree = "<group>"; };
 		65B3A7CE1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLCache+ForceNoCache.m"; sourceTree = "<group>"; };
 		65C1EE531C4794D30095537E /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
@@ -243,7 +254,7 @@
 				1198FF9E1C5819DA00CB7FBA /* SystemConfiguration.framework in Frameworks */,
 				1198FF9C1C5819D200CB7FBA /* Security.framework in Frameworks */,
 				5B0EE1B31C51154B00BFE90A /* MessageUI.framework in Frameworks */,
-				5BB7F2531C6A3C2B0095D508 /* RevSDK.framework in Frameworks */,
+				115834AD1C8DC08400A8C7BD /* RevSDK.framework in Frameworks */,
 				65C1EE5A1C4795460095537E /* libxml2.tbd in Frameworks */,
 				5B70CA191C3D19E80051D31F /* libc++.tbd in Frameworks */,
 				5B70CA171C3D19E00051D31F /* libz.tbd in Frameworks */,
@@ -253,6 +264,7 @@
 				61F733BFF3FBC00489B7CCB8 /* libPods-RevTest App.a in Frameworks */,
 				1198FF9F1C581A0F00CB7FBA /* Fabric.framework in Frameworks */,
 				5BE164E41C5BA1FE003A6E5B /* Crashlytics.framework in Frameworks */,
+				115834AE1C8DC0A600A8C7BD /* RevSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -298,7 +310,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
-				5BB7F2521C6A3C2B0095D508 /* RevSDK.framework */,
+				115834AC1C8DC08400A8C7BD /* RevSDK.framework */,
 				5B43F58C1C4404F900D6F33D /* Assets.xcassets */,
 				080E96DDFE201D6D7F000001 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -339,6 +351,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				11149B531C80E2C50010116D /* libquicrepack.a */,
 				1198FF9D1C5819DA00CB7FBA /* SystemConfiguration.framework */,
 				1198FF9B1C5819D200CB7FBA /* Security.framework */,
 				65C1EE591C4795460095537E /* libxml2.tbd */,
@@ -440,6 +453,12 @@
 				65C1EE5C1C4796520095537E /* RTHTMLGrabber.m */,
 				5B58B34E1C626D31002B14EC /* RTRequestTestLoop.h */,
 				5B58B34F1C626D31002B14EC /* RTRequestTestLoop.m */,
+				5BF51E5D1C6B996B00A4632C /* RTConfigurationLoadObserver.h */,
+				5BF51E5E1C6B996B00A4632C /* RTConfigurationLoadObserver.m */,
+				5BDF00E81C6CA31400A15E40 /* RTStatsUploadTester.h */,
+				5BDF00E91C6CA31400A15E40 /* RTStatsUploadTester.m */,
+				5BBAA0021C6CE0C700AC492B /* RTProtocolSwitchTester.h */,
+				5BBAA0031C6CE0C700AC492B /* RTProtocolSwitchTester.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -748,6 +767,7 @@
 				A7EC06CC1C562F8E00542AEE /* Storage.m in Sources */,
 				A7EC06D11C56384000542AEE /* PickerView.m in Sources */,
 				65C1EE571C4794D30095537E /* HTMLNode.m in Sources */,
+				5BF51E5F1C6B996B00A4632C /* RTConfigurationLoadObserver.m in Sources */,
 				6D73CE081C27F1BA0095EA9C /* NSString+MD5.m in Sources */,
 				5B25817F1C17155F00C55959 /* RTUtils.m in Sources */,
 				65C1EE5D1C4796520095537E /* RTHTMLGrabber.m in Sources */,
@@ -757,6 +777,7 @@
 				65B3A7CF1C44E5EA003C9426 /* NSURLCache+ForceNoCache.m in Sources */,
 				5B0BFEF51C0CA0890057715A /* NSArray+Stats.m in Sources */,
 				5BEC8C9E1C06FB000019BCD1 /* RTStartViewController.m in Sources */,
+				5BDF00EA1C6CA31400A15E40 /* RTStatsUploadTester.m in Sources */,
 				5B0BFEDA1C0C53DE0057715A /* RTReportViewController.m in Sources */,
 				5BEC8CAD1C07259B0019BCD1 /* NSURL+RTUtils.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
@@ -764,6 +785,7 @@
 				5BE0D5B81C3D6F3B0064F97D /* RTCell.m in Sources */,
 				5B0BFEF01C0C86ED0057715A /* RTTestStatsViewController.m in Sources */,
 				5BDE69451C1826CC001DB8D4 /* UIViewController+RTTesting.m in Sources */,
+				5BBAA0041C6CE0C700AC492B /* RTProtocolSwitchTester.m in Sources */,
 				5BEC8CA51C0706A00019BCD1 /* RTMobileWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -801,6 +823,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RevTest",
+					App,
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -837,7 +861,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevSDK Racer";
-				PROVISIONING_PROFILE = "a72c76fc-5c0f-4e87-9954-e40b905984f1";
+				PROVISIONING_PROFILE = "c593f316-503e-49b4-a575-7fe8683ec7a5";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -856,6 +880,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/RevTest",
+					App,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "RevTest App/RevTest App-Prefix.pch";
@@ -890,7 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tundramobile.revsdkdemo;
 				PRODUCT_NAME = "RevSDK Racer";
-				PROVISIONING_PROFILE = "7400bae8-51a4-4a91-bd8d-4994c80b4827";
+				PROVISIONING_PROFILE = "264d5e2d-d703-4431-91ce-f25bbbdb4b5a";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -917,6 +943,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"TEST=1",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -1087,6 +1114,7 @@
 				5BB7F2431C6A2CB90095D508 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "RevTest App" */ = {
 			isa = XCConfigurationList;

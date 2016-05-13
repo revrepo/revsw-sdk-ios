@@ -14,7 +14,8 @@
 typedef enum : NSInteger {
 	kRSNotReachable = 0,
 	kRSReachableViaWiFi,
-	kRSReachableViaWWAN
+	kRSReachableViaWWAN,
+    kRSFakeStatus
 } RSNetworkStatus;
 
 
@@ -56,6 +57,10 @@ extern NSString *kRSReachabilityChangedNotification;
  * WWAN may be available, but not active until a connection has been established. WiFi may require a connection for VPN on Demand.
  */
 - (BOOL)rs_connectionRequired;
+
+- (void)prepareForFake;
+
+@property (nonatomic, assign, getter=isFake) BOOL fake;
 
 @end
 

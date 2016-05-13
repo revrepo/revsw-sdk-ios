@@ -89,7 +89,8 @@ bool ConfigurationService::isTimedOut() const
 }
 
 ConfigurationService::~ConfigurationService()
-{ 
+{
+    
 }
 
 void ConfigurationService::init()
@@ -131,7 +132,7 @@ std::shared_ptr<const Configuration> ConfigurationService::getActive()
         return mStaleConfiguration;
     }
     
-    return mActiveConfiguration;//
+    return mActiveConfiguration;
 }
 
 void ConfigurationService::loadConfiguration()
@@ -150,6 +151,7 @@ void ConfigurationService::loadConfiguration()
                 Log::info(kLogTagSDKConfiguration, "ConfigurationService: new conf received, valid");
                 
                 Configuration configuration = processConfigurationData(aData);
+                //configuration.edgeHost = "www.a" + std::to_string(rand() % 100) + ".com";
                 //10.02.16 Perepelitsa: random "lottery" process
                 int oldABRatio = Model::instance()->abTestingRatio();
                 bool oldABMode = Model::instance()->abTestingMode();
@@ -191,12 +193,12 @@ void ConfigurationService::loadConfiguration()
                 data_storage::saveConfiguration(configuration);
                 
                 // QUIC
-                if (QUICSession::instance()->host() != Model::instance()->edgeHost() &&
-                    QUICSession::instance()->connected())
+                bool quicEndpointChanged = (QUICSession::instance()->host() != Model::instance()->edgeHost()) ||
+                (QUICSession::instance()->port() != Model::instance()->quicUDPPort());
+                if (quicEndpointChanged && QUICSession::instance()->connected())
                 {
                     QUICSession::reconnect();
                 }
-                
                 
                 //////////////////// SCOPE ///////////////////////
                 {
@@ -206,7 +208,8 @@ void ConfigurationService::loadConfiguration()
                                          });
                 }
                 
-                postNotification(kConfigurationLoadedNotification);
+                std::string interval = std::to_string(refreshInterval);
+                postNotification(kConfigurationLoadedNotification, interval);
             }
             else
             {

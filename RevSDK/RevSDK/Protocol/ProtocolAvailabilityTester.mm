@@ -55,6 +55,7 @@ void ProtocolAvailabilityTester::onTestResult(bool aSuccess)
             mCompletitionCallback(mCurrentResults);
             mCurrentResults.clear();
             mRunning.store(false);
+            postNotification("kProtocolTestingOverNotification", result.ProtocolID);
         }
         else
         { 

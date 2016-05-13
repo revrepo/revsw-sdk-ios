@@ -22,7 +22,19 @@
 @import SystemConfiguration.CaptiveNetwork;
 @import UIKit;
 
+static BOOL shouldReturnFakeSSID = NO;
+
 @implementation RSSystemInfo
+
++ (void)initialize
+{
+    [[NSNotificationCenter defaultCenter] addObserverForName:@"ReturnFakeSSID"
+                                                      object:nil
+                                                       queue:nil
+                                                  usingBlock:^(NSNotification* aNote){
+                                                      shouldReturnFakeSSID = YES;
+                                                  }];
+}
 
 + (CTCarrier*) currentCarrier
 {
@@ -80,6 +92,12 @@
 
 + (NSString*) ssid
 {
+    if (shouldReturnFakeSSID)
+    {
+        shouldReturnFakeSSID = NO;
+        return @"Fake_SSID";
+    }
+    
     NSArray *interfaceNames = CFBridgingRelease(CNCopySupportedInterfaces());
     
     NSDictionary *SSIDInfo;
