@@ -239,7 +239,7 @@ namespace rs
         configuration.failuresFailoverThreshold     = [aDictionary[kRSFailuresFailoverThreshold] doubleValue];
         configuration.failuresMonitoringInterval    = [aDictionary[kRSFailuresMonitoringInterval] intValue];
         configuration.quicUDPPort                   = [aDictionary[kRSQuicUDPPort] intValue];
-        configuration.SDKDomain                     = [aDictionary[kRSSDKDomain] intValue];
+        configuration.SDKDomain                     = stdStringFromNSString(aDictionary[kRSSDKDomain]); //by Victor Kosse //[aDictionary[kRSSDKDomain] intValue];
         //
         return configuration;
     }
