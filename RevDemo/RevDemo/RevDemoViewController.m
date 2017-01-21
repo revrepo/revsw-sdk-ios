@@ -139,7 +139,7 @@
                afterDelay:2.0];
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(nullable NSError *)error
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(nonnull NSError *)error
 {
     [self performSelector:@selector(hideHUD)
                withObject:nil
