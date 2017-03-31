@@ -35,9 +35,9 @@
 @end
 
 @interface RSURLConnection : NSObject
-
+NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<RSURLConnectionDelegate> delegate;
-
+NS_ASSUME_NONNULL_END
 + (nullable instancetype)connectionWithRequest:(nullable NSURLRequest *)aRequest delegate:(nullable id<RSURLConnectionDelegate>)delegate;
 - (void)start;
 

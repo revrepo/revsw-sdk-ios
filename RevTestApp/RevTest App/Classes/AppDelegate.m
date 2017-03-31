@@ -148,10 +148,10 @@ id setBeingRemoved(id self, SEL selector, ...)
         didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
     {
         // re-post ( broadcast )
-        NSString* token = [[[[deviceToken description]
-            stringByReplacingOccurrencesOfString:@"<" withString:@""]
-            stringByReplacingOccurrencesOfString:@">" withString:@""]
-            stringByReplacingOccurrencesOfString:@" " withString:@""];
+//        NSString* token = [[[[deviceToken description]
+//            stringByReplacingOccurrencesOfString:@"<" withString:@""]
+//            stringByReplacingOccurrencesOfString:@">" withString:@""]
+//            stringByReplacingOccurrencesOfString:@" " withString:@""];
 
 //        [[NSNotificationCenter defaultCenter] postNotificationName:CDVRemoteNotification object:token];
     }

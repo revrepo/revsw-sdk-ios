@@ -144,13 +144,13 @@ namespace rs
             return;
         }
     }
-    
+// TODO: Unused code?
     void traceSocketSpeed(int aDataSize)
     {
         return;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            p_traceSocketSpeed(aDataSize);
-        });
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            p_traceSocketSpeed(aDataSize);
+//        });
     }
     
     bool decomposeURL(const std::string& aBaseURL, const std::string& aURL, std::string& aHost, std::string& aPath, std::string& aScheme)

@@ -181,10 +181,10 @@ namespace rs
         
         saveObject(mutableDataArray, kRSRequestDataStorageKey);
     }
-    
+// TODO: Unused code?
     void data_storage::saveAvailableProtocols(std::vector<std::string> aVec)
     {
-        NSData* savedData                = contentsOfFileWithName(kRSLastMileDataStorageKey);
+//        NSData* savedData                = contentsOfFileWithName(kRSLastMileDataStorageKey);
         NSArray* requestDataArray        = @[];
         NSMutableArray* mutableDataArray = [NSMutableArray arrayWithArray:requestDataArray];
         
@@ -284,12 +284,12 @@ namespace rs
         
         return vd;*/
     }
-    
+// TODO: Unused code?
     void data_storage::deleteRequestsData()
     {
-        NSError* error = nil;
+//        NSError* error = nil;
         
-        BOOL success = deleteFile(kRSRequestDataStorageKey, &error);
+//        BOOL success = deleteFile(kRSRequestDataStorageKey, &error);
         
 //        if (!success)
 //        {

@@ -56,6 +56,6 @@
 + (RSLocationService*)sharedService;
 
 - (NSString*)getLastLocation;
-- (NSString*)getLastUserSelectedLocation; 
+//- (NSString*)getLastUserSelectedLocation; 
 
 @end

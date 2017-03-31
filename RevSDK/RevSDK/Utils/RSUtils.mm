@@ -58,7 +58,7 @@
 
 - (const char *)cDescription
 {
-    return [NSString stringWithFormat:@"URL %@ status code %ld headers %@", self.URL.absoluteString, self.statusCode, self.allHeaderFields].UTF8String;
+    return [NSString stringWithFormat:@"URL %@ status code %ld headers %@", self.URL.absoluteString, (long)self.statusCode, self.allHeaderFields].UTF8String;
 }
 
 @end

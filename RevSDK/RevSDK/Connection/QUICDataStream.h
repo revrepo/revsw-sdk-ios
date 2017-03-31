@@ -80,7 +80,7 @@ namespace rs
         void OnInitialHeadersComplete(bool fin, size_t frame_len) override;
         void OnTrailingHeadersComplete(bool fin, size_t frame_len) override;
         void onVisitorSentClose();
-        bool should_add_incoming_data(const void* aData, size_t aSize);
+        bool should_add_incoming_data(const void* aData, size_t aSize) override;
         
     private:
         Delegate* mDelegate;

@@ -78,14 +78,14 @@
     return self;
 }
 
-
+// TODO: Unused code?
 -(void)fillLocationName
 {
     self.lastLocationName = @"";
     
-    CLLocation* loc = [self location];
-    
-    __weak RSLocation* weakSelf = self;
+//    CLLocation* loc = [self location];
+//    
+//    __weak RSLocation* weakSelf = self;
     
 //    [[RSLocationService sharedService] getAddressForLocation:loc withCompletionBlock:^(NSString* s, NSString* city, NSError* e) {
 //        weakSelf.lastLocationName = s;
