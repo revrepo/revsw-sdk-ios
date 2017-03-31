@@ -21,7 +21,7 @@
 #import "MBProgressHUD.h"
 
 #import "UIViewController+RTTesting.h"
-#import "NSURL+RTUTils.h"
+#import "NSURL+RTUtils.h"
 
 #import "RTContainerViewController.h"
 #import "RTTestModel.h"

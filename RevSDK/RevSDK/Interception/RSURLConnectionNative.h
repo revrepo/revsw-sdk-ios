@@ -39,8 +39,9 @@
 @property (nonatomic, strong, nullable) NSNumber* firstByteTimestamp;
 @property (nonatomic, strong, nullable) NSURLRequest* request;
 @property (nonatomic, strong, nullable) NSHTTPURLResponse* response;
-@property (nonatomic, weak)   id<RSURLConnectionNativeDelegate> delegate;
-
+NS_ASSUME_NONNULL_BEGIN
+@property (nonatomic, weak) id<RSURLConnectionNativeDelegate> delegate;
+NS_ASSUME_NONNULL_END
 - (nullable instancetype)initWithRequest:(nonnull NSURLRequest *)aRequest delegate:(nullable id<RSURLConnectionNativeDelegate>)aDelegate;
 - (void)start;
 

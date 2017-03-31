@@ -23,8 +23,10 @@ inline uint16_t ByteSwap(uint16_t x) {
 }
 
 inline uint32_t ByteSwap(uint32_t x) {
-  return ((x & 0x000000fful) << 24) | ((x & 0x0000ff00ul) << 8) |
-      ((x & 0x00ff0000ul) >> 8) | ((x & 0xff000000ul) >> 24);
+  return    ((x & 0x000000fful) << 24) |
+            ((x & 0x0000ff00ul) << 8) |
+            ((x & 0x00ff0000ul) >> 8) |
+            ((x & 0xff000000ul) >> 24);
 }
 
 inline uint64_t ByteSwap(uint64_t x) {

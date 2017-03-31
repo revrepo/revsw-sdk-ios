@@ -81,7 +81,7 @@
           didFinishWithResult:(MFMailComposeResult)result
                         error:(nullable NSError *)error
 {
-    NSLog(@"RESULT %d Error %@", result, error);
+    NSLog(@"RESULT %ld Error %@", (long)result, error);
     
     [controller dismissViewControllerAnimated:YES completion:^{
     }];

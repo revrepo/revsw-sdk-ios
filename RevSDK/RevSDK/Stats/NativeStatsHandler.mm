@@ -31,8 +31,7 @@
 #include "Event.hpp"
 #include "DataStorage.hpp"
 
-
-#include "Model.hpp";
+#include "Model.hpp"
 
 #define STRVALUE_OR_DEFAULT( x ) (x ? x : @"-")
 

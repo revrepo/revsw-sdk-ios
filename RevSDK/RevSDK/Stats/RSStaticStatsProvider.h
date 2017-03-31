@@ -22,6 +22,6 @@
 
 //@property (copy, nonatomic, readonly) NSString* lastLocationName;
 
-+ (RSStaticStatsProvider*)sharedProvider;
+//+ (RSStaticStatsProvider*)sharedProvider;
 
 @end
